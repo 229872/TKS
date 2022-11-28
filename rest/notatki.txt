@@ -1,0 +1,9 @@
+RentManager:
+
+@AllArgsConstructor
+@NoArgsConstructor
+@RequestScoped
+
+@Inject
+private RentRepository
+

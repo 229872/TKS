@@ -10,7 +10,6 @@ import pl.lodz.p.edu.rest.model.DTO.RentDTO;
 import pl.lodz.p.edu.rest.model.users.Client;
 import pl.lodz.p.edu.rest.repository.DataFaker;
 
-import javax.xml.crypto.Data;
 import java.util.UUID;
 
 import static io.restassured.RestAssured.baseURI;

@@ -2,14 +2,11 @@ package pl.lodz.p.edu.rest.controllers;
 
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.NoResultException;
-import jakarta.transaction.TransactionalException;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
-import pl.lodz.p.edu.rest.exception.ObjectNotValidException;
 import pl.lodz.p.edu.rest.exception.ConflictException;
 import pl.lodz.p.edu.rest.managers.EquipmentManager;
 import pl.lodz.p.edu.rest.model.DTO.EquipmentDTO;

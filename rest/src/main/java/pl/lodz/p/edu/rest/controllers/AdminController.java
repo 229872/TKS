@@ -9,10 +9,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.rest.model.DTO.users.AdminDTO;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
-import pl.lodz.p.edu.rest.exception.ObjectNotValidException;
 import pl.lodz.p.edu.rest.exception.ConflictException;
 import pl.lodz.p.edu.rest.managers.UserManager;
-import pl.lodz.p.edu.rest.model.users.*;
 import pl.lodz.p.edu.rest.repository.DataFaker;
 
 import java.util.UUID;

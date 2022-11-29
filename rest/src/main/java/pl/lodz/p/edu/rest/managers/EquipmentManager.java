@@ -2,12 +2,11 @@ package pl.lodz.p.edu.rest.managers;
 
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.PersistenceException;
 import jakarta.transaction.Transactional;
 
 import pl.lodz.p.edu.rest.exception.*;
-import pl.lodz.p.edu.rest.model.DTO.EquipmentDTO;
-import pl.lodz.p.edu.rest.model.Equipment;
+import pl.lodz.p.edu.model.DTO.EquipmentDTO;
+import pl.lodz.p.edu.model.Equipment;
 import pl.lodz.p.edu.rest.repository.impl.EquipmentRepository;
 
 import java.util.List;

@@ -4,20 +4,14 @@ import jakarta.inject.Inject;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
-import jakarta.persistence.PersistenceException;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.BeanParam;
-import jakarta.ws.rs.core.Response;
-import pl.lodz.p.edu.rest.controllers.AdminController;
 import pl.lodz.p.edu.rest.exception.BusinessLogicInterruptException;
-import pl.lodz.p.edu.rest.exception.ConflictException;
-import pl.lodz.p.edu.rest.exception.IllegalModificationException;
 import pl.lodz.p.edu.rest.exception.ObjectNotValidException;
-import pl.lodz.p.edu.rest.model.DTO.RentDTO;
-import pl.lodz.p.edu.rest.model.Equipment;
-import pl.lodz.p.edu.rest.model.Rent;
+import pl.lodz.p.edu.model.DTO.RentDTO;
+import pl.lodz.p.edu.model.Equipment;
+import pl.lodz.p.edu.model.Rent;
 
-import pl.lodz.p.edu.rest.model.users.Client;
+import pl.lodz.p.edu.model.users.Client;
 import pl.lodz.p.edu.rest.repository.impl.EquipmentRepository;
 import pl.lodz.p.edu.rest.repository.impl.RentRepository;
 import pl.lodz.p.edu.rest.repository.impl.UserRepository;

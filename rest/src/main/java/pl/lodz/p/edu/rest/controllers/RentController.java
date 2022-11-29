@@ -98,9 +98,7 @@ public class RentController {
         try {
             rentManager.update(entityId, rentDTO);
             return Response.status(OK).entity(rentDTO).build();
-        } catch (ObjectNotValidException e) {
-            return Response.status(BAD_REQUEST).build();
-        } catch(TransactionalException e) {
+        } catch (ObjectNotValidException | TransactionalException e) {
             return Response.status(BAD_REQUEST).build();
         } catch(NoResultException e) {
             return Response.status(NOT_FOUND).build();
@@ -121,17 +119,4 @@ public class RentController {
             return Response.status(CONFLICT).build();
         }
     }
-
-
-
-//    @GET
-//    @Produces(MediaType.TEXT_PLAIN)
-//    @Path("/available/{equipmentUuid}")
-//    public boolean isAvailable(@PathParam("equipmentUuid") UUID equipmentUuid) {
-//        Equipment equipment = equipmentManager.get(equipmentUuid);
-//        return Objects.equals(rentManager.whenAvailable(equipment), LocalDateTime.now());
-//    }
-
-    //TODO PLANTEXT?
-
 }

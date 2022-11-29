@@ -18,10 +18,7 @@ public abstract class User extends AbstractEntity {
     @Column(name = "archive")
     private boolean active;
 
-    public User(String login) throws ObjectNotValidException {
-        if(login == null || login.isEmpty()) {
-            throw new ObjectNotValidException("Client login cannot be null nor empty");
-        }
+    public User(String login) {
         this.login = login;
         this.active = true;
     }

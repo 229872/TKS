@@ -22,7 +22,7 @@ public class EquipmentManager {
     protected EquipmentManager() {
     }
 
-    public void add(Equipment equipment) throws ObjectNotValidException {
+    public void add(Equipment equipment) {
         equipmentRepository.add(equipment);
     }
 
@@ -34,7 +34,7 @@ public class EquipmentManager {
         return equipmentRepository.getAll();
     }
 
-    public void update(UUID entityId, EquipmentDTO equipmentDTO) throws IllegalModificationException, ObjectNotValidException {
+    public void update(UUID entityId, EquipmentDTO equipmentDTO) throws IllegalModificationException {
         synchronized (equipmentRepository) {
             Equipment equipment = equipmentRepository.get(entityId);
             equipment.merge(equipmentDTO);

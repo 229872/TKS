@@ -48,8 +48,6 @@ public class AdminController {
             return Response.status(CONFLICT).build();
         } catch(TransactionalException e) {
             return Response.status(CONFLICT).build();
-        } catch(ObjectNotValidException e) {
-            return Response.status(BAD_REQUEST).build();
         }
     }
 
@@ -84,7 +82,7 @@ public class AdminController {
         try {
             userManager.updateAdmin(entityId, adminDTO);
             return Response.status(OK).entity(adminDTO).build();
-        } catch (ObjectNotValidException | IllegalModificationException e) {
+        } catch (IllegalModificationException e) {
             return Response.status(BAD_REQUEST).build();
         } catch(TransactionalException e) { // login modification
             return Response.status(BAD_REQUEST).build();

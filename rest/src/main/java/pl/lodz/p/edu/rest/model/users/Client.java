@@ -23,14 +23,14 @@ public class Client extends User {
     @Embedded
     private Address address;
 
-    public Client(String login, String firstName, String lastName, Address address) throws ObjectNotValidException {
+    public Client(String login, String firstName, String lastName, Address address) {
         super(login);
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
     }
 
-    public Client(ClientDTO clientDTO) throws ObjectNotValidException {
+    public Client(ClientDTO clientDTO) {
         super(clientDTO.getLogin());
         this.firstName = clientDTO.getFirstName();
         this.lastName = clientDTO.getLastName();

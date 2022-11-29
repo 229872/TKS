@@ -53,8 +53,6 @@ public class ClientController {
             return Response.status(CONFLICT).build();
         } catch(NullPointerException e) {
             return Response.status(BAD_REQUEST).build();
-        } catch(ObjectNotValidException e) {
-            return Response.status(BAD_REQUEST).build();
         }
     }
 
@@ -89,7 +87,7 @@ public class ClientController {
         try {
             userManager.updateClient(entityId, clientDTO);
             return Response.status(OK).entity(clientDTO).build();
-        } catch (ObjectNotValidException | IllegalModificationException e) {
+        } catch (IllegalModificationException e) {
             return Response.status(BAD_REQUEST).build();
         } catch(TransactionalException e) { // login modification
             return Response.status(BAD_REQUEST).build();

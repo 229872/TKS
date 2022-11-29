@@ -17,12 +17,12 @@ public class Employee extends User {
 
     public Employee() {}
 
-    public Employee(String login, String desk) throws ObjectNotValidException {
+    public Employee(String login, String desk) {
         super(login);
         this.desk = desk;
     }
 
-    public Employee(EmployeeDTO employeeDTO) throws ObjectNotValidException {
+    public Employee(EmployeeDTO employeeDTO) {
         this.merge(employeeDTO);
     }
 

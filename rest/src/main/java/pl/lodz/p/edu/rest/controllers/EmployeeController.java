@@ -47,8 +47,6 @@ public class EmployeeController {
             return Response.status(CONFLICT).build();
         } catch(TransactionalException e) {
             return Response.status(CONFLICT).build();
-        } catch(ObjectNotValidException e) {
-            return Response.status(BAD_REQUEST).build();
         }
     }
 
@@ -83,7 +81,7 @@ public class EmployeeController {
         try {
             userManager.updateEmployee(entityId, employeeDTO);
             return Response.status(OK).entity(employeeDTO).build();
-        } catch (ObjectNotValidException | IllegalModificationException e) {
+        } catch (IllegalModificationException e) {
             return Response.status(BAD_REQUEST).build();
         } catch(TransactionalException e) { // login modification
             return Response.status(BAD_REQUEST).build();

@@ -17,38 +17,22 @@ public class DataFaker {
     }
 
     public static Client getClient(Address a) {
-        try {
-            return new Client(randStr(7), // idType.values()[(int)(Math.random() * 2) % 2],
-                    randStr(10), randStr(10), a);
-        } catch(ObjectNotValidException e) {
-            return null; // will never happen
-        }
+        return new Client(randStr(7), // idType.values()[(int)(Math.random() * 2) % 2],
+                randStr(10), randStr(10), a);
     }
 
     public static Client getClient() {
-        try {
-            Address a = getAddress();
-            return new Client(randStr(7),
-                    randStr(10), randStr(10), a);
-        } catch(ObjectNotValidException e) {
-            return null; // will never happen
-        }
+        Address a = getAddress();
+        return new Client(randStr(7),
+                randStr(10), randStr(10), a);
     }
 
     public static Admin getAdmin() {
-        try {
-            return new Admin(randStr(10), randStr(20));
-        } catch (ObjectNotValidException e) {
-            return null; // will never happen
-        }
+        return new Admin(randStr(10), randStr(20));
     }
 
     public static Employee getEmployee() {
-        try {
-            return new Employee(randStr(10), randStr(20));
-        } catch (ObjectNotValidException e) {
-            return null; // will never happen
-        }
+        return new Employee(randStr(10), randStr(20));
     }
 
 

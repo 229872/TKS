@@ -17,11 +17,11 @@ public class Admin extends User {
     public Admin() {
     }
 
-    public Admin(AdminDTO adminDTO) throws ObjectNotValidException {
+    public Admin(AdminDTO adminDTO) {
         this.merge(adminDTO);
     }
 
-    public Admin(String login, String favouriteIceCream) throws ObjectNotValidException {
+    public Admin(String login, String favouriteIceCream) {
         super(login);
         this.favouriteIceCream = favouriteIceCream;
     }

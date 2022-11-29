@@ -42,10 +42,7 @@ public class EquipmentController {
             return Response.status(CREATED).entity(equipment).build();
         } catch(NullPointerException e) {
             return Response.status(BAD_REQUEST).build();
-        } catch(ObjectNotValidException e) {
-            return Response.status(BAD_REQUEST).build();
         }
-        
     }
 
     // read
@@ -79,7 +76,7 @@ public class EquipmentController {
         try {
             equipmentManager.update(entityId, equipmentDTO);
             return Response.status(OK).entity(equipmentDTO).build();
-        } catch (ObjectNotValidException | IllegalModificationException e) {
+        } catch (IllegalModificationException e) {
             return Response.status(BAD_REQUEST).build();
         } catch(EntityNotFoundException e) {
             return Response.status(NOT_FOUND).build();

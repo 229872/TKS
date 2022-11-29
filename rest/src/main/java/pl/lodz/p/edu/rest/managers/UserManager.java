@@ -2,15 +2,12 @@ package pl.lodz.p.edu.rest.managers;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceException;
 import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.Null;
 import pl.lodz.p.edu.rest.model.DTO.users.AdminDTO;
 import pl.lodz.p.edu.rest.model.DTO.users.ClientDTO;
 import pl.lodz.p.edu.rest.model.DTO.users.EmployeeDTO;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
-import pl.lodz.p.edu.rest.exception.ObjectNotValidException;
 import pl.lodz.p.edu.rest.exception.ConflictException;
 import pl.lodz.p.edu.rest.model.users.Admin;
 import pl.lodz.p.edu.rest.model.users.Client;
@@ -35,14 +32,7 @@ public class UserManager {
 
     // ========================================= create
 
-    public void registerClient(Client client) throws ObjectNotValidException, ConflictException {
-        try {
-            if (!client.verify()) {
-                throw new ObjectNotValidException("Client fields have illegal values");
-            }
-        } catch(NullPointerException e) {
-            throw new ObjectNotValidException("Client fields have illegal values");
-        }
+    public void registerClient(Client client) throws ConflictException {
         try {
             userRepository.add(client);
         } catch(PersistenceException e) {
@@ -50,14 +40,7 @@ public class UserManager {
         }
     }
 
-    public void registerAdmin(Admin admin) throws ConflictException, ObjectNotValidException {
-        try {
-            if (!admin.verify()) {
-                throw new ObjectNotValidException("Admin fields have illegal values");
-            }
-        } catch(NullPointerException e) {
-            throw new ObjectNotValidException("Admin fields have illegal values");
-        }
+    public void registerAdmin(Admin admin) throws ConflictException {
         try {
             userRepository.add(admin);
         } catch(PersistenceException e) {
@@ -65,15 +48,7 @@ public class UserManager {
         }
     }
 
-    public void registerEmployee(Employee employee) throws ObjectNotValidException, ConflictException {
-        try {
-            if (!employee.verify()) {
-                throw new ObjectNotValidException("Employee fields have illegal values");
-            }
-        } catch(NullPointerException e) {
-            throw new ObjectNotValidException("Employee fields have illegal values");
-        }
-
+    public void registerEmployee(Employee employee) throws ConflictException {
         try {
             userRepository.add(employee);
         } catch(PersistenceException e) {
@@ -101,16 +76,7 @@ public class UserManager {
 
     // ========================================= update
 
-    public void updateClient(UUID entityId, ClientDTO clientDTO) throws ObjectNotValidException, IllegalModificationException {
-        try {
-            Client clientVerify = new Client(clientDTO);
-            if (!clientVerify.verify()) {
-                throw new ObjectNotValidException("Clients fields have illegal values");
-            }
-        } catch(NullPointerException e) {
-            throw new ObjectNotValidException("Clients fields have illegal values");
-        }
-
+    public void updateClient(UUID entityId, ClientDTO clientDTO) throws IllegalModificationException {
         Client client = (Client) userRepository.getOfType("Client", entityId);
         client.merge(clientDTO);
 
@@ -121,15 +87,7 @@ public class UserManager {
         }
     }
 
-    public void updateAdmin(UUID entityId, AdminDTO adminDTO) throws ObjectNotValidException, IllegalModificationException {
-        try {
-            Admin adminVerify = new Admin(adminDTO);
-            if (!adminVerify.verify()) {
-                throw new ObjectNotValidException("Clients fields have illegal values");
-            }
-        } catch(NullPointerException e) {
-            throw new ObjectNotValidException("Clients fields have illegal values");
-        }
+    public void updateAdmin(UUID entityId, AdminDTO adminDTO) throws IllegalModificationException {
         Admin admin = (Admin) userRepository.getOfType("Admin", entityId);
         admin.merge(adminDTO);
 
@@ -139,16 +97,7 @@ public class UserManager {
             throw new IllegalModificationException("Cannot modify clients login");
         }
     }
-    public void updateEmployee(UUID entityId, EmployeeDTO employeeDTO) throws IllegalModificationException, ObjectNotValidException {
-        try {
-            Employee employeeVerify = new Employee(employeeDTO);
-            if (!employeeVerify.verify()) {
-                throw new ObjectNotValidException("Clients fields have illegal values");
-            }
-        } catch(NullPointerException e) {
-            throw new ObjectNotValidException("Clients fields have illegal values");
-        }
-
+    public void updateEmployee(UUID entityId, EmployeeDTO employeeDTO) throws IllegalModificationException {
         Employee employee = (Employee) userRepository.getOfType("Employee", entityId);
         employee.merge(employeeDTO);
 

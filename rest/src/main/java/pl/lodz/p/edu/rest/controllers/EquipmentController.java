@@ -4,6 +4,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import jakarta.transaction.TransactionalException;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -34,7 +35,7 @@ public class EquipmentController {
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createEquipment(EquipmentDTO equipmentDTO) {
+    public Response createEquipment(@Valid EquipmentDTO equipmentDTO) {
         try {
             Equipment equipment = new Equipment(equipmentDTO);
             equipmentManager.add(equipment);
@@ -74,7 +75,7 @@ public class EquipmentController {
     @PUT
     @Path("/{entityId}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateEquipment(@PathParam("entityId") UUID entityId, EquipmentDTO equipmentDTO) {
+    public Response updateEquipment(@PathParam("entityId") UUID entityId, @Valid EquipmentDTO equipmentDTO) {
         try {
             equipmentManager.update(entityId, equipmentDTO);
             return Response.status(OK).entity(equipmentDTO).build();

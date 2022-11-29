@@ -4,6 +4,7 @@ import jakarta.inject.Inject;
 
 import jakarta.persistence.NoResultException;
 import jakarta.transaction.TransactionalException;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -41,7 +42,7 @@ public class ClientController {
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addClient(ClientDTO clientDTO) {
+    public Response addClient(@Valid ClientDTO clientDTO) {
         try {
             Client client = new Client(clientDTO);
             userManager.registerClient(client);
@@ -84,7 +85,7 @@ public class ClientController {
     @PUT
     @Path("/{entityId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateClient(@PathParam("entityId") UUID entityId, ClientDTO clientDTO) {
+    public Response updateClient(@PathParam("entityId") UUID entityId, @Valid ClientDTO clientDTO) {
         try {
             userManager.updateClient(entityId, clientDTO);
             return Response.status(OK).entity(clientDTO).build();

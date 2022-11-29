@@ -3,6 +3,7 @@ package pl.lodz.p.edu.rest.model.users;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotEmpty;
 import pl.lodz.p.edu.rest.model.DTO.users.EmployeeDTO;
 import pl.lodz.p.edu.rest.exception.ObjectNotValidException;
 
@@ -11,6 +12,7 @@ import pl.lodz.p.edu.rest.exception.ObjectNotValidException;
 public class Employee extends User {
 
     @Column(name = "desk")
+    @NotEmpty
     private String desk;
 
     public Employee() {}

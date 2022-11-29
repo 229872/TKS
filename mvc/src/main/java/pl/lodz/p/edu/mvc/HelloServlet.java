@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.mvc.pas_mvc;
+package pl.lodz.p.edu.mvc;
 
 import java.io.*;
 

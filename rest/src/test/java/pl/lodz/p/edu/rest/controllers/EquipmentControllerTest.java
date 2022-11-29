@@ -228,6 +228,8 @@ class EquipmentControllerTest {
         RentDTO rent = new RentDTO(clientId, equipmentId, "2023-04-05T12:38:35.585", null);
         String rentStr = obj.writeValueAsString(rent);
 
+        System.out.println(rentStr);
+
         given()
                 .header("Content-Type", "application/json")
                 .body(rentStr)

@@ -23,14 +23,6 @@ public class EquipmentManager {
     }
 
     public void add(Equipment equipment) throws ObjectNotValidException {
-        try {
-            if (!equipment.verify()) {
-                throw new ObjectNotValidException("Equipment fields have illegal values");
-            }
-        } catch(NullPointerException e) {
-            throw new ObjectNotValidException("Equipment fields have illegal values");
-        }
-
         equipmentRepository.add(equipment);
     }
 
@@ -43,14 +35,6 @@ public class EquipmentManager {
     }
 
     public void update(UUID entityId, EquipmentDTO equipmentDTO) throws IllegalModificationException, ObjectNotValidException {
-        Equipment equipmentVerify = new Equipment(equipmentDTO);
-        try {
-            if (!equipmentVerify.verify()) {
-                throw new ObjectNotValidException("Equipment fields have illegal values");
-            }
-        } catch(NullPointerException e) {
-            throw new ObjectNotValidException("Equipment fields have illegal values");
-        }
         synchronized (equipmentRepository) {
             Equipment equipment = equipmentRepository.get(entityId);
             equipment.merge(equipmentDTO);

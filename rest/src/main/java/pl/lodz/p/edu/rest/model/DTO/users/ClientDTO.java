@@ -1,5 +1,6 @@
 package pl.lodz.p.edu.rest.model.DTO.users;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import pl.lodz.p.edu.rest.model.Address;
@@ -10,10 +11,13 @@ public class ClientDTO extends UserDTO {
     @NotNull
     @NotEmpty
     private String firstName;
+
     @NotNull
     @NotEmpty
     private String lastName;
+
     @NotNull
+    @Valid
     private Address address;
 
     public ClientDTO() {

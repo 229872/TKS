@@ -2,6 +2,7 @@ package pl.lodz.p.edu.rest.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import pl.lodz.p.edu.rest.model.DTO.EquipmentDTO;
 
 @Entity
@@ -20,12 +21,15 @@ public class Equipment extends AbstractEntity {
     private String name;
 
     @Column(name = "bail")
+    @Positive
     private double bail;
 
     @Column(name = "first_day_cost")
+    @Positive
     private double firstDayCost;
 
     @Column(name = "next_day_cost")
+    @Positive
     private double nextDaysCost;
 
     @Column(name = "description")

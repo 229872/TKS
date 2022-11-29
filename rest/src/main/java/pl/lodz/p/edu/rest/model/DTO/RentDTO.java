@@ -1,13 +1,21 @@
 package pl.lodz.p.edu.rest.model.DTO;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import pl.lodz.p.edu.rest.model.Address;
 
 import java.util.UUID;
 
 public class RentDTO {
+    @NotEmpty
     private String equipmentUUID;
+
+    @NotEmpty
     private String clientUUID;
+
+    @NotEmpty
     private String beginTime;
+
     private String endTime;
 
     public RentDTO() {

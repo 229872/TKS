@@ -1,9 +1,13 @@
 package pl.lodz.p.edu.rest.model.DTO.users;
 
+import jakarta.validation.constraints.NotEmpty;
 import pl.lodz.p.edu.rest.model.users.Employee;
 
 public class EmployeeDTO extends UserDTO {
+
+    @NotEmpty
     private String desk;
+
     public EmployeeDTO() {}
 
     public EmployeeDTO(Employee e) {

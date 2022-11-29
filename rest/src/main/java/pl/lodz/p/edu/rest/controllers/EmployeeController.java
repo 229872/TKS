@@ -3,6 +3,7 @@ package pl.lodz.p.edu.rest.controllers;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
 import jakarta.transaction.TransactionalException;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -37,7 +38,7 @@ public class EmployeeController {
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addEmployee(EmployeeDTO employeeDTO) {
+    public Response addEmployee(@Valid EmployeeDTO employeeDTO) {
         try {
             Employee employee = new Employee(employeeDTO);
             userManager.registerEmployee(employee);
@@ -78,7 +79,7 @@ public class EmployeeController {
     @PUT
     @Path("/{entityId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateEmployee(@PathParam("entityId") UUID entityId, EmployeeDTO employeeDTO) {
+    public Response updateEmployee(@PathParam("entityId") UUID entityId, @Valid EmployeeDTO employeeDTO) {
         try {
             userManager.updateEmployee(entityId, employeeDTO);
             return Response.status(OK).entity(employeeDTO).build();

@@ -1,6 +1,7 @@
 package pl.lodz.p.edu.rest.model.users;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import pl.lodz.p.edu.rest.exception.ObjectNotValidException;
 import pl.lodz.p.edu.rest.model.AbstractEntity;
 
@@ -11,6 +12,7 @@ import pl.lodz.p.edu.rest.model.AbstractEntity;
 public abstract class User extends AbstractEntity {
     @Id
     @Column(name = "login")
+    @NotEmpty
     private String login;
 
     @Column(name = "archive")

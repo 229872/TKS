@@ -1,18 +1,24 @@
 package pl.lodz.p.edu.rest.model.DTO;
 
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import pl.lodz.p.edu.rest.model.Equipment;
 import pl.lodz.p.edu.rest.model.users.Admin;
 
 public class EquipmentDTO {
 
+    @NotEmpty
     private String name;
 
+    @Positive
     private double bail;
 
+    @Positive
     private double firstDayCost;
 
+    @Positive
     private double nextDaysCost;
 
     private String description;

@@ -3,6 +3,7 @@ package pl.lodz.p.edu.rest.controllers;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
 import jakarta.transaction.TransactionalException;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -38,7 +39,7 @@ public class AdminController {
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addAdmin(AdminDTO adminDTO) {
+    public Response addAdmin(@Valid AdminDTO adminDTO) {
         try {
             Admin admin = new Admin(adminDTO);
             userManager.registerAdmin(admin);
@@ -79,7 +80,7 @@ public class AdminController {
     @PUT
     @Path("/{entityId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateAdmin(@PathParam("entityId") UUID entityId, AdminDTO adminDTO) {
+    public Response updateAdmin(@PathParam("entityId") UUID entityId, @Valid AdminDTO adminDTO) {
         try {
             userManager.updateAdmin(entityId, adminDTO);
             return Response.status(OK).entity(adminDTO).build();

@@ -4,6 +4,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import jakarta.transaction.TransactionalException;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -37,16 +38,13 @@ public class RentController {
     @Inject
     private UserManager userManager;
 
-    @Inject
-    private EquipmentManager equipmentManager;
-
     // create
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/")
-    public Response makeReservation(RentDTO rentDTO) {
+    public Response makeReservation(@Valid RentDTO rentDTO) {
         try {
             Rent rent = rentManager.add(rentDTO);
             return Response.status(CREATED).entity(rent).build();
@@ -96,7 +94,7 @@ public class RentController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{uuid}")
-    public Response modifyRent(@PathParam("uuid") UUID entityId, RentDTO rentDTO) {
+    public Response modifyRent(@PathParam("uuid") UUID entityId, @Valid RentDTO rentDTO) {
         try {
             rentManager.update(entityId, rentDTO);
             return Response.status(OK).entity(rentDTO).build();

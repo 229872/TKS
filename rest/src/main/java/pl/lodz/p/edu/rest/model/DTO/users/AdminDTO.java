@@ -1,8 +1,11 @@
 package pl.lodz.p.edu.rest.model.DTO.users;
 
+import jakarta.validation.constraints.NotEmpty;
 import pl.lodz.p.edu.rest.model.users.Admin;
 
 public class AdminDTO extends UserDTO {
+
+    @NotEmpty
     private String favouriteIceCream;
 
     public AdminDTO() {}

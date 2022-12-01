@@ -5,8 +5,8 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 import pl.lodz.p.edu.rest.exception.*;
-import pl.lodz.p.edu.model.DTO.EquipmentDTO;
-import pl.lodz.p.edu.model.Equipment;
+import pl.lodz.p.edu.data.model.DTO.EquipmentDTO;
+import pl.lodz.p.edu.data.model.Equipment;
 import pl.lodz.p.edu.rest.repository.impl.EquipmentRepository;
 
 import java.util.List;

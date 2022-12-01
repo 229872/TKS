@@ -2,11 +2,11 @@
 //
 //import jakarta.persistence.EntityManagerFactory;
 //import jakarta.persistence.Persistence;
-//import pl.lodz.p.edu.rest.model.Address;
-//import pl.lodz.p.edu.rest.model.Client;
-//import pl.lodz.p.edu.rest.model.EQ.Camera;
-//import pl.lodz.p.edu.rest.model.Equipment;
-//import pl.lodz.p.edu.rest.model.Rent;
+//import pl.lodz.p.edu.data.model.Address;
+//import pl.lodz.p.edu.data.model.Client;
+//import pl.lodz.p.edu.data.model.EQ.Camera;
+//import pl.lodz.p.edu.data.model.Equipment;
+//import pl.lodz.p.edu.data.model.Rent;
 //import org.joda.time.LocalDateTime;
 //import org.junit.jupiter.api.BeforeAll;
 //import org.junit.jupiter.api.Test;

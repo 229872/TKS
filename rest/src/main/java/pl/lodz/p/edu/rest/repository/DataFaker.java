@@ -1,11 +1,11 @@
-package pl.lodz.p.edu.data.repository;
+package pl.lodz.p.edu.rest.repository;
 
-import pl.lodz.p.edu.model.Address;
-import pl.lodz.p.edu.model.Equipment;
-import pl.lodz.p.edu.model.Rent;
-import pl.lodz.p.edu.model.users.Admin;
-import pl.lodz.p.edu.model.users.Client;
-import pl.lodz.p.edu.model.users.Employee;
+import pl.lodz.p.edu.data.model.Address;
+import pl.lodz.p.edu.data.model.Equipment;
+import pl.lodz.p.edu.data.model.Rent;
+import pl.lodz.p.edu.data.model.users.Admin;
+import pl.lodz.p.edu.data.model.users.Client;
+import pl.lodz.p.edu.data.model.users.Employee;
 
 public class DataFaker {
 

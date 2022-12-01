@@ -11,7 +11,7 @@ import static org.hamcrest.Matchers.*;
 import static io.restassured.RestAssured.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import pl.lodz.p.edu.rest.model.DTO.users.AdminDTO;
+import pl.lodz.p.edu.data.model.DTO.users.AdminDTO;
 import pl.lodz.p.edu.rest.repository.DataFaker;
 
 import java.util.UUID;

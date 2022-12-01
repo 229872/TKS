@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.data.repository;
+package pl.lodz.p.edu.rest.repository;
 
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
 

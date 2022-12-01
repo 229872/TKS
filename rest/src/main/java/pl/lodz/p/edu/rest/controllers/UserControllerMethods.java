@@ -5,7 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.rest.managers.UserManager;
-import pl.lodz.p.edu.rest.model.users.User;
+import pl.lodz.p.edu.data.model.users.User;
 
 import java.util.List;
 import java.util.UUID;

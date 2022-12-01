@@ -7,11 +7,11 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import pl.lodz.p.edu.model.DTO.users.EmployeeDTO;
+import pl.lodz.p.edu.data.model.DTO.users.EmployeeDTO;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
 import pl.lodz.p.edu.rest.exception.ConflictException;
 import pl.lodz.p.edu.rest.managers.UserManager;
-import pl.lodz.p.edu.model.users.Employee;
+import pl.lodz.p.edu.data.model.users.Employee;
 import pl.lodz.p.edu.rest.repository.DataFaker;
 
 import java.util.UUID;

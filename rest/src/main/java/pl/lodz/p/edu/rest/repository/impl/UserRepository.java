@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.data.repository.impl;
+package pl.lodz.p.edu.rest.repository.impl;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.*;
@@ -7,7 +7,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import pl.lodz.p.edu.data.model.users.User;
-import pl.lodz.p.edu.data.repository.Repository;
+import pl.lodz.p.edu.rest.repository.Repository;
 
 import java.util.List;
 import java.util.UUID;

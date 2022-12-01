@@ -68,8 +68,8 @@
 
 
         <dependency>
-            <groupId>pl.lodz.p.edu.model</groupId>
-            <artifactId>model</artifactId>
+            <groupId>pl.lodz.p.edu.data</groupId>
+            <artifactId>data</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

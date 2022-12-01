@@ -1,11 +1,11 @@
-package pl.lodz.p.edu.data.repository.impl;
+package pl.lodz.p.edu.rest.repository.impl;
 
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
-import pl.lodz.p.edu.data.repository.Repository;
+import pl.lodz.p.edu.rest.repository.Repository;
 import pl.lodz.p.edu.data.model.Equipment;
 import pl.lodz.p.edu.data.model.Rent;
 import pl.lodz.p.edu.data.model.Rent_;

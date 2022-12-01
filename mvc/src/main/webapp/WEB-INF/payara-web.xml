@@ -4,6 +4,6 @@
         "https://docs.payara.fish/schemas/payara-web-app_4.dtd">
 <payara-web-app error-url="">
     <class-loader delegate="false"/>
-    <context-root>mvc</context-root>
+    <context-root>/</context-root>
 
 </payara-web-app>

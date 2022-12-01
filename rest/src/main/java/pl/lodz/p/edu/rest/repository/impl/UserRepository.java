@@ -7,6 +7,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import pl.lodz.p.edu.data.model.users.User;
+import pl.lodz.p.edu.data.model.users.User_;
 import pl.lodz.p.edu.rest.repository.Repository;
 
 import java.util.List;

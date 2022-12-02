@@ -1,0 +1,16 @@
+.nav-bar {
+    background: antiquewhite;
+    width: 20%;
+    float: left;
+}
+
+.content {
+    background: aqua;
+    width: 80%;
+    float: left;
+}
+
+.footer {
+    clear: both;
+    text-align: center;
+}

@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <h:outputStylesheet library="css" name="default.css"/>
+    <title>${msg['app.name']}</title>
+</h:head>
+
+<h:body>
+
+    <div id="top">
+        <ui:insert name="top">Top</ui:insert>
+    </div>
+    <div>
+        <div id="left" class="nav-bar">
+            <ui:insert name="left">
+                <ui:include src="menu.xhtml">Menu</ui:include>
+            </ui:insert>
+        </div>
+        <div id="content" class="content">
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+    </div>
+    <div id="bottom">
+        <div class="center-text">#{msg["app.name"]}</div>
+    </div>
+
+</h:body>
+
+</html>

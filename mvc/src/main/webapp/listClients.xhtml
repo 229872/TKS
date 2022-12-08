@@ -12,7 +12,20 @@
 
 
     <ui:define name="content">
-        Pokaż klientów
+        <h:dataTable value="#{listClientBean.listAll}" var="client">
+            <h:column>
+                <f:facet name="header">Login</f:facet>
+                ${client.login}
+            </h:column>
+            <h:column>
+                <h:form>
+                <f:facet name="header">Edit user</f:facet>
+                    <h:commandButton value="Edit" action="toClient">
+                        <f:param name="uuid" value="#{client.entityId.toString()}"/>
+                    </h:commandButton>
+                </h:form>
+            </h:column>
+        </h:dataTable>
     </ui:define>
 
 </ui:composition>

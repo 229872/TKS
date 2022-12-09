@@ -1,78 +1,55 @@
 package pl.lodz.p.edu.mvc.beans;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
 
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.Map;
 
 public abstract class AbstractBean {
-    protected HttpClient client = HttpClient.newBuilder()
+    private HttpClient client = HttpClient.newBuilder()
             .version(HttpClient.Version.HTTP_1_1)
             .followRedirects(HttpClient.Redirect.NORMAL)
             .connectTimeout(Duration.ofSeconds(20))
             .build();
-    protected HttpRequest request;
 
     protected ObjectMapper om;
 
-    private static String base = "http://localhost:8080/rest/api/";
-
-    public void buildRequestGet(String path) {
-        try {
-            request = HttpRequest.newBuilder()
-                    .uri(new URI(base + path))
-                    .header("Content-Type", "application/json")
-                    .GET()
-                    .build();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void buildRequestPost(String path, String body) {
-        try {
-            request = HttpRequest.newBuilder()
-                    .uri(new URI(base + path))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(body))
-                    .build();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void buildRequestPut(String path, String body) {
-        try {
-            request = HttpRequest.newBuilder()
-                    .uri(new URI(base + path))
-                    .header("Content-Type", "application/json")
-                    .PUT(HttpRequest.BodyPublishers.ofString(body))
-                    .build();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void buildRequestDelete(String path) {
-        try {
-            request = HttpRequest.newBuilder()
-                    .uri(new URI(base + path))
-                    .header("Content-Type", "application/json")
-                    .DELETE()
-                    .build();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    protected AbstractBean(String res) {
-        buildRequestGet(res);
+    protected AbstractBean() {
         om = new ObjectMapper();
     }
 
+    private ExternalContext getContext() {
+        return FacesContext.getCurrentInstance().getExternalContext();
+    }
 
+    protected String loadUuid() {
+        ExternalContext context = getContext();
+        Map<String, String> params = context.getRequestParameterMap();
+        return params.get("uuid");
+    }
+
+    protected void redirect(String page) {
+        ExternalContext context = getContext();
+        try {
+            context.redirect(page);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected HttpResponse<String> send(HttpRequest request) {
+        try {
+            return client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -22,10 +22,17 @@
         </message-bundle>
     </application>
     <navigation-rule>
-        <from-view-id>/listClients.xhtml</from-view-id>
+        <from-view-id>/manageClients.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>toClient</from-outcome>
-            <to-view-id>/client.xhtml</to-view-id>
+            <to-view-id>/editClient.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/editClient.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>fromClient</from-outcome>
+            <to-view-id>/manageClients.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

@@ -2,9 +2,11 @@
     background: antiquewhite;
     width: 20%;
     float: left;
+    margin: 20px;
 }
 
 .content {
+    margin: 20px;
     background: aqua;
     width: 80%;
     float: left;

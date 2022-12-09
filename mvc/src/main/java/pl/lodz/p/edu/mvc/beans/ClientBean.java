@@ -2,58 +2,42 @@ package pl.lodz.p.edu.mvc.beans;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.enterprise.context.ConversationScoped;
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.enterprise.context.SessionScoped;
-import jakarta.faces.context.ExternalContext;
-import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
-import pl.lodz.p.edu.data.model.DTO.users.ClientDTO;
 import pl.lodz.p.edu.data.model.users.Client;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Map;
+
+import static pl.lodz.p.edu.mvc.request.Request.buildGet;
+import static pl.lodz.p.edu.mvc.request.Request.buildPut;
 
 @Named
 @ConversationScoped
 public class ClientBean extends AbstractBean implements Serializable {
 
+    // todo każde rzucanie wyjatku trzeba opakować
+
     private static String res = "clients/";
 
-    private Client client_;
-
-
-    public ClientBean() {
-        super(res);
-    }
+    private Client client;
 
     @PostConstruct
     public void init() {
-        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-        Map<String, String> params = context.getRequestParameterMap();
-        String id = params.get("uuid");
-        if(id == null) {
-            try {
-                context.redirect("listClients.xhtml");
-                return;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        System.out.println(id);
-        buildRequestGet(res + id);
+        String id = loadUuid();
+        HttpRequest request = buildGet(res + id);
         try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            client_ = om.readValue(response.body(), Client.class);
-        } catch (IOException | InterruptedException e) {
+            HttpResponse<String> response = send(request);
+            client = om.readValue(response.body(), Client.class);
+        } catch (IOException e) {
             throw new RuntimeException(e); // todo komunikat
         }
     }
 
-    public Client getClient_() {
-        return client_;
+    public Client getClient() {
+        return client;
     }
 
     private int errCode;
@@ -63,46 +47,29 @@ public class ClientBean extends AbstractBean implements Serializable {
     }
 
     public void update() {
+        String body;
         try {
-            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-            String body = om.writeValueAsString(client_);
-            String clientId = client_.getEntityId().toString();
-            buildRequestPut(res + clientId, body);
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            errCode = response.statusCode();
-            // todo komunikat
+            body = om.writeValueAsString(client);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e); // todo komunikat
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
+        String clientId = client.getEntityId().toString();
+        HttpRequest request = buildPut(res + clientId, body);
+        HttpResponse<String> response = send(request);
+        errCode = response.statusCode(); // komunikat na podstawie tego
     }
 
     public void activate() {
-        String clientId = client_.getEntityId().toString();
-        buildRequestPut(res + clientId + "/activate", "");
-        try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            errCode = response.statusCode();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        String clientId = client.getEntityId().toString();
+        HttpRequest request = buildPut(res + clientId + "/activate", "");
+        HttpResponse<String> response = send(request);
+        errCode = response.statusCode();
     }
 
     public void deactivate() {
-        String clientId = client_.getEntityId().toString();
-        buildRequestPut(res + clientId + "/deactivate", "");
-        try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            errCode = response.statusCode();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        String clientId = client.getEntityId().toString();
+        HttpRequest request = buildPut(res + clientId + "/deactivate", "");
+        HttpResponse<String> response = send(request);
+        errCode = response.statusCode();
     }
 }

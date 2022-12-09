@@ -1,9 +1,8 @@
-package pl.lodz.p.edu.mvc.beans;
+package pl.lodz.p.edu.mvc.deprecatedBeans;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.enterprise.context.ConversationScoped;
 import jakarta.inject.Named;
-import pl.lodz.p.edu.data.model.DTO.users.ClientDTO;
 import pl.lodz.p.edu.data.model.users.Client;
 
 import javax.annotation.PostConstruct;

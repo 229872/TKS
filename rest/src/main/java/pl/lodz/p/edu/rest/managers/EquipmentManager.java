@@ -33,6 +33,12 @@ public class EquipmentManager {
         return equipmentRepository.getAll();
     }
 
+    public List<Equipment> getAvailable() {
+        List<Equipment> allEquipment = equipmentRepository.getAll();
+        List<Equipment> availableEquipment = allEquipment.stream()
+                .filter(equipment -> equipment.get)
+    }
+
     public void update(UUID entityId, EquipmentDTO equipmentDTO) throws IllegalModificationException {
         synchronized (equipmentRepository) {
             Equipment equipment = equipmentRepository.get(entityId);

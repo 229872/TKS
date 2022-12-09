@@ -12,19 +12,8 @@
 
 
     <ui:define name="content">
-        <h:form>
-            ${msg['user.firstName']}
-            <h:inputText id="firstName" value="#{clientManagerBean.newClient.firstName}"/><br/>
-            <h:message for="firstName"/>
-            ${msg['user.lastName']} <h:inputText value="#{clientManagerBean.newClient.lastName}"/><br/>
-            ${msg['address.city']} <h:inputText value="#{clientManagerBean.newClient.address.city}"/><br/>
-            ${msg['address.street']} <h:inputText value="#{clientManagerBean.newClient.address.street}"/><br/>
-            ${msg['address.streetNo']} <h:inputText value="#{clientManagerBean.newClient.address.streetNr}"/><br/>
-            ${clientManagerBean.newClient.toString()}
-            <h:commandButton action="#{clientManagerBean.saveNewClient()}" value="#{msg['action.submit']}"/>
-        </h:form>
-        ${clientManagerBean.errCode}<br/>
-        <h:dataTable value="#{clientManagerBean.listAll}" var="client">
+<!--        searching by login -->
+        <h:dataTable value="#{clientListBean.clients}" var="client">
             <h:column>
                 <f:facet name="header">${msg["user.login"]}</f:facet>
                 ${client.login}
@@ -37,7 +26,6 @@
                     </h:commandButton>
                 </h:form>
             </h:column>
-        </h:dataTable>
+        </h:dataTable>-+/*
     </ui:define>
-
 </ui:composition>

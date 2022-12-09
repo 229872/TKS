@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.mvc.beans;
+package pl.lodz.p.edu.mvc.deprecatedBeans;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;

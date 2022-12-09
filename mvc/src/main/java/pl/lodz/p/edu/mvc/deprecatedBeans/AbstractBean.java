@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.mvc.beans;
+package pl.lodz.p.edu.mvc.deprecatedBeans;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.faces.context.ExternalContext;

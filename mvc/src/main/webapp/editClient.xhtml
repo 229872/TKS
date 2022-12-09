@@ -17,18 +17,26 @@
             <h:commandButton value="#{msg['action.gotoList']}" action="fromClient"/>
         </h:form>
         <h:form>
+<!--            todo: dołożyć pola message -->
             ${msg['object.id']} <h:outputText value="#{clientBean.client.entityId}"/><br/>
             ${msg['user.login']} <h:outputText value="#{clientBean.client.login}"/><br/>
-            ${msg['user.firstName']} <h:inputText value="#{clientBean.client.firstName}"/><br/>
-            ${msg['user.lastName']} <h:inputText value="#{clientBean.client.lastName}"/><br/>
-            ${msg['address.city']} <h:inputText value="#{clientBean.client.address.city}"/><br/>
-            ${msg['address.street']} <h:inputText value="#{clientBean.client.address.street}"/><br/>
-            ${msg['address.streetNo']} <h:inputText value="#{clientBean.client.address.streetNr}"/><br/>
-            ${msg['user.active']} <h:outputText value="#{clientBean.client.active}"/><br/> // todo zmienić!!
+
+            ${msg['user.firstName']} <h:inputText id="firstName" value="#{clientBean.client.firstName}"/>
+            <h:message for="firstName"/><br/>
+            ${msg['user.lastName']} <h:inputText id="lastName" value="#{clientBean.client.lastName}"/>
+            <h:message for="lastName"/><br/>
+            ${msg['address.city']} <h:inputText id="city" value="#{clientBean.client.address.city}"/>
+            <h:message for="city"/><br/>
+            ${msg['address.street']} <h:inputText id="street" value="#{clientBean.client.address.street}"/>
+            <h:message for="street"/><br/>
+            ${msg['address.streetNo']} <h:inputText id="streetNr" value="#{clientBean.client.address.streetNr}"/>
+            <h:message for="streetNr"/><br/>
+            ${msg['user.active']} <h:outputText id="firstName" value="#{clientBean.client.active}"/><br/> // todo zmienić!!
             <h:commandButton value="#{msg['action.submit']}" action="#{clientBean.update()}">
                 <f:param name="uuid" value="#{clientBean.client.entityId.toString()}"/>
             </h:commandButton>
 
+            <!-- activate or deactivate button -->
             <c:if test="${!clientBean.client.active}">
                 <h:commandButton value="#{msg['action.activate']}" action="#{clientBean.activate()}"/>
                 <f:param name="uuid" value="#{clientBean.client.entityId.toString()}"/>
@@ -39,5 +47,6 @@
             </c:if>
         </h:form>
         err code ${clientBean.errCode}
+<!--        lista alokacji klienta -->
     </ui:define>
 </ui:composition>

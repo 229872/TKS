@@ -53,6 +53,14 @@ public class EquipmentController {
     }
 
     @GET
+    @Path("/available")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllAvailable() {
+        List<Equipment> equipment = equipmentManager.getAvailable();
+        return Response.status(OK).entity(equipment).build();
+    }
+
+    @GET
     @Path("/{uuid}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEquipment(@PathParam("uuid") UUID uuid) {

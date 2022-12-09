@@ -21,6 +21,15 @@
             i18n.jsf_messages
         </message-bundle>
     </application>
+
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>manageClients</from-outcome>
+            <to-view-id>/manageClients.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
     <navigation-rule>
         <from-view-id>/manageClients.xhtml</from-view-id>
         <navigation-case>
@@ -35,4 +44,5 @@
             <to-view-id>/manageClients.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+
 </faces-config>

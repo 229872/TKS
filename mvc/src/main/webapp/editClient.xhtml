@@ -17,10 +17,6 @@
             <h:commandButton value="#{msg['action.gotoList']}" action="fromClient"/>
         </h:form>
         <h:form>
-<!--            todo: dołożyć pola message -->
-            ${msg['object.id']} <h:outputText value="#{clientBean.client.entityId}"/><br/>
-            ${msg['user.login']} <h:outputText value="#{clientBean.client.login}"/><br/>
-
             ${msg['user.firstName']} <h:inputText id="firstName" value="#{clientBean.client.firstName}"/>
             <h:message for="firstName"/><br/>
             ${msg['user.lastName']} <h:inputText id="lastName" value="#{clientBean.client.lastName}"/>
@@ -31,7 +27,7 @@
             <h:message for="street"/><br/>
             ${msg['address.streetNo']} <h:inputText id="streetNr" value="#{clientBean.client.address.streetNr}"/>
             <h:message for="streetNr"/><br/>
-            ${msg['user.active']} <h:outputText id="firstName" value="#{clientBean.client.active}"/><br/> // todo zmienić!!
+            ${msg['user.active']} <h:outputText value="#{clientBean.active}"/><br/>
             <h:commandButton value="#{msg['action.submit']}" action="#{clientBean.update()}">
                 <f:param name="uuid" value="#{clientBean.client.entityId.toString()}"/>
             </h:commandButton>
@@ -47,6 +43,11 @@
             </c:if>
         </h:form>
         err code ${clientBean.errCode}
-<!--        lista alokacji klienta -->
+        <h:dataTable value="#{clientBean.clientRents}" var="rent">
+            <h:column>
+                <f:facet name="header">${msg["equipment.name"]}</f:facet>
+                ${rent.equipment.name}
+            </h:column>
+        </h:dataTable>
     </ui:define>
 </ui:composition>

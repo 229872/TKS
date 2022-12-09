@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
 public class RentDTO {
+
     @NotEmpty
     private String equipmentUUID;
 

@@ -4,9 +4,10 @@ import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Map;
 
-public abstract class AbstractBean {
+public abstract class AbstractBean implements Serializable {
     private ExternalContext getContext() {
         return FacesContext.getCurrentInstance().getExternalContext();
     }

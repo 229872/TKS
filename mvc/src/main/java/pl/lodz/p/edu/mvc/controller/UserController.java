@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import pl.lodz.p.edu.mvc.request.Request;
 
+import javax.sound.midi.Soundbank;
 import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -78,17 +79,18 @@ public class UserController<T, Tdto> extends AbstractController {
         }
     }
 
-    public Tdto create(Tdto user) {
+    public T create(Tdto user) {
         String body;
         try {
             body = om.writeValueAsString(user);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e); // todo komunikat
+            throw new RuntimeException(e.getMessage()); // todo komunikat
         }
         HttpRequest request = buildPost(path, body);
         HttpResponse<String> response = send(request);
+
         try {
-            return om.readValue(response.body(), TdtoType);
+            return om.readValue(response.body(), TType);
         } catch (IOException e) {
             throw new RuntimeException(e); // todo komunikat
         }

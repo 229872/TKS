@@ -48,7 +48,9 @@ public class Client extends User {
         this.address = clientDTO.getAddress();
     }
 
-    public Client() {}
+    public Client() {
+        address = new Address();
+    }
 
     public String getFirstName() {
         return firstName;

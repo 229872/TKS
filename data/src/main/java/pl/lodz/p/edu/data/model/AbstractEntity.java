@@ -26,15 +26,6 @@ public abstract class AbstractEntity implements Serializable {
         return entityId;
     }
 
-    public String getId_() {
-        return entityId.toString();
-    }
-
-    public void setId_(String id) {
-        entityId = UUID.fromString(id);
-    }
-
-
     @Override
     public String toString() {
         return "AbstractEntity{" +

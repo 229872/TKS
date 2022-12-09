@@ -25,7 +25,7 @@ public class Address {
         this.streetNr = streetNr;
     }
 
-    protected Address() {}
+    public Address() {}
 
     public String getCity() {
         return city;

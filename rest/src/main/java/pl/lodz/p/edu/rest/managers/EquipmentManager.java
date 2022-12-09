@@ -35,8 +35,8 @@ public class EquipmentManager {
 
     public List<Equipment> getAvailable() {
         List<Equipment> allEquipment = equipmentRepository.getAll();
-        List<Equipment> availableEquipment = allEquipment.stream()
-                .filter(equipment -> equipment.get)
+        List<Equipment> availableEquipment ;
+        return allEquipment;
     }
 
     public void update(UUID entityId, EquipmentDTO equipmentDTO) throws IllegalModificationException {

@@ -3,6 +3,7 @@ package pl.lodz.p.edu.mvc.backingBean;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import pl.lodz.p.edu.data.model.DTO.users.ClientDTO;
 import pl.lodz.p.edu.data.model.users.Client;
 import pl.lodz.p.edu.mvc.controller.ClientController;
 
@@ -23,6 +24,32 @@ public class ClientBean extends AbstractBean {
     // niewiadomo
 
     public ClientBean() {
-        client = clientController.get(getUuidFromParam());
+        String clientId = getUuidFromParam();
+        if(clientId == null) {
+            redirect("manageClients.xhtml");
+            return;
+        }
+        client = clientController.get(clientId);
+    }
+
+    public void update() {
+        ClientDTO updatedClient = clientController.update(
+                client.getEntityId().toString(), new ClientDTO(client));
+        client.merge(updatedClient);
+    }
+
+    public void create() {
+        ClientDTO createdClient = clientController.create(new ClientDTO(client));
+        client.merge(createdClient);
+    }
+
+    public void activate() {
+        clientController.activate(client.getEntityId().toString());
+        client = clientController.get(client.getEntityId().toString());
+    }
+
+    public void deactivate() {
+        clientController.deactivate(client.getEntityId().toString());
+        client = clientController.get(client.getEntityId().toString());
     }
 }

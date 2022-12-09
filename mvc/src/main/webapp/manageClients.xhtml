@@ -13,6 +13,10 @@
 
     <ui:define name="content">
 <!--        searching by login -->
+        <h:form>
+            <h:inputText value="#{clientListBean.searchParam}"/>
+            <h:commandButton action="#{clientListBean.search()}"/>
+        </h:form>
         <h:dataTable value="#{clientListBean.clients}" var="client">
             <h:column>
                 <f:facet name="header">${msg["user.login"]}</f:facet>

@@ -17,13 +17,12 @@ import java.util.List;
 import static pl.lodz.p.edu.mvc.request.Request.buildGet;
 import static pl.lodz.p.edu.mvc.request.Request.buildPut;
 
-@Named
 @RequestScoped
 public class ClientController extends UserController<Client, ClientDTO> {
 
     private static final String path = "clients/";
 
-
+    
     public ClientController() {
         super(path, Client.class, Client[].class, ClientDTO.class);
     }

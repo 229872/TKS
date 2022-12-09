@@ -6,17 +6,19 @@
                 template="./modules/pageTemplate.xhtml">
     <ui:define name="content">
         <h:form>
-            ${msg['user.firstName']}
-            <h:inputText id="firstName" value="#{clientManagerBean.newClient.firstName}"/><br/>
-            <h:message for="firstName"/>
-            ${msg['user.lastName']} <h:inputText value="#{clientManagerBean.newClient.lastName}"/><br/>
-            ${msg['address.city']} <h:inputText value="#{clientManagerBean.newClient.address.city}"/><br/>
-            ${msg['address.street']} <h:inputText value="#{clientManagerBean.newClient.address.street}"/><br/>
-            ${msg['address.streetNo']} <h:inputText value="#{clientManagerBean.newClient.address.streetNr}"/><br/>
-            ${clientBean.newClient.toString()}
-            <h:commandButton action="#{clientManagerBean.saveNewClient()}" value="#{msg['action.submit']}"/>
+            ${msg['user.firstName']} <h:inputText id="firstName" value="#{clientBean.client.firstName}"/>
+            <h:message for="firstName"/><br/>
+            ${msg['user.lastName']} <h:inputText id="lastName" value="#{clientBean.client.lastName}"/>
+            <h:message for="lastName"/><br/>
+            ${msg['address.city']} <h:inputText id="city" value="#{clientBean.client.address.city}"/>
+            <h:message for="city"/><br/>
+            ${msg['address.street']} <h:inputText id="street" value="#{clientBean.client.address.street}"/>
+            <h:message for="street"/><br/>
+            ${msg['address.streetNo']} <h:inputText id="streetNr" value="#{clientBean.client.address.streetNr}"/>
+            <h:message for="streetNr"/><br/>
+
+            <h:commandButton action="#{clientBean.create()}" value="#{msg['action.submit']}"/>
         </h:form>
-        ${clientManagerBean.errCode}<br/>
     </ui:define>
 
 

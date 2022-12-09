@@ -14,7 +14,7 @@ import java.net.http.HttpResponse;
 import static pl.lodz.p.edu.mvc.request.Request.buildGet;
 import static pl.lodz.p.edu.mvc.request.Request.buildPut;
 
-@Named
+
 @ConversationScoped
 public class ClientBean extends AbstractBean implements Serializable {
 

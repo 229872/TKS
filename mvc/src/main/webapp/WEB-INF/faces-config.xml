@@ -25,7 +25,7 @@
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>manageClients</from-outcome>
+            <from-outcome>toManageClients</from-outcome>
             <to-view-id>/manageClients.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>

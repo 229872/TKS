@@ -17,11 +17,25 @@ public class ClientListBean {
 
     private List<Client> clients;
 
+    public String getSearchParam() {
+        return searchParam;
+    }
+
+    public void setSearchParam(String searchParam) {
+        this.searchParam = searchParam;
+    }
+
+    private String searchParam;
+
     public List<Client> getClients() {
         return clients;
     }
 
     public ClientListBean() {
         clients = clientController.getAll();
+    }
+
+    public void search() {
+        clients = clientController.search(searchParam);
     }
 }

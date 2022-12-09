@@ -45,7 +45,6 @@ public class ClientManagerBean extends AbstractBean {
     private int errCode;
 
 
-
     public List<Client> getListAll() {
         return listAll;
     }

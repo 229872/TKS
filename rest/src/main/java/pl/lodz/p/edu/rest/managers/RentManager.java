@@ -190,7 +190,7 @@ public class RentManager {
         return when;
     }
 
-    private boolean checkEquipmentAvailable(Equipment equipment, LocalDateTime beginTime) {
+    public boolean checkEquipmentAvailable(Equipment equipment, LocalDateTime beginTime) {
         List<Rent> rentEquipmentList;
         try {
             rentEquipmentList = rentRepository.getEquipmentRents(equipment);

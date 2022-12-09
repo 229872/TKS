@@ -6,15 +6,19 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import pl.lodz.p.edu.data.model.Rent;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
 import pl.lodz.p.edu.rest.exception.ConflictException;
 import pl.lodz.p.edu.rest.managers.EquipmentManager;
 import pl.lodz.p.edu.data.model.DTO.EquipmentDTO;
 import pl.lodz.p.edu.data.model.Equipment;
+import pl.lodz.p.edu.rest.managers.RentManager;
 import pl.lodz.p.edu.rest.repository.DataFaker;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static jakarta.ws.rs.core.Response.Status.*;
 import static jakarta.ws.rs.core.Response.Status.BAD_REQUEST;
@@ -25,6 +29,8 @@ public class EquipmentController {
 
     @Inject
     private EquipmentManager equipmentManager;
+    @Inject
+    private RentManager rentManager;
 
     // create
 
@@ -56,8 +62,12 @@ public class EquipmentController {
     @Path("/available")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllAvailable() {
-        List<Equipment> equipment = equipmentManager.getAvailable();
-        return Response.status(OK).entity(equipment).build();
+        List<Equipment> allEquipment = equipmentManager.getAll();
+        List<Equipment> availableEquipment = allEquipment.stream()
+                .filter(equipment -> rentManager.checkEquipmentAvailable(equipment, LocalDateTime.now()))
+                .toList();
+
+        return Response.status(OK).entity(availableEquipment).build();
     }
 
     @GET

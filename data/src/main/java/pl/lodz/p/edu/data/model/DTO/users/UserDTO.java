@@ -6,6 +6,8 @@ import pl.lodz.p.edu.data.model.users.User;
 
 public class UserDTO {
 
+    private String uuid;
+
     @NotNull
     @NotEmpty
     private String login;
@@ -14,6 +16,7 @@ public class UserDTO {
 
     public UserDTO(User user) {
         this.login = user.getLogin();
+        this.uuid = user.getEntityId().toString();
     }
 
     public String getLogin() {
@@ -22,5 +25,14 @@ public class UserDTO {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

@@ -1,10 +1,13 @@
 package pl.lodz.p.edu.data.model.DTO;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import pl.lodz.p.edu.data.model.Equipment;
 
 public class EquipmentDTO {
+
+    private String uuid;
 
     @NotEmpty
     private String name;
@@ -23,6 +26,7 @@ public class EquipmentDTO {
     public EquipmentDTO() {}
 
     public EquipmentDTO(Equipment e) {
+        uuid = e.getEntityId().toString();
         name = e.getName();
         bail = e.getBail();
         firstDayCost = e.getFirstDayCost();
@@ -39,6 +43,13 @@ public class EquipmentDTO {
                 ", nextDaysCost=" + nextDaysCost +
                 ", description='" + description + '\'' +
                 '}';
+    }
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getName() {

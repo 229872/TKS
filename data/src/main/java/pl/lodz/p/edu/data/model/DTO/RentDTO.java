@@ -7,6 +7,8 @@ import java.util.UUID;
 
 public class RentDTO {
 
+    private String uuid;
+
     @NotEmpty
     private String equipmentUUID;
 
@@ -18,15 +20,27 @@ public class RentDTO {
 
     private String endTime;
 
-    public RentDTO() {
-    }
+    public RentDTO() {}
 
-    public RentDTO(String clientUUID, String equipmentUUID,
+    public RentDTO(String rentId, String clientUUID, String equipmentUUID,
                    String beginTime, String endTime) {
+        this.uuid = rentId;
         this.clientUUID = clientUUID;
         this.equipmentUUID = equipmentUUID;
         this.beginTime = beginTime;
         this.endTime = endTime;
+    }
+
+    public RentDTO(String clientUUID, String equipmentUUID, String beginTime, String endTime) {
+        this(null, clientUUID, equipmentUUID, beginTime, endTime);
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getEquipmentUUID() {

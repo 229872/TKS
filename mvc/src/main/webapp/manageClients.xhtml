@@ -13,7 +13,9 @@
 
     <ui:define name="content">
         <h:form>
-            ${msg['user.firstName']} <h:inputText value="#{clientManagerBean.newClient.firstName}"/><br/>
+            ${msg['user.firstName']}
+            <h:inputText id="firstName" value="#{clientManagerBean.newClient.firstName}"/><br/>
+            <h:message for="firstName"/>
             ${msg['user.lastName']} <h:inputText value="#{clientManagerBean.newClient.lastName}"/><br/>
             ${msg['address.city']} <h:inputText value="#{clientManagerBean.newClient.address.city}"/><br/>
             ${msg['address.street']} <h:inputText value="#{clientManagerBean.newClient.address.street}"/><br/>

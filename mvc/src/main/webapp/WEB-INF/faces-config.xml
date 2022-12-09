@@ -9,7 +9,7 @@
 
     <application>
         <locale-config>
-            <default-locale>pl</default-locale>
+            <default-locale>en</default-locale>
             <supported-locale>pl</supported-locale>
             <supported-locale>en</supported-locale>
         </locale-config>

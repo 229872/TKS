@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="./modules/pageTemplate.xhtml">
+
+    <ui:define name="top">
+        <p>${msg['main.page']}/${msg["menu.userPage"]}</p>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form>
+            <h:commandButton value="#{msg['action.gotoList']}" action="fromClient"/>
+        </h:form>
+        <h:form>
+            ${msg['object.id']} <h:outputText id="entityId" value="#{clientBean.client.entityId}"/><br/>
+            ${msg['user.login']} <h:outputText value="#{clientBean.client.login}"/><br/>
+            ${msg['user.firstName']} <h:inputText value="#{clientBean.client.firstName}"/><br/>
+            ${msg['user.lastName']} <h:inputText value="#{clientBean.client.lastName}"/><br/>
+            ${msg['address.city']} <h:inputText value="#{clientBean.client.address.city}"/><br/>
+            ${msg['address.street']} <h:inputText value="#{clientBean.client.address.street}"/><br/>
+            ${msg['address.streetNo']} <h:inputText value="#{clientBean.client.address.streetNr}"/><br/>
+            ${msg['user.active']} <h:outputText value="#{clientBean.client.active}"/><br/> // todo zmienić!!
+            <h:commandButton value="#{msg['action.submit']}" action="#{clientBean.update()}">
+                <f:param name="uuid" value="#{clientBean.client.entityId.toString()}"/>
+            </h:commandButton>
+
+            <c:if test="${!clientBean.client.active}">
+                <h:commandButton value="#{msg['action.activate']}" action="#{clientBean.activate()}"/>
+                <f:param name="uuid" value="#{clientBean.client.entityId.toString()}"/>
+            </c:if>
+            <c:if test="${clientBean.client.active}">
+                <h:commandButton value="#{msg['action.deactivate']}" action="#{clientBean.deactivate()}"/>
+                <f:param name="uuid" value="#{clientBean.client.entityId.toString()}"/>
+            </c:if>
+        </h:form>
+        err code ${clientBean.errCode}
+    </ui:define>
+</ui:composition>

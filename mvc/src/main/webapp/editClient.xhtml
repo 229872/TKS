@@ -8,34 +8,33 @@
                 template="./modules/pageTemplate.xhtml">
 
     <ui:define name="top">
-        <p>${msg['main.page']}/${msg["menu.listClients"]}</p>
+        <p>${msg['main.page']}/${msg["menu.manageClients"]}</p>
     </ui:define>
 
     <ui:define name="content">
-        <h3>Edit client</h3>
+        <h3>${msg['action.editClient']}</h3>
         <h:form>
-            <h:commandButton value="Go back to list" action="fromClient"/>
+            <h:commandButton value="#{msg['action.gotoList']}" action="fromClient"/>
         </h:form>
         <h:form>
-            Client id <h:outputText value="#{clientBean.client.entityId}"/><br/>
-            Login <h:outputText value="#{clientBean.client.login}"/><br/>
-            First name <h:inputText value="#{clientBean.client.firstName}"/><br/>
-            Last name <h:inputText value="#{clientBean.client.lastName}"/><br/>
-            City <h:inputText value="#{clientBean.client.address.city}"/><br/>
-            Street <h:inputText value="#{clientBean.client.address.street}"/><br/>
-            Street number <h:inputText value="#{clientBean.client.address.streetNr}"/><br/>
-            <br/>
-            Active <h:outputText value="#{clientBean.client.active}"/><br/>
-            <h:commandButton value="Submit" action="#{clientBean.update()}">
+            ${msg['object.id']} <h:outputText value="#{clientBean.client.entityId}"/><br/>
+            ${msg['user.login']} <h:outputText value="#{clientBean.client.login}"/><br/>
+            ${msg['user.firstName']} <h:inputText value="#{clientBean.client.firstName}"/><br/>
+            ${msg['user.lastName']} <h:inputText value="#{clientBean.client.lastName}"/><br/>
+            ${msg['address.city']} <h:inputText value="#{clientBean.client.address.city}"/><br/>
+            ${msg['address.street']} <h:inputText value="#{clientBean.client.address.street}"/><br/>
+            ${msg['address.streetNo']} <h:inputText value="#{clientBean.client.address.streetNr}"/><br/>
+            ${msg['user.active']} <h:outputText value="#{clientBean.client.active}"/><br/> // todo zmienić!!
+            <h:commandButton value="#{msg['action.submit']}" action="#{clientBean.update()}">
                 <f:param name="uuid" value="#{clientBean.client.entityId.toString()}"/>
             </h:commandButton>
 
             <c:if test="${!clientBean.client.active}">
-                <h:commandButton value="Activate" action="#{clientBean.activate()}"/>
+                <h:commandButton value="#{msg['action.activate']}" action="#{clientBean.activate()}"/>
                 <f:param name="uuid" value="#{clientBean.client.entityId.toString()}"/>
             </c:if>
             <c:if test="${clientBean.client.active}">
-                <h:commandButton value="Deactivate" action="#{clientBean.deactivate()}"/>
+                <h:commandButton value="#{msg['action.deactivate']}" action="#{clientBean.deactivate()}"/>
                 <f:param name="uuid" value="#{clientBean.client.entityId.toString()}"/>
             </c:if>
         </h:form>

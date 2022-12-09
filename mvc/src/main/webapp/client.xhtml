@@ -26,11 +26,17 @@
             Street number <h:inputText value="#{clientBean.client_.address.streetNr}"/><br/>
             <br/>
             Active <h:outputText value="#{clientBean.client_.active}"/><br/>
-            <h:commandButton value="Submit" action="#{clientBean.update()}"/>
-        </h:form>
-        <h:form>
-            <c:if test="#{clientBean.client_.active}">
+            <h:commandButton value="Submit" action="#{clientBean.update()}">
+                <f:param name="uuid" value="#{clientBean.client_.entityId.toString()}"/>
+            </h:commandButton>
+
+            <c:if test="${!clientBean.client_.active}">
                 <h:commandButton value="Activate" action="#{clientBean.activate()}"/>
+                <f:param name="uuid" value="#{clientBean.client_.entityId.toString()}"/>
+            </c:if>
+            <c:if test="${clientBean.client_.active}">
+                <h:commandButton value="Deactivate" action="#{clientBean.deactivate()}"/>
+                <f:param name="uuid" value="#{clientBean.client_.entityId.toString()}"/>
             </c:if>
         </h:form>
         err code ${clientBean.errCode}

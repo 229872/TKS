@@ -1,8 +1,10 @@
 package pl.lodz.p.edu.mvc.beans;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.enterprise.context.ConversationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import pl.lodz.p.edu.data.model.DTO.users.ClientDTO;
@@ -15,7 +17,7 @@ import java.net.http.HttpResponse;
 import java.util.Map;
 
 @Named
-@SessionScoped
+@ConversationScoped
 public class ClientBean extends AbstractBean implements Serializable {
 
     private static String res = "clients/";
@@ -29,8 +31,18 @@ public class ClientBean extends AbstractBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        Map<String, String> params = context.getRequestParameterMap();
         String id = params.get("uuid");
+        if(id == null) {
+            try {
+                context.redirect("listClients.xhtml");
+                return;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        System.out.println(id);
         buildRequestGet(res + id);
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -52,6 +64,7 @@ public class ClientBean extends AbstractBean implements Serializable {
 
     public void update() {
         try {
+            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             String body = om.writeValueAsString(client_);
             String clientId = client_.getEntityId().toString();
             buildRequestPut(res + clientId, body);
@@ -69,7 +82,7 @@ public class ClientBean extends AbstractBean implements Serializable {
 
     public void activate() {
         String clientId = client_.getEntityId().toString();
-        buildRequestPut(res + clientId + "/avtivate", "");
+        buildRequestPut(res + clientId + "/activate", "");
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             errCode = response.statusCode();

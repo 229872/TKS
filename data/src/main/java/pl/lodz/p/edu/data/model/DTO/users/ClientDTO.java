@@ -21,6 +21,7 @@ public class ClientDTO extends UserDTO {
     private Address address;
 
     public ClientDTO() {
+        address = new Address("", "", "");
     }
 
     public ClientDTO(Client c) {

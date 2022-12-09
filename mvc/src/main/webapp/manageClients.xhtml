@@ -12,7 +12,17 @@
 
 
     <ui:define name="content">
-        <h:dataTable value="#{listClientBean.listAll}" var="client">
+        <h:form>
+            ${msg['user.firstName']} <h:inputText value="#{clientManagerBean.newClient.firstName}"/><br/>
+            ${msg['user.lastName']} <h:inputText value="#{clientManagerBean.newClient.lastName}"/><br/>
+            ${msg['address.city']} <h:inputText value="#{clientManagerBean.newClient.address.city}"/><br/>
+            ${msg['address.street']} <h:inputText value="#{clientManagerBean.newClient.address.street}"/><br/>
+            ${msg['address.streetNo']} <h:inputText value="#{clientManagerBean.newClient.address.streetNr}"/><br/>
+            ${clientManagerBean.newClient.toString()}
+            <h:commandButton action="#{clientManagerBean.saveNewClient()}" value="#{msg['action.submit']}"/>
+        </h:form>
+        ${clientManagerBean.errCode}<br/>
+        <h:dataTable value="#{clientManagerBean.listAll}" var="client">
             <h:column>
                 <f:facet name="header">${msg["user.login"]}</f:facet>
                 ${client.login}

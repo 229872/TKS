@@ -3,6 +3,7 @@ package pl.lodz.p.edu.mvc.beans;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.enterprise.context.ConversationScoped;
 import jakarta.inject.Named;
+import pl.lodz.p.edu.data.model.DTO.users.ClientDTO;
 import pl.lodz.p.edu.data.model.users.Client;
 
 import javax.annotation.PostConstruct;
@@ -24,9 +25,13 @@ public class ClientBean extends AbstractBean implements Serializable {
 
     private Client client;
 
+
     @PostConstruct
     public void init() {
         String id = loadUuid();
+        if(id == null) {
+            return;
+        }
         HttpRequest request = buildGet(res + id);
         try {
             HttpResponse<String> response = send(request);

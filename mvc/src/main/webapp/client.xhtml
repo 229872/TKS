@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="./modules/pageTemplate.xhtml">
+
+    <ui:define name="top">
+        <p>${msg['main.page']}/${msg["menu.listClients"]}</p>
+    </ui:define>
+
+    <ui:define name="content">
+        <h3>Edit client</h3>
+        <h:form>
+            <h:commandButton value="Go back to list" action="listClients"/>
+        </h:form>
+        <h:form>
+            Client id <h:outputText value="#{clientBean.client_.entityId}"/><br/>
+            Login <h:outputText value="#{clientBean.client_.login}"/><br/>
+            First name <h:inputText value="#{clientBean.client_.firstName}"/><br/>
+            Last name <h:inputText value="#{clientBean.client_.lastName}"/><br/>
+            City <h:inputText value="#{clientBean.client_.address.city}"/><br/>
+            Street <h:inputText value="#{clientBean.client_.address.street}"/><br/>
+            Street number <h:inputText value="#{clientBean.client_.address.streetNr}"/><br/>
+            <br/>
+            Active <h:outputText value="#{clientBean.client_.active}"/><br/>
+            <h:commandButton value="Submit" action="#{clientBean.update()}"/>
+        </h:form>
+        <h:form>
+            <c:if test="#{clientBean.client_.active}">
+                <h:commandButton value="Activate" action="#{clientBean.activate()}"/>
+            </c:if>
+        </h:form>
+        err code ${clientBean.errCode}
+    </ui:define>
+
+</ui:composition>

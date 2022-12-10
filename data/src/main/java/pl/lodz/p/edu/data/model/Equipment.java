@@ -61,7 +61,7 @@ public class Equipment extends AbstractEntity {
         this.description = equipmentDTO.getDescription();
     }
 
-    protected Equipment() {}
+    public Equipment() {}
 
     @Override
     public String toString() {

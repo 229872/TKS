@@ -78,9 +78,4 @@ public class ClientBean extends AbstractBean {
         clientController.deactivate(client.getEntityId().toString());
         client = clientController.get(client.getEntityId().toString());
     }
-
-    private int errCode;
-    public int getErrCode() {
-        return errCode;
-    }
 }

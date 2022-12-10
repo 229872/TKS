@@ -42,7 +42,6 @@
                 <f:param name="uuid" value="#{clientBean.client.entityId.toString()}"/>
             </c:if>
         </h:form>
-        err code ${clientBean.errCode}
         <h3>${msg['client.clientRents']}</h3>
         <h:dataTable value="#{clientBean.clientRents}" var="rent">
             <h:column>

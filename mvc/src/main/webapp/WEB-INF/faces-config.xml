@@ -28,6 +28,18 @@
             <from-outcome>toManageClients</from-outcome>
             <to-view-id>/manageClients.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>toManageEmployees</from-outcome>
+            <to-view-id>/manageEmployees.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>toManageAdmin</from-outcome>
+            <to-view-id>/manageAdmin.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>toManageEquipment</from-outcome>
+            <to-view-id>/manageEquipment.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
 
     <navigation-rule>
@@ -42,6 +54,25 @@
         <navigation-case>
             <from-outcome>fromClient</from-outcome>
             <to-view-id>/manageClients.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/manageEquipment.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>toEquipment</from-outcome>
+            <to-view-id>/editEquipment.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>toEquipmentDelete</from-outcome>
+            <to-view-id>/editEquipment.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/editEquipment.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>fromEquipment</from-outcome>
+            <to-view-id>/manageEquipment.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 

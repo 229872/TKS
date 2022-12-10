@@ -28,6 +28,20 @@ public class RentController extends AbstractController {
         }
     }
 
+    public List<MvcRentDTO> getEquipmentRents(String equipmentId) {
+        HttpRequest request = Request.buildGet(path + "equipment/" + equipmentId);
+        HttpResponse<String> response = send(request);
+        try {
+            return Arrays.asList(om.readValue(response.body(), MvcRentDTO[].class));
+        } catch (JsonMappingException e) {
+            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
     public List<MvcRentDTO> getAll() {
         HttpRequest request = Request.buildGet(path);
         HttpResponse<String> response = send(request);

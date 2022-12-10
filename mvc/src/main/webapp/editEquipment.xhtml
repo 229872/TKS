@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="./modules/pageTemplate.xhtml">
+
+    <ui:define name="top">
+        <p>${msg['main.page']}/${msg["menu.manageClients"]}</p>
+    </ui:define>
+
+    <ui:define name="content">
+        <h3>${msg['action.editEquipment']}</h3>
+        <h:form>
+            <h:commandButton value="#{msg['action.gotoList']}" action="fromEquipment"/>
+        </h:form>
+        <h:form>
+            ${msg['equipment.name']} <h:inputText id="name" value="#{equipmentBean.equipment.name}"/>
+            <h:message for="name"/><br/>
+            ${msg['equipment.bail']} <h:inputText id="bail" value="#{equipmentBean.equipment.bail}"/>
+            <h:message for="bail"/><br/>
+            ${msg['equipment.firstDayCost']} <h:inputText id="firstDayCost" value="#{equipmentBean.equipment.firstDayCost}"/>
+            <h:message for="firstDayCost"/><br/>
+            ${msg['equipment.nextDaysCost']} <h:inputText id="nextDaysCost" value="#{equipmentBean.equipment.nextDaysCost}"/>
+            <h:message for="nextDaysCost"/><br/>
+            ${msg['equipment.description']} <h:inputText id="description" value="#{equipmentBean.equipment.description}"/>
+            <h:message for="description"/><br/>
+
+            <h:commandButton value="#{msg['action.submit']}" action="#{equipmentBean.update()}">
+                <f:param name="uuid" value="#{equipmentBean.equipment.entityId.toString()}"/>
+            </h:commandButton>
+        </h:form>
+        <h3>${msg['equipment.equipmentRents']}</h3>
+        <h:dataTable value="#{equipmentBean.equipmentRents}" var="rent">
+            <h:column>
+                <f:facet name="header">${msg["equipment.name"]}</f:facet>
+                ${rent.equipment.name}
+            </h:column>
+            <h:column>
+                <f:facet name="header">${msg["rent.beginTime"]}</f:facet>
+                ${rent.beginTime}
+            </h:column>
+            <h:column>
+                <f:facet name="header">${msg["rent.endTime"]}</f:facet>
+                ${rent.endTime}
+            </h:column>
+        </h:dataTable>
+    </ui:define>
+</ui:composition>

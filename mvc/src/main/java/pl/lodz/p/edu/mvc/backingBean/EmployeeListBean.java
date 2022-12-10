@@ -4,9 +4,11 @@ import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import pl.lodz.p.edu.data.model.users.Employee;
+import pl.lodz.p.edu.data.model.users.User;
 import pl.lodz.p.edu.mvc.controller.EmployeeController;
 
 import javax.faces.bean.SessionScoped;
+import java.util.Comparator;
 import java.util.List;
 
 @Named
@@ -20,6 +22,7 @@ public class EmployeeListBean {
     @PostConstruct
     public void initEmployees() {
         employees = employeeController.getAll();
+        employees.sort(Comparator.comparing(User::getLogin));
     }
 
     private String searchParam;

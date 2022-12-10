@@ -8,6 +8,7 @@ import pl.lodz.p.edu.data.model.DTO.MvcRentDTO;
 import pl.lodz.p.edu.mvc.controller.RentController;
 
 import javax.faces.bean.SessionScoped;
+import java.util.Comparator;
 import java.util.List;
 
 @Named

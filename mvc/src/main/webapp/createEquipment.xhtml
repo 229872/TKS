@@ -14,8 +14,14 @@
         <h:form>
             ${msg['equipment.name']} <h:inputText id="name" value="#{equipmentBean.equipment.name}"/>
             <h:message for="name"/><br/>
-            ${msg['equipment.bail']} <h:inputText id="bail" value="#{equipmentBean.equipment.bail}"/>
-            <h:message for="bail"/><br/>
+
+            ${msg['equipment.bail']} <h:inputText id="bail" value="#{equipmentBean.equipment.bail}"
+            validatorMessage="#{msg['javax.faces.validator.RegexValidator.NOT_MATCHED']}">
+            <f:validateRegex pattern="^[1-9][0-9]*$"/>
+            </h:inputText>
+            <h:message for="bail"/>
+            <br/>
+
             ${msg['equipment.firstDayCost']} <h:inputText id="firstDayCost" value="#{equipmentBean.equipment.firstDayCost}"/>
             <h:message for="firstDayCost"/><br/>
             ${msg['equipment.nextDaysCost']} <h:inputText id="nextDaysCost" value="#{equipmentBean.equipment.nextDaysCost}"/>

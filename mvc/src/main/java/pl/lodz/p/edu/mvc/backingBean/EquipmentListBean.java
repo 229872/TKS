@@ -4,7 +4,6 @@ import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import pl.lodz.p.edu.data.model.Equipment;
-import pl.lodz.p.edu.data.model.users.Client;
 import pl.lodz.p.edu.mvc.controller.EquipmentController;
 
 import javax.faces.bean.SessionScoped;
@@ -19,7 +18,7 @@ public class EquipmentListBean {
     public EquipmentListBean() {}
 
     @PostConstruct
-    public void initClients() {
+    public void initEquipments() {
         equipment = equipmentController.getAll();
     }
 

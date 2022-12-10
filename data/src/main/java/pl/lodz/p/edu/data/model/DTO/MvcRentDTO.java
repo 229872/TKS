@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.mvc;
+package pl.lodz.p.edu.data.model.DTO;
 
 import pl.lodz.p.edu.data.model.Equipment;
 import pl.lodz.p.edu.data.model.Rent;

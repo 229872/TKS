@@ -1,13 +1,12 @@
 package pl.lodz.p.edu.mvc.backingBean;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.ConversationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import pl.lodz.p.edu.data.model.DTO.EquipmentDTO;
 import pl.lodz.p.edu.data.model.Equipment;
-import pl.lodz.p.edu.mvc.MvcRentDTO;
+import pl.lodz.p.edu.data.model.DTO.MvcRentDTO;
 import pl.lodz.p.edu.mvc.controller.EquipmentController;
 import pl.lodz.p.edu.mvc.controller.RentController;
 

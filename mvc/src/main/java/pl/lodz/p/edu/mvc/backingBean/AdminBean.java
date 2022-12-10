@@ -2,24 +2,12 @@ package pl.lodz.p.edu.mvc.backingBean;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
-import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import pl.lodz.p.edu.data.model.Address;
-import pl.lodz.p.edu.data.model.DTO.RentDTO;
 import pl.lodz.p.edu.data.model.DTO.users.AdminDTO;
-import pl.lodz.p.edu.data.model.DTO.users.ClientDTO;
-import pl.lodz.p.edu.data.model.Rent;
 import pl.lodz.p.edu.data.model.users.Admin;
-import pl.lodz.p.edu.data.model.users.Client;
-import pl.lodz.p.edu.mvc.MvcRentDTO;
 import pl.lodz.p.edu.mvc.controller.AdminController;
-import pl.lodz.p.edu.mvc.controller.ClientController;
 import pl.lodz.p.edu.mvc.controller.RentController;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
 
 @Named
 @RequestScoped

@@ -57,6 +57,25 @@
     </navigation-rule>
 
     <navigation-rule>
+        <from-view-id>/manageAdmins.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>toAdmin</from-outcome>
+            <to-view-id>/editAdmin.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>toCreateAdmin</from-outcome>
+            <to-view-id>/createAdmin.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/editAdmin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>fromAdmin</from-outcome>
+            <to-view-id>/manageAdmins.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
         <from-view-id>/manageEquipment.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>toEquipment</from-outcome>

@@ -2,21 +2,16 @@ package pl.lodz.p.edu.mvc.backingBean;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
-import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import pl.lodz.p.edu.data.model.Address;
-import pl.lodz.p.edu.data.model.DTO.RentDTO;
 import pl.lodz.p.edu.data.model.DTO.users.ClientDTO;
-import pl.lodz.p.edu.data.model.Rent;
 import pl.lodz.p.edu.data.model.users.Client;
-import pl.lodz.p.edu.mvc.MvcRentDTO;
+import pl.lodz.p.edu.data.model.DTO.MvcRentDTO;
 import pl.lodz.p.edu.mvc.controller.ClientController;
 import pl.lodz.p.edu.mvc.controller.RentController;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 @Named
 @RequestScoped
@@ -64,7 +59,7 @@ public class ClientBean extends AbstractBean {
         client.merge(updatedClient);
     }
 
-    public void create() { //????????????????????????????????????????????????????????
+    public void create() {
         client = clientController.create(new ClientDTO(client));
     }
 

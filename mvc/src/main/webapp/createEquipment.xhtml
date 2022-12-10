@@ -23,9 +23,8 @@
             ${msg['equipment.description']} <h:inputText id="description" value="#{equipmentBean.equipment.description}"/>
             <h:message for="description"/><br/>
 
-            <h:commandButton value="#{msg['action.submit']}" action="#{equipmentBean.create()}">
-                <f:param name="uuid" value="#{equipmentBean.equipment.entityId.toString()}"/>
-            </h:commandButton>
+            <h:commandButton action="#{equipmentBean.create()}" value="#{msg['action.submit']}"/>
+
         </h:form>
     </ui:define>
 </ui:composition>

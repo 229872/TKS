@@ -13,6 +13,9 @@
 
     <ui:define name="content">
         <h:form>
+            <h:commandButton value="#{msg['action.createAdmin']}" action="toCreateAdmin"/>
+        </h:form>
+        <h:form>
             <h:inputText value="#{adminListBean.searchParam}"/>
             <h:commandButton action="#{adminListBean.search()}" value="#{msg['action.search']}"/>
         </h:form>
@@ -34,6 +37,6 @@
                 </h:form>
             </h:column>
 
-        </h:dataTable>-+/*
+        </h:dataTable>
     </ui:define>
 </ui:composition>

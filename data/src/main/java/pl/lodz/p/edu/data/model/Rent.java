@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
+import pl.lodz.p.edu.data.model.DTO.MvcRentDTO;
 import pl.lodz.p.edu.data.model.DTO.RentDTO;
 import pl.lodz.p.edu.data.model.users.Client;
 
@@ -48,7 +49,7 @@ public class Rent extends AbstractEntity {
         this.client = client;
     }
 
-    protected Rent() {}
+    public Rent() {}
 
     public Rent(RentDTO rentDTO, Equipment equipment, Client client) {
         this.beginTime = LocalDateTime.parse(rentDTO.getBeginTime());
@@ -110,6 +111,24 @@ public class Rent extends AbstractEntity {
         this.equipment = equipment;
         this.client = client;
     }
+
+    public void merge(MvcRentDTO mvcRentDTO) {
+        this.beginTime = LocalDateTime.parse(mvcRentDTO.getBeginTime());
+        this.endTime = LocalDateTime.parse(mvcRentDTO.getEndTime());
+        this.client = mvcRentDTO.getClient();
+        this.client.setActive(mvcRentDTO.isActive());
+        this.equipment = mvcRentDTO.getEquipment();
+    }
+
+    public void merge(Rent rent) {
+        this.beginTime = rent.getBeginTime();
+        this.endTime = rent.getEndTime();
+        this.equipment = rent.getEquipment();
+        this.client = rent.getClient();
+//        this.client.setActive(rent.client.isActive());
+    }
+    //Ja tu tak bardzo nie wiem co ty miałeś w planach robiąc to mvcRentDto
+
     public LocalDateTime getBeginTime() {
         return beginTime;
     }

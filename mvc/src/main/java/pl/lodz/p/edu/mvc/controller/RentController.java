@@ -4,13 +4,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import pl.lodz.p.edu.data.model.DTO.RentDTO;
 import pl.lodz.p.edu.data.model.Rent;
-import pl.lodz.p.edu.mvc.MvcRentDTO;
+import pl.lodz.p.edu.data.model.DTO.MvcRentDTO;
 import pl.lodz.p.edu.mvc.request.Request;
 
+import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Arrays;
 import java.util.List;
+
+import static pl.lodz.p.edu.mvc.request.Request.*;
 
 public class RentController extends AbstractController {
 
@@ -40,8 +43,6 @@ public class RentController extends AbstractController {
         }
     }
 
-
-
     public List<MvcRentDTO> getAll() {
         HttpRequest request = Request.buildGet(path);
         HttpResponse<String> response = send(request);
@@ -52,5 +53,55 @@ public class RentController extends AbstractController {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Rent get(String uuid) {
+        HttpRequest request = buildGet(path + uuid);
+        HttpResponse<String> response = send(request);
+        try {
+            return om.readValue(response.body(), Rent.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e); // todo komunikat
+        }
+    }
+
+    public MvcRentDTO update(String id, MvcRentDTO mvcRentDTO) {
+        //FIXME I HAVE NO F IDEA HOW THESE SHOULD WORK
+        String body;
+        try {
+            body = om.writeValueAsString(mvcRentDTO);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e); // todo komunikat
+        }
+        HttpRequest request = buildPut(path + id, body);
+        HttpResponse<String> response = send(request);
+        try {
+            return om.readValue(response.body(), MvcRentDTO.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e); // todo komunikat
+        }
+    }
+
+    public Rent create(MvcRentDTO mvcRentDTO) {
+        //FIXME I HAVE NO F IDEA HOW THESE SHOULD WORK
+        String body;
+        try {
+            body = om.writeValueAsString(mvcRentDTO);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e.getMessage()); // todo komunikat
+        }
+        HttpRequest request = buildPost(path, body);
+        HttpResponse<String> response = send(request);
+
+        try {
+            return om.readValue(response.body(), MvcRentDTO.class).toRent(); //?
+        } catch (IOException e) {
+            throw new RuntimeException(e); // todo komunikat
+        }
+    }
+
+    public void delete(Rent rent) {
+        HttpRequest request = buildDelete(path + rent.getEntityId().toString());
+        HttpResponse<String> response = send(request);
     }
 }

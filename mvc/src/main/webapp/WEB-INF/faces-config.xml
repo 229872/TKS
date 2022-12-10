@@ -74,6 +74,24 @@
             <to-view-id>/manageAdmins.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+    <from-view-id>/manageEmployees.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>toEmployee</from-outcome>
+            <to-view-id>/editEmployee.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>toCreateEmployee</from-outcome>
+            <to-view-id>/createEmployee.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/editEmployee.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>fromEmployee</from-outcome>
+            <to-view-id>/manageEmployees.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 
     <navigation-rule>
         <from-view-id>/manageEquipment.xhtml</from-view-id>

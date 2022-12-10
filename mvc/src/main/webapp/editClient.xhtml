@@ -27,7 +27,7 @@
             <h:message for="street"/><br/>
             ${msg['address.streetNo']} <h:inputText id="streetNr" value="#{clientBean.client.address.streetNr}"/>
             <h:message for="streetNr"/><br/>
-            ${msg['user.active']} <h:outputText value="#{clientBean.active}"/><br/>
+            ${msg['user.active']} <h:outputText value="#{clientBean.client.active}"/><br/>
             <h:commandButton value="#{msg['action.submit']}" action="#{clientBean.update()}">
                 <f:param name="uuid" value="#{clientBean.client.entityId.toString()}"/>
             </h:commandButton>
@@ -43,10 +43,19 @@
             </c:if>
         </h:form>
         err code ${clientBean.errCode}
+        <h3>${msg['client.clientRents']}</h3>
         <h:dataTable value="#{clientBean.clientRents}" var="rent">
             <h:column>
                 <f:facet name="header">${msg["equipment.name"]}</f:facet>
                 ${rent.equipment.name}
+            </h:column>
+            <h:column>
+                <f:facet name="header">${msg["rent.beginTime"]}</f:facet>
+                ${rent.beginTime}
+            </h:column>
+            <h:column>
+                <f:facet name="header">${msg["rent.endTime"]}</f:facet>
+                ${rent.endTime}
             </h:column>
         </h:dataTable>
     </ui:define>

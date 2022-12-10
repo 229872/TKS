@@ -15,7 +15,7 @@
 <!--        searching by login -->
         <h:form>
             <h:inputText value="#{clientListBean.searchParam}"/>
-            <h:commandButton action="#{clientListBean.search()}"/>
+            <h:commandButton action="#{clientListBean.search()}" value="#{msg['action.search']}"/>
         </h:form>
         <h:dataTable value="#{clientListBean.clients}" var="client">
             <h:column>

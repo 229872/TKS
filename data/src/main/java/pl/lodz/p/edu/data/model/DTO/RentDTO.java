@@ -2,6 +2,7 @@ package pl.lodz.p.edu.data.model.DTO;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import pl.lodz.p.edu.data.model.Rent;
 
 import java.util.UUID;
 

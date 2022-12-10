@@ -10,6 +10,7 @@ import pl.lodz.p.edu.data.model.DTO.RentDTO;
 import pl.lodz.p.edu.data.model.DTO.users.ClientDTO;
 import pl.lodz.p.edu.data.model.Rent;
 import pl.lodz.p.edu.data.model.users.Client;
+import pl.lodz.p.edu.mvc.MvcRentDTO;
 import pl.lodz.p.edu.mvc.controller.ClientController;
 import pl.lodz.p.edu.mvc.controller.RentController;
 
@@ -37,9 +38,9 @@ public class ClientBean extends AbstractBean {
         this.client = client;
     }
 
-    private List<RentDTO> clientRents;
+    private List<MvcRentDTO> clientRents;
 
-    public List<RentDTO> getClientRents() {
+    public List<MvcRentDTO> getClientRents() {
         return clientRents;
     }
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import pl.lodz.p.edu.mvc.request.Request;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -43,6 +44,7 @@ public class UserController<T, Tdto> extends AbstractController {
     public List<T> search(String login) {
         HttpRequest request = Request.buildGet(path + "?login=" + login);
         HttpResponse<String> response = send(request);
+        JOptionPane.showMessageDialog(null,response.body());
         try {
             return Arrays.asList(om.readValue(response.body(), TListType));
         } catch (JsonMappingException e) {

@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="./modules/pageTemplate.xhtml">
+
+    <ui:define name="top">
+        <p>${msg['main.page']}/${msg["menu.manageEmployees"]}</p>
+    </ui:define>
+
+
+    <ui:define name="content">
+        <h:form>
+            <h:inputText value="#{employeeListBean.searchParam}"/>
+            <h:commandButton action="#{employeeListBean.search()}" value="#{msg['action.search']}"/>
+        </h:form>
+        <h:dataTable value="#{employeeListBean.employees}" var="employees">
+            <h:column>
+                <f:facet name="header">${msg["user.login"]}</f:facet>
+                ${employees.login}
+            </h:column>
+            <h:column>
+                <f:facet name="header">${msg["user.active"]}</f:facet>
+                ${employees.active}
+            </h:column>
+            <h:column>
+                <f:facet name="header">${msg['action.edit']}</f:facet>
+                <h:form>
+                    <h:commandButton value="#{msg['action.edit']}" action="toEmployee">
+                        <f:param name="uuid" value="#{employees.entityId.toString()}"/>
+                    </h:commandButton>
+                </h:form>
+            </h:column>
+
+        </h:dataTable>-+/*
+    </ui:define>
+</ui:composition>

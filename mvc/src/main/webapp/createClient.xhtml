@@ -5,7 +5,15 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 template="./modules/pageTemplate.xhtml">
+    <ui:define name="top">
+        <p>${msg['main.page']}/${msg["menu.manageClients"]}/${msg["action.createClient"]}</p>
+    </ui:define>
+
     <ui:define name="content">
+        <h3>${msg['action.createClient']}</h3>
+        <h:form>
+            <h:commandButton value="#{msg['action.gotoList']}" action="fromCreateClient"/>
+        </h:form>
         <h:form>
             ${msg['user.firstName']} <h:inputText id="firstName" value="#{clientBean.client.firstName}"/>
             <h:message for="firstName"/><br/>
@@ -21,6 +29,4 @@
             <h:commandButton action="#{clientBean.create()}" value="#{msg['action.submit']}"/>
         </h:form>
     </ui:define>
-
-
 </ui:composition>

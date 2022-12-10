@@ -27,12 +27,14 @@
             </h:commandButton>
             <!-- activate or deactivate button -->
             <c:if test="${!adminBean.admin.active}">
-                <h:commandButton value="#{msg['action.activate']}" action="#{adminBean.activate()}"/>
-                <f:param name="uuid" value="#{adminBean.admin.entityId.toString()}"/>
+                <h:commandButton value="#{msg['action.activate']}" action="#{adminBean.activate()}">
+                    <f:param name="uuid" value="#{adminBean.admin.entityId.toString()}"/>
+                </h:commandButton>
             </c:if>
             <c:if test="${adminBean.admin.active}">
-                <h:commandButton value="#{msg['action.deactivate']}" action="#{adminBean.deactivate()}"/>
-                <f:param name="uuid" value="#{adminBean.admin.entityId.toString()}"/>
+                <h:commandButton value="#{msg['action.deactivate']}" action="#{adminBean.deactivate()}">
+                    <f:param name="uuid" value="#{adminBean.admin.entityId.toString()}"/>
+                </h:commandButton>
             </c:if>
         </h:form>
 

@@ -5,7 +5,15 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 template="./modules/pageTemplate.xhtml">
+    <ui:define name="top">
+        <p>${msg['main.page']}/${msg["menu.manageAdmins"]}/${msg["action.createAdmin"]}</p>
+    </ui:define>
+
     <ui:define name="content">
+        <h3>${msg['action.createAdmin']}</h3>
+        <h:form>
+            <h:commandButton value="#{msg['action.gotoList']}" action="fromCreateAdmin"/>
+        </h:form>
         <h:form>
             ${msg['admin.login']} <h:inputText id="login" value="#{adminBean.admin.login}"/>
             <h:message for="login"/><br/>

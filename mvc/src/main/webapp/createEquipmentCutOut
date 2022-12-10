@@ -1,5 +1,0 @@
-<!--            <h:commandButton value="#{msg['action.submit']}" action="#{equipmentBean.create()}">-->
-<!--                <f:param name="uuid" value="#{equipmentBean.equipment.entityId.toString()}"/>-->
-<!--            </h:commandButton>-->
-
-wrzuciłem to tu, bo to dziadostwo czyta komentarze. Teoretycznie bez tego działa? Nie jestem pewien do czego to uuid było

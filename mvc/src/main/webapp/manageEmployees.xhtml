@@ -12,12 +12,13 @@
 
 
     <ui:define name="content">
+        <h3>${msg['menu.manageEmployees']}</h3>
+        <h:form>
+            <h:commandButton value="#{msg['action.createEmployee']}" action="toCreateEmployee"/>
+        </h:form>
         <h:form>
             <h:inputText value="#{employeeListBean.searchParam}"/>
             <h:commandButton action="#{employeeListBean.search()}" value="#{msg['action.search']}"/>
-        </h:form>
-        <h:form>
-            <h:commandButton value="#{msg['action.createEmployee']}" action="toCreateEmployee"/>
         </h:form>
         <h:dataTable value="#{employeeListBean.employees}" var="employees">
             <h:column>
@@ -40,6 +41,6 @@
                     </h:commandButton>
                 </h:form>
             </h:column>
-        </h:dataTable>-+/*
+        </h:dataTable>
     </ui:define>
 </ui:composition>

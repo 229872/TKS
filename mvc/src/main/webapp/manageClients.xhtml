@@ -12,6 +12,10 @@
 
 
     <ui:define name="content">
+        <h3>${msg['menu.manageClients']}</h3>
+        <h:form>
+            <h:commandButton value="#{msg['action.createClient']}" action="toCreateClient"/>
+        </h:form>
         <h:form>
             <h:inputText value="#{clientListBean.searchParam}"/>
             <h:commandButton action="#{clientListBean.search()}" value="#{msg['action.search']}"/>
@@ -33,7 +37,6 @@
                     </h:commandButton>
                 </h:form>
             </h:column>
-
         </h:dataTable>
     </ui:define>
 </ui:composition>

@@ -33,7 +33,7 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>toManageAdmin</from-outcome>
-            <to-view-id>/manageAdmin.xhtml</to-view-id>
+            <to-view-id>/manageAdmins.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-outcome>toManageEquipment</from-outcome>

@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="./modules/pageTemplate.xhtml">
+    <ui:define name="content">
+        <h:form>
+            ${msg['admin.login']} <h:inputText id="login" value="#{adminBean.admin.login}"/>
+            <h:message for="login"/><br/>
+            ${msg['admin.iceCream']} <h:inputText id="iceCream" value="#{adminBean.admin.favouriteIceCream}"/>
+            <h:message for="iceCream"/><br/>
+
+            <h:commandButton action="#{adminBean.create()}" value="#{msg['action.submit']}"/>
+        </h:form>
+    </ui:define>
+
+
+</ui:composition>

@@ -39,6 +39,10 @@
             <from-outcome>toManageEquipment</from-outcome>
             <to-view-id>/manageEquipment.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>toChooseClient</from-outcome>
+            <to-view-id>/chooseClient.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
 
     <navigation-rule>
@@ -109,6 +113,14 @@
         <navigation-case>
             <from-outcome>fromEquipment</from-outcome>
             <to-view-id>/manageEquipment.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/chooseClient.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>toClientView</from-outcome>
+            <to-view-id>/clientView.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 

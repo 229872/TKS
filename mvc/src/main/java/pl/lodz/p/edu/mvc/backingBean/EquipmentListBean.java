@@ -20,6 +20,7 @@ public class EquipmentListBean {
     @PostConstruct
     public void initEquipments() {
         equipment = equipmentController.getAll();
+        available = equipmentController.getAvailable();
     }
 
     private String searchParam;
@@ -33,6 +34,10 @@ public class EquipmentListBean {
     }
 
     private List<Equipment> equipment;
+
+    private List<Equipment> available;
+
+    public List<Equipment> getAvailable() { return available; }
 
     public List<Equipment> getEquipment() {
         return equipment;

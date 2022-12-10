@@ -19,6 +19,8 @@ public class EmployeeBean extends AbstractBean {
     @Inject
     private RentController rentController;
 
+
+
     private Employee employee;
 
     public Employee getEmployee() {

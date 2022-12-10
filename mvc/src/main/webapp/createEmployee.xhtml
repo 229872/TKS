@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="./modules/pageTemplate.xhtml">
+    <ui:define name="top">
+        <p>${msg['main.page']}/${msg["menu.manageEmployees"]}/${msg["menu.manageEmployees.createEmployee"]}</p>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            ${msg['user.login']} <h:inputText id="login" value="#{employeeBean.employee.login}"/>
+            <h:message for="login"/><br/>
+            ${msg['employee.desk']} <h:inputText id="desk" value="#{employeeBean.employee.desk}"/>
+            <h:message for="desk"/><br/>
+
+            <h:commandButton action="#{employeeBean.create()}" value="#{msg['action.submit']}"/>
+        </h:form>
+    </ui:define>
+
+
+</ui:composition>

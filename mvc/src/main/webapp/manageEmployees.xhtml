@@ -16,10 +16,17 @@
             <h:inputText value="#{employeeListBean.searchParam}"/>
             <h:commandButton action="#{employeeListBean.search()}" value="#{msg['action.search']}"/>
         </h:form>
+        <h:form>
+            <h:commandButton value="#{msg['action.createEmployee']}" action="toCreateEmployee"/>
+        </h:form>
         <h:dataTable value="#{employeeListBean.employees}" var="employees">
             <h:column>
                 <f:facet name="header">${msg["user.login"]}</f:facet>
                 ${employees.login}
+            </h:column>
+            <h:column>
+                <f:facet name="header">${msg["employee.desk"]}</f:facet>
+                ${employees.desk}
             </h:column>
             <h:column>
                 <f:facet name="header">${msg["user.active"]}</f:facet>
@@ -33,7 +40,12 @@
                     </h:commandButton>
                 </h:form>
             </h:column>
-
+            <h:column>
+                <f:facet name="header">${msg['action.delete']}</f:facet>
+                <h:form>
+                    <h:commandButton value="#{msg['action.delete']}" action="${equipmentListBean.delete(employees)}"/>
+                </h:form>
+            </h:column>
         </h:dataTable>-+/*
     </ui:define>
 </ui:composition>

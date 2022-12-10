@@ -10,6 +10,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.rest.exception.BusinessLogicInterruptException;
 import pl.lodz.p.edu.rest.exception.ObjectNotValidException;
+import pl.lodz.p.edu.rest.managers.EquipmentManager;
 import pl.lodz.p.edu.rest.managers.RentManager;
 import pl.lodz.p.edu.rest.managers.UserManager;
 import pl.lodz.p.edu.data.model.DTO.RentDTO;
@@ -32,6 +33,9 @@ public class RentController {
 
     @Inject
     private UserManager userManager;
+
+    @Inject
+    private EquipmentManager equipmentManager;
 
     // create
 
@@ -59,6 +63,19 @@ public class RentController {
         try {
             Client client = (Client) userManager.getUserByUuidOfType("Client", clientUuid);
             List<Rent> rents = rentManager.getRentsByClient(client);
+            return Response.status(Response.Status.OK).entity(rents).build();
+        } catch (NoResultException e) {
+            return Response.status(NOT_FOUND).build();
+        }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/equipment/{uuid}")
+    public Response getEquipmentRents(@PathParam("uuid") UUID equipmentUuid) {
+        try {
+            Equipment equipment = equipmentManager.get(equipmentUuid);
+            List<Rent> rents = rentManager.getRentByEq(equipment);
             return Response.status(Response.Status.OK).entity(rents).build();
         } catch (NoResultException e) {
             return Response.status(NOT_FOUND).build();

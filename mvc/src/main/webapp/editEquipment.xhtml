@@ -17,6 +17,8 @@
             <h:commandButton value="#{msg['action.gotoList']}" action="fromEquipment"/>
         </h:form>
         <h:form>
+            ${msg['object.id']} <h:outputText value="#{equipmentBean.equipment.entityId.toString()}"/><br/>
+
             ${msg['equipment.name']} <h:inputText id="name" value="#{equipmentBean.equipment.name}"/>
             <h:message for="name"/><br/>
             ${msg['equipment.bail']} <h:inputText id="bail" value="#{equipmentBean.equipment.bail}"/>

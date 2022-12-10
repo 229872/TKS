@@ -47,7 +47,7 @@ public class EquipmentBean extends AbstractBean {
             equipmentRents = new ArrayList<>();
         } else {
             equipment = equipmentController.get(equipmentId);
-            equipmentRents = rentController.getEquipmentRents(equipmentId);
+//            equipmentRents = rentController.getEquipmentRents(equipmentId);
         }
     }
     

@@ -52,6 +52,7 @@ public class RentManager {
         }
     }
 
+
     public Rent get(UUID uuid) {
         return rentRepository.get(uuid);
     }

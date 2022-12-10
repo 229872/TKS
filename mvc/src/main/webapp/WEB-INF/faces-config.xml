@@ -23,7 +23,6 @@
     </application>
 
     <navigation-rule>
-        <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>toManageClients</from-outcome>
             <to-view-id>/manageClients.xhtml</to-view-id>
@@ -64,8 +63,8 @@
             <to-view-id>/editEquipment.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
-            <from-outcome>toEquipmentDelete</from-outcome>
-            <to-view-id>/editEquipment.xhtml</to-view-id>
+            <from-outcome>toCreateEquipment</from-outcome>
+            <to-view-id>/createEquipment.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>

@@ -12,6 +12,10 @@
 
 
     <ui:define name="content">
+        <h:form>
+            <h:commandButton value="#{msg['action.createEquipment']}" action="toCreateEquipment"/>
+        </h:form>
+
         <h:dataTable value="#{equipmentListBean.equipment}" var="equipment">
             <h:column>
                 <f:facet name="header">${msg["object.id"]}</f:facet>

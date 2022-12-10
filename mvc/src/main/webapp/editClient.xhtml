@@ -17,6 +17,9 @@
             <h:commandButton value="#{msg['action.gotoList']}" action="fromClient"/>
         </h:form>
         <h:form>
+            ${msg['object.id']} <h:outputText value="#{clientBean.client.entityId.toString()}"/><br/>
+            ${msg['user.login']} <h:outputText value="#{clientBean.client.login}"/><br/>
+
             ${msg['user.firstName']} <h:inputText id="firstName" value="#{clientBean.client.firstName}"/>
             <h:message for="firstName"/><br/>
             ${msg['user.lastName']} <h:inputText id="lastName" value="#{clientBean.client.lastName}"/>

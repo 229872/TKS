@@ -12,6 +12,23 @@
     </ui:define>
 
     <ui:define name="content">
+        <h:dataTable value="#{equipmentListBean.available}" var="equipment">
+            <h:column>
+                <f:facet name="header">${msg["object.id"]}</f:facet>
+                ${equipment.entityId.toString()}
+            </h:column>
+            <h:column>
+                <f:facet name="header">${msg["equipment.name"]}</f:facet>
+                ${equipment.name}
+            </h:column>
+            <h:column>
+                <f:facet name="header">${msg['action.makeRent']}</f:facet>
+                <h:form>
+                    <h:commandButton value="#{msg['action.makeRent']}" action="${rentBean.create()}"/>
+                </h:form>
+            </h:column>
+        </h:dataTable>
+
 <!--        dokonywanie rezerwacji na equipment. -->
 <!--        todo: route który zwraca tylko dostępne equipment  done-->
 <!--        lista equipment, jakoś przekazywanie daty -->

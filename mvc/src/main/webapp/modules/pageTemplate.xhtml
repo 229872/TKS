@@ -7,6 +7,7 @@
 <h:head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <h:outputStylesheet library="css" name="default.css"/>
+    <h:outputStylesheet library="css" name="cssLayout.css"/>
     <title>${msg['app.name']}</title>
 </h:head>
 
@@ -16,19 +17,18 @@
         <ui:insert name="top">Top</ui:insert>
     </div>
     <div>
-        <div id="left" class="nav-bar">
+        <div id="left">
             <ui:insert name="left">
                 <ui:include src="menu.xhtml">Menu</ui:include>
             </ui:insert>
         </div>
-        <div id="content" class="content">
+        <div id="content" class="right_content">
             <ui:insert name="content">Content</ui:insert>
         </div>
     </div>
     <div id="bottom">
-        <div class="center-text">#{msg["app.name"]}</div>
+        <center>#{msg["app.name"]}</center>
     </div>
-
 </h:body>
 
 </html>

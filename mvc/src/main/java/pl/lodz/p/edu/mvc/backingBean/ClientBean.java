@@ -10,8 +10,7 @@ import pl.lodz.p.edu.data.model.DTO.MvcRentDTO;
 import pl.lodz.p.edu.mvc.controller.ClientController;
 import pl.lodz.p.edu.mvc.controller.RentController;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Named
 @RequestScoped

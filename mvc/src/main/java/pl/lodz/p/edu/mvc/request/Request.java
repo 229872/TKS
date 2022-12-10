@@ -44,6 +44,18 @@ public class Request {
         }
     }
 
+    public static HttpRequest buildPut(String path) {
+        try {
+            return HttpRequest.newBuilder()
+                    .uri(new URI(base + path))
+                    .header("Content-Type", "application/json")
+                    .PUT(HttpRequest.BodyPublishers.noBody())
+                    .build();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static HttpRequest buildDelete(String path) {
         try {
             return HttpRequest.newBuilder()

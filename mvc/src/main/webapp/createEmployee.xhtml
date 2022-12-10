@@ -10,6 +10,10 @@
     </ui:define>
 
     <ui:define name="content">
+        <h3>${msg['action.createEmployee']}</h3>
+        <h:form>
+            <h:commandButton value="#{msg['action.gotoList']}" action="fromCreateEmployee"/>
+        </h:form>
         <h:form>
             ${msg['user.login']} <h:inputText id="login" value="#{employeeBean.employee.login}"/>
             <h:message for="login"/><br/>
@@ -19,6 +23,4 @@
             <h:commandButton action="#{employeeBean.create()}" value="#{msg['action.submit']}"/>
         </h:form>
     </ui:define>
-
-
 </ui:composition>

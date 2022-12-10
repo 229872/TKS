@@ -42,6 +42,20 @@ public class EquipmentController extends AbstractController {
         }
     }
 
+    public List<Equipment> getAvailable() {
+        HttpRequest request = Request.buildGet(path + "available");
+        HttpResponse<String> response = send(request);
+
+        // fixme check for status codes?
+        try {
+            return Arrays.asList(om.readValue(response.body(), Equipment[].class));
+        } catch (JsonMappingException e) {
+            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public EquipmentDTO update(String id, EquipmentDTO equipment) {
         String body;
         try {

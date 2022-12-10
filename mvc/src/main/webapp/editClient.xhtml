@@ -8,7 +8,7 @@
                 template="./modules/pageTemplate.xhtml">
 
     <ui:define name="top">
-        <p>${msg['main.page']}/${msg["menu.manageClients"]}</p>
+        <p>${msg['main.page']}/${msg["menu.manageClients"]}/${msg["action.editClient"]}</p>
     </ui:define>
 
     <ui:define name="content">
@@ -37,14 +37,17 @@
 
             <!-- activate or deactivate button -->
             <c:if test="${!clientBean.client.active}">
-                <h:commandButton value="#{msg['action.activate']}" action="#{clientBean.activate()}"/>
-                <f:param name="uuid" value="#{clientBean.client.entityId.toString()}"/>
+                <h:commandButton value="#{msg['action.activate']}" action="#{clientBean.activate()}">
+                    <f:param name="uuid" value="#{clientBean.client.entityId.toString()}"/>
+                </h:commandButton>
             </c:if>
             <c:if test="${clientBean.client.active}">
-                <h:commandButton value="#{msg['action.deactivate']}" action="#{clientBean.deactivate()}"/>
-                <f:param name="uuid" value="#{clientBean.client.entityId.toString()}"/>
+                <h:commandButton value="#{msg['action.deactivate']}" action="#{clientBean.deactivate()}">
+                    <f:param name="uuid" value="#{clientBean.client.entityId.toString()}"/>
+                </h:commandButton>
             </c:if>
         </h:form>
+
         <h3>${msg['client.clientRents']}</h3>
         <h:dataTable value="#{clientBean.clientRents}" var="rent">
             <h:column>

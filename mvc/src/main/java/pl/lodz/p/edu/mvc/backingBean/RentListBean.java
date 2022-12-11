@@ -43,4 +43,16 @@ public class RentListBean {
     public void delete(Rent rent) {
         rentController.delete(rent);
     }
+
+    public void delete(MvcRentDTO rentDTO) {
+        String begTime = rentDTO.getBeginTime();
+        String endTime = rentDTO.getEndTime();
+        if (!begTime.contains("T")) {
+            rentDTO.setBeginTime(begTime + "T00:00:00.000");
+        }
+        if (!endTime.contains("T")) {
+            rentDTO.setEndTime(endTime + "T00:00:00.000");
+        }
+        rentController.delete(rentDTO.toRent());
+    }
 }

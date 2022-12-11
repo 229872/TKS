@@ -12,7 +12,11 @@
     </ui:define>
 
     <ui:define name="content">
-        ${clientBean.client.entityId.toString()}
+        <h3>${msg['menu.userPage']}</h3>
+        ${msg['profile.loggedAs']} ${clientBean.client.login}
+        <h:form>
+            <h:commandButton value="#{msg['action.logout']}" action="fromClientView"/>
+        </h:form>
         <h:dataTable value="#{equipmentListBean.available}" var="equipment">
             <h:column>
                 <f:facet name="header">${msg["object.id"]}</f:facet>
@@ -23,18 +27,52 @@
                 ${equipment.name}
             </h:column>
             <h:column>
-                <f:facet name="header">${msg['action.makeRent']}</f:facet>
+                <f:facet name="header">${msg['action.makeReservaton']}</f:facet>
                 <h:form>
-                    <h:commandButton value="#{msg['action.makeRent']}" action="toMakeReservation">
+                    <h:commandButton value="#{msg['action.makeReservaton']}" action="toMakeReservation">
                         <f:param name="uuidClient" value="#{clientBean.client.entityId.toString()}"/>
                         <f:param name="uuidEquipment" value="#{equipment.entityId.toString()}"/>
                     </h:commandButton>
                 </h:form>
             </h:column>
         </h:dataTable>
-
-<!--        dokonywanie rezerwacji na equipment. -->
-<!--        todo: route który zwraca tylko dostępne equipment  done-->
-<!--        lista equipment, jakoś przekazywanie daty -->
+        <h3>${msg['client.clientRents']}</h3>
+        <h:dataTable value="#{clientBean.clientRents}" var="rent">
+            <h:column>
+                <f:facet name="header">${msg["object.id"]}</f:facet>
+                ${rent.entityId.toString()}
+            </h:column>
+            <h:column>
+                <f:facet name="header">${msg["object.id"]}</f:facet>
+                ${rent.equipment.entityId}
+            </h:column>
+            <h:column>
+                <f:facet name="header">${msg["equipment.name"]}</f:facet>
+                ${rent.equipment.name}
+            </h:column>
+            <h:column>
+                <f:facet name="header">${msg["equipment.bail"]}</f:facet>
+                ${rent.equipment.bail}
+            </h:column>
+            <h:column>
+                <f:facet name="header">${msg["equipment.firstDayCost"]}</f:facet>
+                ${rent.equipment.firstDayCost}
+            </h:column>
+            <h:column>
+                <f:facet name="header">${msg["equipment.nextDaysCost"]}</f:facet>
+                ${rent.equipment.nextDaysCost}
+            </h:column>
+            <h:column>
+                <f:facet name="header">${msg["rent.beginTime"]}</f:facet>
+                ${rent.beginTime.toString()}
+            </h:column>
+            <h:column>
+                <f:facet name="header">${msg["rent.endTime"]}</f:facet>
+                ${rent.endTime.toString()}
+            </h:column>
+<!--            niezakończone mają end date ustawioną na null -->
+<!--            usuwanie niezakończonych rezerwacji -->
+<!--            zakańczanie (popdawanie end date) niezakończonych rezerwacji -->
+        </h:dataTable>
     </ui:define>
 </ui:composition>

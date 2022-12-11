@@ -55,6 +55,12 @@ public class ClientBean extends AbstractBean {
         } else {
             client = clientController.get(clientId);
             clientRents = rentController.getClientRents(clientId);
+            for(MvcRentDTO rent : clientRents) {
+                rent.setBeginTime(rent.getBeginTime().replaceAll("T.*$", ""));
+                if(rent.getEndTime() != null) {
+                    rent.setEndTime(rent.getEndTime().replaceAll("T.*$", ""));
+                }
+            }
         }
     }
 

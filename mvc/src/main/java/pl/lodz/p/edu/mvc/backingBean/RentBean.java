@@ -104,6 +104,8 @@ public class RentBean extends AbstractBean {
         }
         rent = rentController.create(rent);
         rent.setBeginTime(rent.getBeginTime().replaceAll("T.*$", ""));
-        rent.setEndTime(rent.getEndTime().replaceAll("T.*$", ""));
+        if(rent.getEndTime() != null) {
+            rent.setEndTime(rent.getEndTime().replaceAll("T.*$", ""));
+        }
     }
 }

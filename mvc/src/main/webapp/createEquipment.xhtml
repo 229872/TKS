@@ -17,23 +17,23 @@
         </h:form>
         <h:form>
             ${msg['equipment.name']} <h:inputText id="name" required="true" value="#{equipmentBean.equipment.name}">
-            <f:validateBean disabled="true"/>
-            <f:validateRegex pattern="[A-Za-z]*"/>
+                <f:validateBean disabled="true"/>
+                <f:validateRegex pattern="[A-Za-z]*"/>
             </h:inputText>
             <h:message for="name" style="color:yellow"/><br/>
             ${msg['equipment.bail']} <h:inputText id="bail" required="true" value="#{equipmentBean.equipment.bail}">
-            <f:validateBean disabled="true"/>
-            <f:validateDoubleRange minimum="0.01"/>
+                <f:validateBean disabled="true"/>
+                <f:validateDoubleRange minimum="0.01"/>
             </h:inputText>
             <h:message for="bail" style="color:yellow"/><br/>
             ${msg['equipment.firstDayCost']} <h:inputText id="firstDayCost" required="true" value="#{equipmentBean.equipment.firstDayCost}">
-            <f:validateBean disabled="true"/>
-            <f:validateDoubleRange minimum="0.01"/>
+                <f:validateBean disabled="true"/>
+                <f:validateDoubleRange minimum="0.01"/>
             </h:inputText>
             <h:message for="firstDayCost" style="color:yellow"/><br/>
             ${msg['equipment.nextDaysCost']} <h:inputText id="nextDaysCost" required="true" value="#{equipmentBean.equipment.nextDaysCost}">
-            <f:validateBean disabled="true"/>
-            <f:validateDoubleRange minimum="0.01"/>
+                <f:validateBean disabled="true"/>
+                <f:validateDoubleRange minimum="0.01"/>
             </h:inputText>
             <h:message for="nextDaysCost" style="color:yellow"/><br/>
             ${msg['equipment.description']} <h:inputText id="description" required="false" value="#{equipmentBean.equipment.description}">

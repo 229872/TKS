@@ -5,50 +5,59 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import pl.lodz.p.edu.data.model.DTO.RentDTO;
+import pl.lodz.p.edu.data.model.Equipment;
 import pl.lodz.p.edu.data.model.Rent;
 import pl.lodz.p.edu.data.model.DTO.MvcRentDTO;
+import pl.lodz.p.edu.data.model.users.Client;
+import pl.lodz.p.edu.mvc.controller.ClientController;
+import pl.lodz.p.edu.mvc.controller.EquipmentController;
 import pl.lodz.p.edu.mvc.controller.RentController;
+
+import javax.ejb.Local;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Named
 @RequestScoped
 public class RentBean extends AbstractBean {
 
-//    @Inject
-//    private ClientController clientController;
-//
-//    @Inject
-//    private EquipmentController equipmentController;
+    @Inject
+    private ClientController clientController;
+
+    @Inject
+    private EquipmentController equipmentController;
 
     @Inject
     private RentController rentController;
 
-//    private Client client;
-//
-//    public Client getClient() {
-//        return client;
-//    }
-//
-//    public void setClient(Client client) {
-//        this.client = client;
-//    }
-//
-//    private Equipment equipment;
-//
-//    public Equipment getEquipment() {
-//        return equipment;
-//    }
-//
-//    public void setEquipment(Equipment equipment) {
-//        this.equipment = equipment;
-//    }
+    private Client client;
 
-    private Rent rent;
+    public Client getClient() {
+        return client;
+    }
 
-    public Rent getRent() {
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    private Equipment equipment;
+
+    public Equipment getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(Equipment equipment) {
+        this.equipment = equipment;
+    }
+
+    private MvcRentDTO rent;
+
+    public MvcRentDTO getRent() {
         return rent;
     }
 
-    public void setRent(Rent rent) {
+    public void setRent(MvcRentDTO rent) {
         this.rent = rent;
     }
 
@@ -58,24 +67,41 @@ public class RentBean extends AbstractBean {
     public void init() {
         String rentId = getUuidFromParam();
         if (rentId == null) {
-            rent = new Rent();
+            rent = new MvcRentDTO();
+            String clientId = getFromParam("uuidClient");
+            if (clientId == null) {
+                client = new Client();
+            } else {
+                client = clientController.get(clientId);
+            }
+            rent.setClient(client);
+            String equipmentId = getFromParam("uuidEquipment");
+            if (equipmentId == null) {
+                equipment = new Equipment();
+            } else {
+                equipment = equipmentController.get(equipmentId);
+            }
+            rent.setEquipment(equipment);
         } else {
             rent = rentController.get(rentId);
+            client = rent.getClient();
+            equipment = rent.getEquipment();
         }
+        LocalDateTime now = LocalDateTime.now();
+        String nowStr = now.format(DateTimeFormatter.ISO_DATE);
+        rent.setBeginTime(nowStr);
+        rent.setEndTime(nowStr);
     }
 
     public void update() {
-        MvcRentDTO updatedRent = rentController.update(
-                rent.getEntityId().toString(), new MvcRentDTO(rent.getEntityId().toString(),
-                        rent.getEquipment(), rent.getClient(), rent.getBeginTime().toString(),
-                        rent.getEndTime().toString(), rent.getClient().isActive()));
-        rent.merge(updatedRent.toRent());
+        rent = rentController.update(rent);
     }
 
     public void create() {
-        rent = rentController.create(new MvcRentDTO(rent.getClient().getEntityId().toString(),
-                rent.getEquipment(), rent.getClient(), rent.getBeginTime().toString(),
-                rent.getEndTime().toString(), rent.getClient().isActive()));
+        rent.setBeginTime(rent.getBeginTime() + "T00:00:00.000");
+        if(rent.getEndTime().isEmpty()) {
+            rent.setEndTime(rent.getEndTime() + "T00:00:00.000");
+        }
+        rent = rentController.create(rent);
     }
-
 }

@@ -55,25 +55,8 @@ public class RentController extends AbstractController {
         }
     }
 
-    public Rent get(String uuid) {
+    public MvcRentDTO get(String uuid) {
         HttpRequest request = buildGet(path + uuid);
-        HttpResponse<String> response = send(request);
-        try {
-            return om.readValue(response.body(), Rent.class);
-        } catch (IOException e) {
-            throw new RuntimeException(e); // todo komunikat
-        }
-    }
-
-    public MvcRentDTO update(String id, MvcRentDTO mvcRentDTO) {
-        //FIXME I HAVE NO F IDEA HOW THESE SHOULD WORK
-        String body;
-        try {
-            body = om.writeValueAsString(mvcRentDTO);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e); // todo komunikat
-        }
-        HttpRequest request = buildPut(path + id, body);
         HttpResponse<String> response = send(request);
         try {
             return om.readValue(response.body(), MvcRentDTO.class);
@@ -82,7 +65,24 @@ public class RentController extends AbstractController {
         }
     }
 
-    public Rent create(MvcRentDTO mvcRentDTO) {
+    public MvcRentDTO update(MvcRentDTO mvcRentDTO) {
+        //FIXME I HAVE NO F IDEA HOW THESE SHOULD WORK
+        String body;
+        try {
+            body = om.writeValueAsString(mvcRentDTO);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e); // todo komunikat
+        }
+        HttpRequest request = buildPut(path + mvcRentDTO.getEntityId(), body);
+        HttpResponse<String> response = send(request);
+        try {
+            return om.readValue(response.body(), MvcRentDTO.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e); // todo komunikat
+        }
+    }
+
+    public MvcRentDTO create(MvcRentDTO mvcRentDTO) {
         //FIXME I HAVE NO F IDEA HOW THESE SHOULD WORK
         String body;
         try {
@@ -94,7 +94,7 @@ public class RentController extends AbstractController {
         HttpResponse<String> response = send(request);
 
         try {
-            return om.readValue(response.body(), MvcRentDTO.class).toRent(); //?
+            return om.readValue(response.body(), MvcRentDTO.class);
         } catch (IOException e) {
             throw new RuntimeException(e); // todo komunikat
         }

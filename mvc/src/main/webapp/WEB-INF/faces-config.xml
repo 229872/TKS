@@ -45,6 +45,14 @@
         </navigation-case>
     </navigation-rule>
 
+    <navigation-rule>
+        <from-view-id>/clientView.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>toEditRent</from-outcome>
+            <to-view-id>/editRent.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
     <!-- CLIENTS -->
     <navigation-rule>
         <from-view-id>/manageClients.xhtml</from-view-id>
@@ -178,5 +186,6 @@
             <to-view-id>/clientView.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+
 
 </faces-config>

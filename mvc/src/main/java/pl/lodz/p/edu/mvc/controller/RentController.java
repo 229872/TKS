@@ -7,6 +7,7 @@ import pl.lodz.p.edu.data.model.Rent;
 import pl.lodz.p.edu.data.model.DTO.MvcRentDTO;
 import pl.lodz.p.edu.mvc.request.Request;
 
+import javax.ws.rs.NotFoundException;
 import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -34,6 +35,9 @@ public class RentController extends AbstractController {
     public List<MvcRentDTO> getEquipmentRents(String equipmentId) {
         HttpRequest request = Request.buildGet(path + "equipment/" + equipmentId);
         HttpResponse<String> response = send(request);
+        if(response.statusCode() == 404) {
+            throw new NotFoundException();
+        }
         try {
             return Arrays.asList(om.readValue(response.body(), MvcRentDTO[].class));
         } catch (JsonMappingException e) {

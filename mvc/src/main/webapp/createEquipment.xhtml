@@ -15,6 +15,7 @@
         <h:form>
             <h:commandButton value="#{msg['action.gotoList']}" action="fromCreateEquipment"/>
         </h:form>
+        ${equipmentBean.message}<br/>
         <h:form>
             ${msg['equipment.name']} <h:inputText id="name" required="true" value="#{equipmentBean.equipment.name}">
                 <f:validateBean disabled="true"/>

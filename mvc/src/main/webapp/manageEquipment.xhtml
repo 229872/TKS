@@ -16,6 +16,7 @@
             <h:commandButton value="#{msg['action.createEquipment']}" action="toCreateEquipment"/>
         </h:form>
 
+        ${equipmentBean.message}
         <h:dataTable value="#{equipmentListBean.equipment}" var="equipment">
             <h:column>
                 <f:facet name="header">${msg["object.id"]}</f:facet>
@@ -36,7 +37,9 @@
             <h:column>
                 <f:facet name="header">${msg['action.delete']}</f:facet>
                 <h:form>
-                    <h:commandButton value="#{msg['action.delete']}" action="${equipmentListBean.delete(equipment)}"/>
+                    <h:commandButton value="#{msg['action.delete']}" action="${equipmentBean.delete()}">
+                        <f:param name="uuid" value="#{equipment.entityId.toString()}"/>
+                    </h:commandButton>
                 </h:form>
             </h:column>
         </h:dataTable>

@@ -22,6 +22,16 @@ public class EquipmentBean extends AbstractBean {
     @Inject
     private RentController rentController;
 
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public Equipment getEquipment() {
         return equipment;
     }
@@ -58,6 +68,10 @@ public class EquipmentBean extends AbstractBean {
 
     public void create() {
         equipment = equipmentController.create(new EquipmentDTO(equipment));
+    }
+
+    public void delete() {
+        equipmentController.delete(equipment);
     }
 
 }

@@ -34,9 +34,6 @@
                 <f:validateRegex pattern="^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$"/>
             </h:inputText>
             <h:message for="endTime" style="color:yellow"/><br/>
-            <h:selectManyCheckbox value="#{rentBean.}">
-
-            </h:selectManyCheckbox>
 
             <h:commandButton action="#{rentBean.create()}" value="#{msg['action.submit']}">
                 <f:param name="uuidClient" value="#{rentBean.client.entityId.toString()}"/>

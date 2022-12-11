@@ -2,20 +2,16 @@ function confirmAction() {
     return confirm("Are you sure you want to delete?");
 }
 
-function filterEquipment() {
-    const filterValue = document.getElementById('filterValue').value;
-    let table = document.getElementById('equipmentTable');
-    let rows = table.getElementsByTagName("tr");
+async function filterClient() {
+    let filter = document.getElementById("filter").value;
 
-    for (let i = 0; i < rows.length; i++) {
-        let name = rows[i].getElementsByTagName("td")[1];
-        if (name) {
-            let txtValue = name.textContent || name.innerText;
-            if (txtValue.toUpperCase().indexOf(filterValue) > -1) {
-                rows[i].style.display = "";
-            } else {
-                rows[i].style.display = "none";
-            }
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if(xhr.readyState === xhr.DONE && xhr.status === 200) {
+            let response = JSON.parse(xhr.responseText);
+            console.log(response);
         }
     }
+    xhr.open("GET","http://localhost:8080/rest/api/clients?login=" + filter, true);
+    xhr.send();
 }

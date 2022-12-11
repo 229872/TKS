@@ -18,17 +18,28 @@
         </h:form>
         <h:form>
             ${msg['object.id']} <h:outputText value="#{equipmentBean.equipment.entityId.toString()}"/><br/>
-
-            ${msg['equipment.name']} <h:inputText id="name" value="#{equipmentBean.equipment.name}"/>
-            <h:message for="name"/><br/>
-            ${msg['equipment.bail']} <h:inputText id="bail" value="#{equipmentBean.equipment.bail}"/>
-            <h:message for="bail"/><br/>
-            ${msg['equipment.firstDayCost']} <h:inputText id="firstDayCost" value="#{equipmentBean.equipment.firstDayCost}"/>
-            <h:message for="firstDayCost"/><br/>
-            ${msg['equipment.nextDaysCost']} <h:inputText id="nextDaysCost" value="#{equipmentBean.equipment.nextDaysCost}"/>
-            <h:message for="nextDaysCost"/><br/>
-            ${msg['equipment.description']} <h:inputText id="description" value="#{equipmentBean.equipment.description}"/>
-            <h:message for="description"/><br/>
+            ${msg['equipment.name']} <h:inputText id="name" required="true" value="#{equipmentBean.equipment.name}">
+            <f:validateRegex pattern="[A-Za-z]*"/>
+            </h:inputText>
+            <h:message for="name" style="color:yellow"/><br/>
+            ${msg['equipment.bail']} <h:inputText id="bail" required="true" value="#{equipmentBean.equipment.bail}">
+            <f:validateBean disabled="true"/>
+            <f:validateDoubleRange minimum="0.01"/>
+        </h:inputText>
+            <h:message for="bail" style="color:yellow"/><br/>
+            ${msg['equipment.firstDayCost']} <h:inputText id="firstDayCost" required="true" value="#{equipmentBean.equipment.firstDayCost}">
+            <f:validateBean disabled="true"/>
+            <f:validateDoubleRange minimum="0.01"/>
+        </h:inputText>
+            <h:message for="firstDayCost" style="color:yellow"/><br/>
+            ${msg['equipment.nextDaysCost']} <h:inputText id="nextDaysCost" required="true" value="#{equipmentBean.equipment.nextDaysCost}">
+            <f:validateBean disabled="true"/>
+            <f:validateDoubleRange minimum="0.01"/>
+        </h:inputText>
+            <h:message for="nextDaysCost" style="color:yellow"/><br/>
+            ${msg['equipment.description']} <h:inputText id="description" required="false" value="#{equipmentBean.equipment.description}">
+        </h:inputText>
+            <h:message for="description" style="color:yellow"/><br/>
 
             <h:commandButton value="#{msg['action.submit']}" action="#{equipmentBean.update()}">
                 <f:param name="uuid" value="#{equipmentBean.equipment.entityId.toString()}"/>

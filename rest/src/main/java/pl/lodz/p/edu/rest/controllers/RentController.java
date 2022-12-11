@@ -77,7 +77,7 @@ public class RentController {
             Equipment equipment = equipmentManager.get(equipmentUuid);
             List<Rent> rents = rentManager.getRentByEq(equipment);
             return Response.status(Response.Status.OK).entity(rents).build();
-        } catch (NoResultException e) {
+        } catch (NoResultException | EntityNotFoundException e) {
             return Response.status(NOT_FOUND).build();
         }
     }

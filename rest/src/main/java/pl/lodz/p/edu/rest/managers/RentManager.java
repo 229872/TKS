@@ -41,7 +41,11 @@ public class RentManager {
     protected RentManager() {}
 
     public List<Rent> getRentByEq(Equipment equipment) {
-        return rentRepository.getRentByEq(equipment);
+        try {
+            return rentRepository.getRentByEq(equipment);
+        } catch(EntityNotFoundException e) {
+            return new ArrayList<>();
+        }
     }
 
     public List<Rent> getRentsByClient(Client client) {

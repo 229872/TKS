@@ -83,7 +83,6 @@ public class RentController extends AbstractController {
     }
 
     public MvcRentDTO create(MvcRentDTO mvcRentDTO) {
-        //FIXME I HAVE NO F IDEA HOW THESE SHOULD WORK
         RentDTO rentDTO = mvcRentDTO.toRentDTO();
         String body;
         try {

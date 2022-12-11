@@ -27,16 +27,6 @@ public class EquipmentListBean {
         available.sort(Comparator.comparing(Equipment::getName));
     }
 
-    private String searchParam;
-
-    public String getSearchParam() {
-        return searchParam;
-    }
-
-    public void setSearchParam(String searchParam) {
-        this.searchParam = searchParam;
-    }
-
     private List<Equipment> equipment;
 
     private List<Equipment> available;

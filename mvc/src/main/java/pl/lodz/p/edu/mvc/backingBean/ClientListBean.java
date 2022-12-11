@@ -45,8 +45,6 @@ public class ClientListBean {
         return clients;
     }
 
-
-
     public void search() {
         clients = clientController.search(searchParam);
     }

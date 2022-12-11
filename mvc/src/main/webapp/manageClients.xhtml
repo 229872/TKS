@@ -16,8 +16,10 @@
         <h:form>
             <h:commandButton value="#{msg['action.createClient']}" action="toCreateClient"/>
         </h:form>
+
+
         <h:form>
-            <h:inputText value="#{clientListBean.searchParam}"/>
+            <h:inputText id="searchParam" binding="#{clientListBean.searchParam}"/>
             <h:commandButton action="#{clientListBean.search()}" value="#{msg['action.search']}"/>
         </h:form>
         <h:dataTable value="#{clientListBean.clients}" var="client">

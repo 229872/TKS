@@ -44,6 +44,9 @@ public class UserController<T, Tdto> extends AbstractController {
     public List<T> search(String login) {
         HttpRequest request = Request.buildGet(path + "?login=" + login);
         HttpResponse<String> response = send(request);
+        if(response.statusCode() != 200) {
+            throw new RuntimeException(response.toString());
+        }
         try {
             return Arrays.asList(om.readValue(response.body(), TListType));
         } catch (JsonMappingException e) {

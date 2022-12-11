@@ -22,25 +22,11 @@ public class ClientRentsBean {
         clientRents = rentController.getAll();
     }
 
-    private String searchParam;
-
-    public String getSearchParam() {
-        return searchParam;
-    }
-
-    public void setSearchParam(String searchParam) {
-        this.searchParam = searchParam;
-    }
-
     private List<MvcRentDTO> clientRents;
 
     public List<MvcRentDTO> getClientRents() {
         return clientRents;
     }
-
-//    public void delete(Rent rent) {
-//        rentController.delete(rent.getEntityId().toString());
-//    }
 
     public void delete(MvcRentDTO rentDTO) {
         rentController.delete(rentDTO.getEntityId());

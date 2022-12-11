@@ -80,7 +80,7 @@ public class EquipmentRepository implements Repository<Equipment> {
     }
 
     public boolean isEquipmentRented(UUID entityId) {
-        Query q = em.createQuery("Select count(rent) from Rent rent where rent.equipment.entityId = :id and rent.endTime is null", Long.class);
+        Query q = em.createQuery("Select count(rent) from Rent rent where rent.equipment.entityId = :id", Long.class);
         q.setParameter("id", entityId);
         Long count = (Long) q.getSingleResult();
         return count == 0 ? false : true;

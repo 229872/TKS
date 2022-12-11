@@ -16,7 +16,6 @@
             <h:commandButton value="#{msg['action.createEquipment']}" action="toCreateEquipment"/>
         </h:form>
 
-        ${msg['action.filter']} <h:inputText id="filterValue" onchange="filterEquipment()"/><br/>
         ${equipmentBean.message}
         <h:dataTable id="equipmentTable" value="#{equipmentListBean.equipment}" var="equipment">
             <h:column>

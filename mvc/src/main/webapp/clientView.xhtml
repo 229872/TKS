@@ -74,7 +74,7 @@
                 <f:facet name="header">${msg['action.delete']}</f:facet>
                 <h:form>
                     <h:commandButton value="#{msg['action.delete']}" action="${rentListBean.delete(rent)}">
-
+                        <f:param name="uuid" value="#{clientBean.client.entityId.toString()}"/>
                     </h:commandButton>
                 </h:form>
             </h:column>
@@ -82,7 +82,8 @@
                 <f:facet name="header">${msg['action.edit']}</f:facet>
                 <h:form>
                     <h:commandButton value="#{msg['action.edit']}" action="toEditRent">
-                        <f:param name="uuid" value="#{rent.entityId.toString()}"/>
+                        <f:param name="uuidRent" value="#{rent}"/>
+                        <f:param name="uuidClient" value="#{clientBean.client.entityId.toString()}"/>
                     </h:commandButton>
                 </h:form>
             </h:column>

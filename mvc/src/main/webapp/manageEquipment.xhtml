@@ -29,7 +29,7 @@
             <h:column>
                 <f:facet name="header">${msg['action.edit']}</f:facet>
                 <h:form>
-                    <h:commandButton value="#{msg['action.edit']}" action="toEquipment">
+                    <h:commandButton value="#{msg['action.edit']}" onclick="return confirmAction()" action="toEquipment">
                         <f:param name="uuid" value="#{equipment.entityId.toString()}"/>
                     </h:commandButton>
                 </h:form>
@@ -37,7 +37,7 @@
             <h:column>
                 <f:facet name="header">${msg['action.delete']}</f:facet>
                 <h:form>
-                    <h:commandButton value="#{msg['action.delete']}" action="${equipmentBean.delete()}">
+                    <h:commandButton value="#{msg['action.delete']}" action="${equipmentBean.delete()}" onclick="return confirmAction()">
                         <f:param name="uuid" value="#{equipment.entityId.toString()}"/>
                     </h:commandButton>
                 </h:form>

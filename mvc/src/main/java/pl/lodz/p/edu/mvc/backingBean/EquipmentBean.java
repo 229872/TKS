@@ -10,6 +10,8 @@ import pl.lodz.p.edu.data.model.DTO.MvcRentDTO;
 import pl.lodz.p.edu.mvc.controller.EquipmentController;
 import pl.lodz.p.edu.mvc.controller.RentController;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,12 @@ public class EquipmentBean extends AbstractBean {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    private String isRented = "nope";
+
+    public String getIsRented() {
+        return isRented;
     }
 
     public Equipment getEquipment() {
@@ -71,7 +79,11 @@ public class EquipmentBean extends AbstractBean {
     }
 
     public void delete() {
-        equipmentController.delete(equipment);
+        int status = equipmentController.delete(equipment);
+        if (status == 409) {
+            this.isRented = "This equipment is rented" + status;
+            FacesContext.getCurrentInstance().addMessage("deleteEq", new FacesMessage("pain"));
+        }
     }
 
 }

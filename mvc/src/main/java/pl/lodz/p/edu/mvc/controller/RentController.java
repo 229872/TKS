@@ -37,6 +37,9 @@ public class RentController extends AbstractController {
     public List<MvcRentDTO> getEquipmentRents(String equipmentId) {
         HttpRequest request = Request.buildGet(path + "equipment/" + equipmentId);
         HttpResponse<String> response = send(request);
+        if(response.statusCode() == 404) {
+            throw new NotFoundException();
+        }
         try {
             return Arrays.asList(om.readValue(response.body(), MvcRentDTO[].class));
         } catch (JsonMappingException e) {

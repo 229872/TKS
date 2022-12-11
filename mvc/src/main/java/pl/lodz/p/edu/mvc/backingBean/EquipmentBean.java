@@ -12,6 +12,8 @@ import pl.lodz.p.edu.mvc.controller.RentController;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -64,19 +66,41 @@ public class EquipmentBean extends AbstractBean {
             equipment = new Equipment();
             equipmentRents = new ArrayList<>();
         } else {
-            equipment = equipmentController.get(equipmentId);
-//            equipmentRents = rentController.getEquipmentRents(equipmentId);
+            try {
+                equipment = equipmentController.get(equipmentId);
+            } catch (NotFoundException e) {
+                equipment = new Equipment();
+            }
+            try {
+                equipmentRents = rentController.getEquipmentRents(equipmentId);
+            } catch (NotFoundException e) {
+                equipmentRents = new ArrayList<>();
+            }
         }
     }
     
     public void update() {
-        EquipmentDTO updatedEquipment = equipmentController.update(
-                equipment.getEntityId().toString(), new EquipmentDTO(equipment));
-        equipment.merge(updatedEquipment);
+        ResourceBundle bundle = ResourceBundle.getBundle("i18n.messages");
+        try {
+            EquipmentDTO updatedEquipment = equipmentController.update(
+                    equipment.getEntityId().toString(), new EquipmentDTO(equipment));
+            equipment.merge(updatedEquipment);
+            message = bundle.getString("status.updatedOk");
+        } catch(NotFoundException e) {
+            message = bundle.getString("status.notFound") + equipment.getEntityId().toString();
+        } catch(BadRequestException e) {
+            message = bundle.getString(("status.badRequest")) + equipment.getEntityId().toString();
+        }
     }
 
     public void create() {
-        equipment = equipmentController.create(new EquipmentDTO(equipment));
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n.messages");
+        try {
+            equipment = equipmentController.create(new EquipmentDTO(equipment));
+            message = resourceBundle.getString("status.createdOk");
+        } catch (BadRequestException e) {
+            message = resourceBundle.getString("status.badRequest");
+        }
     }
 
     public void delete() {

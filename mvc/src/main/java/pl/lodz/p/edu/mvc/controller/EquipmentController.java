@@ -6,6 +6,8 @@ import pl.lodz.p.edu.data.model.DTO.EquipmentDTO;
 import pl.lodz.p.edu.data.model.Equipment;
 import pl.lodz.p.edu.mvc.request.Request;
 
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.NotFoundException;
 import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -21,6 +23,9 @@ public class EquipmentController extends AbstractController {
     public Equipment get(String uuid) {
         HttpRequest request = buildGet(path + uuid);
         HttpResponse<String> response = send(request);
+        if(response.statusCode() == 404) {
+            throw new NotFoundException();
+        }
         try {
             return om.readValue(response.body(), Equipment.class);
         } catch (IOException e) {
@@ -65,6 +70,13 @@ public class EquipmentController extends AbstractController {
         }
         HttpRequest request = buildPut(path + id, body);
         HttpResponse<String> response = send(request);
+        if(response.statusCode() == 404) {
+            throw new NotFoundException();
+        }
+        if(response.statusCode() == 400) {
+            throw new BadRequestException();
+        }
+
         try {
             return om.readValue(response.body(), EquipmentDTO.class);
         } catch (IOException e) {

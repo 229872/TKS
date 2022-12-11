@@ -30,3 +30,33 @@ async function filterClient() {
     xhr.open("GET","http://localhost:8080/rest/api/clients?login=" + filter, true);
     xhr.send();
 }
+
+function validate() {
+    let rLogin = new RegExp(/^(Cat|Dog|Sheep)_[0-9]{4}-[a-zA-Z]{1,8}$/);
+    let rIceCream = new RegExp(/^(Vanilla|Chocolate|Sorbet)$/);
+    let inputLogin = document.getElementById("createAdmin:login");
+    let inputIceCream = document.getElementById("createAdmin:iceCream");
+
+    let goodLogin = testTextInput(rLogin, inputLogin, 'login');
+    let goodIceCream = testTextInput(rIceCream, inputIceCream, 'iceCream');
+
+    let button = document.getElementById("createAdmin:button");
+    button.disabled = !(goodLogin && goodIceCream);
+}
+
+function testTextInput(regex, input, name) {
+    let label = document.getElementById(name + 'Label');
+    console.log(label);
+    if(input.value == '') {
+        input.style.background = "orange";
+        label.innerHTML = "Cannot be empty";
+        return false;
+    } else if (!regex.test(input.value)) {
+        input.style.background = "red";
+        label.innerHTML = "Not matching regex: " + regex.toString();
+        return false;
+    }
+    label.innerHTML = "";
+    input.style.background = "green";
+    return true;
+}

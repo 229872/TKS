@@ -106,10 +106,12 @@ public class RentBean extends AbstractBean {
             rent = rentController.update(rent);
         } catch (BadRequestException e) {
             error = resourceBundle.getString("rent.bad.date");
+            return;
         } catch (ClientErrorException e) {
             error = resourceBundle.getString("rent.conflict");
+            return;
         }
-
+        error = ResourceBundle.getBundle("i18n.messages").getString("status.updatedOk");
     }
 
     public void create() {
@@ -129,7 +131,7 @@ public class RentBean extends AbstractBean {
             return;
         }
 
-
+        error = ResourceBundle.getBundle("i18n.messages").getString("status.createdOk");
 
         rent.setBeginTime(rent.getBeginTime().replaceAll("T.*$", ""));
         if(rent.getEndTime() != null) {

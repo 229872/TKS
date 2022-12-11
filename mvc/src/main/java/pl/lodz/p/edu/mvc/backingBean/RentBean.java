@@ -4,17 +4,13 @@ import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import pl.lodz.p.edu.data.model.DTO.RentDTO;
 import pl.lodz.p.edu.data.model.Equipment;
-import pl.lodz.p.edu.data.model.Rent;
 import pl.lodz.p.edu.data.model.DTO.MvcRentDTO;
 import pl.lodz.p.edu.data.model.users.Client;
 import pl.lodz.p.edu.mvc.controller.ClientController;
 import pl.lodz.p.edu.mvc.controller.EquipmentController;
 import pl.lodz.p.edu.mvc.controller.RentController;
 
-import javax.ejb.Local;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -90,7 +86,6 @@ public class RentBean extends AbstractBean {
         LocalDateTime now = LocalDateTime.now();
         String nowStr = now.format(DateTimeFormatter.ISO_DATE);
         rent.setBeginTime(nowStr);
-        rent.setEndTime(nowStr);
     }
 
     public void update() {
@@ -101,6 +96,8 @@ public class RentBean extends AbstractBean {
         rent.setBeginTime(rent.getBeginTime() + "T00:00:00.000");
         if(!rent.getEndTime().isEmpty()) {
             rent.setEndTime(rent.getEndTime() + "T00:00:00.000");
+        } else {
+            rent.setEndTime(null);
         }
         rent = rentController.create(rent);
         rent.setBeginTime(rent.getBeginTime().replaceAll("T.*$", ""));

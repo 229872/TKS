@@ -30,12 +30,20 @@ public class MvcRentDTO {
         this.active = active;
     }
 
+    public MvcRentDTO(Equipment equipment, Client client,
+                      String beginTime, String endTime) {
+        this(null, equipment, client, beginTime, endTime, true);
+    }
+
     public MvcRentDTO() {
     }
 
     public Rent toRent() {
         LocalDateTime beginTime = LocalDateTime.parse(this.beginTime);
-        LocalDateTime endTime = LocalDateTime.parse(this.endTime);
+        LocalDateTime endTime = null;
+        if(this.endTime.isEmpty()) {
+            endTime = LocalDateTime.parse(this.endTime);
+        }
         return new Rent(beginTime, endTime, equipment, client);
     }
 

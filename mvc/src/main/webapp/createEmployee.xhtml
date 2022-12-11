@@ -15,9 +15,12 @@
             <h:commandButton value="#{msg['action.gotoList']}" action="fromCreateEmployee"/>
         </h:form>
         <h:form>
-            ${msg['user.login']} <h:inputText id="login" value="#{employeeBean.employee.login}"/>
+            ${msg['user.login']} <h:inputText id="login" required="true" value="#{employeeBean.employee.login}"/>
             <h:message for="login"/><br/>
-            ${msg['employee.desk']} <h:inputText id="desk" value="#{employeeBean.employee.desk}"/>
+            ${msg['employee.desk']} <h:inputText id="desk" required="true" value="#{employeeBean.employee.desk}">
+            <f:validateBean disabled="true"/>
+            <f:validateRegex pattern="[A-Za-z0-9]*"/>
+            </h:inputText><br/>
             <h:message for="desk"/><br/>
 
             <h:commandButton action="#{employeeBean.create()}" value="#{msg['action.submit']}"/>

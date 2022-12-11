@@ -15,10 +15,14 @@
             <h:commandButton value="#{msg['action.gotoList']}" action="fromCreateAdmin"/>
         </h:form>
         <h:form>
-            ${msg['admin.login']} <h:inputText id="login" value="#{adminBean.admin.login}"/>
+            ${msg['admin.login']} <h:inputText id="login" required="true" value="#{adminBean.admin.login}">
+            </h:inputText>
             <h:message for="login"/><br/>
-            ${msg['admin.iceCream']} <h:inputText id="iceCream" value="#{adminBean.admin.favouriteIceCream}"/>
+            ${msg['admin.iceCream']} <h:inputText id="iceCream" required="true" value="#{adminBean.admin.favouriteIceCream}">
             <h:message for="iceCream"/><br/>
+            <f:validateBean disabled="true"/>
+            <f:validateRegex pattern="[A-Za-z]*"/>
+            </h:inputText><br/>
 
             <h:commandButton action="#{adminBean.create()}" value="#{msg['action.submit']}"/>
         </h:form>

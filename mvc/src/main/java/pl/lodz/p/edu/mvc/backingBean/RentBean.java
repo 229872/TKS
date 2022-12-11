@@ -11,8 +11,12 @@ import pl.lodz.p.edu.mvc.controller.ClientController;
 import pl.lodz.p.edu.mvc.controller.EquipmentController;
 import pl.lodz.p.edu.mvc.controller.RentController;
 
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.ClientErrorException;
+import javax.ws.rs.NotFoundException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
 
 @Named
 @RequestScoped
@@ -59,6 +63,15 @@ public class RentBean extends AbstractBean {
 
     public RentBean() {}
 
+    private String error;
+
+    public String getError() {
+        return error;
+    }
+
+    private final ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n.jsf_messages");
+
+
     @PostConstruct
     public void init() {
         String rentId = getFromParam("uuidRent");
@@ -89,7 +102,14 @@ public class RentBean extends AbstractBean {
     }
 
     public void update() {
-        rent = rentController.update(rent);
+        try {
+            rent = rentController.update(rent);
+        } catch (BadRequestException e) {
+            error = resourceBundle.getString("rent.bad.date");
+        } catch (ClientErrorException e) {
+            error = resourceBundle.getString("rent.conflict");
+        }
+
     }
 
     public void create() {
@@ -99,7 +119,18 @@ public class RentBean extends AbstractBean {
         } else {
             rent.setEndTime(null);
         }
-        rent = rentController.create(rent);
+        try {
+            rent = rentController.create(rent);
+        } catch (BadRequestException e) {
+            error = resourceBundle.getString("rent.bad.date");
+            return;
+        } catch (ClientErrorException e) {
+            error = resourceBundle.getString("rent.conflict");
+            return;
+        }
+
+
+
         rent.setBeginTime(rent.getBeginTime().replaceAll("T.*$", ""));
         if(rent.getEndTime() != null) {
             rent.setEndTime(rent.getEndTime().replaceAll("T.*$", ""));

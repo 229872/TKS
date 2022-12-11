@@ -10,6 +10,10 @@
 
     <ui:define name="content">
         <h3>${msg['action.editRent']}</h3>
+        ${msg['rent.notToday']}
+        <br/>
+        ${msg['rent.secondAfter']}
+        <br/>
         <h:form>
             ${msg['rent.endTime']} <h:inputText id="endTime" value="#{rentBean.rent.endTime}">
             <f:validateRegex pattern="^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$"/>

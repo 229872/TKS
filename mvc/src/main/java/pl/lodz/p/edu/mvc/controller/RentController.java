@@ -7,6 +7,9 @@ import pl.lodz.p.edu.data.model.Rent;
 import pl.lodz.p.edu.data.model.DTO.MvcRentDTO;
 import pl.lodz.p.edu.mvc.request.Request;
 
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.ClientErrorException;
+import javax.ws.rs.NotFoundException;
 import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -66,7 +69,6 @@ public class RentController extends AbstractController {
     }
 
     public MvcRentDTO update(MvcRentDTO mvcRentDTO) {
-        //FIXME I HAVE NO F IDEA HOW THESE SHOULD WORK
         String body;
         try {
             body = om.writeValueAsString(mvcRentDTO);
@@ -75,6 +77,15 @@ public class RentController extends AbstractController {
         }
         HttpRequest request = buildPut(path + mvcRentDTO.getEntityId(), body);
         HttpResponse<String> response = send(request);
+        if (response.statusCode() == 404) {
+            throw new NotFoundException();
+        }
+        if (response.statusCode() == 400) {
+            throw new BadRequestException();
+        }
+
+
+
         try {
             return om.readValue(response.body(), MvcRentDTO.class);
         } catch (IOException e) {
@@ -92,6 +103,13 @@ public class RentController extends AbstractController {
         }
         HttpRequest request = buildPost(path, body);
         HttpResponse<String> response = send(request);
+
+        if (response.statusCode() == 409) {
+            throw new ClientErrorException(409);
+        }
+        if (response.statusCode() == 400) {
+            throw new BadRequestException();
+        }
 
         try {
             return om.readValue(response.body(), MvcRentDTO.class);

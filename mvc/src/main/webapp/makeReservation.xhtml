@@ -24,16 +24,20 @@
 
             ${msg['format.date']}<br/>
 
-            ${msg['rent.beginTime']} <h:inputText id="beginTime" rendered="true" value="#{rentBean.rent.beginTime}">
+            ${msg['rent.notToday']}
+            <br/>
+            ${msg['rent.secondAfter']}
+            <br/>
+            ${msg['rent.beginTime']} <h:inputText id="beginTime" required="true" value="#{rentBean.rent.beginTime}">
                 <f:validateRegex pattern="^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$"/>
-            </h:inputText>
-            <h:message for="beginTime" style="color:yellow"/><br/>
-
+            </h:inputText><br/>
+            <h:message for="beginTime" style="color:red"/>
             ${msg['rent.endTime']} <h:inputText id="endTime" value="#{rentBean.rent.endTime}">
                 <f:validateRegex pattern="^([0-9]{4}\-[0-9]{2}\-[0-9]{2}|)$"/>
-            </h:inputText>
-            <h:message for="endTime" style="color:yellow"/><br/>
-
+            </h:inputText><br/>
+            <h:message for="endTime" style="color:red"/><br/>
+            <h:outputText style="color: red" value="#{rentBean.error}"/>
+            <br/>
             <h:commandButton action="#{rentBean.create()}" value="#{msg['action.submit']}">
                 <f:param name="uuidClient" value="#{rentBean.client.entityId.toString()}"/>
                 <f:param name="uuidEquipment" value="#{rentBean.equipment.entityId.toString()}"/>

@@ -61,7 +61,7 @@ public class RentBean extends AbstractBean {
 
     @PostConstruct
     public void init() {
-        String rentId = getUuidFromParam();
+        String rentId = getFromParam("uuidRent");
         if (rentId == null) {
             rent = new MvcRentDTO();
             String clientId = getFromParam("uuidClient");
@@ -78,14 +78,14 @@ public class RentBean extends AbstractBean {
                 equipment = equipmentController.get(equipmentId);
             }
             rent.setEquipment(equipment);
+            LocalDateTime now = LocalDateTime.now();
+            String nowStr = now.format(DateTimeFormatter.ISO_DATE);
+            rent.setBeginTime(nowStr);
         } else {
             rent = rentController.get(rentId);
             client = rent.getClient();
             equipment = rent.getEquipment();
         }
-        LocalDateTime now = LocalDateTime.now();
-        String nowStr = now.format(DateTimeFormatter.ISO_DATE);
-        rent.setBeginTime(nowStr);
     }
 
     public void update() {
@@ -104,5 +104,9 @@ public class RentBean extends AbstractBean {
         if(rent.getEndTime() != null) {
             rent.setEndTime(rent.getEndTime().replaceAll("T.*$", ""));
         }
+    }
+
+    public void delete() {
+        rentController.delete(rent.getEntityId());
     }
 }

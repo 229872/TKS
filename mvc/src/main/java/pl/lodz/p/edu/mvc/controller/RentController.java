@@ -100,8 +100,8 @@ public class RentController extends AbstractController {
         }
     }
 
-    public void delete(Rent rent) {
-        HttpRequest request = buildDelete(path + rent.getEntityId().toString());
+    public void delete(String id) {
+        HttpRequest request = buildDelete(path + id);
         HttpResponse<String> response = send(request);
     }
 }

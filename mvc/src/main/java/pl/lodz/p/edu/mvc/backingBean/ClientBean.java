@@ -84,4 +84,10 @@ public class ClientBean extends AbstractBean {
         clientController.deactivate(client.getEntityId().toString());
         client = clientController.get(client.getEntityId().toString());
     }
+
+    public void deleteClientRent() {
+        String clientRent = getFromParam("uuidRent");
+        rentController.delete(clientRent);
+        clientRents = rentController.getClientRents(client.getEntityId().toString());
+    }
 }

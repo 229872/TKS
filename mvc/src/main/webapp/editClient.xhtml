@@ -24,27 +24,27 @@
             <f:validateBean disabled="true"/>
             <f:validateRegex pattern="[A-Za-z]*"/>
             </h:inputText>
-            <h:message for="firstName"/><br/>
+            <h:message for="firstName" style="color:red"/><br/>
             ${msg['user.lastName']} <h:inputText id="lastName" required="true" value="#{clientBean.client.lastName}">
             <f:validateBean disabled="true"/>
             <f:validateRegex pattern="[A-Za-z]*"/>
             </h:inputText>
-            <h:message for="lastName"/><br/>
+            <h:message for="lastName" style="color:red"/><br/>
             ${msg['address.city']} <h:inputText id="city" required="true" value="#{clientBean.client.address.city}">
             <f:validateBean disabled="true"/>
             <f:validateRegex pattern="[A-Za-z]*"/>
             </h:inputText>
-            <h:message for="city"/><br/>
+            <h:message for="city" style="color:red"/><br/>
             ${msg['address.street']} <h:inputText id="street" required="false" value="#{clientBean.client.address.street}">
             <f:validateBean disabled="true"/>
             <f:validateRegex pattern="[A-Za-z]*"/>
             </h:inputText>
-            <h:message for="street"/><br/>
+            <h:message for="street" style="color:red"/><br/>
             ${msg['address.streetNo']} <h:inputText id="streetNr" required="true" value="#{clientBean.client.address.streetNr}">
             <f:validateBean disabled="true"/>
             <f:validateRegex pattern="[A-Za-z0-9]*"/>
             </h:inputText>
-            <h:message for="streetNr"/><br/>
+            <h:message for="streetNr" style="color:red"/><br/>
             ${msg['user.active']} <h:outputText value="#{clientBean.client.active}"/><br/>
             <h:commandButton value="#{msg['action.submit']}" action="#{clientBean.update()}">
                 <f:param name="uuid" value="#{clientBean.client.entityId.toString()}"/>

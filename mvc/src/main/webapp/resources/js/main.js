@@ -2,6 +2,7 @@ function confirmAction() {
     return confirm("Are you sure you want to delete?");
 }
 
+
 async function filterClient() {
     let filter = document.getElementById("filter").value;
     let table = document.getElementById("clientTable");

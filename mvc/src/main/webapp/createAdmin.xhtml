@@ -19,7 +19,7 @@
             </h:inputText>
             <h:message for="login"/><br/>
             ${msg['admin.iceCream']} <h:inputText id="iceCream" required="true" value="#{adminBean.admin.favouriteIceCream}">
-            <h:message for="iceCream"/><br/>
+            <h:message for="iceCream" style="color:red"/><br/>
             <f:validateBean disabled="true"/>
             <f:validateRegex pattern="[A-Za-z]*"/>
             </h:inputText><br/>

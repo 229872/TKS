@@ -14,7 +14,7 @@
             ${msg['rent.endTime']} <h:inputText id="endTime" value="#{rentBean.rent.endTime}">
             <f:validateRegex pattern="^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$"/>
         </h:inputText>
-            <h:message for="endTime" style="color:yellow"/><br/>
+            <h:message for="endTime" style="color:red"/><br/>
 
             <h:commandButton value="#{msg['action.submit']}" action="#{rentBean.update()}">
                 <f:param name="uuid" value="#{rentBean.rent.entityId.toString()}"/>

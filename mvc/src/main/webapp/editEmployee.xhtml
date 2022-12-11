@@ -20,7 +20,10 @@
             ${msg['object.id']} <h:outputText value="#{employeeBean.employee.entityId.toString()}"/><br/>
             ${msg['user.login']} <h:outputText value="#{employeeBean.employee.login}"/><br/>
 
-            ${msg['employee.desk']} <h:inputText id="desk" value="#{employeeBean.employee.desk}"/>
+            ${msg['employee.desk']} <h:inputText id="desk" required="true" value="#{employeeBean.employee.desk}">
+            <f:validateBean disabled="true"/>
+            <f:validateRegex pattern="[A-Za-z0-9]*"/>
+            </h:inputText><br/>
             <h:message for="desk"/><br/>
 
             ${msg['user.active']} <h:outputText value="#{employeeBean.employee.active}"/><br/>

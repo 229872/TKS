@@ -19,8 +19,11 @@
         <h:form>
             ${msg['object.id']} <h:outputText value="#{adminBean.admin.entityId.toString()}"/><br/>
             ${msg['user.login']} <h:outputText value="#{adminBean.admin.login}"/><br/>
-            ${msg['admin.iceCream']} <h:inputText id="iceCream" value="#{adminBean.admin.favouriteIceCream}"/><br/>
-            <h:message for="iceCream"/><br/>
+            ${msg['admin.iceCream']} <h:inputText id="iceCream" required="true" value="#{adminBean.admin.favouriteIceCream}"><br/>
+            <f:validateBean disabled="true"/>
+            <f:validateRegex pattern="[A-Za-z]*"/>
+            </h:inputText><br/>
+        <h:message for="iceCream"/><br/>
             ${msg['user.active']} <h:outputText value="#{adminBean.admin.active}"/><br/>
             <h:commandButton value="#{msg['action.submit']}" action="#{adminBean.update()}">
                 <f:param name="uuid" value="#{adminBean.admin.entityId.toString()}"/>

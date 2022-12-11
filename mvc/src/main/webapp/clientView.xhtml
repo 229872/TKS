@@ -73,7 +73,7 @@
             <h:column>
                 <f:facet name="header">${msg['action.delete']}</f:facet>
                 <h:form>
-                    <h:commandButton value="#{msg['action.delete']}" action="${rentListBean.delete(rent)}">
+                    <h:commandButton value="#{msg['action.delete']}" onclick="return confirmAction()" action="${rentListBean.delete(rent)}">
                         <f:param name="uuid" value="#{clientBean.client.entityId.toString()}"/>
                     </h:commandButton>
                 </h:form>

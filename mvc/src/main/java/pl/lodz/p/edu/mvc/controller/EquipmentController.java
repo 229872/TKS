@@ -91,6 +91,6 @@ public class EquipmentController extends AbstractController {
 
     public void delete(Equipment equipment) {
         HttpRequest request = buildDelete(path + equipment.getEntityId().toString());
-        HttpResponse<String> response = send(request);
+        send(request);
     }
 }

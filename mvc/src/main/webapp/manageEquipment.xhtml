@@ -16,7 +16,9 @@
             <h:commandButton value="#{msg['action.createEquipment']}" action="toCreateEquipment"/>
         </h:form>
 
-        <h:dataTable value="#{equipmentListBean.equipment}" var="equipment">
+        ${msg['action.filter']} <h:inputText id="filterValue" onchange="filterEquipment()"/><br/>
+        ${equipmentBean.message}
+        <h:dataTable id="equipmentTable" value="#{equipmentListBean.equipment}" var="equipment">
             <h:column>
                 <f:facet name="header">${msg["object.id"]}</f:facet>
                 ${equipment.entityId.toString()}
@@ -28,7 +30,7 @@
             <h:column>
                 <f:facet name="header">${msg['action.edit']}</f:facet>
                 <h:form>
-                    <h:commandButton value="#{msg['action.edit']}" action="toEquipment">
+                    <h:commandButton value="#{msg['action.edit']}" onclick="return confirmAction()" action="toEquipment">
                         <f:param name="uuid" value="#{equipment.entityId.toString()}"/>
                     </h:commandButton>
                 </h:form>
@@ -36,7 +38,9 @@
             <h:column>
                 <f:facet name="header">${msg['action.delete']}</f:facet>
                 <h:form>
-                    <h:commandButton value="#{msg['action.delete']}" action="${equipmentListBean.delete(equipment)}"/>
+                    <h:commandButton value="#{msg['action.delete']}" action="${equipmentBean.delete()}" onclick="return confirmAction()">
+                        <f:param name="uuid" value="#{equipment.entityId.toString()}"/>
+                    </h:commandButton>
                 </h:form>
             </h:column>
         </h:dataTable>

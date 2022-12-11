@@ -15,15 +15,30 @@
             <h:commandButton value="#{msg['action.gotoList']}" action="fromCreateClient"/>
         </h:form>
         <h:form>
-            ${msg['user.firstName']} <h:inputText id="firstName" value="#{clientBean.client.firstName}"/>
+            ${msg['user.firstName']} <h:inputText id="firstName" required="true" value="#{clientBean.client.firstName}">
+            <f:validateBean disabled="true"/>
+            <f:validateRegex pattern="[A-Za-z]*"/>
+            </h:inputText>
             <h:message for="firstName"/><br/>
-            ${msg['user.lastName']} <h:inputText id="lastName" value="#{clientBean.client.lastName}"/>
+            ${msg['user.lastName']} <h:inputText id="lastName" required="true" value="#{clientBean.client.lastName}">
+            <f:validateBean disabled="true"/>
+            <f:validateRegex pattern="[A-Za-z]*"/>
+            </h:inputText>
             <h:message for="lastName"/><br/>
-            ${msg['address.city']} <h:inputText id="city" value="#{clientBean.client.address.city}"/>
+            ${msg['address.city']} <h:inputText id="city" required="true" value="#{clientBean.client.address.city}">
+            <f:validateBean disabled="true"/>
+            <f:validateRegex pattern="[A-Za-z]*"/>
+            </h:inputText>
             <h:message for="city"/><br/>
-            ${msg['address.street']} <h:inputText id="street" value="#{clientBean.client.address.street}"/>
+            ${msg['address.street']} <h:inputText id="street" required="false" value="#{clientBean.client.address.street}">
+            <f:validateBean disabled="true"/>
+            <f:validateRegex pattern="[A-Za-z]*"/>
+            </h:inputText>
             <h:message for="street"/><br/>
-            ${msg['address.streetNo']} <h:inputText id="streetNr" value="#{clientBean.client.address.streetNr}"/>
+            ${msg['address.streetNo']} <h:inputText id="streetNr" required="true" value="#{clientBean.client.address.streetNr}">
+            <f:validateBean disabled="true"/>
+            <f:validateRegex pattern="[A-Za-z0-9]*"/>
+            </h:inputText>
             <h:message for="streetNr"/><br/>
 
             <h:commandButton action="#{clientBean.create()}" value="#{msg['action.submit']}"/>

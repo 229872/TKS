@@ -165,12 +165,17 @@
             <from-outcome>fromClientView</from-outcome>
             <to-view-id>/chooseClient.xhtml</to-view-id>
         </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>/clientView.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>toMakeReservation</from-outcome>
             <to-view-id>/makeReservation.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>toEditRent</from-outcome>
+            <to-view-id>/editRent.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>toTest</from-outcome>
+            <to-view-id>/test.html</to-view-id>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
@@ -178,13 +183,6 @@
         <navigation-case>
             <from-outcome>fromMakeReservation</from-outcome>
             <to-view-id>/clientView.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>/clientView.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>toEditRent</from-outcome>
-            <to-view-id>/editRent.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 

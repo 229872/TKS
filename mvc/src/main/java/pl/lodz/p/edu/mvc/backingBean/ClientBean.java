@@ -54,12 +54,16 @@ public class ClientBean extends AbstractBean {
             clientRents = new ArrayList<>();
         } else {
             client = clientController.get(clientId);
-            clientRents = rentController.getClientRents(clientId);
-            for(MvcRentDTO rent : clientRents) {
-                rent.setBeginTime(rent.getBeginTime().replaceAll("T.*$", ""));
-                if(rent.getEndTime() != null) {
-                    rent.setEndTime(rent.getEndTime().replaceAll("T.*$", ""));
-                }
+            refreshClientRents();
+        }
+    }
+
+    private void refreshClientRents() {
+        clientRents = rentController.getClientRents(client.getEntityId().toString());
+        for(MvcRentDTO rent : clientRents) {
+            rent.setBeginTime(rent.getBeginTime().replaceAll("T.*$", ""));
+            if(rent.getEndTime() != null) {
+                rent.setEndTime(rent.getEndTime().replaceAll("T.*$", ""));
             }
         }
     }
@@ -88,6 +92,6 @@ public class ClientBean extends AbstractBean {
     public void deleteClientRent() {
         String clientRent = getFromParam("uuidRent");
         rentController.delete(clientRent);
-        clientRents = rentController.getClientRents(client.getEntityId().toString());
+        refreshClientRents();
     }
 }

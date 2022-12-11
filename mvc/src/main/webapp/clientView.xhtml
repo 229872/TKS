@@ -73,8 +73,9 @@
             <h:column>
                 <f:facet name="header">${msg['action.delete']}</f:facet>
                 <h:form>
-                    <h:commandButton value="#{msg['action.delete']}" onclick="return confirmAction()" action="${rentListBean.delete(rent)}">
+                    <h:commandButton value="#{msg['action.delete']}" onclick="return confirmAction()" action="${clientBean.deleteClientRent()}">
                         <f:param name="uuid" value="#{clientBean.client.entityId.toString()}"/>
+                        <f:param name="uuidRent" value="#{rent.entityId}"/>
                     </h:commandButton>
                 </h:form>
             </h:column>
@@ -82,14 +83,10 @@
                 <f:facet name="header">${msg['action.edit']}</f:facet>
                 <h:form>
                     <h:commandButton value="#{msg['action.edit']}" action="toEditRent">
-                        <f:param name="uuidRent" value="#{rent}"/>
-                        <f:param name="uuidClient" value="#{clientBean.client.entityId.toString()}"/>
+                        <f:param name="uuidRent" value="#{rent.entityId}"/>
                     </h:commandButton>
                 </h:form>
             </h:column>
-<!--            niezakończone mają end date ustawioną na null -->
-<!--            usuwanie niezakończonych rezerwacji -->
-<!--            zakańczanie (popdawanie end date) niezakończonych rezerwacji -->
         </h:dataTable>
     </ui:define>
 </ui:composition>

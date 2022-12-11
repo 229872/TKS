@@ -14,17 +14,15 @@
         <h:form>
             <h:commandButton value="#{msg['action.gotoList']}" action="fromCreateAdmin"/>
         </h:form>
-        <h:form>
-            ${msg['admin.login']} <h:inputText id="login" required="true" value="#{adminBean.admin.login}">
-            </h:inputText>
-            <h:message for="login"/><br/>
-            ${msg['admin.iceCream']} <h:inputText id="iceCream" required="true" value="#{adminBean.admin.favouriteIceCream}">
-            <h:message for="iceCream" style="color:red"/><br/>
-            <f:validateBean disabled="true"/>
-            <f:validateRegex pattern="[A-Za-z]*"/>
-            </h:inputText><br/>
+        <h:form id="createAdmin">
+            ${msg['admin.login']} <h:inputText id="login" onchange="validate()"
+                                               value="#{adminBean.admin.login}"/>
+            <label id="loginLabel" for="login"/><br/>
+            ${msg['admin.iceCream']} <h:inputText id="iceCream" onchange="validate()"
+                                                  value="#{adminBean.admin.favouriteIceCream}"/>
+            <label id="iceCreamLabel" for="iceCream"/><br/>
 
-            <h:commandButton action="#{adminBean.create()}" value="#{msg['action.submit']}"/>
+            <h:commandButton id="button" disabled="true" action="#{adminBean.create()}" value="#{msg['action.submit']}"/>
         </h:form>
     </ui:define>
 

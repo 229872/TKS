@@ -24,7 +24,7 @@
 
             ${msg['format.date']}<br/>
 
-            ${msg['rent.beginTime']} <h:inputText id="beginTime" required="true" value="#{rentBean.rent.beginTime}">
+            ${msg['rent.beginTime']} <h:inputText id="beginTime" rendered="true" value="#{rentBean.rent.beginTime}">
                 <f:validateRegex pattern="^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$"/>
             </h:inputText>
             <h:message for="beginTime" style="color:yellow"/><br/>

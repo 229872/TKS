@@ -9,8 +9,6 @@
     <ui:define name="top">
         <p>${msg['main.page']}/${msg["menu.manageEquipment"]}</p>
     </ui:define>
-
-
     <ui:define name="content">
         <h:form>
             <h:commandButton value="#{msg['action.createEquipment']}" action="toCreateEquipment"/>
@@ -18,6 +16,11 @@
 
         ${msg['action.filter']} <h:inputText id="filterValue" onchange="filterEquipment()"/><br/>
         ${equipmentBean.message}
+
+
+
+
+        <h:outputText style="background-color: yellow; font-size: 30px" value="${equipmentBean.isRented}"/>
         <h:dataTable id="equipmentTable" value="#{equipmentListBean.equipment}" var="equipment">
             <h:column>
                 <f:facet name="header">${msg["object.id"]}</f:facet>
@@ -30,7 +33,7 @@
             <h:column>
                 <f:facet name="header">${msg['action.edit']}</f:facet>
                 <h:form>
-                    <h:commandButton value="#{msg['action.edit']}" onclick="return confirmAction()" action="toEquipment">
+                    <h:commandButton value="#{msg['action.edit']}" action="toEquipment">
                         <f:param name="uuid" value="#{equipment.entityId.toString()}"/>
                     </h:commandButton>
                 </h:form>
@@ -43,14 +46,7 @@
                     </h:commandButton>
                 </h:form>
             </h:column>
-            <h:column>
-                <f:facet name="header">""</f:facet>
-                <h:outputText value="${equipmentBean.isRented}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header" >""</f:facet>
-                <h:message for="deleteEq"/>
-            </h:column>
         </h:dataTable>
+
     </ui:define>
 </ui:composition>

@@ -23,7 +23,7 @@
             <f:validateBean disabled="true"/>
             <f:validateRegex pattern="[A-Za-z]*"/>
             </h:inputText><br/>
-        <h:message for="iceCream"/><br/>
+        <h:message for="iceCream" style="color:red"/><br/>
             ${msg['user.active']} <h:outputText value="#{adminBean.admin.active}"/><br/>
             <h:commandButton value="#{msg['action.submit']}" action="#{adminBean.update()}">
                 <f:param name="uuid" value="#{adminBean.admin.entityId.toString()}"/>

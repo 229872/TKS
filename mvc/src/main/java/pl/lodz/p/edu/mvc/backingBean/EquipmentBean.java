@@ -14,6 +14,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 @Named
 @RequestScoped
@@ -34,7 +35,7 @@ public class EquipmentBean extends AbstractBean {
         this.message = message;
     }
 
-    private String isRented = "nope";
+    private String isRented = "";
 
     public String getIsRented() {
         return isRented;
@@ -81,8 +82,11 @@ public class EquipmentBean extends AbstractBean {
     public void delete() {
         int status = equipmentController.delete(equipment);
         if (status == 409) {
-            this.isRented = "This equipment is rented" + status;
-            FacesContext.getCurrentInstance().addMessage("deleteEq", new FacesMessage("pain"));
+            ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n.messages");
+
+            this.isRented = resourceBundle.getString("equipment.this")
+                    +" " + this.equipment.getEntityId().toString() + " " +
+                    resourceBundle.getString("equipment.noDeleteRent");
         }
     }
 

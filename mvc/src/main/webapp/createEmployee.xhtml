@@ -16,12 +16,12 @@
         </h:form>
         <h:form>
             ${msg['user.login']} <h:inputText id="login" required="true" value="#{employeeBean.employee.login}"/>
-            <h:message for="login"/><br/>
+            <h:message for="login" style="color:red"/><br/>
             ${msg['employee.desk']} <h:inputText id="desk" required="true" value="#{employeeBean.employee.desk}">
             <f:validateBean disabled="true"/>
             <f:validateRegex pattern="[A-Za-z0-9]*"/>
-            </h:inputText><br/>
-            <h:message for="desk"/><br/>
+            </h:inputText>
+            <h:message for="desk" style="color:red"/><br/>
 
             <h:commandButton action="#{employeeBean.create()}" value="#{msg['action.submit']}"/>
         </h:form>

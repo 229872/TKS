@@ -20,7 +20,10 @@
             ${msg['rent.beginTime']} <h:inputText id="beginTime" value="#{rentBean.rent.beginTime}"/><br/>
             ${msg['rent.endTime']} <h:inputText id="endTime" value="#{rentBean.rent.endTime}"/><br/>
 
-            <h:commandButton action="#{rentBean.create()}" value="#{msg['action.submit']}"/>
+            <h:commandButton action="#{rentBean.create()}" value="#{msg['action.submit']}">
+                <f:param name="uuidClient" value="#{rentBean.client.entityId.toString()}"/>
+                <f:param name="uuidEquipment" value="#{rentBean.equipment.entityId.toString()}"/>
+            </h:commandButton>
         </h:form>
     </ui:define>
 </ui:composition>

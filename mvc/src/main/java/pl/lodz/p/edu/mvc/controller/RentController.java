@@ -84,9 +84,10 @@ public class RentController extends AbstractController {
 
     public MvcRentDTO create(MvcRentDTO mvcRentDTO) {
         //FIXME I HAVE NO F IDEA HOW THESE SHOULD WORK
+        RentDTO rentDTO = mvcRentDTO.toRentDTO();
         String body;
         try {
-            body = om.writeValueAsString(mvcRentDTO);
+            body = om.writeValueAsString(rentDTO);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e.getMessage()); // todo komunikat
         }

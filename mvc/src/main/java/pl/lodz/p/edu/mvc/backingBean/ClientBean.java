@@ -16,6 +16,12 @@ import java.util.*;
 @RequestScoped
 public class ClientBean extends AbstractBean {
 
+    private String debug;
+
+    public String getDebug() {
+        return debug;
+    }
+
     @Inject
     private ClientController clientController;
 

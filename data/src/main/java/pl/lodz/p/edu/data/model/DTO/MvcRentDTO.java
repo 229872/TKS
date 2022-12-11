@@ -47,6 +47,10 @@ public class MvcRentDTO {
         return new Rent(beginTime, endTime, equipment, client);
     }
 
+    public RentDTO toRentDTO() {
+        return new RentDTO(client.getEntityId().toString(), equipment.getEntityId().toString(), beginTime, endTime);
+    }
+
     public String getEntityId() {
         return entityId;
     }

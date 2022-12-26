@@ -49,8 +49,6 @@ public class UserController<T, Tdto> extends AbstractController {
         }
         try {
             return Arrays.asList(om.readValue(response.body(), TListType));
-        } catch (JsonMappingException e) {
-            throw new RuntimeException(e);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

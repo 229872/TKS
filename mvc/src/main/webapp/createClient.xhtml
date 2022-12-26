@@ -15,6 +15,11 @@
             <h:commandButton value="#{msg['action.gotoList']}" action="fromCreateClient"/>
         </h:form>
         <h:form>
+            ${msg['user.login']} <h:inputText id="login" required="true" value="#{clientBean.client.login}">
+            <f:validateBean disabled="true"/>
+            <f:validateRegex pattern="[A-Za-z]*"/>
+            </h:inputText>
+            <h:message for="login" style="color:red"/><br/>
             ${msg['user.firstName']} <h:inputText id="firstName" required="true" value="#{clientBean.client.firstName}">
             <f:validateBean disabled="true"/>
             <f:validateRegex pattern="[A-Za-z]*"/>

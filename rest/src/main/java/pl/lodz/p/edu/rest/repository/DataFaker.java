@@ -14,22 +14,22 @@ public class DataFaker {
     }
 
     public static Client getClient(Address a) {
-        return new Client(randStr(7), // idType.values()[(int)(Math.random() * 2) % 2],
+        return new Client(randStr(7), randStr(7),// idType.values()[(int)(Math.random() * 2) % 2],
                 randStr(10), randStr(10), a);
     }
 
     public static Client getClient() {
         Address a = getAddress();
-        return new Client(randStr(7),
+        return new Client(randStr(7), randStr(7),
                 randStr(10), randStr(10), a);
     }
 
     public static Admin getAdmin() {
-        return new Admin(randStr(10), randStr(20));
+        return new Admin(randStr(10), randStr(7), randStr(20));
     }
 
     public static Employee getEmployee() {
-        return new Employee(randStr(10), randStr(20));
+        return new Employee(randStr(10), randStr(7), randStr(20));
     }
 
 

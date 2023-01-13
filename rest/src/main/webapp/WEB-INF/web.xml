@@ -4,6 +4,19 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
 
+    <security-role>
+        <role-name>ADMIN</role-name>
+    </security-role>
+    <security-role>
+        <role-name>USER</role-name>
+    </security-role>
+    <security-role>
+        <role-name>EMPLOYEE</role-name>
+    </security-role>
+<!--    <security-role>-->
+<!--        <role-name>ANONYMOUS</role-name>-->
+<!--    </security-role>-->
+
     <session-config>
         <session-timeout>
             30

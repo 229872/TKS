@@ -22,15 +22,15 @@ public class Client extends User {
     @Embedded
     private Address address;
 
-    public Client(String login, String firstName, String lastName, Address address) {
-        super(login);
+    public Client(String login, String password, String firstName, String lastName, Address address) {
+        super(login, password);
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
     }
 
     public Client(ClientDTO clientDTO) {
-        super(clientDTO.getLogin());
+        super(clientDTO.getLogin(), clientDTO.getPassword());
         this.firstName = clientDTO.getFirstName();
         this.lastName = clientDTO.getLastName();
         this.address = clientDTO.getAddress();
@@ -43,6 +43,7 @@ public class Client extends User {
 
     public void merge(ClientDTO clientDTO) {
         this.setLogin(clientDTO.getLogin());
+        this.setPassword(clientDTO.getPassword());
         this.firstName = clientDTO.getFirstName();
         this.lastName = clientDTO.getLastName();
         this.address = clientDTO.getAddress();

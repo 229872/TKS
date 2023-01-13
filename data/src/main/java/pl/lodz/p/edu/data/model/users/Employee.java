@@ -16,8 +16,8 @@ public class Employee extends User {
 
     public Employee() {}
 
-    public Employee(String login, String desk) {
-        super(login);
+    public Employee(String login, String password, String desk) {
+        super(login, password);
         this.desk = desk;
     }
 
@@ -33,6 +33,7 @@ public class Employee extends User {
 
     public void merge(EmployeeDTO employeeDTO) {
         this.setLogin(employeeDTO.getLogin());
+        this.setPassword(employeeDTO.getPassword());
         this.desk = employeeDTO.getDesk();
     }
 

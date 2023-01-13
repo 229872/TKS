@@ -20,8 +20,8 @@ public class Admin extends User {
         this.merge(adminDTO);
     }
 
-    public Admin(String login, String favouriteIceCream) {
-        super(login);
+    public Admin(String login, String password, String favouriteIceCream) {
+        super(login, password);
         this.favouriteIceCream = favouriteIceCream;
     }
 
@@ -31,6 +31,7 @@ public class Admin extends User {
 
     public void merge(AdminDTO adminDTO) {
         this.setLogin(adminDTO.getLogin());
+        this.setPassword(adminDTO.getPassword());
         this.favouriteIceCream = adminDTO.getFavouriteIceCream();
     }
 

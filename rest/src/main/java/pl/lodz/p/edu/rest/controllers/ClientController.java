@@ -108,6 +108,13 @@ public class ClientController {
     }
 
 
+    // login
+    @POST
+    @Path("/login")
+    public Response login(ClientDTO client) {
+        return Response.status(200).build();
+    }
+
 
     // ========= other
 

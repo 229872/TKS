@@ -77,7 +77,10 @@ public class UserManager {
     // ========================================= update
 
     public void updateClient(UUID entityId, ClientDTO clientDTO) throws IllegalModificationException {
-        Client client = (Client) userRepository.getOfType("Client", entityId);
+        Client client = (Client) userRepository.getOfType("Client", entityId); //possible npe
+        if (clientDTO.getPassword() == null) {
+            clientDTO.setPassword(client.getPassword());
+        }
         client.merge(clientDTO);
 
         try {
@@ -88,7 +91,10 @@ public class UserManager {
     }
 
     public void updateAdmin(UUID entityId, AdminDTO adminDTO) throws IllegalModificationException {
-        Admin admin = (Admin) userRepository.getOfType("Admin", entityId);
+        Admin admin = (Admin) userRepository.getOfType("Admin", entityId); //possible npe
+        if (adminDTO.getPassword() == null) {
+            adminDTO.setPassword(admin.getPassword());
+        }
         admin.merge(adminDTO);
 
         try {
@@ -98,7 +104,10 @@ public class UserManager {
         }
     }
     public void updateEmployee(UUID entityId, EmployeeDTO employeeDTO) throws IllegalModificationException {
-        Employee employee = (Employee) userRepository.getOfType("Employee", entityId);
+        Employee employee = (Employee) userRepository.getOfType("Employee", entityId); //possible npe
+        if (employeeDTO.getPassword() == null) {
+            employeeDTO.setPassword(employee.getPassword());
+        }
         employee.merge(employeeDTO);
 
         try {

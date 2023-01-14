@@ -76,6 +76,7 @@ public class ClientBean extends AbstractBean {
 
     public void create() {
         client = clientController.create(new ClientDTO(client));
+        client.setPassword("");
     }
 
 

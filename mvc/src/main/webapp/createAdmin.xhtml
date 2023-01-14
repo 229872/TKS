@@ -18,11 +18,14 @@
             ${msg['admin.login']} <h:inputText id="login" onchange="validate()"
                                                value="#{adminBean.admin.login}"/>
             <label id="loginLabel" for="login"/><br/>
+            ${msg['admin.password']} <h:inputText id="password"
+                                               value="#{adminBean.admin.password}"/>
+            <label id="passwordLabel" for="password"/><br/>
             ${msg['admin.iceCream']} <h:inputText id="iceCream" onchange="validate()"
                                                   value="#{adminBean.admin.favouriteIceCream}"/>
             <label id="iceCreamLabel" for="iceCream"/><br/>
 
-            <h:commandButton id="button" disabled="true" action="#{adminBean.create()}" value="#{msg['action.submit']}"/>
+            <h:commandButton id="button" action="#{adminBean.create()}" value="#{msg['action.submit']}"/>
         </h:form>
     </ui:define>
 

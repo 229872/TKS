@@ -39,7 +39,7 @@ public class AdminController {
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("ADMIN")
+    
     public Response addAdmin(@Valid AdminDTO adminDTO) {
         try {
             Admin admin = new Admin(adminDTO);
@@ -57,7 +57,7 @@ public class AdminController {
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("ADMIN")
+    
     public Response searchAdmin(@QueryParam("login") String login) {
         return userControllerMethods.searchUser("Admin", login);
     }
@@ -65,7 +65,7 @@ public class AdminController {
     @GET
     @Path("/{uuid}")
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("ADMIN")
+    
     public Response getUserByUuid(@PathParam("uuid") UUID entityId) {
         return userControllerMethods.getSingleUser("Admin", entityId);
     }
@@ -73,7 +73,7 @@ public class AdminController {
     @GET
     @Path("/login/{login}")
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("ADMIN")
+    
     public Response getUserByLogin(@PathParam("login") String login) {
         return userControllerMethods.getSingleUser("Admin", login);
     }
@@ -82,7 +82,7 @@ public class AdminController {
     @PUT
     @Path("/{entityId}")
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("ADMIN")
+    
     public Response updateAdmin(@PathParam("entityId") UUID entityId, @Valid AdminDTO adminDTO) {
         try {
             userManager.updateAdmin(entityId, adminDTO);
@@ -98,7 +98,7 @@ public class AdminController {
 
     @PUT
     @Path("/{entityId}/activate")
-    @RolesAllowed("ADMIN")
+    
     public Response activateUser(@PathParam("entityId") UUID entityId) {
         return userControllerMethods.activateUser("Admin", entityId);
     }
@@ -114,7 +114,7 @@ public class AdminController {
     @POST
     @Path("/addFake")
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("ADMIN")
+    
     public Admin addFakeUserAdmin() {
         Admin c = DataFaker.getAdmin();
         try {

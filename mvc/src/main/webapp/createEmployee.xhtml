@@ -17,6 +17,8 @@
         <h:form>
             ${msg['user.login']} <h:inputText id="login" required="true" value="#{employeeBean.employee.login}"/>
             <h:message for="login" style="color:red"/><br/>
+            ${msg['employee.password']} <h:inputText id="password" value="#{employeeBean.employee.password}"/>
+            <label id="passwordLabel" for="password"/><br/>
             ${msg['employee.desk']} <h:inputText id="desk" required="true" value="#{employeeBean.employee.desk}">
             <f:validateBean disabled="true"/>
             <f:validateRegex pattern="[A-Za-z0-9]*"/>

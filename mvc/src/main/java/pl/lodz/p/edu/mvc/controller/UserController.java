@@ -81,6 +81,7 @@ public class UserController<T, Tdto> extends AbstractController {
     }
 
     public T create(Tdto user) {
+
         String body;
         try {
             body = om.writeValueAsString(user);
@@ -93,8 +94,9 @@ public class UserController<T, Tdto> extends AbstractController {
         try {
             return om.readValue(response.body(), TType);
         } catch (IOException e) {
-            throw new RuntimeException(e); // todo komunikat
+            throw new RuntimeException(e.getCause()); // todo komunikat
         }
+
     }
 
     public void activate(String id) {
@@ -106,4 +108,5 @@ public class UserController<T, Tdto> extends AbstractController {
         HttpRequest request = buildPut(path + id + "/deactivate", "");
         HttpResponse<String> response = send(request);
     }
+
 }

@@ -16,7 +16,7 @@ public class AuthenticationManager {
     @Inject
     JwtUtilities utilities;
 
-    public String login(String login, String password) {
+    public String login(String login, String password) throws AuthenticationFailureException {
         User user;
         try {
             user = userRepository.getByOnlyLogin(login);

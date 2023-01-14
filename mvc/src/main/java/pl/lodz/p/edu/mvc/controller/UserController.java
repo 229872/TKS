@@ -81,7 +81,6 @@ public class UserController<T, Tdto> extends AbstractController {
     }
 
     public T create(Tdto user) {
-
         String body;
         try {
             body = om.writeValueAsString(user);

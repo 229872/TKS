@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 public abstract class AbstractBean implements Serializable {
-    private ExternalContext getContext() {
+    protected ExternalContext getContext() {
         return FacesContext.getCurrentInstance().getExternalContext();
     }
 

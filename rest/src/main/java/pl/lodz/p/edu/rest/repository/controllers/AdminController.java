@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.rest.controllers;
+package pl.lodz.p.edu.rest.repository.controllers;
 
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
@@ -7,41 +7,43 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import pl.lodz.p.edu.data.model.DTO.users.EmployeeDTO;
+import pl.lodz.p.edu.data.model.DTO.users.AdminDTO;
+import pl.lodz.p.edu.data.model.users.Admin;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
 import pl.lodz.p.edu.rest.exception.ConflictException;
 import pl.lodz.p.edu.rest.managers.UserManager;
-import pl.lodz.p.edu.data.model.users.Employee;
 import pl.lodz.p.edu.rest.repository.DataFaker;
 
 import java.util.UUID;
 import java.util.logging.Logger;
 
 import static jakarta.ws.rs.core.Response.Status.*;
-import static jakarta.ws.rs.core.Response.Status.OK;
+import static jakarta.ws.rs.core.Response.Status.CONFLICT;
 
-@Path("/employees")
-public class EmployeeController {
+@Path("/admins")
+public class AdminController {
 
     Logger logger = Logger.getLogger(AdminController.class.getName());
-
     @Inject
     private UserManager userManager;
 
     @Inject
     private UserControllerMethods userControllerMethods;
 
-    protected EmployeeController() {}
+    protected AdminController() {}
+
+    // create
 
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addEmployee(@Valid EmployeeDTO employeeDTO) {
+    
+    public Response addAdmin(@Valid AdminDTO adminDTO) {
         try {
-            Employee employee = new Employee(employeeDTO);
-            userManager.registerEmployee(employee);
-            return Response.status(CREATED).entity(employee).build();
+            Admin admin = new Admin(adminDTO);
+            userManager.registerAdmin(admin);
+            return Response.status(CREATED).entity(admin).build();
         } catch(ConflictException e) {
             return Response.status(CONFLICT).build();
         } catch(TransactionalException e) {
@@ -54,32 +56,36 @@ public class EmployeeController {
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
+    
     public Response searchAdmin(@QueryParam("login") String login) {
-        return userControllerMethods.searchUser("Employee", login);
+        return userControllerMethods.searchUser("Admin", login);
     }
 
     @GET
-    @Path("/{entityId}")
+    @Path("/{uuid}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserByUuid(@PathParam("entityId") UUID entityId) {
-        return userControllerMethods.getSingleUser("Employee", entityId);
+    
+    public Response getUserByUuid(@PathParam("uuid") UUID entityId) {
+        return userControllerMethods.getSingleUser("Admin", entityId);
     }
 
     @GET
     @Path("/login/{login}")
     @Produces(MediaType.APPLICATION_JSON)
+    
     public Response getUserByLogin(@PathParam("login") String login) {
-        return userControllerMethods.getSingleUser("Employee", login);
+        return userControllerMethods.getSingleUser("Admin", login);
     }
 
     // update
     @PUT
     @Path("/{entityId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateEmployee(@PathParam("entityId") UUID entityId, @Valid EmployeeDTO employeeDTO) {
+    
+    public Response updateAdmin(@PathParam("entityId") UUID entityId, @Valid AdminDTO adminDTO) {
         try {
-            userManager.updateEmployee(entityId, employeeDTO);
-            return Response.status(OK).entity(employeeDTO).build();
+            userManager.updateAdmin(entityId, adminDTO);
+            return Response.status(OK).entity(adminDTO).build();
         } catch (IllegalModificationException e) {
             return Response.status(BAD_REQUEST).build();
         } catch(TransactionalException e) { // login modification
@@ -91,14 +97,15 @@ public class EmployeeController {
 
     @PUT
     @Path("/{entityId}/activate")
+    
     public Response activateUser(@PathParam("entityId") UUID entityId) {
-        return userControllerMethods.activateUser("Employee", entityId);
+        return userControllerMethods.activateUser("Admin", entityId);
     }
 
     @PUT
     @Path("/{entityId}/deactivate")
     public Response deactivateUser(@PathParam("entityId") UUID entityId) {
-        return userControllerMethods.deactivateUser("Employee", entityId);
+        return userControllerMethods.deactivateUser("Admin", entityId);
     }
 
     // other
@@ -106,11 +113,12 @@ public class EmployeeController {
     @POST
     @Path("/addFake")
     @Produces(MediaType.APPLICATION_JSON)
-    public Employee addFakeUserAdmin() {
-        Employee c = DataFaker.getEmployee();
+    
+    public Admin addFakeUserAdmin() {
+        Admin c = DataFaker.getAdmin();
         try {
-            userManager.registerEmployee(c);
-        } catch (Exception e) {
+            userManager.registerAdmin(c);
+        } catch(Exception e) {
             return null;
         }
         return c;

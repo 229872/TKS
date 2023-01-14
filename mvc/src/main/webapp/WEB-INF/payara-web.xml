@@ -6,22 +6,22 @@
     <class-loader delegate="false"/>
     <context-root>/</context-root>
     <security-role-mapping>
-        <role-name>Admin</role-name>
+        <role-name>ADMIN</role-name>
         <group-name>Admins</group-name>
     </security-role-mapping>
 
     <security-role-mapping>
-        <role-name>Client</role-name>
+        <role-name>CLIENT</role-name>
         <group-name>Clients</group-name>
     </security-role-mapping>
 
     <security-role-mapping>
-        <role-name>Employee</role-name>
+        <role-name>EMPLOYEE</role-name>
         <group-name>Employees</group-name>
     </security-role-mapping>
 
     <security-role-mapping>
-        <role-name>Guest</role-name>
+        <role-name>GUEST</role-name>
         <group-name>Guests</group-name>
     </security-role-mapping>
 </payara-web-app>

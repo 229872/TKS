@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.rest.controllers;
+package pl.lodz.p.edu.rest.repository.controllers;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;

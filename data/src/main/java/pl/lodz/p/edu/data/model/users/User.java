@@ -27,6 +27,10 @@ public abstract class User extends AbstractEntity {
     @Column(name = "archive")
     private boolean active;
 
+    @Column(name = "userRole")
+    @Enumerated(EnumType.STRING)
+    protected UserType role;
+
     public User(String login, String password) {
         this.login = login;
         this.active = true;
@@ -75,5 +79,13 @@ public abstract class User extends AbstractEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UserType getRole() {
+        return role;
+    }
+
+    public void setRole(UserType role) {
+        this.role = role;
     }
 }

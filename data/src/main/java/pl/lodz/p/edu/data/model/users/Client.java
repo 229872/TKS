@@ -1,9 +1,6 @@
 package pl.lodz.p.edu.data.model.users;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import pl.lodz.p.edu.data.model.Address;
 import pl.lodz.p.edu.data.model.DTO.users.ClientDTO;
@@ -22,11 +19,13 @@ public class Client extends User {
     @Embedded
     private Address address;
 
+
     public Client(String login, String password, String firstName, String lastName, Address address) {
         super(login, password);
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
+        this.role = UserType.CLIENT;
     }
 
     public Client(ClientDTO clientDTO) {
@@ -34,6 +33,7 @@ public class Client extends User {
         this.firstName = clientDTO.getFirstName();
         this.lastName = clientDTO.getLastName();
         this.address = clientDTO.getAddress();
+        this.role = UserType.CLIENT;
     }
 
     public boolean verify() {
@@ -51,6 +51,7 @@ public class Client extends User {
 
     public Client() {
         address = new Address();
+        this.role = UserType.CLIENT;
     }
 
     public String getFirstName() {
@@ -91,4 +92,9 @@ public class Client extends User {
         setLastName(lastName);
         setAddress(address);
     }
+
+    public UserType getRole() {
+        return role;
+    }
+
 }

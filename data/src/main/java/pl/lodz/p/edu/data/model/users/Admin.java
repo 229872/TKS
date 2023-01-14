@@ -1,8 +1,6 @@
 package pl.lodz.p.edu.data.model.users;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import pl.lodz.p.edu.data.model.DTO.users.AdminDTO;
 
@@ -14,15 +12,18 @@ public class Admin extends User {
     private String favouriteIceCream;
 
     public Admin() {
+        this.role = UserType.ADMIN;
     }
 
     public Admin(AdminDTO adminDTO) {
         this.merge(adminDTO);
+        this.role = UserType.ADMIN;
     }
 
     public Admin(String login, String password, String favouriteIceCream) {
         super(login, password);
         this.favouriteIceCream = favouriteIceCream;
+        this.role = UserType.ADMIN;
     }
 
     public boolean verify() {
@@ -33,8 +34,8 @@ public class Admin extends User {
         this.setLogin(adminDTO.getLogin());
         this.setPassword(adminDTO.getPassword());
         this.favouriteIceCream = adminDTO.getFavouriteIceCream();
+        this.role = UserType.ADMIN;
     }
-
 
 
     public String getFavouriteIceCream() {
@@ -44,4 +45,9 @@ public class Admin extends User {
     public void setFavouriteIceCream(String favouriteIceCream) {
         this.favouriteIceCream = favouriteIceCream;
     }
+
+    public UserType getRole() {
+        return role;
+    }
+
 }

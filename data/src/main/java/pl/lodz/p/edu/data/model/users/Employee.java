@@ -1,8 +1,6 @@
 package pl.lodz.p.edu.data.model.users;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import pl.lodz.p.edu.data.model.DTO.users.EmployeeDTO;
 
@@ -19,10 +17,12 @@ public class Employee extends User {
     public Employee(String login, String password, String desk) {
         super(login, password);
         this.desk = desk;
+        this.role = UserType.EMPLOYEE;
     }
 
     public Employee(EmployeeDTO employeeDTO) {
         this.merge(employeeDTO);
+        this.role = UserType.EMPLOYEE;
     }
 
 
@@ -45,4 +45,7 @@ public class Employee extends User {
         this.desk = desk;
     }
 
+    public UserType getRole() {
+        return role;
+    }
 }

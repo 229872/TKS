@@ -52,6 +52,12 @@ public class UserRepository implements Repository<User> {
         return (User) q.getSingleResult();
     }
 
+    public User getByOnlyLogin(String login) {
+        Query q = em.createQuery("SELECT user FROM User user WHERE user.login = :login", User.class);
+        q.setParameter("login", login);
+        return (User) q.getSingleResult();
+    }
+
     public List<User> getAllWithLogin(String type, String login) {
         Query q = em.createQuery("SELECT user FROM User user WHERE user.login like :login and type(user) = " + type, User.class);
         q.setParameter("login", login + "%");

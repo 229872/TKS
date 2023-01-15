@@ -16,6 +16,9 @@ public class JwtSessionBean extends AbstractBean {
     @Inject
     private HttpServletRequest request;
 
+    public JwtSessionBean() {
+    }
+
     @PostConstruct
     public void init() {
         jwtToken = "";
@@ -31,12 +34,28 @@ public class JwtSessionBean extends AbstractBean {
 
     }
 
-    public boolean isLoggedIn() {
-        return !getContext().isUserInRole("GUEST");
+    public boolean isLoggedInClient() {
+        return getContext().isUserInRole("CLIENT");
     }
+
+    public boolean isLoggedInGuest() {
+        return getContext().isUserInRole("GUEST");
+    }
+
+    public boolean isLoggedInEmployee() {
+        return getContext().isUserInRole("EMPLOYEE");
+    }
+
+    public boolean isLoggedInAdmin() {
+        return getContext().isUserInRole("ADMIN");
+    }
+
 
     public void invalidateSession() {
         getContext().invalidateSession();
     }
 
+    public String getJwtToken() {
+        return jwtToken;
+    }
 }

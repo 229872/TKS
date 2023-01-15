@@ -13,11 +13,10 @@ import pl.lodz.p.edu.data.model.users.User;
 import pl.lodz.p.edu.rest.repository.impl.UserRepository;
 
 import java.security.Principal;
-import java.security.SignatureException;
 import java.util.*;
 
 @ApplicationScoped
-public class JwtAuthenticationMechanism implements HttpAuthenticationMechanism {
+public class JwtRestAuthenticationMechanism implements HttpAuthenticationMechanism {
 
     @Inject
     JwtUtilities jwtUtilities;
@@ -44,7 +43,7 @@ public class JwtAuthenticationMechanism implements HttpAuthenticationMechanism {
         String userLogin = claims.getSubject();
 
         User dbUser = userRepository.getByOnlyLogin(userLogin); //TODO REMEMBER
-
+//        throw new RuntimeException(claims.toString());
         if (dbUser == null) {
             return httpMessageContext.notifyContainerAboutLogin("GUEST", new HashSet<>(List.of("GUEST")));
         }                                                   // Not sure about principal

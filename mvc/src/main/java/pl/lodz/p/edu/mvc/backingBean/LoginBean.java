@@ -3,23 +3,25 @@ package pl.lodz.p.edu.mvc.backingBean;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.context.FacesContext;
-import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import pl.lodz.p.edu.data.model.DTO.CredentialsDTO;
 import pl.lodz.p.edu.mvc.controller.LoginController;
 
 @Named
-@ViewScoped
+@SessionScoped
 public class LoginBean extends AbstractBean {
 
     @Inject
-    JwtSessionBean jwtSessionBean;
+    private JwtSessionBean jwtSessionBean;
 
     @Inject
-    LoginController loginController;
+    private LoginController loginController;
 
-    private CredentialsDTO credentialsDTO;
+    private CredentialsDTO credentialsDTO = new CredentialsDTO();
+
+    public LoginBean() {
+    }
 
     @PostConstruct
     public void init() {
@@ -27,23 +29,24 @@ public class LoginBean extends AbstractBean {
     }
 
     public String login() {
-        String jwtToken = null;
+        String jwtToken;
+
         try {
             jwtToken = loginController.logIn(credentialsDTO);
         } catch (Exception e) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             // error with localisation idk resource bundle
+            throw new RuntimeException("niewiadomo login()");
         }
 
         if (jwtToken != null) {
             jwtSessionBean.logIn(jwtToken);
-            return "java server ugly faces";
+            return "";
         } else {
             FacesContext facesContext = FacesContext.getCurrentInstance();
-            // error with localisation idk resource bundle
-
+            throw new RuntimeException("niewiadomo (jwtToken != null) else -> ");
         }
-        return "";
+//        return "";
     }
 
     public CredentialsDTO getCredentialsDTO() {

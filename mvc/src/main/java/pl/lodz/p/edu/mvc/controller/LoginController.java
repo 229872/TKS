@@ -28,4 +28,6 @@ public class LoginController extends AbstractController {
         return response.body();
     }
 
+    public LoginController() {
+    }
 }

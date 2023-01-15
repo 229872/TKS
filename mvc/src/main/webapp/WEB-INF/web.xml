@@ -44,7 +44,15 @@
     </security-role>
 
     <security-role>
+        <role-name>EMPLOYEE</role-name>
+    </security-role>
+
+    <security-role>
         <role-name>CLIENT</role-name>
+    </security-role>
+
+    <security-role>
+        <role-name>GUEST</role-name>
     </security-role>
 
     <security-constraint>
@@ -54,8 +62,8 @@
             <url-pattern>/editAdmin.xhtml</url-pattern>
             <url-pattern>/manageAdmins.xhtml</url-pattern>
         </web-resource-collection>
-<!--        <auth-constraint>-->
-<!--            CLIENT-->
-<!--        </auth-constraint>-->
+        <auth-constraint>
+            CLIENT
+        </auth-constraint>
     </security-constraint>
 </web-app>

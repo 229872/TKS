@@ -29,16 +29,14 @@ public class JwtMvcAuthenticationMechanism implements HttpAuthenticationMechanis
             return httpMessageContext.notifyContainerAboutLogin("GUEST", new HashSet<>(List.of("GUEST")));
         }
         Claims claims;
-        claims = parseJwt(token);
         try {
             claims = parseJwt(token);
         } catch (Exception e) {
             return httpMessageContext.notifyContainerAboutLogin("GUEST", new HashSet<>(List.of("GUEST")));
         }
         String login = claims.getSubject();
-        String userType = claims.get("role", String.class); //Role?
+        String userType = claims.get("userType", String.class); //Role?
         return httpMessageContext.notifyContainerAboutLogin(login, new HashSet<>(List.of(userType)));
-
     }
 
     public Claims parseJwt(String token) {

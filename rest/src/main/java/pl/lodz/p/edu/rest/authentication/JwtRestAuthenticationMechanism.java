@@ -47,7 +47,7 @@ public class JwtRestAuthenticationMechanism implements HttpAuthenticationMechani
         if (dbUser == null) {
             return httpMessageContext.notifyContainerAboutLogin("GUEST", new HashSet<>(List.of("GUEST")));
         }                                                   // Not sure about principal
-        return httpMessageContext.notifyContainerAboutLogin((Principal) dbUser, new HashSet<>(List.of(claims.get("role", String.class))));
+        return httpMessageContext.notifyContainerAboutLogin(dbUser.getLogin(), new HashSet<>(List.of(claims.get("userType", String.class))));
 
 
     }

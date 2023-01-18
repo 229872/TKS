@@ -23,10 +23,6 @@
 
         <h:form id="idk">
             <h:outputText id="test1"  value="#{jwtSessionBean.jwtToken}"/>
-            ${msg[guest]} <h:outputText id="test2"  value="#{jwtSessionBean.loggedInGuest}"/>
-            ${msg['client']} <h:outputText id="test3"  value="#{jwtSessionBean.loggedInClient}"/>
-            ${msg['employee']}<h:outputText id="test4"  value="#{jwtSessionBean.loggedInEmployee}"/>
-            ${msg['admin']}<h:outputText id="test5"  value="#{jwtSessionBean.loggedInAdmin}"/>
             <br/>
             <h:commandButton id="idkButton" action="#{jwtSessionBean.invalidateSession()}" value="#{msg['action.submit']}"/>
         </h:form>

@@ -15,6 +15,12 @@ import pl.lodz.p.edu.data.model.JsonPasswordCustomAdapter;
 @DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
 //@JsonbTypeAdapter(c)
 public abstract class User extends AbstractEntity {
+
+    public static String CLIENT_TYPE = "CLIENT";
+    public static String EMPLOYEE_TYPE = "EMPLOYEE";
+    public static String ADMIN_TYPE = "ADMIN";
+
+
     @Id
     @Column(name = "login")
     @NotEmpty
@@ -28,8 +34,7 @@ public abstract class User extends AbstractEntity {
     private boolean active;
 
     @Column(name = "userType")
-    @Enumerated(EnumType.STRING)
-    protected UserType role;
+    protected String userType;
 
     public User(String login, String password) {
         this.login = login;
@@ -81,11 +86,11 @@ public abstract class User extends AbstractEntity {
         this.password = password;
     }
 
-    public UserType getRole() {
-        return role;
+    public String getUserType() {
+        return userType;
     }
 
-    public void setRole(UserType role) {
-        this.role = role;
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 }

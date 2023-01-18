@@ -3,16 +3,35 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <ul>
         <li><h:outputLink value="index.xhtml" >${msg["main.page"]}</h:outputLink></li>
-        <li><h:outputLink value="manageClients.xhtml" >${msg["menu.manageClients"]}</h:outputLink></li>
-        <li><h:outputLink value="manageAdmins.xhtml" >${msg["menu.manageAdmins"]}</h:outputLink></li>
-        <li><h:outputLink value="manageEmployees.xhtml" >${msg["menu.manageEmployees"]}</h:outputLink></li>
-        <li><h:outputLink value="manageEquipment.xhtml" >${msg["menu.manageEquipment"]}</h:outputLink></li>
+        <c:if test="#{jwtSessionBean.role eq 'GUEST'}">
+            <li><h:outputLink value="login.xhtml" >${msg["user.login"]}</h:outputLink></li>
+        </c:if>
+        <c:if test="#{jwtSessionBean.role != 'GUEST'}">
+            <li><h:outputLink value="logout.xhtml" >${msg["user.logout"]}</h:outputLink></li>
+        </c:if>
+        <c:if test="#{jwtSessionBean.role eq CLIENT}">
+            <li><h:outputLink value="makeReservation.xhtml" >${msg["action.makeReservaton"]}</h:outputLink></li>
+        </c:if>
+        <c:if test="#{jwtSessionBean.role eq EMPLOYEE}">
+            <li><h:outputLink value="listClients.xhtml" >${msg["menu.listClients"]}</h:outputLink></li>
+            <li><h:outputLink value="manageClients.xhtml" >${msg["menu.manageClients"]}</h:outputLink></li>
+            <li><h:outputLink value="manageEquipment.xhtml" >${msg["menu.manageEquipment"]}</h:outputLink></li>
+        </c:if>
+        <c:if test="#{jwtSessionBean.role eq ADMIN}">
+            <li><h:outputLink value="manageAdmins.xhtml" >${msg["menu.manageAdmins"]}</h:outputLink></li>
+            <li><h:outputLink value="manageEmployees.xhtml" >${msg["menu.manageEmployees"]}</h:outputLink></li>
+            <li><h:outputLink value="makeReservation.xhtml" >${msg["action.makeReservaton"]}</h:outputLink></li>
+        </c:if>
+
+
+
         <li><h:outputLink value="chooseClient.xhtml" >${msg["menu.chooseClient"]}</h:outputLink></li>
-        <li><h:outputLink value="listClients.xhtml" >${msg["menu.listClients"]}</h:outputLink></li>
+
     </ul>
 
 </ui:composition>

@@ -42,28 +42,23 @@
     <security-role>
         <role-name>ADMIN</role-name>
     </security-role>
-
+    <security-role>
+        <role-name>USER</role-name>
+    </security-role>
     <security-role>
         <role-name>EMPLOYEE</role-name>
     </security-role>
-
-    <security-role>
-        <role-name>CLIENT</role-name>
-    </security-role>
-
     <security-role>
         <role-name>GUEST</role-name>
     </security-role>
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>admin</web-resource-name>
-            <url-pattern>/createAdmin.xhtml</url-pattern>
-            <url-pattern>/editAdmin.xhtml</url-pattern>
-            <url-pattern>/manageAdmins.xhtml</url-pattern>
+            <web-resource-name>all</web-resource-name>
+            <url-pattern>/</url-pattern>
         </web-resource-collection>
-        <auth-constraint>
-            CLIENT
-        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
     </security-constraint>
 </web-app>

@@ -25,7 +25,7 @@ public class Client extends User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
-        this.role = UserType.CLIENT;
+        this.userType = User.CLIENT_TYPE;
     }
 
     public Client(ClientDTO clientDTO) {
@@ -33,7 +33,7 @@ public class Client extends User {
         this.firstName = clientDTO.getFirstName();
         this.lastName = clientDTO.getLastName();
         this.address = clientDTO.getAddress();
-        this.role = UserType.CLIENT;
+        this.userType = User.CLIENT_TYPE;
     }
 
     public boolean verify() {
@@ -47,11 +47,12 @@ public class Client extends User {
         this.firstName = clientDTO.getFirstName();
         this.lastName = clientDTO.getLastName();
         this.address = clientDTO.getAddress();
+        this.userType = User.CLIENT_TYPE;
     }
 
     public Client() {
         address = new Address();
-        this.role = UserType.CLIENT;
+        this.userType = User.CLIENT_TYPE;
     }
 
     public String getFirstName() {
@@ -92,9 +93,4 @@ public class Client extends User {
         setLastName(lastName);
         setAddress(address);
     }
-
-    public UserType getRole() {
-        return role;
-    }
-
 }

@@ -30,14 +30,6 @@ public class AuthenticationManager {
             throw new AuthenticationFailureException("User is inactive");
 
         }
-        String roleStr = "";
-        if(user.getRole() == UserType.ADMIN) {
-            roleStr = "ADMIN";
-        } else if(user.getRole() == UserType.CLIENT) {
-            roleStr = "CLIENT";
-        } else if(user.getRole() == UserType.EMPLOYEE) {
-            roleStr = "EMPLOYEE";
-        }
-        return utilities.generateToken(user.getLogin(), roleStr);
+        return utilities.generateToken(user.getLogin(), user.getUserType());
     }
 }

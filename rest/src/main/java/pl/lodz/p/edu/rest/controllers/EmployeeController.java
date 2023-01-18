@@ -1,32 +1,29 @@
-package pl.lodz.p.edu.rest.repository.controllers;
+package pl.lodz.p.edu.rest.controllers;
 
 import jakarta.inject.Inject;
-
 import jakarta.persistence.NoResultException;
 import jakarta.transaction.TransactionalException;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
-import pl.lodz.p.edu.data.model.DTO.users.ClientDTO;
+import pl.lodz.p.edu.data.model.DTO.users.EmployeeDTO;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
 import pl.lodz.p.edu.rest.exception.ConflictException;
 import pl.lodz.p.edu.rest.managers.UserManager;
-import pl.lodz.p.edu.data.model.users.Client;
+import pl.lodz.p.edu.data.model.users.Employee;
 import pl.lodz.p.edu.rest.repository.DataFaker;
 
 import java.util.UUID;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static jakarta.ws.rs.core.Response.Status.*;
+import static jakarta.ws.rs.core.Response.Status.OK;
 
-@Path("/clients")
-//@RequestScoped
-public class ClientController {
+@Path("/employees")
+public class EmployeeController {
 
-    Logger logger = Logger.getLogger(ClientController.class.getName());
+    Logger logger = Logger.getLogger(AdminController.class.getName());
 
     @Inject
     private UserManager userManager;
@@ -34,58 +31,55 @@ public class ClientController {
     @Inject
     private UserControllerMethods userControllerMethods;
 
-    protected ClientController() {}
+    protected EmployeeController() {}
 
-    // create
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addClient(@Valid ClientDTO clientDTO) {
+    public Response addEmployee(@Valid EmployeeDTO employeeDTO) {
         try {
-            Client client = new Client(clientDTO);
-            userManager.registerClient(client);
-            return Response.status(CREATED).entity(client).build();
+            Employee employee = new Employee(employeeDTO);
+            userManager.registerEmployee(employee);
+            return Response.status(CREATED).entity(employee).build();
         } catch(ConflictException e) {
             return Response.status(CONFLICT).build();
         } catch(TransactionalException e) {
             return Response.status(CONFLICT).build();
-        } catch(NullPointerException e) {
-            return Response.status(BAD_REQUEST).build();
         }
     }
 
     // read
+
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response searchClients(@QueryParam("login") String login) {
-        logger.info(login);
-        return userControllerMethods.searchUser("Client", login);
+    public Response searchAdmin(@QueryParam("login") String login) {
+        return userControllerMethods.searchUser("Employee", login);
     }
 
     @GET
-    @Path("/{uuid}")
+    @Path("/{entityId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserByUuid(@PathParam("uuid") UUID entityId) {
-        return userControllerMethods.getSingleUser("Client", entityId);
+    public Response getUserByUuid(@PathParam("entityId") UUID entityId) {
+        return userControllerMethods.getSingleUser("Employee", entityId);
     }
 
     @GET
     @Path("/login/{login}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserByLogin(@PathParam("login") String login) {
-        return userControllerMethods.getSingleUser("Client", login);
+        return userControllerMethods.getSingleUser("Employee", login);
     }
 
     // update
     @PUT
     @Path("/{entityId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateClient(@PathParam("entityId") UUID entityId, @Valid ClientDTO clientDTO) {
+    public Response updateEmployee(@PathParam("entityId") UUID entityId, @Valid EmployeeDTO employeeDTO) {
         try {
-            userManager.updateClient(entityId, clientDTO);
-            return Response.status(OK).entity(clientDTO).build();
+            userManager.updateEmployee(entityId, employeeDTO);
+            return Response.status(OK).entity(employeeDTO).build();
         } catch (IllegalModificationException e) {
             return Response.status(BAD_REQUEST).build();
         } catch(TransactionalException e) { // login modification
@@ -98,36 +92,25 @@ public class ClientController {
     @PUT
     @Path("/{entityId}/activate")
     public Response activateUser(@PathParam("entityId") UUID entityId) {
-        return userControllerMethods.activateUser("Client", entityId);
+        return userControllerMethods.activateUser("Employee", entityId);
     }
 
     @PUT
     @Path("/{entityId}/deactivate")
     public Response deactivateUser(@PathParam("entityId") UUID entityId) {
-        return userControllerMethods.deactivateUser("Client", entityId);
+        return userControllerMethods.deactivateUser("Employee", entityId);
     }
 
-
-    // login
-    @POST
-    @Path("/login")
-    public Response login(ClientDTO client) {
-        return Response.status(200).build();
-    }
-
-
-    // ========= other
+    // other
 
     @POST
     @Path("/addFake")
     @Produces(MediaType.APPLICATION_JSON)
-    public Client addFakeClient() {
-        Client c = DataFaker.getClient();
-        logger.log(Level.INFO, c.toString());
+    public Employee addFakeUserAdmin() {
+        Employee c = DataFaker.getEmployee();
         try {
-            userManager.registerClient(c);
-        } catch(Exception e) {
-            System.out.println(e.getMessage());
+            userManager.registerEmployee(c);
+        } catch (Exception e) {
             return null;
         }
         return c;

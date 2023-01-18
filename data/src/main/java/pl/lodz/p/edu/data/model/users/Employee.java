@@ -17,12 +17,13 @@ public class Employee extends User {
     public Employee(String login, String password, String desk) {
         super(login, password);
         this.desk = desk;
-        this.role = UserType.EMPLOYEE;
+        this.userType = User.EMPLOYEE_TYPE;
     }
 
     public Employee(EmployeeDTO employeeDTO) {
         this.merge(employeeDTO);
-        this.role = UserType.EMPLOYEE;
+        this.userType = User.EMPLOYEE_TYPE;
+
     }
 
 
@@ -43,9 +44,5 @@ public class Employee extends User {
 
     public void setDesk(String desk) {
         this.desk = desk;
-    }
-
-    public UserType getRole() {
-        return role;
     }
 }

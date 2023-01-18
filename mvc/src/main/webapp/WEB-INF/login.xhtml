@@ -3,11 +3,11 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:f="http://java.sun.com/jsf/core"
                 template="./modules/pageTemplate.xhtml">
 
     <ui:define name="top">
-        <p>${msg['main.page']}/${msg["user.login"]}</p>
+        <p>${msg['main.page']}/${msg["menu.login"]}</p>
     </ui:define>
 
     <ui:define name="content">
@@ -19,10 +19,14 @@
 
             <h:commandButton id="button" action="#{loginBean.login()}" value="#{msg['action.submit']}"/>
 
-            #{loginBean.role}
-            <c:if test="#{jwtSessionBean.role != 'GUEST'}">
-                ${msg['user.login.success']}
-            </c:if>
         </h:form>
+
+        <h:form id="idk">
+            <h:outputText id="test1"  value="#{jwtSessionBean.jwtToken}"/>
+            <br/>
+            <h:commandButton id="idkButton" action="#{jwtSessionBean.invalidateSession()}" value="#{msg['action.submit']}"/>
+        </h:form>
+
+
     </ui:define>
 </ui:composition>

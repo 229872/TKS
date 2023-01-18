@@ -21,7 +21,7 @@ public class EquipmentController extends AbstractController {
     public static final String path = "equipment/";
     
     public Equipment get(String uuid) {
-        HttpRequest request = buildGet(path + uuid);
+        HttpRequest request = this.buildGet(path + uuid);
         HttpResponse<String> response = send(request);
         if(response.statusCode() == 404) {
             throw new NotFoundException();
@@ -34,7 +34,7 @@ public class EquipmentController extends AbstractController {
     }
 
     public List<Equipment> getAll() {
-        HttpRequest request = Request.buildGet(path);
+        HttpRequest request = this.buildGet(path);
         HttpResponse<String> response = send(request);
 
         // fixme check for status codes?
@@ -48,7 +48,7 @@ public class EquipmentController extends AbstractController {
     }
 
     public List<Equipment> getAvailable() {
-        HttpRequest request = Request.buildGet(path + "available");
+        HttpRequest request = this.buildGet(path + "available");
         HttpResponse<String> response = send(request);
 
         // fixme check for status codes?
@@ -68,7 +68,7 @@ public class EquipmentController extends AbstractController {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e); // todo komunikat
         }
-        HttpRequest request = buildPut(path + id, body);
+        HttpRequest request = this.buildPut(path + id, body);
         HttpResponse<String> response = send(request);
         if(response.statusCode() == 404) {
             throw new NotFoundException();
@@ -91,7 +91,7 @@ public class EquipmentController extends AbstractController {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e.getMessage()); // todo komunikat
         }
-        HttpRequest request = buildPost(path, body);
+        HttpRequest request = this.buildPost(path, body);
         HttpResponse<String> response = send(request);
 
         try {
@@ -102,7 +102,7 @@ public class EquipmentController extends AbstractController {
     }
 
     public int delete(Equipment equipment) {
-        HttpRequest request = buildDelete(path + equipment.getEntityId().toString());
+        HttpRequest request = this.buildDelete(path + equipment.getEntityId().toString());
         return send(request).statusCode();
 
     }

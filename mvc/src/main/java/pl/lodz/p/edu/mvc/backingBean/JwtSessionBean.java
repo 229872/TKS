@@ -11,17 +11,12 @@ import jakarta.servlet.http.HttpServletRequest;
 @Named
 public class JwtSessionBean extends AbstractBean {
 
-    private String jwtToken;
+    private String jwtToken = "";
 
     @Inject
     private HttpServletRequest request;
 
     public JwtSessionBean() {
-    }
-
-    @PostConstruct
-    public void init() {
-        jwtToken = "";
     }
 
     public void logIn(String jwtToken) {

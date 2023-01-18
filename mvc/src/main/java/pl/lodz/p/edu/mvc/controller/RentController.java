@@ -23,7 +23,7 @@ public class RentController extends AbstractController {
     private static final String path = "rents/";
 
     public List<MvcRentDTO> getClientRents(String clientId) {
-        HttpRequest request = Request.buildGet(path + "client/" + clientId);
+        HttpRequest request = this.buildGet(path + "client/" + clientId);
         HttpResponse<String> response = send(request);
         try {
             return Arrays.asList(om.readValue(response.body(), MvcRentDTO[].class));
@@ -35,7 +35,7 @@ public class RentController extends AbstractController {
     }
 
     public List<MvcRentDTO> getEquipmentRents(String equipmentId) {
-        HttpRequest request = Request.buildGet(path + "equipment/" + equipmentId);
+        HttpRequest request = this.buildGet(path + "equipment/" + equipmentId);
         HttpResponse<String> response = send(request);
         if(response.statusCode() == 404) {
             throw new NotFoundException();
@@ -50,7 +50,7 @@ public class RentController extends AbstractController {
     }
 
     public List<MvcRentDTO> getAll() {
-        HttpRequest request = Request.buildGet(path);
+        HttpRequest request = this.buildGet(path);
         HttpResponse<String> response = send(request);
         try {
             return Arrays.asList(om.readValue(response.body(), MvcRentDTO[].class));
@@ -62,7 +62,7 @@ public class RentController extends AbstractController {
     }
 
     public MvcRentDTO get(String uuid) {
-        HttpRequest request = buildGet(path + uuid);
+        HttpRequest request = this.buildGet(path + uuid);
         HttpResponse<String> response = send(request);
         try {
             return om.readValue(response.body(), MvcRentDTO.class);
@@ -78,7 +78,7 @@ public class RentController extends AbstractController {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e); // todo komunikat
         }
-        HttpRequest request = buildPut(path + mvcRentDTO.getEntityId(), body);
+        HttpRequest request = this.buildPut(path + mvcRentDTO.getEntityId(), body);
         HttpResponse<String> response = send(request);
         if (response.statusCode() == 404) {
             throw new NotFoundException();
@@ -86,8 +86,6 @@ public class RentController extends AbstractController {
         if (response.statusCode() == 400) {
             throw new BadRequestException();
         }
-
-
 
         try {
             return om.readValue(response.body(), MvcRentDTO.class);
@@ -104,7 +102,7 @@ public class RentController extends AbstractController {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e.getMessage()); // todo komunikat
         }
-        HttpRequest request = buildPost(path, body);
+        HttpRequest request = this.buildPost(path, body);
         HttpResponse<String> response = send(request);
 
         if (response.statusCode() == 409) {
@@ -122,7 +120,7 @@ public class RentController extends AbstractController {
     }
 
     public void delete(String id) {
-        HttpRequest request = buildDelete(path + id);
+        HttpRequest request = this.buildDelete(path + id);
         HttpResponse<String> response = send(request);
     }
 }

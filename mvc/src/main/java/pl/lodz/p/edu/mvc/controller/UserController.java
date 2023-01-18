@@ -11,7 +11,6 @@ import java.net.http.HttpResponse;
 import java.util.Arrays;
 import java.util.List;
 
-import static pl.lodz.p.edu.mvc.request.Request.*;
 
 public class UserController<T, Tdto> extends AbstractController {
 
@@ -28,7 +27,7 @@ public class UserController<T, Tdto> extends AbstractController {
     }
 
     public List<T> getAll() {
-        HttpRequest request = Request.buildGet(path);
+        HttpRequest request = this.buildGet(path);
         HttpResponse<String> response = send(request);
 
         // fixme check for status codes?
@@ -42,7 +41,7 @@ public class UserController<T, Tdto> extends AbstractController {
     }
 
     public List<T> search(String login) {
-        HttpRequest request = Request.buildGet(path + "?login=" + login);
+        HttpRequest request = this.buildGet(path + "?login=" + login);
         HttpResponse<String> response = send(request);
         if(response.statusCode() != 200) {
             throw new RuntimeException(response.toString());
@@ -55,7 +54,7 @@ public class UserController<T, Tdto> extends AbstractController {
     }
 
     public T get(String uuid) {
-        HttpRequest request = buildGet(path + uuid);
+        HttpRequest request = this.buildGet(path + uuid);
         HttpResponse<String> response = send(request);
         try {
             return om.readValue(response.body(), TType);
@@ -71,7 +70,7 @@ public class UserController<T, Tdto> extends AbstractController {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e); // todo komunikat
         }
-        HttpRequest request = buildPut(path + id, body);
+        HttpRequest request = this.buildPut(path + id, body);
         HttpResponse<String> response = send(request);
         try {
             return om.readValue(response.body(), TdtoType);
@@ -87,7 +86,7 @@ public class UserController<T, Tdto> extends AbstractController {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e.getMessage()); // todo komunikat
         }
-        HttpRequest request = buildPost(path, body);
+        HttpRequest request = this.buildPost(path, body);
         HttpResponse<String> response = send(request);
 
         try {
@@ -99,12 +98,12 @@ public class UserController<T, Tdto> extends AbstractController {
     }
 
     public void activate(String id) {
-        HttpRequest request = buildPut(path + id + "/activate", "");
+        HttpRequest request = this.buildPut(path + id + "/activate", "");
         HttpResponse<String> response = send(request);
     }
 
     public void deactivate(String id) {
-        HttpRequest request = buildPut(path + id + "/deactivate", "");
+        HttpRequest request = this.buildPut(path + id + "/deactivate", "");
         HttpResponse<String> response = send(request);
     }
 

@@ -27,7 +27,7 @@ public abstract class User extends AbstractEntity {
     @Column(name = "archive")
     private boolean active;
 
-    @Column(name = "userRole")
+    @Column(name = "userType")
     @Enumerated(EnumType.STRING)
     protected UserType role;
 

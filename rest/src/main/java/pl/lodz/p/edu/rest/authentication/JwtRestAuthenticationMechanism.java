@@ -27,8 +27,8 @@ public class JwtRestAuthenticationMechanism implements HttpAuthenticationMechani
     @Override
     public AuthenticationStatus validateRequest(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, HttpMessageContext httpMessageContext) throws AuthenticationException {
         String authorizationHeader = httpServletRequest.getHeader("AUTHORIZATION");
-        String token;
-        if (authorizationHeader == null || !authorizationHeader.startsWith("BEARER")) {
+        String bearer = authorizationHeader.substring(0, 6);
+        if (authorizationHeader == null || !bearer.equals("BEARER")) {
             return httpMessageContext.notifyContainerAboutLogin("GUEST", new HashSet<>(List.of("GUEST")));
         }
         String tokenToParse = authorizationHeader.substring("BEARER".length());
@@ -41,13 +41,16 @@ public class JwtRestAuthenticationMechanism implements HttpAuthenticationMechani
         }
 
         String userLogin = claims.getSubject();
+        String userType = claims.get("userType", String.class);
+        System.out.println(userType);
+//        User dbUser = userRepository.getByLogin(userType, userLogin); //TODO Kinda bad but whatever
+        //Return object that counts as a null???
+        User dbUser = userRepository.getByOnlyLogin(userLogin);
 
-        User dbUser = userRepository.getByOnlyLogin(userLogin); //TODO REMEMBER
-//        throw new RuntimeException(claims.toString());
         if (dbUser == null) {
             return httpMessageContext.notifyContainerAboutLogin("GUEST", new HashSet<>(List.of("GUEST")));
         }                                                   // Not sure about principal
-        return httpMessageContext.notifyContainerAboutLogin(dbUser.getLogin(), new HashSet<>(List.of(claims.get("userType", String.class))));
+        return httpMessageContext.notifyContainerAboutLogin(dbUser.getLogin(), Collections.singleton(userType));
 
 
     }

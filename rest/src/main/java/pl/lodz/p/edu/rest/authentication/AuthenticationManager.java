@@ -4,6 +4,7 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
 import pl.lodz.p.edu.data.model.users.User;
+import pl.lodz.p.edu.data.model.users.UserType;
 import pl.lodz.p.edu.rest.exception.AuthenticationFailureException;
 import pl.lodz.p.edu.rest.repository.impl.UserRepository;
 
@@ -29,9 +30,14 @@ public class AuthenticationManager {
             throw new AuthenticationFailureException("User is inactive");
 
         }
-
-        // todo?
-        return utilities.generateToken(user.getLogin(), user.getRole().toString());
-
+        String roleStr = "";
+        if(user.getRole() == UserType.ADMIN) {
+            roleStr = "ADMIN";
+        } else if(user.getRole() == UserType.CLIENT) {
+            roleStr = "CLIENT";
+        } else if(user.getRole() == UserType.EMPLOYEE) {
+            roleStr = "EMPLOYEE";
+        }
+        return utilities.generateToken(user.getLogin(), roleStr);
     }
 }

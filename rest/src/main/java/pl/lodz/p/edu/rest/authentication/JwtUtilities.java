@@ -11,7 +11,6 @@ import java.util.Date;
 @ApplicationScoped
 public class JwtUtilities {
 
-    //todo how to change it from somewhere?
     private String secret = "NIEWIADOMONIEWIADOMONIEWIADOMONIEWIADOMONIEWIADOMONIEWIADOMO";
 
     private int exp_time = 2137000;

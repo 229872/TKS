@@ -7,12 +7,13 @@ import pl.lodz.p.edu.data.model.Equipment;
 import pl.lodz.p.edu.data.model.users.User;
 import pl.lodz.p.edu.mvc.controller.EquipmentController;
 
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import java.util.Comparator;
 import java.util.List;
 
 @Named
-@SessionScoped
+@RequestScoped
 public class EquipmentListBean {
     @Inject
     private EquipmentController equipmentController;

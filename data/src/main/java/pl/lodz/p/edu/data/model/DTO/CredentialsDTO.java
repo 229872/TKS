@@ -4,8 +4,10 @@ import jakarta.validation.constraints.NotEmpty;
 
 public class CredentialsDTO {
 
+    @NotEmpty
     private String login;
 
+    @NotEmpty
     private String password;
 
     public CredentialsDTO() {

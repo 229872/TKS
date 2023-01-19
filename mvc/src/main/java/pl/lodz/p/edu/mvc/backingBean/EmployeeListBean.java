@@ -1,6 +1,7 @@
 package pl.lodz.p.edu.mvc.backingBean;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -13,7 +14,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Named
-@SessionScoped
+@RequestScoped
 public class EmployeeListBean implements Serializable {
     @Inject
     private EmployeeController employeeController;

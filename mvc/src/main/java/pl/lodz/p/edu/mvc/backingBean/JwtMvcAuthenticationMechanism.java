@@ -43,7 +43,7 @@ public class JwtMvcAuthenticationMechanism implements HttpAuthenticationMechanis
         httpMessageContext.forward(userType);
         Set<String> roles = new HashSet<>();
         roles.add(userType);
-        return httpMessageContext.notifyContainerAboutLogin(login, roles);
+        return httpMessageContext.notifyContainerAboutLogin(login, new HashSet<>(List.of(userType)));
     }
 
     public Claims parseJwt(String token) {

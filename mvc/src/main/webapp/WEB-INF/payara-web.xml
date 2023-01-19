@@ -5,23 +5,4 @@
 <payara-web-app error-url="">
     <class-loader delegate="false"/>
     <context-root>/</context-root>
-    <security-role-mapping>
-        <role-name>ADMIN</role-name>
-        <group-name>Admins</group-name>
-    </security-role-mapping>
-
-    <security-role-mapping>
-        <role-name>CLIENT</role-name>
-        <group-name>Clients</group-name>
-    </security-role-mapping>
-
-    <security-role-mapping>
-        <role-name>EMPLOYEE</role-name>
-        <group-name>Employees</group-name>
-    </security-role-mapping>
-
-    <security-role-mapping>
-        <role-name>GUEST</role-name>
-        <group-name>Guests</group-name>
-    </security-role-mapping>
 </payara-web-app>

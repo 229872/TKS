@@ -33,9 +33,7 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    console.log("submit");
-    if(this.loginForm.getRawValue().login == null &&
-      this.loginForm.getRawValue().password == null) {
+    if(this.loginForm.getRawValue().login == null && this.loginForm.getRawValue().password == null) {
       return;
     }
     const credentials: Credentials = {
@@ -44,7 +42,6 @@ export class LoginComponent {
     } as Credentials;
 
     this.authService.login(credentials).subscribe(result => {
-      console.log(result);
       if(result.status == 200) {
         this.authService.saveUserData(result);
         this.router.navigate(['/']);

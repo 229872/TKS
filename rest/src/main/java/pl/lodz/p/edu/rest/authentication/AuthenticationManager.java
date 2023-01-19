@@ -33,7 +33,7 @@ public class AuthenticationManager {
         User updated = userRepository.get(user.getEntityId());
         updated.setPassword(credentials.getNewPassword());
         userRepository.update(updated);
-        return "ok";
+        return null;
     }
 
     private User getUser(String login, String password) throws AuthenticationFailureException {

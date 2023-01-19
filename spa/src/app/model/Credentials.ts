@@ -3,6 +3,10 @@ export interface Credentials {
   password: string
 }
 
+export interface CredentialsChangePassword extends Credentials {
+  newPassword: string
+}
+
 export interface Token {
   jwt: string;
   email: string;

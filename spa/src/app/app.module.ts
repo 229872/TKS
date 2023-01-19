@@ -8,13 +8,15 @@ import { LoginComponent } from './components/login/login.component';
 import { MakeReservationComponent } from './components/make-reservation/make-reservation.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    MakeReservationComponent
+    MakeReservationComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

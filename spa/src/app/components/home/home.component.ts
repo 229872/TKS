@@ -37,8 +37,11 @@ export class HomeComponent {
 
   onLogout() {
     this.authService.logout();
-
     window.location.reload();
+  }
+
+  onChangePassword() {
+
   }
 
 }

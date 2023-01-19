@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Credentials} from "../model/Credentials";
+import {Credentials, CredentialsChangePassword} from "../model/Credentials";
 import jwt_decode from 'jwt-decode';
 import {Token, TokenInfo} from "../model/Token";
 
@@ -19,6 +19,11 @@ export class AuthService {
       {observe: 'response'});
   }
 
+  public changePassword(credentials: CredentialsChangePassword) {
+    return this.httpClient.put<any>(this.baseUrl + '/changePassword',
+      credentials, {observe: 'response'});
+  }
+
   public logout() {
     localStorage.removeItem('login');
     localStorage.removeItem('jwt');
@@ -28,7 +33,6 @@ export class AuthService {
   public saveUserData(result: any) {
     try {
       const tokenInfo: TokenInfo = jwt_decode(result.body.jwt);
-      console.log(tokenInfo);
       localStorage.setItem('login', tokenInfo.sub);
       localStorage.setItem('jwt', tokenInfo.jwt);
       localStorage.setItem('role', tokenInfo.userType);
@@ -42,8 +46,7 @@ export class AuthService {
   }
 
   public isUserLoggedIn() {
-    console.log(localStorage.getItem('role'))
-    return localStorage.getItem('role') == null;
+    return localStorage.getItem('role') != null;
   }
 
   public getLogin() {

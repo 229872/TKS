@@ -22,10 +22,6 @@ export class MakeReservationComponent {
   equipment: Equipment|null = null;
 
   ngOnInit(): void {
-    if(!this.authService.isUserInRole("CLIENT")) {
-      this.router.navigate(['/']);
-    }
-
     this.activeRoute.paramMap.subscribe((params) => {
       this.uuid = params.get('id')!.toString();
       this.equipmentService.getByUUID(this.uuid).subscribe(result => {

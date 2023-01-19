@@ -44,13 +44,6 @@ export class ChangePasswordComponent {
     return 0;
   }
 
-  ngOnInit(): void {
-    console.log(this.authService.isUserLoggedIn());
-    if(!this.authService.isUserLoggedIn()) {
-      this.router.navigate(['/']);
-    }
-  }
-
   onSubmit() {
     const credentials = {
       login: this.authService.getLogin(),

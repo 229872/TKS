@@ -36,7 +36,6 @@ export class AuthService {
   public saveUserData(result: any) {
     try {
       const tokenInfo: TokenInfo = jwt_decode(result.body.jwt);
-      console.log(tokenInfo);
       localStorage.setItem('login', tokenInfo.sub);
       localStorage.setItem('jwt', result.body.jwt);
       localStorage.setItem('role', tokenInfo.userType);

@@ -24,7 +24,6 @@ async function filterClient() {
                 tr.append(id, login, active);
                 tbody.appendChild(tr);
             })
-            console.log(response);
         }
     }
     xhr.open("GET","http://localhost:8080/rest/api/clients?login=" + filter, true);
@@ -46,7 +45,6 @@ function validate() {
 
 function testTextInput(regex, input, name) {
     let label = document.getElementById(name + 'Label');
-    console.log(label);
     if(input.value == '') {
         input.style.background = "orange";
         label.innerHTML = "Cannot be empty";

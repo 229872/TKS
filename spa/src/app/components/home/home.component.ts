@@ -14,8 +14,7 @@ export class HomeComponent {
   constructor(
     private equipmentService: EquipmentService,
     private authService: AuthService,
-    private router: Router,
-    private fb: FormBuilder
+    private router: Router
   ) { }
 
   equipment: Array<Equipment> = [];
@@ -33,7 +32,6 @@ export class HomeComponent {
     this.isUser = this.authService.isUserInRole("CLIENT");
     this.isLoggedIn = this.authService.isUserLoggedIn();
     this.login = this.authService.getLogin();
-    console.log(this.authService.getToken());
   }
 
   onLogout() {
@@ -41,8 +39,8 @@ export class HomeComponent {
     window.location.reload();
   }
 
-  onChangePassword() {
-
+  onMakeRequest(equipment: Equipment) {
+    this.router.navigate(['make-reservation', equipment.entityId]);
   }
 
 }

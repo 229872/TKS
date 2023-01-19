@@ -17,4 +17,9 @@ export class EquipmentService {
       {observe: 'response'});
   }
 
+  public getByUUID(uuid: string): Observable<HttpResponse<Equipment>> {
+    return this.httpClient.get<Equipment>(this.baseUrl + '/equipment/' + uuid,
+      {observe: 'response'});
+  }
+
 }

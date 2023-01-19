@@ -51,7 +51,7 @@ public class LoginBean extends AbstractBean {
 
         incorrectPassword = jwtToken == null;
         if(!incorrectPassword) jwtSessionBean.logIn(jwtToken);
-        return "index.xhtml";
+        return "afterLogin";
     }
 
     public String getRole() {

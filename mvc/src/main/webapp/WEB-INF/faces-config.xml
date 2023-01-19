@@ -173,10 +173,6 @@
             <from-outcome>toEditRent</from-outcome>
             <to-view-id>/editRent.xhtml</to-view-id>
         </navigation-case>
-        <navigation-case>
-            <from-outcome>toTest</from-outcome>
-            <to-view-id>/test.html</to-view-id>
-        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/makeReservation.xhtml</from-view-id>
@@ -185,7 +181,22 @@
             <to-view-id>/clientView.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-
+    <navigation-rule>
+        <from-view-id>/login.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>afterLogin</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/logout.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>afterLogout</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
 
 
 </faces-config>

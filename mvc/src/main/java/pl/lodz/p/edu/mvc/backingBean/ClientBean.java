@@ -28,6 +28,9 @@ public class ClientBean extends AbstractBean {
     @Inject
     private RentController rentController;
 
+    @Inject
+    private JwtSessionBean jwtSessionBean;
+
     private Client client;
 
     public Client getClient() {
@@ -50,12 +53,11 @@ public class ClientBean extends AbstractBean {
     public void init() {
         String clientId = getUuidFromParam();
         if (clientId == null) {
-            client = new Client();
-            clientRents = new ArrayList<>();
+            client = clientController.getByLogin(jwtSessionBean.getUsername());
         } else {
             client = clientController.get(clientId);
-            refreshClientRents();
         }
+        refreshClientRents();
     }
 
     private void refreshClientRents() {

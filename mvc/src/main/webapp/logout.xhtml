@@ -15,7 +15,7 @@
         <h:form id="logout">
             <h:outputText id="logoutOutput" value="#{msg['action.logout']}"/>
             <br/>
-            <h:commandButton id="logoutButton" action="#{jwtSessionBean.invalidateSession()}"/>
+            <h:commandButton id="logoutButton" action="#{jwtSessionBean.invalidateSession()}" value="${msg['action.logout']}"/>
         </h:form>
 
     </ui:define>

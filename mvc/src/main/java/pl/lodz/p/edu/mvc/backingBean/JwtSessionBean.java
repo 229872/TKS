@@ -30,8 +30,9 @@ public class JwtSessionBean extends AbstractBean {
         }
     }
 
-    public void invalidateSession() {
+    public String invalidateSession() {
         getContext().invalidateSession();
+        return "afterLogout";
     }
 
     public String getJwtToken() {

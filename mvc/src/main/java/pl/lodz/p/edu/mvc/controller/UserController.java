@@ -40,6 +40,7 @@ public class UserController<T, Tdto> extends AbstractController {
         }
     }
 
+
     public List<T> search(String login) {
         HttpRequest request = this.buildGet(path + "?login=" + login);
         HttpResponse<String> response = send(request);
@@ -55,6 +56,16 @@ public class UserController<T, Tdto> extends AbstractController {
 
     public T get(String uuid) {
         HttpRequest request = this.buildGet(path + uuid);
+        HttpResponse<String> response = send(request);
+        try {
+            return om.readValue(response.body(), TType);
+        } catch (IOException e) {
+            throw new RuntimeException(e); // todo komunikat
+        }
+    }
+
+    public T getByLogin(String login) {
+        HttpRequest request = this.buildGet(path + "login/" + login);
         HttpResponse<String> response = send(request);
         try {
             return om.readValue(response.body(), TType);

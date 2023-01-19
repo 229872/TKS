@@ -19,13 +19,7 @@
 
             <h:commandButton id="button" action="#{loginBean.login()}" value="#{msg['action.submit']}"/>
             <br/>
-            #{jwtSessionBean.role}<br/>
-            #{jwtSessionBean.username}<br/>
-            #{jwtSessionBean.jwtToken}<br/>
 
-            <c:if test="#{loginBean.role != 'GUEST'}">
-                ${msg['user.login.success']}
-            </c:if>
             <c:if test="#{loginBean.incorrectPassword}">
                 ${msg['user.login.failure']}
             </c:if>

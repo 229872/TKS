@@ -42,7 +42,7 @@ public class ClientController {
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({"CLIENT"})
+    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response addClient(@Valid ClientDTO clientDTO) {
         try {
             Client client = new Client(clientDTO);
@@ -61,7 +61,7 @@ public class ClientController {
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({"CLIENT"})
+    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response searchClients(@QueryParam("login") String login) {
         logger.info(login);
         return userControllerMethods.searchUser("Client", login);
@@ -70,6 +70,7 @@ public class ClientController {
     @GET
     @Path("/{uuid}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response getUserByUuid(@PathParam("uuid") UUID entityId) {
         return userControllerMethods.getSingleUser("Client", entityId);
     }
@@ -77,6 +78,7 @@ public class ClientController {
     @GET
     @Path("/login/{login}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response getUserByLogin(@PathParam("login") String login) {
         return userControllerMethods.getSingleUser("Client", login);
     }
@@ -85,6 +87,7 @@ public class ClientController {
     @PUT
     @Path("/{entityId}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response updateClient(@PathParam("entityId") UUID entityId, @Valid ClientDTO clientDTO) {
         try {
             userManager.updateClient(entityId, clientDTO);
@@ -100,22 +103,16 @@ public class ClientController {
 
     @PUT
     @Path("/{entityId}/activate")
+    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response activateUser(@PathParam("entityId") UUID entityId) {
         return userControllerMethods.activateUser("Client", entityId);
     }
 
     @PUT
     @Path("/{entityId}/deactivate")
+    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response deactivateUser(@PathParam("entityId") UUID entityId) {
         return userControllerMethods.deactivateUser("Client", entityId);
-    }
-
-
-    // login
-    @POST
-    @Path("/login")
-    public Response login(ClientDTO client) {
-        return Response.status(200).build();
     }
 
 

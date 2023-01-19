@@ -15,7 +15,7 @@
             <li><h:outputLink value="logout.xhtml" >${msg["user.logout"]}</h:outputLink></li>
         </c:if>
         <c:if test="#{loginBean.role eq 'CLIENT'}">
-            <li><h:outputLink value="makeReservation.xhtml" >${msg["action.makeReservaton"]}</h:outputLink></li>
+            <li><h:outputLink value="clientView.xhtml" >${msg["menu.clientView"]}</h:outputLink></li>
         </c:if>
         <c:if test="#{loginBean.role eq 'EMPLOYEE'}">
             <li><h:outputLink value="listClients.xhtml" >${msg["menu.listClients"]}</h:outputLink></li>
@@ -26,12 +26,6 @@
             <li><h:outputLink value="manageAdmins.xhtml" >${msg["menu.manageAdmins"]}</h:outputLink></li>
             <li><h:outputLink value="manageEmployees.xhtml" >${msg["menu.manageEmployees"]}</h:outputLink></li>
         </c:if>
-            <li><h:outputLink value="makeReservation.xhtml" >${msg["action.makeReservaton"]}</h:outputLink></li>
-
-
-
-        <li><h:outputLink value="chooseClient.xhtml" >${msg["menu.chooseClient"]}</h:outputLink></li>
-
     </ul>
 
 </ui:composition>

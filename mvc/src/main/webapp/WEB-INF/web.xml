@@ -56,9 +56,32 @@
         <web-resource-collection>
             <web-resource-name>client</web-resource-name>
             <url-pattern>/makeReservation.xhtml</url-pattern>
+            <url-pattern>/editClient.xhtml</url-pattern>
+            <url-pattern>/clientView.xhtml</url-pattern>
+
+            <url-pattern>/editRent.xhtml</url-pattern>
+
+
         </web-resource-collection>
         <auth-constraint>
             <role-name>CLIENT</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>employee</web-resource-name>
+            <url-pattern>/manageClients.xhtml</url-pattern>
+            <url-pattern>/createClient</url-pattern>
+            <url-pattern>/editClient</url-pattern>
+            <url-pattern>/listClient</url-pattern>
+
+            <url-pattern>/manageEquipment.xhtml</url-pattern>
+            <url-pattern>/createEquipment.xhtml</url-pattern>
+            <url-pattern>/editEquipment.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>EMPLOYEE</role-name>
         </auth-constraint>
     </security-constraint>
 
@@ -68,7 +91,9 @@
             <url-pattern>/manageAdmins.xhtml</url-pattern>
             <url-pattern>/createAdmin.xhtml</url-pattern>
             <url-pattern>/editAdmin.xhtml</url-pattern>
+
             <url-pattern>/manageEmployees.xhtml</url-pattern>
+            <url-pattern>/createEmployee.xhtml</url-pattern>
             <url-pattern>/editEmployee.xhtml</url-pattern>
         </web-resource-collection>
         <auth-constraint>
@@ -76,17 +101,7 @@
         </auth-constraint>
     </security-constraint>
 
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>employee</web-resource-name>
-            <url-pattern>/manageClients.xhtml</url-pattern>
-            <url-pattern>/createAdmin.xhtml</url-pattern>
-            <url-pattern>/editAdmin.xhtml</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>ADMIN</role-name>
-        </auth-constraint>
-    </security-constraint>
+
 
     <security-constraint>
         <web-resource-collection>

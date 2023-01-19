@@ -40,9 +40,6 @@ public class JwtMvcAuthenticationMechanism implements HttpAuthenticationMechanis
         }
         String login = claims.getSubject();
         String userType = claims.get("userType", String.class); //Role?
-        httpMessageContext.forward(userType);
-        Set<String> roles = new HashSet<>();
-        roles.add(userType);
         return httpMessageContext.notifyContainerAboutLogin(login, new HashSet<>(List.of(userType)));
     }
 

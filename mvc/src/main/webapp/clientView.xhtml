@@ -15,7 +15,7 @@
         <h3>${msg['menu.userPage']}</h3>
         ${msg['profile.loggedAs']} ${clientBean.client.login}
         <h:form>
-            <h:commandButton value="#{msg['action.logout']}" action="fromClientView"/>
+            <h:commandButton value="#{msg['action.makeReservaton']}" action="toMakeReservation"/>
         </h:form>
         <h:dataTable value="#{equipmentListBean.available}" var="equipment">
             <h:column>

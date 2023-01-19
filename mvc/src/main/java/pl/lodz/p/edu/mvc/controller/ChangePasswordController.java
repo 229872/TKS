@@ -18,7 +18,7 @@ public class ChangePasswordController extends AbstractController {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        HttpRequest request = buildPost(path, body);
+        HttpRequest request = buildPut(path, body);
 
         HttpResponse<String> response = send(request);
         return response.statusCode() == 200;

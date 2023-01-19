@@ -20,17 +20,15 @@ export class AuthService {
   }
 
   saveUserData(result: any) {
-    const tokenInfo = this.getDecodedJwtToken(result.body.jwt);
-    localStorage.setItem('email', result.body.email);
-    localStorage.setItem('jwt', result.body.jwt);
-    localStorage.setItem('role', tokenInfo.role);
-  }
-
-  getDecodedJwtToken(token: string): any {
     try {
-      return jwt_decode(token);
+      const tokenInfo = jwt_decode(result.body.jwt);
+      // @ts-ignore
+      localStorage.setItem('login', tokenInfo.sub);
+      localStorage.setItem('jwt', result.body.jwt);
+      // @ts-ignore
+      localStorage.setItem('role', tokenInfo.role);
     } catch (Error) {
-      return null;
+      return;
     }
   }
 }

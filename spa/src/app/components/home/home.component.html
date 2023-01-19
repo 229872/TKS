@@ -1,5 +1,13 @@
-<h3 class="mb-4">Zaloguj się</h3>
-<button class="btn btn-danger mb-4" (click)="onLogin()">Zaloguj się!</button>
+<div [hidden]="!isLoggedIn">
+  <h3 class="mb-4">Zaloguj się</h3>
+  <button class="btn btn-light mb-4" [routerLink]="['login']">Zaloguj się!</button>
+  <p>Aby móc zarezerwować pojazd musisz się zalogować</p>
+</div>
+<div [hidden]="isLoggedIn">
+  <h3 class="mb-4">Zalogowany jako {{login}}</h3>
+  <button class="btn btn-warning mb-4" (click)="onLogout()">Wyloguj się!</button>
+</div>
+
 <h3 class="mb-4">Może trochę sprzętu?</h3>
 <div class="row justify-content-center">
   <table class="table table-bordered table-striped">
@@ -17,7 +25,7 @@
       <td>{{ eq.firstDayCost }} zł</td>
       <td>{{ eq.nextDaysCost }} zł</td>
       <td>
-        <button class="btn btn-info">Zarezerwuj</button>
+        <button class="btn btn-info" [disabled]="!isUser">Zarezerwuj</button>
       </td>
     </tr>
     </tbody>

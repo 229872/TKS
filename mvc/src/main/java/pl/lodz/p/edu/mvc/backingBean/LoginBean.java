@@ -19,9 +19,6 @@ public class LoginBean extends AbstractBean {
     private JwtSessionBean jwtSessionBean;
 
     @Inject
-    private HttpServletRequest request;
-
-    @Inject
     private LoginController loginController;
 
     private CredentialsDTO credentialsDTO = new CredentialsDTO();
@@ -50,7 +47,10 @@ public class LoginBean extends AbstractBean {
         }
 
         incorrectPassword = jwtToken == null;
-        if(!incorrectPassword) jwtSessionBean.logIn(jwtToken);
+        if(incorrectPassword) {
+            return "";
+        }
+        jwtSessionBean.logIn(jwtToken);
         return "afterLogin";
     }
 

@@ -26,7 +26,7 @@ public abstract class User extends AbstractEntity {
     @NotEmpty
     private String login;
 
-    @Column(name = "hash")
+    @Column(name = "password")
     @JsonbTypeAdapter(JsonPasswordCustomAdapter.class)
     private String password;
 

@@ -3,17 +3,19 @@ package pl.lodz.p.edu.rest.authentication;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
+import jakarta.transaction.Transactional;
 import pl.lodz.p.edu.data.model.DTO.CredentialsNewPasswordDTO;
 import pl.lodz.p.edu.data.model.users.User;
 import pl.lodz.p.edu.data.model.users.UserType;
 import pl.lodz.p.edu.rest.exception.AuthenticationFailureException;
 import pl.lodz.p.edu.rest.repository.impl.UserRepository;
 
+@Transactional
 @RequestScoped
 public class AuthenticationManager {
 
     @Inject
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Inject
     JwtUtilities utilities;
@@ -27,9 +29,10 @@ public class AuthenticationManager {
     public String changePassword(CredentialsNewPasswordDTO credentials) throws AuthenticationFailureException {
         User user = getUser(credentials.getLogin(), credentials.getPassword());
         // if old password ok then:
-        user.setPassword(credentials.getNewPassword());
-        userRepository.update(user);
-        return utilities.generateToken(user.getLogin(), user.getUserType());
+        User updated = userRepository.get(user.getEntityId());
+        updated.setPassword(credentials.getNewPassword());
+        userRepository.update(updated);
+        return "ok";
     }
 
     private User getUser(String login, String password) throws AuthenticationFailureException {

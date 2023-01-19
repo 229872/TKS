@@ -13,6 +13,7 @@
         </c:if>
         <c:if test="#{loginBean.role != 'GUEST'}">
             <li><h:outputLink value="logout.xhtml" >${msg["user.logout"]}</h:outputLink></li>
+            <li><h:outputLink value="changePassword.xhtml" >${msg["user.changePassword"]}</h:outputLink></li>
         </c:if>
         <c:if test="#{loginBean.role eq 'CLIENT'}">
             <li><h:outputLink value="clientView.xhtml" >${msg["menu.clientView"]}</h:outputLink></li>

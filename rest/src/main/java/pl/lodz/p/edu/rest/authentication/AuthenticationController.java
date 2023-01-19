@@ -12,14 +12,14 @@ import pl.lodz.p.edu.data.model.DTO.CredentialsDTO;
 import pl.lodz.p.edu.data.model.DTO.CredentialsNewPasswordDTO;
 import pl.lodz.p.edu.rest.exception.AuthenticationFailureException;
 
-@Path("/login")
+@Path("/")
 public class AuthenticationController {
 
     @Inject
-    AuthenticationManager authManager;
+    private AuthenticationManager authManager;
 
     @POST
-    @Path("/")
+    @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response login(@Valid CredentialsDTO credentialsDTO) {
@@ -32,7 +32,7 @@ public class AuthenticationController {
     }
 
     @POST
-    @Path("/")
+    @Path("/changePassword")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response changePassword(@Valid CredentialsNewPasswordDTO credentials) {

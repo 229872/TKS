@@ -19,6 +19,8 @@ public class CredentialsNewPasswordDTO {
     }
 
     public CredentialsNewPasswordDTO() {
+        this.password = "";
+        this.newPassword = "";
     }
 
 

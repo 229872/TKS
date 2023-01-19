@@ -62,10 +62,6 @@ public class LoginBean extends AbstractBean {
         return "GUEST";
     }
 
-    public String getUsername() {
-        return FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName();
-    }
-
     public CredentialsDTO getCredentialsDTO() {
         return credentialsDTO;
     }

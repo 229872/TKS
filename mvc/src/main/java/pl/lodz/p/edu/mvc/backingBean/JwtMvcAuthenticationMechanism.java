@@ -3,6 +3,7 @@ package pl.lodz.p.edu.mvc.backingBean;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.AuthenticationException;
 import jakarta.security.enterprise.AuthenticationStatus;
@@ -39,8 +40,10 @@ public class JwtMvcAuthenticationMechanism implements HttpAuthenticationMechanis
         }
         String login = claims.getSubject();
         String userType = claims.get("userType", String.class); //Role?
-
-        return httpMessageContext.notifyContainerAboutLogin(login, new HashSet<>(List.of("CLIENT")));
+        httpMessageContext.forward(userType);
+        Set<String> roles = new HashSet<>();
+        roles.add(userType);
+        return httpMessageContext.notifyContainerAboutLogin(login, roles);
     }
 
     public Claims parseJwt(String token) {

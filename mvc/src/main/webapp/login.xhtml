@@ -19,8 +19,9 @@
 
             <h:commandButton id="button" action="#{loginBean.login()}" value="#{msg['action.submit']}"/>
             <br/>
-            #{loginBean.role}<br/>
-            #{loginBean.username}<br/>
+            #{jwtSessionBean.role}<br/>
+            #{jwtSessionBean.username}<br/>
+            #{jwtSessionBean.jwtToken}<br/>
 
             <c:if test="#{loginBean.role != 'GUEST'}">
                 ${msg['user.login.success']}

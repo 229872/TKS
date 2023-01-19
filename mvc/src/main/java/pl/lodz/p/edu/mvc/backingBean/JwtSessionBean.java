@@ -2,11 +2,12 @@ package pl.lodz.p.edu.mvc.backingBean;
 
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.context.ExternalContext;
-import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+
+import javax.faces.context.FacesContext;
 
 @SessionScoped
 @Named
@@ -35,5 +36,17 @@ public class JwtSessionBean extends AbstractBean {
 
     public String getJwtToken() {
         return jwtToken;
+    }
+
+    public String getRole() {
+        ExternalContext context = jakarta.faces.context.FacesContext.getCurrentInstance().getExternalContext();
+        if (context.isUserInRole("CLIENT")) return "CLIENT";
+        if (context.isUserInRole("EMPLOYEE")) return "EMPLOYEE";
+        if (context.isUserInRole("ADMIN")) return "ADMIN";
+        return "GUEST";
+    }
+
+    public String getUsername() {
+        return FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName();
     }
 }

@@ -22,6 +22,8 @@ export class LoginComponent {
     password: ['', Validators.required]
   });
 
+  incorrectPassword: boolean = false;
+
   get login() {
     return this.loginForm.controls['login'];
   }
@@ -45,7 +47,11 @@ export class LoginComponent {
       console.log(result);
       if(result.status == 200) {
         this.authService.saveUserData(result);
+        this.router.navigate(['/']);
       }
+    }, error => {
+      this.incorrectPassword = true;
+      this.loginForm.get('password')?.reset();
     });
   }
 }

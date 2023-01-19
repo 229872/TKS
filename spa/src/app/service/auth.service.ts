@@ -19,7 +19,7 @@ export class AuthService {
       {observe: 'response'});
   }
 
-  saveUserData(result: any) {
+  public saveUserData(result: any) {
     try {
       const tokenInfo = jwt_decode(result.body.jwt);
       // @ts-ignore

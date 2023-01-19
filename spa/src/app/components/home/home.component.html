@@ -1,1 +1,25 @@
-<p>home works!</p>
+<h3 class="mb-4">Zaloguj się</h3>
+<button class="btn btn-danger mb-4" (click)="onLogin()">Zaloguj się!</button>
+<h3 class="mb-4">Może trochę sprzętu?</h3>
+<div class="row justify-content-center">
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th>Nazwa</th>
+      <th>Koszt za pierwszy dzień</th>
+      <th>Koszt za następne dni</th>
+      <th>Zarezerwuj</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let eq of equipment">
+      <td>{{ eq.name }}</td>
+      <td>{{ eq.firstDayCost }} zł</td>
+      <td>{{ eq.nextDaysCost }} zł</td>
+      <td>
+        <button class="btn btn-info">Zarezerwuj</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

@@ -3,6 +3,7 @@ package pl.lodz.p.edu.mvc.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.enterprise.context.RequestScoped;
 import pl.lodz.p.edu.data.model.DTO.CredentialsDTO;
+import pl.lodz.p.edu.data.model.DTO.TokenDTO;
 
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -25,9 +26,13 @@ public class LoginController extends AbstractController {
 
         HttpResponse<String> response = send(request);
         if(response.statusCode() == 200) {
-            return response.body();
-        } else {
-            return null;
+            try {
+                TokenDTO token = om.readValue(response.body(), TokenDTO.class);
+                return token.getJwt();
+            } catch (JsonProcessingException e) {
+                return null;
+            }
         }
+        return null;
     }
 }

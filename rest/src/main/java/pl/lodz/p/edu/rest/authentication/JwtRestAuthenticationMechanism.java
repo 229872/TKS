@@ -27,8 +27,11 @@ public class JwtRestAuthenticationMechanism implements HttpAuthenticationMechani
     @Override
     public AuthenticationStatus validateRequest(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, HttpMessageContext httpMessageContext) throws AuthenticationException {
         String authorizationHeader = httpServletRequest.getHeader("AUTHORIZATION");
+        if(authorizationHeader == null) {
+            return httpMessageContext.notifyContainerAboutLogin("GUEST", new HashSet<>(List.of("GUEST")));
+        }
         String bearer = authorizationHeader.substring(0, 6);
-        if (authorizationHeader == null || !bearer.equals("BEARER")) {
+        if (!bearer.equals("BEARER")) {
             return httpMessageContext.notifyContainerAboutLogin("GUEST", new HashSet<>(List.of("GUEST")));
         }
         String tokenToParse = authorizationHeader.substring("BEARER".length());

@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
 import pl.lodz.p.edu.data.model.DTO.CredentialsNewPasswordDTO;
+import pl.lodz.p.edu.data.model.DTO.TokenDTO;
 import pl.lodz.p.edu.data.model.users.User;
 import pl.lodz.p.edu.data.model.users.UserType;
 import pl.lodz.p.edu.rest.exception.AuthenticationFailureException;
@@ -20,10 +21,10 @@ public class AuthenticationManager {
     @Inject
     JwtUtilities utilities;
 
-    public String login(String login, String password) throws AuthenticationFailureException {
+    public TokenDTO login(String login, String password) throws AuthenticationFailureException {
         User user = getUser(login, password);
         // if password ok then:
-        return utilities.generateToken(user.getLogin(), user.getUserType());
+        return new TokenDTO(utilities.generateToken(user.getLogin(), user.getUserType()));
     }
 
     public String changePassword(CredentialsNewPasswordDTO credentials) throws AuthenticationFailureException {

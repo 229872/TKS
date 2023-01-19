@@ -1,1 +1,45 @@
-<p>login works!</p>
+<h3 class="mb-4">Zaloguj się</h3>
+<form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+  <div class="row">
+    <div class="col-6">
+      <div class="input-group mb-2 mr-sm-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Login</div>
+        </div>
+        <input type="text" class="form-control"
+               id="login" placeholder="Login"
+               name="login" formControlName="login">
+      </div>
+    </div>
+    <div class="col">
+      <div [hidden]="!(login.touched && !login.valid)"
+           class="text text-danger mb-2 mr-sm-2 mt-2">
+        Proszę podać login
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <div class="input-group mb-2 mr-sm-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Email</div>
+        </div>
+        <input type="text" class="form-control"
+               id="password" placeholder="Hasło"
+               name="password" formControlName="password">
+      </div>
+    </div>
+    <div class="col">
+      <div [hidden]="!(password.touched && !password.valid)"
+           class="text text-danger mb-2 mr-sm-2 mt-2">
+        Proszę podać hasło
+      </div>
+    </div>
+  </div>
+
+  <button type="submit"
+          class="btn btn-primary mb-2"
+          [disabled]="!loginForm.valid">
+    Zaloguj</button>
+</form>

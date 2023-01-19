@@ -21,7 +21,10 @@ export class AuthService {
 
   public changePassword(credentials: CredentialsChangePassword) {
     return this.httpClient.put<any>(this.baseUrl + '/changePassword',
-      credentials, {observe: 'response'});
+      credentials, {headers: {
+        'content-type': 'application/json',
+        'authorization': 'Bearer ' + this.getToken()
+        }, observe: 'response'});
   }
 
   public logout() {
@@ -33,8 +36,9 @@ export class AuthService {
   public saveUserData(result: any) {
     try {
       const tokenInfo: TokenInfo = jwt_decode(result.body.jwt);
+      console.log(tokenInfo);
       localStorage.setItem('login', tokenInfo.sub);
-      localStorage.setItem('jwt', tokenInfo.jwt);
+      localStorage.setItem('jwt', result.body.jwt);
       localStorage.setItem('role', tokenInfo.userType);
     } catch (Error) {
       return;
@@ -50,6 +54,10 @@ export class AuthService {
   }
 
   public getLogin() {
-    return localStorage.getItem('login')
+    return localStorage.getItem('login');
+  }
+
+  public getToken() {
+    return localStorage.getItem('jwt');
   }
 }

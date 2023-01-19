@@ -31,6 +31,7 @@ public class JwtRestAuthenticationMechanism implements HttpAuthenticationMechani
             return httpMessageContext.notifyContainerAboutLogin("GUEST", new HashSet<>(List.of("GUEST")));
         }
         String bearer = authorizationHeader.substring(0, 6);
+        bearer = bearer.toUpperCase();
         if (!bearer.equals("BEARER")) {
             return httpMessageContext.notifyContainerAboutLogin("GUEST", new HashSet<>(List.of("GUEST")));
         }

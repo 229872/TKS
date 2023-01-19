@@ -1,5 +1,6 @@
 package pl.lodz.p.edu.rest.authentication;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -32,6 +33,7 @@ public class AuthenticationController {
     @Path("/changePassword")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response changePassword(@Valid CredentialsNewPasswordDTO credentials) {
         try {
             return Response.status(200).entity(authManager.changePassword(credentials)).build();

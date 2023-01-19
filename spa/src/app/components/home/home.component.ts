@@ -33,6 +33,7 @@ export class HomeComponent {
     this.isUser = this.authService.isUserInRole("CLIENT");
     this.isLoggedIn = this.authService.isUserLoggedIn();
     this.login = this.authService.getLogin();
+    console.log(this.authService.getToken());
   }
 
   onLogout() {

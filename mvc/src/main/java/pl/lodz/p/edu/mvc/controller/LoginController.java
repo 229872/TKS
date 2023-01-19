@@ -24,6 +24,10 @@ public class LoginController extends AbstractController {
         HttpRequest request = buildPost(path, body);
 
         HttpResponse<String> response = send(request);
-        return response.body();
+        if(response.statusCode() == 200) {
+            return response.body();
+        } else {
+            return null;
+        }
     }
 }

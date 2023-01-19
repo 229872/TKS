@@ -18,10 +18,15 @@
             <label id="passwordLabel" for="password"/><br/>
 
             <h:commandButton id="button" action="#{loginBean.login()}" value="#{msg['action.submit']}"/>
+            <br/>
+            #{loginBean.role}<br/>
+            #{loginBean.username}<br/>
 
-            #{loginBean.role}
-            <c:if test="#{jwtSessionBean.role != 'GUEST'}">
+            <c:if test="#{loginBean.role != 'GUEST'}">
                 ${msg['user.login.success']}
+            </c:if>
+            <c:if test="#{loginBean.incorrectPassword}">
+                ${msg['user.login.failure']}
             </c:if>
         </h:form>
     </ui:define>

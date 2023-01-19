@@ -1,5 +1,6 @@
 package pl.lodz.p.edu.rest.controllers;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
 import jakarta.transaction.TransactionalException;
@@ -37,6 +38,7 @@ public class EmployeeController {
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"ADMIN"})
     public Response addEmployee(@Valid EmployeeDTO employeeDTO) {
         try {
             Employee employee = new Employee(employeeDTO);
@@ -54,6 +56,7 @@ public class EmployeeController {
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Response searchAdmin(@QueryParam("login") String login) {
         return userControllerMethods.searchUser("Employee", login);
     }
@@ -61,6 +64,7 @@ public class EmployeeController {
     @GET
     @Path("/{entityId}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Response getUserByUuid(@PathParam("entityId") UUID entityId) {
         return userControllerMethods.getSingleUser("Employee", entityId);
     }
@@ -68,6 +72,7 @@ public class EmployeeController {
     @GET
     @Path("/login/{login}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Response getUserByLogin(@PathParam("login") String login) {
         return userControllerMethods.getSingleUser("Employee", login);
     }
@@ -76,6 +81,7 @@ public class EmployeeController {
     @PUT
     @Path("/{entityId}")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Response updateEmployee(@PathParam("entityId") UUID entityId, @Valid EmployeeDTO employeeDTO) {
         try {
             userManager.updateEmployee(entityId, employeeDTO);
@@ -91,12 +97,14 @@ public class EmployeeController {
 
     @PUT
     @Path("/{entityId}/activate")
+    @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Response activateUser(@PathParam("entityId") UUID entityId) {
         return userControllerMethods.activateUser("Employee", entityId);
     }
 
     @PUT
     @Path("/{entityId}/deactivate")
+    @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Response deactivateUser(@PathParam("entityId") UUID entityId) {
         return userControllerMethods.deactivateUser("Employee", entityId);
     }
@@ -106,6 +114,7 @@ public class EmployeeController {
     @POST
     @Path("/addFake")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Employee addFakeUserAdmin() {
         Employee c = DataFaker.getEmployee();
         try {

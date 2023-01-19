@@ -105,6 +105,7 @@ public class AdminController {
 
     @PUT
     @Path("/{entityId}/deactivate")
+    @RolesAllowed({"ADMIN"})
     public Response deactivateUser(@PathParam("entityId") UUID entityId) {
         return userControllerMethods.deactivateUser("Admin", entityId);
     }
@@ -114,7 +115,7 @@ public class AdminController {
     @POST
     @Path("/addFake")
     @Produces(MediaType.APPLICATION_JSON)
-    
+    @RolesAllowed({"ADMIN"})
     public Admin addFakeUserAdmin() {
         Admin c = DataFaker.getAdmin();
         try {

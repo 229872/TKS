@@ -43,7 +43,7 @@
         <role-name>ADMIN</role-name>
     </security-role>
     <security-role>
-        <role-name>USER</role-name>
+        <role-name>CLIENT</role-name>
     </security-role>
     <security-role>
         <role-name>EMPLOYEE</role-name>
@@ -51,6 +51,42 @@
     <security-role>
         <role-name>GUEST</role-name>
     </security-role>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>client</web-resource-name>
+            <url-pattern>/makeReservation.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>CLIENT</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>admin</web-resource-name>
+            <url-pattern>/manageAdmins.xhtml</url-pattern>
+            <url-pattern>/createAdmin.xhtml</url-pattern>
+            <url-pattern>/editAdmin.xhtml</url-pattern>
+            <url-pattern>/manageEmployees.xhtml</url-pattern>
+            <url-pattern>/editEmployee.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ADMIN</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>employee</web-resource-name>
+            <url-pattern>/manageClients.xhtml</url-pattern>
+            <url-pattern>/createAdmin.xhtml</url-pattern>
+            <url-pattern>/editAdmin.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ADMIN</role-name>
+        </auth-constraint>
+    </security-constraint>
 
     <security-constraint>
         <web-resource-collection>

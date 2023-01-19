@@ -10,15 +10,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import pl.lodz.p.edu.data.model.DTO.CredentialsDTO;
 import pl.lodz.p.edu.mvc.controller.LoginController;
 
-import javax.ws.rs.core.SecurityContext;
 
 @Named
 @SessionScoped
 public class LoginBean extends AbstractBean {
 
-//    @Inject
-//    private JwtSessionBean jwtSessionBean;
-
+    @Inject
+    private JwtSessionBean jwtSessionBean;
 
     @Inject
     private HttpServletRequest request;
@@ -48,20 +46,24 @@ public class LoginBean extends AbstractBean {
         try {
             jwtToken = loginController.logIn(credentialsDTO);
         } catch (Exception e) {
-            FacesContext facesContext = FacesContext.getCurrentInstance();
-            // error with localisation idk resource bundle
-            throw new RuntimeException("niewiadomo login()");
+            throw new RuntimeException("Error during login");
         }
 
         incorrectPassword = jwtToken == null;
-        return "";
+        if(!incorrectPassword) jwtSessionBean.logIn(jwtToken);
+        return "index.xhtml";
     }
 
     public String getRole() {
-        if (request.isUserInRole("CLIENT")) return "CLIENT";
-        if (request.isUserInRole("EMPLOYEE")) return "EMPLOYEE";
-        if (request.isUserInRole("ADMIN")) return "ADMIN";
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        if (context.isUserInRole("CLIENT")) return "CLIENT";
+        if (context.isUserInRole("EMPLOYEE")) return "EMPLOYEE";
+        if (context.isUserInRole("ADMIN")) return "ADMIN";
         return "GUEST";
+    }
+
+    public String getUsername() {
+        return FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName();
     }
 
     public CredentialsDTO getCredentialsDTO() {

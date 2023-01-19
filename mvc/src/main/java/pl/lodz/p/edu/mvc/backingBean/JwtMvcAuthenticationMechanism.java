@@ -12,8 +12,10 @@ import jakarta.security.enterprise.authentication.mechanism.http.HttpMessageCont
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @ApplicationScoped
 @AutoApplySession
@@ -24,6 +26,7 @@ public class JwtMvcAuthenticationMechanism implements HttpAuthenticationMechanis
 
     @Override
     public AuthenticationStatus validateRequest(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, HttpMessageContext httpMessageContext) throws AuthenticationException {
+
         String token = sessionBean.getJwtToken();
         if (token.isEmpty() || token.isBlank()) {
             return httpMessageContext.notifyContainerAboutLogin("GUEST", new HashSet<>(List.of("GUEST")));
@@ -36,7 +39,8 @@ public class JwtMvcAuthenticationMechanism implements HttpAuthenticationMechanis
         }
         String login = claims.getSubject();
         String userType = claims.get("userType", String.class); //Role?
-        return httpMessageContext.notifyContainerAboutLogin(login, new HashSet<>(List.of(userType)));
+
+        return httpMessageContext.notifyContainerAboutLogin(login, new HashSet<>(List.of("CLIENT")));
     }
 
     public Claims parseJwt(String token) {

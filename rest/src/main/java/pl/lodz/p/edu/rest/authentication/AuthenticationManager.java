@@ -24,11 +24,8 @@ public class AuthenticationManager {
         } catch (NoResultException e) {
             throw new AuthenticationFailureException("User not found");
         }
-
-
         if (!user.isActive()) {
             throw new AuthenticationFailureException("User is inactive");
-
         }
         return utilities.generateToken(user.getLogin(), user.getUserType());
     }

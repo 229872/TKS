@@ -20,22 +20,13 @@ public class JwtSessionBean extends AbstractBean {
     public JwtSessionBean() {
     }
 
-    public void logIn(String jwtToken) {
-        this.jwtToken = jwtToken;
+    public void logIn(String jwt) {
+        this.jwtToken = jwt;
         try {
             request.logout(); //Todo there is other way to achieve this?
         } catch (ServletException e) {
             throw new RuntimeException();
         }
-
-    }
-
-    public String getRole() {
-        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-        if (context.isUserInRole("CLIENT")) return "CLIENT";
-        if (context.isUserInRole("EMPLOYEE")) return "EMPLOYEE";
-        if (context.isUserInRole("ADMIN")) return "ADMIN";
-        return "GUEST";
     }
 
     public void invalidateSession() {

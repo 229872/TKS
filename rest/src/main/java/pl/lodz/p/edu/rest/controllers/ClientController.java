@@ -61,6 +61,7 @@ public class ClientController {
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"CLIENT"})
     public Response searchClients(@QueryParam("login") String login) {
         logger.info(login);
         return userControllerMethods.searchUser("Client", login);

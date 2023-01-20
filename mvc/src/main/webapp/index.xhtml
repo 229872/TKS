@@ -10,8 +10,5 @@
 
     <ui:define name="content">
         ${msg['app.name']}<br/>
-        <c:if test="#{jwtSessionBean.username != 'GUEST'}">
-            Zalogowany jako: #{jwtSessionBean.username};
-        </c:if>
     </ui:define>
 </ui:composition>

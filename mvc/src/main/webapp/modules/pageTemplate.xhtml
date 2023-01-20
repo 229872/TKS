@@ -29,6 +29,7 @@
     </div>
     <div id="bottom">
         <center>#{msg["app.name"]}</center>
+        <ui:insert name="right">Zalogowany jako: #{jwtSessionBean.username}, z rolą: #{jwtSessionBean.role}</ui:insert>
     </div>
 </h:body>
 

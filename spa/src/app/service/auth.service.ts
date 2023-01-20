@@ -22,8 +22,7 @@ export class AuthService {
   public changePassword(credentials: CredentialsChangePassword) {
     return this.httpClient.put<any>(this.baseUrl + '/changePassword',
       credentials, {headers: {
-        'content-type': 'application/json',
-        'authorization': 'Bearer ' + this.getToken()
+        'content-type': 'application/json'
         }, observe: 'response'});
   }
 

@@ -15,7 +15,7 @@
     <div class="col">
       <div [hidden]="!(beginTime.touched && !beginTime.valid)"
            class="text text-danger mb-2 mr-sm-2 mt-2">
-        Data musi być podana w formacie rrrr mm dd, np 2022 13 27
+        Data musi być podana w formacie rrrr-mm-dd, np 2022-12-27
       </div>
     </div>
   </div>
@@ -34,8 +34,13 @@
     <div class="col">
       <div [hidden]="!(endTime.touched && !endTime.valid)"
            class="text text-danger mb-2 mr-sm-2 mt-2">
-        Data musi być podana w formacie rrrr mm dd, np 2022 12 27
+        Data musi być podana w formacie rrrr-mm-dd, np 2022-02-07
       </div>
     </div>
   </div>
+
+  <button type="submit"
+          class="btn btn-primary mb-2"
+          [disabled]="!reservationForm.valid">
+    Zaloguj</button>
 </form>

@@ -11,7 +11,7 @@ import javax.faces.context.FacesContext;
 
 @SessionScoped
 @Named
-public class JwtSessionBean extends AbstractBean {
+public class    JwtSessionBean extends AbstractBean {
 
     private String jwtToken = "";
 

@@ -1,1 +1,13 @@
-<p>make-reservation works!</p>
+<form [formGroup]="makeReservationForm">
+  <span class="d-block h4"> From:</span>
+  <ngb-datepicker #d formControlName="beginTime"></ngb-datepicker>
+  <input type="text" ngbDatepicker #d="ngbDatepicker"/>
+  <div class="row text-center p-0 py-2 p-sm-4">
+
+    <div class="col-sm-6">
+      <span class="d-block mt-sm-auto mt-3 h4">To:</span>
+      <ngb-datepicker
+        formControlName="endTime"></ngb-datepicker>
+    </div>
+  </div>
+</form>

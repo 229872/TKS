@@ -12,6 +12,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { JwtInterceptor } from './interceptor/jwt.interceptor';
 import {ClientGuard} from "./service/auth-guard/client.guard";
 import {LoggedInGuard} from "./service/auth-guard/logged-in.guard";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {LoggedInGuard} from "./service/auth-guard/logged-in.guard";
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

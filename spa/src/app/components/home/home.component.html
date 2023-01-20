@@ -1,3 +1,6 @@
+<div class="alert alert-success" [hidden]="!messageVisible || empty(message)">
+  {{message}}
+</div>
 <div [hidden]="isLoggedIn">
   <h3 class="mb-4">Zaloguj się</h3>
   <button class="btn btn-light mb-4" [routerLink]="['login']">Zaloguj się!</button>

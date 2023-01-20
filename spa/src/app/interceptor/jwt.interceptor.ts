@@ -2,7 +2,7 @@ import {AuthService} from "../service/auth.service";
 import {Router} from "@angular/router";
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {Injectable} from "@angular/core";
-import {Observable} from "rxjs";
+import {catchError, Observable, throwError} from "rxjs";
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -19,7 +19,14 @@ export class JwtInterceptor implements HttpInterceptor {
         Authorization: `Bearer ${token}`
       }
     });
-    return next.handle(cloned);
+    return next.handle(cloned).pipe(
+      catchError(err => {
+        if (err.status === 403) {
+          this.authService.logout();
+        }
+        return throwError(() => err);
+      })
+    );
   }
 
 }

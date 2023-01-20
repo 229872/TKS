@@ -42,5 +42,18 @@
   <button type="submit"
           class="btn btn-primary mb-2"
           [disabled]="!reservationForm.valid">
-    Zaloguj</button>
+    Utwórz rezerwację</button>
+
+  <div [hidden]="!isConflict()">
+    <p class="text-danger">
+      Istnieje już rezerwacja na ten dzień
+    </p>
+  </div>
+
+  <div [hidden]="!isBad()">
+    <p class="text-danger">
+      Coś poszło nie tak, zadzwoń do adminstratora NATYCHMIAST!<br/>
+      nr. tel + 39 06 69889806
+    </p>
+  </div>
 </form>

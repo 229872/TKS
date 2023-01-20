@@ -73,11 +73,17 @@ export class MakeReservationComponent {
     this.beginTime.setValue(`${now.getFullYear()}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`);
   }
 
+  isConflict() {
+    return this.rentStatus == RentStatus.Conflict;
+  }
+
+  isBad() {
+    return this.rentStatus == RentStatus.BadRequest;
+  }
+
   onSubmit() {
-    let beginTime = this.reservationForm.getRawValue().beginTime;
-    beginTime += 'T00:00:00';
-    let endTime = this.reservationForm.getRawValue().endTime;
-    endTime += 'T00:00:00';
+    let beginTime = this.reservationForm.getRawValue().beginTime + 'T00:00:00';
+    let endTime = this.reservationForm.getRawValue().endTime + 'T00:00:00';
 
     const rent: Rent = {
       equipmentUUID: this.equipment?.entityId,
@@ -87,14 +93,21 @@ export class MakeReservationComponent {
     this.rentService.createRent(rent).subscribe(result => {
       if(result.status == 200) {
         this.rentStatus = RentStatus.Good;
+        localStorage.setItem('message', 'Pomyślnie utworzono rezerwację!')
+        this.router.navigate(['/']);
       }
     }, error => {
       console.log(error);
+      if(error.status == 409) {
+        this.rentStatus = RentStatus.Conflict;
+      } else if(error.status == 400) {
+        this.rentStatus = RentStatus.BadRequest;
+      }
     })
   }
 }
 
-enum RentStatus {
+export enum RentStatus {
   NotCreated,
   Good,
   Conflict,

@@ -54,6 +54,11 @@ public class LoginBean extends AbstractBean {
         return "afterLogin";
     }
 
+    public boolean isInRole(String role) {
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        return context.isUserInRole(role);
+    }
+
     public String getRole() {
         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
         if (context.isUserInRole("CLIENT")) return "CLIENT";

@@ -1,1 +1,41 @@
-<p>make-reservation works!</p>
+<h3 class="mb-4">Zarezerwuj</h3>
+<button [routerLink]="['/']" class="btn btn-light mb-4">Przejdź do strony głównej</button>
+<form (ngSubmit)="onSubmit()" [formGroup]="reservationForm">
+  <div class="row">
+    <div class="col-6">
+      <div class="input-group mb-2 mr-sm-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Czas rozpoczęcia</div>
+        </div>
+        <input type="text" class="form-control"
+               id="beginTime" placeholder="Czas rozpoczęcia"
+               name="beginTime" formControlName="beginTime">
+      </div>
+    </div>
+    <div class="col">
+      <div [hidden]="!(beginTime.touched && !beginTime.valid)"
+           class="text text-danger mb-2 mr-sm-2 mt-2">
+        Data musi być podana w formacie rrrr mm dd, np 2022 13 27
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <div class="input-group mb-2 mr-sm-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Czas zakończenia</div>
+        </div>
+        <input type="text" class="form-control"
+               id="endTime" placeholder="Czas rozpoczęcia"
+               name="endTime" formControlName="endTime">
+      </div>
+    </div>
+    <div class="col">
+      <div [hidden]="!(endTime.touched && !endTime.valid)"
+           class="text text-danger mb-2 mr-sm-2 mt-2">
+        Data musi być podana w formacie rrrr mm dd, np 2022 12 27
+      </div>
+    </div>
+  </div>
+</form>

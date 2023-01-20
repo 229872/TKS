@@ -91,7 +91,7 @@ export class MakeReservationComponent {
       beginTime, endTime
     } as Rent;
     this.rentService.createRent(rent).subscribe(result => {
-      if(result.status == 200) {
+      if(result.status == 201) {
         this.rentStatus = RentStatus.Good;
         localStorage.setItem('message', 'Pomyślnie utworzono rezerwację!')
         this.router.navigate(['/']);

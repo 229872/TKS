@@ -32,6 +32,7 @@ export class HomeComponent {
       }
     })
     this.message = localStorage.getItem('message');
+    localStorage.removeItem('message');
     let that = this;
     setTimeout(() => {
       that.messageVisible = false;

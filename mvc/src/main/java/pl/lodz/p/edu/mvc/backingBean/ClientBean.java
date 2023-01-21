@@ -5,11 +5,14 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import pl.lodz.p.edu.data.model.DTO.users.ClientDTO;
+import pl.lodz.p.edu.data.model.users.Admin;
 import pl.lodz.p.edu.data.model.users.Client;
 import pl.lodz.p.edu.data.model.DTO.MvcRentDTO;
 import pl.lodz.p.edu.mvc.controller.ClientController;
 import pl.lodz.p.edu.mvc.controller.RentController;
 
+import java.io.IOException;
+import java.net.http.HttpResponse;
 import java.util.*;
 
 @Named
@@ -41,6 +44,16 @@ public class ClientBean extends AbstractBean {
         this.client = client;
     }
 
+    private String ifMatch = "";
+
+    public String getIfMatch() {
+        return ifMatch;
+    }
+
+    public void setIfMatch(String ifMatch) {
+        this.ifMatch = ifMatch;
+    }
+
     private List<MvcRentDTO> clientRents;
 
     public List<MvcRentDTO> getClientRents() {
@@ -53,10 +66,27 @@ public class ClientBean extends AbstractBean {
     public void init() {
         String clientId = getUuidFromParam();
         if (clientId == null) {
-            client = clientController.getByLogin(jwtSessionBean.getUsername());
+            try {
+                client = clientController.getByLogin(jwtSessionBean.getUsername());
+            } catch(Exception e) {
+                client = new Client();
+                return;
+            }
         } else {
-            client = clientController.get(clientId);
-        }
+            try {
+                HttpResponse<String> response = clientController.getWithRequest(clientId);
+                client = om.readValue(response.body(), Client.class);
+
+                if (response.headers().firstValue("ETag").isEmpty()) {
+                    throw new RuntimeException("no eTag header");
+                }
+                String eTag = response.headers().firstValue("ETag").get();
+
+                ifMatch = om.readValue(eTag, String.class);
+
+            } catch (IOException e) {
+                throw new RuntimeException(e); // todo komunikat
+            }        }
         refreshClientRents();
     }
 
@@ -72,7 +102,7 @@ public class ClientBean extends AbstractBean {
 
     public void update() {
         ClientDTO updatedClient = clientController.update(
-                client.getEntityId().toString(), new ClientDTO(client));
+                client.getEntityId().toString(), new ClientDTO(client), ifMatch);
         client.merge(updatedClient);
     }
 

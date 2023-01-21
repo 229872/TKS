@@ -1,5 +1,7 @@
 package pl.lodz.p.edu.rest.controllers;
 
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.shaded.gson.JsonObject;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
@@ -10,11 +12,14 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.data.model.DTO.users.AdminDTO;
 import pl.lodz.p.edu.data.model.users.Admin;
+import pl.lodz.p.edu.rest.authentication.JwtUtilities;
+import pl.lodz.p.edu.rest.exception.AuthenticationFailureException;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
 import pl.lodz.p.edu.rest.exception.ConflictException;
 import pl.lodz.p.edu.rest.managers.UserManager;
 import pl.lodz.p.edu.rest.repository.DataFaker;
 
+import java.text.ParseException;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -30,6 +35,9 @@ public class AdminController {
 
     @Inject
     private UserControllerMethods userControllerMethods;
+
+    @Inject
+    private JwtUtilities jwtUtilities;
 
     protected AdminController() {}
 
@@ -83,7 +91,16 @@ public class AdminController {
     @Path("/{entityId}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed({"ADMIN"})
-    public Response updateAdmin(@PathParam("entityId") UUID entityId, @Valid AdminDTO adminDTO) {
+    public Response updateAdmin(@PathParam("entityId") UUID entityId, @HeaderParam("IF-MATCH") String ifMatch,
+                                @Valid AdminDTO adminDTO) {
+        JsonObject jsonDTO = new JsonObject();
+        jsonDTO.addProperty("login", adminDTO.getLogin());
+        try {
+            jwtUtilities.verifySingedLogin(ifMatch, String.valueOf(jsonDTO));
+        } catch (ParseException | AuthenticationFailureException | JOSEException e) {
+            return Response.status(BAD_REQUEST).build();
+        }
+
         try {
             userManager.updateAdmin(entityId, adminDTO);
             return Response.status(OK).entity(adminDTO).build();

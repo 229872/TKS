@@ -1,9 +1,12 @@
 package pl.lodz.p.edu.rest.controllers;
 
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.shaded.gson.JsonObject;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
 import jakarta.ws.rs.core.Response;
+import pl.lodz.p.edu.rest.authentication.JwtUtilities;
 import pl.lodz.p.edu.rest.managers.UserManager;
 import pl.lodz.p.edu.data.model.users.User;
 
@@ -18,6 +21,9 @@ public class UserControllerMethods {
     @Inject
     private UserManager userManager;
 
+    @Inject
+    private JwtUtilities jwtUtilities;
+
     public Response searchUser(String type, String login) {
         if(login != null) {
             List<User> searchResult = userManager.searchOfType(type, login);
@@ -30,9 +36,16 @@ public class UserControllerMethods {
     public Response getSingleUser(String type, UUID entityId) {
         try {
             User user = userManager.getUserByUuidOfType(type, entityId);
-            return Response.status(OK).entity(user).build();
+
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("login", user.getLogin());
+            String ifMatchTag = jwtUtilities.signLogin(jsonObject.toString());
+
+            return Response.status(OK).entity(user).tag(ifMatchTag).build();
         } catch(NoResultException e) {
             return Response.status(NOT_FOUND).build();
+        } catch (JOSEException e) {
+            return Response.status(BAD_REQUEST).build();
         }
     }
 

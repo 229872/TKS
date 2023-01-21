@@ -79,13 +79,14 @@ public abstract class AbstractController {
         }
     }
 
-    protected HttpRequest buildPut(String path) {
+    protected HttpRequest buildPutUser(String path, String body, String ifMatch) {
         try {
             return HttpRequest.newBuilder()
                     .uri(new URI(base + path))
                     .header("Content-Type", "application/json")
                     .header("AUTHORIZATION", "BEARER " + sessionBean.getJwtToken())
-                    .PUT(HttpRequest.BodyPublishers.noBody())
+                    .header("IF-MATCH", ifMatch)
+                    .PUT(HttpRequest.BodyPublishers.ofString(body))
                     .build();
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);

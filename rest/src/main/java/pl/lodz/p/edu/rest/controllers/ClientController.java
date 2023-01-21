@@ -1,5 +1,7 @@
 package pl.lodz.p.edu.rest.controllers;
 
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.shaded.gson.JsonObject;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 
@@ -11,12 +13,15 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import pl.lodz.p.edu.data.model.DTO.users.ClientDTO;
+import pl.lodz.p.edu.rest.authentication.JwtUtilities;
+import pl.lodz.p.edu.rest.exception.AuthenticationFailureException;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
 import pl.lodz.p.edu.rest.exception.ConflictException;
 import pl.lodz.p.edu.rest.managers.UserManager;
 import pl.lodz.p.edu.data.model.users.Client;
 import pl.lodz.p.edu.rest.repository.DataFaker;
 
+import java.text.ParseException;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,6 +39,9 @@ public class ClientController {
 
     @Inject
     private UserControllerMethods userControllerMethods;
+
+    @Inject
+    private JwtUtilities jwtUtilities;
 
     protected ClientController() {}
 
@@ -88,7 +96,15 @@ public class ClientController {
     @Path("/{entityId}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
-    public Response updateClient(@PathParam("entityId") UUID entityId, @Valid ClientDTO clientDTO) {
+    public Response updateClient(@PathParam("entityId") UUID entityId, @HeaderParam("IF-MATCH") String ifMatch,
+                                 @Valid ClientDTO clientDTO) {
+        JsonObject jsonDTO = new JsonObject();
+        jsonDTO.addProperty("login", clientDTO.getLogin());
+        try {
+            jwtUtilities.verifySingedLogin(ifMatch, String.valueOf(jsonDTO));
+        } catch (ParseException | AuthenticationFailureException | JOSEException e) {
+            return Response.status(BAD_REQUEST).build();
+        }
         try {
             userManager.updateClient(entityId, clientDTO);
             return Response.status(OK).entity(clientDTO).build();

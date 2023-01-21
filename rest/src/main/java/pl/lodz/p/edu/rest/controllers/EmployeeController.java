@@ -1,5 +1,7 @@
 package pl.lodz.p.edu.rest.controllers;
 
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.shaded.gson.JsonObject;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
@@ -9,12 +11,15 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.data.model.DTO.users.EmployeeDTO;
+import pl.lodz.p.edu.rest.authentication.JwtUtilities;
+import pl.lodz.p.edu.rest.exception.AuthenticationFailureException;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
 import pl.lodz.p.edu.rest.exception.ConflictException;
 import pl.lodz.p.edu.rest.managers.UserManager;
 import pl.lodz.p.edu.data.model.users.Employee;
 import pl.lodz.p.edu.rest.repository.DataFaker;
 
+import java.text.ParseException;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -31,6 +36,9 @@ public class EmployeeController {
 
     @Inject
     private UserControllerMethods userControllerMethods;
+
+    @Inject
+    private JwtUtilities jwtUtilities;
 
     protected EmployeeController() {}
 
@@ -82,7 +90,15 @@ public class EmployeeController {
     @Path("/{entityId}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed({"ADMIN", "EMPLOYEE"})
-    public Response updateEmployee(@PathParam("entityId") UUID entityId, @Valid EmployeeDTO employeeDTO) {
+    public Response updateEmployee(@PathParam("entityId") UUID entityId, @HeaderParam("IF-MATCH") String ifMatch,
+                                   @Valid EmployeeDTO employeeDTO) {
+        JsonObject jsonDTO = new JsonObject();
+        jsonDTO.addProperty("login", employeeDTO.getLogin());
+        try {
+            jwtUtilities.verifySingedLogin(ifMatch, String.valueOf(jsonDTO));
+        } catch (ParseException | AuthenticationFailureException | JOSEException e) {
+            return Response.status(BAD_REQUEST).build();
+        }
         try {
             userManager.updateEmployee(entityId, employeeDTO);
             return Response.status(OK).entity(employeeDTO).build();

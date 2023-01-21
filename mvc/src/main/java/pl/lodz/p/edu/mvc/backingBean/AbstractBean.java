@@ -1,5 +1,6 @@
 package pl.lodz.p.edu.mvc.backingBean;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 
@@ -11,6 +12,7 @@ public abstract class AbstractBean implements Serializable {
     protected ExternalContext getContext() {
         return FacesContext.getCurrentInstance().getExternalContext();
     }
+    protected ObjectMapper om = new ObjectMapper();
 
     protected String getUuidFromParam() {
         ExternalContext context = getContext();

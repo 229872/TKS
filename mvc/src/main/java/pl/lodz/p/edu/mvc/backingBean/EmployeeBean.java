@@ -6,9 +6,13 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 import pl.lodz.p.edu.data.model.DTO.users.EmployeeDTO;
+import pl.lodz.p.edu.data.model.users.Admin;
 import pl.lodz.p.edu.data.model.users.Employee;
 import pl.lodz.p.edu.mvc.controller.EmployeeController;
 import pl.lodz.p.edu.mvc.controller.RentController;
+
+import java.io.IOException;
+import java.net.http.HttpResponse;
 
 @Named
 @RequestScoped
@@ -18,8 +22,6 @@ public class EmployeeBean extends AbstractBean {
 
     @Inject
     private RentController rentController;
-
-
 
     private Employee employee;
 
@@ -31,11 +33,16 @@ public class EmployeeBean extends AbstractBean {
         this.employee = employee;
     }
 
-//    private List<MvcRentDTO> clientRents;
-//
-//    public List<MvcRentDTO> getClientRents() {
-//        return clientRents;
-//    }
+    private String ifMatch = "";
+
+    public String getIfMatch() {
+        return ifMatch;
+    }
+
+    public void setIfMatch(String ifMatch) {
+        this.ifMatch = ifMatch;
+    }
+
 
     public EmployeeBean() {}
 
@@ -46,14 +53,26 @@ public class EmployeeBean extends AbstractBean {
             employee = new Employee();
 //            clientRents = new ArrayList<>();
         } else {
-            employee = employeeController.get(clientId);
-//            clientRents = rentController.getClientRents(clientId);
+            try {
+                HttpResponse<String> response = employeeController.getWithRequest(clientId);
+                employee = om.readValue(response.body(), Employee.class);
+
+                if (response.headers().firstValue("ETag").isEmpty()) {
+                    throw new RuntimeException("no eTag header");
+                }
+                String eTag = response.headers().firstValue("ETag").get();
+
+                ifMatch = om.readValue(eTag, String.class);
+
+            } catch (IOException e) {
+                throw new RuntimeException(e); // todo komunikat
+            }
         }
     }
 
     public void update() {
         EmployeeDTO updatedEmployee = employeeController.update(
-                employee.getEntityId().toString(), new EmployeeDTO(employee));
+                employee.getEntityId().toString(), new EmployeeDTO(employee), ifMatch);
         employee.merge(updatedEmployee);
     }
 

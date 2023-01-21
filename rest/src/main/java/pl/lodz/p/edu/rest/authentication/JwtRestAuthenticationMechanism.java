@@ -56,6 +56,5 @@ public class JwtRestAuthenticationMechanism implements HttpAuthenticationMechani
         }                                                   // Not sure about principal
         return httpMessageContext.notifyContainerAboutLogin(dbUser.getLogin(), Collections.singleton(userType));
 
-
     }
 }

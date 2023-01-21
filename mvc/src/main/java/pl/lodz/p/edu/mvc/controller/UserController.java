@@ -64,6 +64,11 @@ public class UserController<T, Tdto> extends AbstractController {
         }
     }
 
+    public HttpResponse<String> getWithRequest(String uuid) {
+        HttpRequest request = this.buildGet(path + uuid);
+        return send(request);
+    }
+
     public T getByLogin(String login) {
         HttpRequest request = this.buildGet(path + "login/" + login);
         HttpResponse<String> response = send(request);
@@ -74,14 +79,14 @@ public class UserController<T, Tdto> extends AbstractController {
         }
     }
 
-    public Tdto update(String id, Tdto user) {
+    public Tdto update(String id, Tdto user, String ifMatch) {
         String body;
         try {
             body = om.writeValueAsString(user);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e); // todo komunikat
         }
-        HttpRequest request = this.buildPut(path + id, body);
+        HttpRequest request = this.buildPutUser(path + id, body, ifMatch);
         HttpResponse<String> response = send(request);
         try {
             return om.readValue(response.body(), TdtoType);

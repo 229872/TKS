@@ -1,4 +1,5 @@
 interface User {
+  entityId: string,
   login: string,
 }
 

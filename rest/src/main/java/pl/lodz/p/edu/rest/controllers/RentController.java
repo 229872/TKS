@@ -10,14 +10,13 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.rest.exception.BusinessLogicInterruptException;
 import pl.lodz.p.edu.rest.exception.ObjectNotValidException;
-import pl.lodz.p.edu.rest.managers.EquipmentManager;
-import pl.lodz.p.edu.rest.managers.RentManager;
-import pl.lodz.p.edu.rest.managers.UserManager;
+import pl.lodz.p.edu.rest.managers.api.EquipmentManager;
+import pl.lodz.p.edu.rest.managers.api.RentManager;
+import pl.lodz.p.edu.rest.managers.api.UserManager;
 import pl.lodz.p.edu.data.model.DTO.RentDTO;
 import pl.lodz.p.edu.data.model.Equipment;
 import pl.lodz.p.edu.data.model.Rent;
 import pl.lodz.p.edu.data.model.users.Client;
-import pl.lodz.p.edu.data.model.users.User;
 
 import java.util.List;
 import java.util.UUID;
@@ -53,8 +52,6 @@ public class RentController {
             return Response.status(CONFLICT).build();
         }
     }
-
-    // read
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

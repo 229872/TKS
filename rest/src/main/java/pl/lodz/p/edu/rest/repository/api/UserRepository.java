@@ -1,6 +1,7 @@
 package pl.lodz.p.edu.rest.repository.api;
 
 import pl.lodz.p.edu.data.model.users.User;
+import pl.lodz.p.edu.rest.exception.IllegalModificationException;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,4 +16,6 @@ public interface UserRepository extends Repository<User> {
     User getByLogin(String type, String login);
 
     User getByLoginPassword(String login, String password);
+    @Override
+    void update(User elem);
 }

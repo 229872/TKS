@@ -6,8 +6,9 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
 import jakarta.ws.rs.core.Response;
+import pl.lodz.p.edu.rest.managers.api.UserManager;
 import pl.lodz.p.edu.rest.util.JwtUtilities;
-import pl.lodz.p.edu.rest.managers.UserManager;
+import pl.lodz.p.edu.rest.managers.impl.UserManagerImpl;
 import pl.lodz.p.edu.data.model.users.User;
 
 import java.util.List;

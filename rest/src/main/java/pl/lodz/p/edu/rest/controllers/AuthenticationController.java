@@ -9,7 +9,7 @@ import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.data.model.DTO.CredentialsDTO;
 import pl.lodz.p.edu.data.model.DTO.CredentialsNewPasswordDTO;
 import pl.lodz.p.edu.rest.exception.AuthenticationFailureException;
-import pl.lodz.p.edu.rest.managers.AuthenticationManager;
+import pl.lodz.p.edu.rest.managers.api.AuthenticationManager;
 
 @Path("/")
 public class AuthenticationController {

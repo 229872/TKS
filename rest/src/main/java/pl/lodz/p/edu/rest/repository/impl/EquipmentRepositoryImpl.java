@@ -5,6 +5,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
+import pl.lodz.p.edu.rest.repository.api.EquipmentRepository;
 import pl.lodz.p.edu.rest.repository.api.Repository;
 import pl.lodz.p.edu.data.model.Equipment;
 import pl.lodz.p.edu.data.model.Equipment_;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class EquipmentRepositoryImpl implements Repository<Equipment> {
+public class EquipmentRepositoryImpl implements EquipmentRepository {
 
     @PersistenceContext(unitName = "app")
     private EntityManager em;

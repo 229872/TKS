@@ -9,12 +9,13 @@ import jakarta.transaction.Transactional;
 import pl.lodz.p.edu.data.model.users.User;
 import pl.lodz.p.edu.data.model.users.User_;
 import pl.lodz.p.edu.rest.repository.api.Repository;
+import pl.lodz.p.edu.rest.repository.api.UserRepository;
 
 import java.util.List;
 import java.util.UUID;
 
 @RequestScoped
-public class UserRepositoryImpl implements Repository<User> {
+public class UserRepositoryImpl implements UserRepository {
 
     @PersistenceContext(name = "request")
     protected EntityManager em;

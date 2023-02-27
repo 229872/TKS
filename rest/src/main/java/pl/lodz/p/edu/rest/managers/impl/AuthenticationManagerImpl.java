@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.rest.managers;
+package pl.lodz.p.edu.rest.managers.impl;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -7,13 +7,14 @@ import jakarta.transaction.Transactional;
 import pl.lodz.p.edu.data.model.DTO.CredentialsNewPasswordDTO;
 import pl.lodz.p.edu.data.model.DTO.TokenDTO;
 import pl.lodz.p.edu.data.model.users.User;
+import pl.lodz.p.edu.rest.managers.api.AuthenticationManager;
 import pl.lodz.p.edu.rest.util.JwtUtilities;
 import pl.lodz.p.edu.rest.exception.AuthenticationFailureException;
 import pl.lodz.p.edu.rest.repository.api.UserRepository;
 
 @Transactional
 @RequestScoped
-public class AuthenticationManager {
+public class AuthenticationManagerImpl implements AuthenticationManager {
 
     @Inject
     private UserRepository userRepository;

@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.rest.managers;
+package pl.lodz.p.edu.rest.managers.impl;
 
 import jakarta.inject.Inject;
 
@@ -6,12 +6,14 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
 import pl.lodz.p.edu.rest.exception.BusinessLogicInterruptException;
+import pl.lodz.p.edu.rest.exception.IllegalModificationException;
 import pl.lodz.p.edu.rest.exception.ObjectNotValidException;
 import pl.lodz.p.edu.data.model.DTO.RentDTO;
 import pl.lodz.p.edu.data.model.Equipment;
 import pl.lodz.p.edu.data.model.Rent;
 
 import pl.lodz.p.edu.data.model.users.Client;
+import pl.lodz.p.edu.rest.managers.api.RentManager;
 import pl.lodz.p.edu.rest.repository.api.EquipmentRepository;
 import pl.lodz.p.edu.rest.repository.api.RentRepository;
 import pl.lodz.p.edu.rest.repository.api.UserRepository;
@@ -25,9 +27,9 @@ import java.util.logging.Logger;
 
 
 @Transactional
-public class RentManager {
+public class RentManagerImpl implements RentManager {
 
-    Logger logger = Logger.getLogger(RentManager.class.getName());
+    Logger logger = Logger.getLogger(RentManagerImpl.class.getName());
 
     @Inject
     private RentRepository rentRepository;
@@ -38,7 +40,7 @@ public class RentManager {
     @Inject
     private EquipmentRepository equipmentRepository;
 
-    protected RentManager() {}
+    protected RentManagerImpl() {}
 
     public List<Rent> getRentByEq(Equipment equipment) {
         try {
@@ -112,7 +114,8 @@ public class RentManager {
 
 
 
-    public Rent update(UUID entityId, RentDTO rentDTO) throws ObjectNotValidException, BusinessLogicInterruptException {
+    public Rent update(UUID entityId, RentDTO rentDTO) throws ObjectNotValidException,
+            BusinessLogicInterruptException {
         Rent rent;
         try {
             rent = rentRepository.get(entityId);

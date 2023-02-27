@@ -13,11 +13,12 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import pl.lodz.p.edu.data.model.DTO.users.ClientDTO;
+import pl.lodz.p.edu.rest.managers.api.UserManager;
 import pl.lodz.p.edu.rest.util.JwtUtilities;
 import pl.lodz.p.edu.rest.exception.AuthenticationFailureException;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
 import pl.lodz.p.edu.rest.exception.ConflictException;
-import pl.lodz.p.edu.rest.managers.UserManager;
+import pl.lodz.p.edu.rest.managers.impl.UserManagerImpl;
 import pl.lodz.p.edu.data.model.users.Client;
 import pl.lodz.p.edu.rest.util.DataFaker;
 
@@ -29,7 +30,6 @@ import java.util.logging.Logger;
 import static jakarta.ws.rs.core.Response.Status.*;
 
 @Path("/clients")
-//@RequestScoped
 public class ClientController {
 
     Logger logger = Logger.getLogger(ClientController.class.getName());
@@ -45,7 +45,6 @@ public class ClientController {
 
     protected ClientController() {}
 
-    // create
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -56,16 +55,13 @@ public class ClientController {
             Client client = new Client(clientDTO);
             userManager.registerClient(client);
             return Response.status(CREATED).entity(client).build();
-        } catch(ConflictException e) {
-            return Response.status(CONFLICT).build();
-        } catch(TransactionalException e) {
+        } catch(ConflictException | TransactionalException e) {
             return Response.status(CONFLICT).build();
         } catch(NullPointerException e) {
             return Response.status(BAD_REQUEST).build();
         }
     }
 
-    // read
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
@@ -91,7 +87,6 @@ public class ClientController {
         return userControllerMethods.getSingleUser("Client", login);
     }
 
-    // update
     @PUT
     @Path("/{entityId}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -132,7 +127,6 @@ public class ClientController {
     }
 
 
-    // ========= other
 
     @POST
     @Path("/addFake")

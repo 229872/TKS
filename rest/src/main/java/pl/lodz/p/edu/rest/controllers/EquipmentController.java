@@ -8,10 +8,10 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
 import pl.lodz.p.edu.rest.exception.ConflictException;
-import pl.lodz.p.edu.rest.managers.EquipmentManager;
+import pl.lodz.p.edu.rest.managers.api.EquipmentManager;
 import pl.lodz.p.edu.data.model.DTO.EquipmentDTO;
 import pl.lodz.p.edu.data.model.Equipment;
-import pl.lodz.p.edu.rest.managers.RentManager;
+import pl.lodz.p.edu.rest.managers.api.RentManager;
 import pl.lodz.p.edu.rest.util.DataFaker;
 
 import java.time.LocalDateTime;
@@ -30,8 +30,6 @@ public class EquipmentController {
     @Inject
     private RentManager rentManager;
 
-    // create
-
     @POST
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
@@ -45,8 +43,6 @@ public class EquipmentController {
             return Response.status(BAD_REQUEST).build();
         }
     }
-
-    // read
 
     @GET
     @Path("/")
@@ -80,8 +76,6 @@ public class EquipmentController {
         }
     }
 
-    // update
-
     @PUT
     @Path("/{entityId}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -96,8 +90,6 @@ public class EquipmentController {
         }
     }
 
-    // delete
-
     @DELETE
     @Path("/{uuid}")
     public Response unregisterEquipment(@PathParam("uuid") UUID uuid) {
@@ -109,7 +101,6 @@ public class EquipmentController {
         }
     }
 
-    //===============================================
 
     @POST
     @Path("/addFake")

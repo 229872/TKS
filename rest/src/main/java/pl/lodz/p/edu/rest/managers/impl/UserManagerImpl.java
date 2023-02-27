@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.rest.managers;
+package pl.lodz.p.edu.rest.managers.impl;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -13,6 +13,7 @@ import pl.lodz.p.edu.data.model.users.Admin;
 import pl.lodz.p.edu.data.model.users.Client;
 import pl.lodz.p.edu.data.model.users.Employee;
 import pl.lodz.p.edu.data.model.users.User;
+import pl.lodz.p.edu.rest.managers.api.UserManager;
 import pl.lodz.p.edu.rest.repository.api.UserRepository;
 
 import java.util.List;
@@ -21,16 +22,14 @@ import java.util.logging.Logger;
 
 @Transactional
 @RequestScoped
-public class UserManager {
+public class UserManagerImpl implements UserManager {
 
-    Logger logger = Logger.getLogger(UserManager.class.getName());
+    Logger logger = Logger.getLogger(UserManagerImpl.class.getName());
 
     @Inject
     private UserRepository userRepository;
 
-    protected UserManager() {}
-
-    // ========================================= create
+    protected UserManagerImpl() {}
 
     public void registerClient(Client client) throws ConflictException {
         try {
@@ -56,8 +55,6 @@ public class UserManager {
         }
     }
 
-    // ========================================= read
-
     public User getUserByUuidOfType(String type, UUID entityId) {
         return userRepository.getOfType(type, entityId);
     }
@@ -74,7 +71,6 @@ public class UserManager {
         return userRepository.getByLogin(type, login);
     }
 
-    // ========================================= update
 
     public void updateClient(UUID entityId, ClientDTO clientDTO) throws IllegalModificationException {
         Client client = (Client) userRepository.getOfType("Client", entityId); //possible npe
@@ -135,7 +131,7 @@ public class UserManager {
         }
     }
 
-    public void updateUser(User user) {
+    public void updateUser(User user) throws IllegalModificationException {
         userRepository.update(user);
     }
 }

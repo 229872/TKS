@@ -11,11 +11,12 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.data.model.DTO.users.EmployeeDTO;
+import pl.lodz.p.edu.rest.managers.api.UserManager;
 import pl.lodz.p.edu.rest.util.JwtUtilities;
 import pl.lodz.p.edu.rest.exception.AuthenticationFailureException;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
 import pl.lodz.p.edu.rest.exception.ConflictException;
-import pl.lodz.p.edu.rest.managers.UserManager;
+import pl.lodz.p.edu.rest.managers.impl.UserManagerImpl;
 import pl.lodz.p.edu.data.model.users.Employee;
 import pl.lodz.p.edu.rest.util.DataFaker;
 
@@ -52,14 +53,10 @@ public class EmployeeController {
             Employee employee = new Employee(employeeDTO);
             userManager.registerEmployee(employee);
             return Response.status(CREATED).entity(employee).build();
-        } catch(ConflictException e) {
-            return Response.status(CONFLICT).build();
-        } catch(TransactionalException e) {
+        } catch(ConflictException | TransactionalException e) {
             return Response.status(CONFLICT).build();
         }
     }
-
-    // read
 
     @GET
     @Path("/")
@@ -85,7 +82,6 @@ public class EmployeeController {
         return userControllerMethods.getSingleUser("Employee", login);
     }
 
-    // update
     @PUT
     @Path("/{entityId}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -124,8 +120,6 @@ public class EmployeeController {
     public Response deactivateUser(@PathParam("entityId") UUID entityId) {
         return userControllerMethods.deactivateUser("Employee", entityId);
     }
-
-    // other
 
     @POST
     @Path("/addFake")

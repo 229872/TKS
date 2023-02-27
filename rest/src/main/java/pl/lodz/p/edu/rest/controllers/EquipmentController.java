@@ -6,19 +6,17 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import pl.lodz.p.edu.data.model.Rent;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
 import pl.lodz.p.edu.rest.exception.ConflictException;
 import pl.lodz.p.edu.rest.managers.EquipmentManager;
 import pl.lodz.p.edu.data.model.DTO.EquipmentDTO;
 import pl.lodz.p.edu.data.model.Equipment;
 import pl.lodz.p.edu.rest.managers.RentManager;
-import pl.lodz.p.edu.rest.repository.DataFaker;
+import pl.lodz.p.edu.rest.util.DataFaker;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static jakarta.ws.rs.core.Response.Status.*;
 import static jakarta.ws.rs.core.Response.Status.BAD_REQUEST;

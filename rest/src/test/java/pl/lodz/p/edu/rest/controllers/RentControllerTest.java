@@ -11,12 +11,10 @@ import static org.hamcrest.Matchers.*;
 import static io.restassured.RestAssured.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import pl.lodz.p.edu.data.model.Address;
 import pl.lodz.p.edu.data.model.DTO.RentDTO;
-import pl.lodz.p.edu.data.model.DTO.users.AdminDTO;
 import pl.lodz.p.edu.data.model.Equipment;
 import pl.lodz.p.edu.data.model.users.Client;
-import pl.lodz.p.edu.rest.repository.DataFaker;
+import pl.lodz.p.edu.rest.util.DataFaker;
 
 import java.util.UUID;
 

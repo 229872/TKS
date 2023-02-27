@@ -12,7 +12,7 @@ import static io.restassured.RestAssured.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import pl.lodz.p.edu.data.model.DTO.users.EmployeeDTO;
-import pl.lodz.p.edu.rest.repository.DataFaker;
+import pl.lodz.p.edu.rest.util.DataFaker;
 
 import java.util.UUID;
 

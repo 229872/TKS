@@ -7,7 +7,7 @@ import jakarta.transaction.Transactional;
 import pl.lodz.p.edu.rest.exception.*;
 import pl.lodz.p.edu.data.model.DTO.EquipmentDTO;
 import pl.lodz.p.edu.data.model.Equipment;
-import pl.lodz.p.edu.rest.repository.impl.EquipmentRepository;
+import pl.lodz.p.edu.rest.repository.api.EquipmentRepository;
 
 import java.util.List;
 import java.util.UUID;

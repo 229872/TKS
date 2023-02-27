@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static io.restassured.RestAssured.*;
 
 import pl.lodz.p.edu.data.model.DTO.users.ClientDTO;
-import pl.lodz.p.edu.rest.repository.DataFaker;
+import pl.lodz.p.edu.rest.util.DataFaker;
 
 import java.util.UUID;
 

@@ -13,7 +13,7 @@ import pl.lodz.p.edu.data.model.users.Admin;
 import pl.lodz.p.edu.data.model.users.Client;
 import pl.lodz.p.edu.data.model.users.Employee;
 import pl.lodz.p.edu.data.model.users.User;
-import pl.lodz.p.edu.rest.repository.impl.UserRepository;
+import pl.lodz.p.edu.rest.repository.api.UserRepository;
 
 import java.util.List;
 import java.util.UUID;

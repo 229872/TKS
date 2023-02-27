@@ -12,9 +12,9 @@ import pl.lodz.p.edu.data.model.Equipment;
 import pl.lodz.p.edu.data.model.Rent;
 
 import pl.lodz.p.edu.data.model.users.Client;
-import pl.lodz.p.edu.rest.repository.impl.EquipmentRepository;
-import pl.lodz.p.edu.rest.repository.impl.RentRepository;
-import pl.lodz.p.edu.rest.repository.impl.UserRepository;
+import pl.lodz.p.edu.rest.repository.api.EquipmentRepository;
+import pl.lodz.p.edu.rest.repository.api.RentRepository;
+import pl.lodz.p.edu.rest.repository.api.UserRepository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;

@@ -12,12 +12,12 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.data.model.DTO.users.AdminDTO;
 import pl.lodz.p.edu.data.model.users.Admin;
-import pl.lodz.p.edu.rest.authentication.JwtUtilities;
+import pl.lodz.p.edu.rest.util.JwtUtilities;
 import pl.lodz.p.edu.rest.exception.AuthenticationFailureException;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
 import pl.lodz.p.edu.rest.exception.ConflictException;
 import pl.lodz.p.edu.rest.managers.UserManager;
-import pl.lodz.p.edu.rest.repository.DataFaker;
+import pl.lodz.p.edu.rest.util.DataFaker;
 
 import java.text.ParseException;
 import java.util.UUID;

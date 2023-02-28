@@ -8,21 +8,20 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import pl.lodz.p.edu.data.model.DTO.RentDTO;
+import pl.lodz.p.edu.data.model.Equipment;
+import pl.lodz.p.edu.data.model.Rent;
+import pl.lodz.p.edu.data.model.users.Client;
 import pl.lodz.p.edu.rest.exception.BusinessLogicInterruptException;
 import pl.lodz.p.edu.rest.exception.ObjectNotValidException;
 import pl.lodz.p.edu.rest.managers.api.EquipmentManager;
 import pl.lodz.p.edu.rest.managers.api.RentManager;
 import pl.lodz.p.edu.rest.managers.api.UserManager;
-import pl.lodz.p.edu.data.model.DTO.RentDTO;
-import pl.lodz.p.edu.data.model.Equipment;
-import pl.lodz.p.edu.data.model.Rent;
-import pl.lodz.p.edu.data.model.users.Client;
 
 import java.util.List;
 import java.util.UUID;
 
 import static jakarta.ws.rs.core.Response.Status.*;
-import static jakarta.ws.rs.core.Response.Status.NOT_FOUND;
 
 @Path("/rents")
 public class RentController {
@@ -109,7 +108,7 @@ public class RentController {
             return Response.status(OK).entity(rentDTO).build();
         } catch (ObjectNotValidException | TransactionalException e) {
             return Response.status(BAD_REQUEST).build();
-        } catch(NoResultException e) {
+        } catch (NoResultException e) {
             return Response.status(NOT_FOUND).build();
         } catch (BusinessLogicInterruptException e) {
             return Response.status(CONFLICT).build();

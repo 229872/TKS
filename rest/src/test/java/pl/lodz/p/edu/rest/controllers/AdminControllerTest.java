@@ -11,21 +11,36 @@ import static org.hamcrest.Matchers.*;
 import static io.restassured.RestAssured.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import pl.lodz.p.edu.data.model.DTO.CredentialsDTO;
 import pl.lodz.p.edu.data.model.DTO.users.AdminDTO;
+import pl.lodz.p.edu.rest.exception.AuthenticationFailureException;
+import pl.lodz.p.edu.rest.managers.impl.AuthenticationManagerImpl;
 import pl.lodz.p.edu.rest.util.DataFaker;
 
 import java.util.UUID;
 
 class AdminControllerTest {
 
-    @BeforeAll
-    static void beforeAll() {
-        baseURI = "http://localhost:8080/rest/api";
-    }
-
     ObjectMapper obj = new ObjectMapper();
     AdminDTO validAdmin;
     String validAdminStr;
+    static String token;
+
+    @BeforeAll
+    static void beforeAll() {
+        baseURI = "http://localhost:8080/rest/api";
+
+        CredentialsDTO adminDTO = new CredentialsDTO("admin", "password");
+
+        token = given()
+                .header("Content-Type", "application/json")
+                .body(adminDTO)
+                .when()
+                .post("/login")
+                .then()
+                .statusCode(200)
+                .extract().path("jwt");
+    }
 
     @BeforeEach
     void beforeEach() throws JsonProcessingException {
@@ -39,6 +54,7 @@ class AdminControllerTest {
     void createAdmin_correct() {
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validAdminStr)
                 .when()
                 .post("/admins")
@@ -51,6 +67,7 @@ class AdminControllerTest {
     void createAdmin_noBody() {
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body("")
                 .when()
                 .post("/admins")
@@ -65,6 +82,7 @@ class AdminControllerTest {
         System.out.println(notValidAdminStr);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(notValidAdminStr)
                 .when()
                 .post("/admins")
@@ -76,6 +94,7 @@ class AdminControllerTest {
     void createAdmin_conflict() {
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validAdminStr)
                 .when()
                 .post("/admins")
@@ -83,6 +102,7 @@ class AdminControllerTest {
                 .statusCode(201);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validAdminStr)
                 .when()
                 .post("/admins")
@@ -95,6 +115,7 @@ class AdminControllerTest {
     void getAllAdmins_correct()  {
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/admins")
                 .then()
@@ -105,6 +126,7 @@ class AdminControllerTest {
     void getOneAdmin_byUUID_correct()  {
         String uuid = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validAdminStr)
                 .when()
                 .post("/admins")
@@ -112,6 +134,7 @@ class AdminControllerTest {
                 .extract().path("entityId");
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/admins/" + uuid)
                 .then()
@@ -124,6 +147,7 @@ class AdminControllerTest {
         String uuid = UUID.randomUUID().toString();
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/admins/" + uuid)
                 .then()
@@ -134,6 +158,7 @@ class AdminControllerTest {
     void getOneAdmin_byLogin_correct()  {
         String login = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validAdminStr)
                 .when()
                 .post("/admins")
@@ -142,6 +167,7 @@ class AdminControllerTest {
 
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/admins/login/" + login)
                 .then()
@@ -154,6 +180,7 @@ class AdminControllerTest {
         String login = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/admins/login/" + login)
                 .then()
@@ -167,6 +194,7 @@ class AdminControllerTest {
         String str1 = obj.writeValueAsString(validAdmin);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(str1)
                 .when()
                 .post("/admins")
@@ -177,6 +205,7 @@ class AdminControllerTest {
         String str2 = obj.writeValueAsString(validAdmin);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(str2)
                 .when()
                 .post("/admins")
@@ -186,6 +215,7 @@ class AdminControllerTest {
         // test
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/admins?login=" + uniqueLogin)
                 .then()
@@ -198,6 +228,7 @@ class AdminControllerTest {
     void updateOneAdmin_correct() throws JsonProcessingException {
         String uuid = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validAdminStr)
                 .when()
                 .post("/admins")
@@ -210,6 +241,7 @@ class AdminControllerTest {
         String updatedAdminStr = obj.writeValueAsString(validAdmin);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(updatedAdminStr)
                 .when()
                 .put("/admins/" + uuid)
@@ -217,6 +249,7 @@ class AdminControllerTest {
                 .statusCode(200);
         String favouriteIceCream = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/admins/" + uuid)
                 .then()
@@ -230,6 +263,8 @@ class AdminControllerTest {
         String uuid = UUID.randomUUID().toString();
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
+//                .header("IF-MATCH", "")
                 .body(validAdminStr)
                 .when()
                 .put("/admins/" + uuid)
@@ -241,6 +276,7 @@ class AdminControllerTest {
     void updateOneAdmin_updateLogin() throws JsonProcessingException {
         String uuid = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validAdminStr)
                 .when()
                 .post("/admins")
@@ -251,6 +287,7 @@ class AdminControllerTest {
         String updatedLogin = obj.writeValueAsString(validAdmin);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(updatedLogin)
                 .when()
                 .put("/admins/" + uuid)
@@ -262,6 +299,7 @@ class AdminControllerTest {
     void updateOneAdmin_illegalValues() throws JsonProcessingException {
         String uuid = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validAdminStr)
                 .when()
                 .post("/admins")
@@ -272,6 +310,7 @@ class AdminControllerTest {
         String updatedLogin = obj.writeValueAsString(validAdmin);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(updatedLogin)
                 .when()
                 .put("/admins/" + uuid)
@@ -283,6 +322,7 @@ class AdminControllerTest {
     void activateDeactivateTest() throws JsonProcessingException {
         String uuid = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validAdminStr)
                 .when()
                 .post("/admins")
@@ -293,12 +333,14 @@ class AdminControllerTest {
         // deactivate
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .put("/admins/" + uuid + "/deactivate")
                 .then()
                 .statusCode(204);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/admins/" + uuid)
                 .then()
@@ -307,12 +349,14 @@ class AdminControllerTest {
         // activate
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .put("/admins/" + uuid + "/activate")
                 .then()
                 .statusCode(204);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/admins/" + uuid)
                 .then()

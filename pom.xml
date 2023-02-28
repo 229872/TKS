@@ -14,7 +14,6 @@
     <!-- sub modules -->
     <modules>
         <module>rest</module>
-        <module>mvc</module>
         <module>data</module>
     </modules>
 

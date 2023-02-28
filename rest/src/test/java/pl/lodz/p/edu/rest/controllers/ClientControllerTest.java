@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import static io.restassured.RestAssured.*;
 
+import pl.lodz.p.edu.data.model.DTO.CredentialsDTO;
 import pl.lodz.p.edu.data.model.DTO.users.ClientDTO;
 import pl.lodz.p.edu.rest.util.DataFaker;
 
@@ -18,14 +19,27 @@ import java.util.UUID;
 
 class ClientControllerTest {
 
-    @BeforeAll
-    static void beforeAll() {
-        baseURI = "http://localhost:8080/rest/api";
-    }
 
     ObjectMapper obj = new ObjectMapper();
     ClientDTO validClient;
     String validClientStr;
+    static String token;
+
+    @BeforeAll
+    static void beforeAll() {
+        baseURI = "http://localhost:8080/rest/api";
+
+        CredentialsDTO adminDTO = new CredentialsDTO("admin", "password");
+
+        token = given()
+                .header("Content-Type", "application/json")
+                .body(adminDTO)
+                .when()
+                .post("/login")
+                .then()
+                .statusCode(200)
+                .extract().path("jwt");
+    }
 
     @BeforeEach
     void beforeEach() throws JsonProcessingException {
@@ -39,6 +53,7 @@ class ClientControllerTest {
     void createClient_correct() {
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validClientStr)
                 .when()
                 .post("/clients")
@@ -51,6 +66,7 @@ class ClientControllerTest {
     void createClient_noBody() {
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body("")
                 .when()
                 .post("/clients")
@@ -65,6 +81,7 @@ class ClientControllerTest {
         System.out.println(notValidClientStr);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(notValidClientStr)
                 .when()
                 .post("/clients")
@@ -76,6 +93,7 @@ class ClientControllerTest {
     void createClient_conflict() {
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validClientStr)
                 .when()
                 .post("/clients")
@@ -83,6 +101,7 @@ class ClientControllerTest {
                 .statusCode(201);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validClientStr)
                 .when()
                 .post("/clients")
@@ -95,6 +114,7 @@ class ClientControllerTest {
     void getAllClients_correct()  {
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/clients")
                 .then()
@@ -105,6 +125,7 @@ class ClientControllerTest {
     void getOneClient_byUUID_correct()  {
         String uuid = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validClientStr)
                 .when()
                 .post("/clients")
@@ -112,6 +133,7 @@ class ClientControllerTest {
                 .extract().path("entityId");
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/clients/" + uuid)
                 .then()
@@ -124,6 +146,7 @@ class ClientControllerTest {
         String uuid = UUID.randomUUID().toString();
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/clients/" + uuid)
                 .then()
@@ -134,6 +157,7 @@ class ClientControllerTest {
     void getOneClient_byLogin_correct()  {
         String login = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validClientStr)
                 .when()
                 .post("/clients")
@@ -142,6 +166,7 @@ class ClientControllerTest {
 
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/clients/login/" + login)
                 .then()
@@ -154,6 +179,7 @@ class ClientControllerTest {
         String login = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/clients/login/" + login)
                 .then()
@@ -167,6 +193,7 @@ class ClientControllerTest {
         String str1 = obj.writeValueAsString(validClient);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(str1)
                 .when()
                 .post("/clients")
@@ -177,6 +204,7 @@ class ClientControllerTest {
         String str2 = obj.writeValueAsString(validClient);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(str2)
                 .when()
                 .post("/clients")
@@ -186,6 +214,7 @@ class ClientControllerTest {
         // test
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/clients?login=" + uniqueLogin)
                 .then()
@@ -198,6 +227,7 @@ class ClientControllerTest {
     void updateOneClient_correct() throws JsonProcessingException {
         String uuid = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validClientStr)
                 .when()
                 .post("/clients")
@@ -210,6 +240,7 @@ class ClientControllerTest {
         String updatedClientStr = obj.writeValueAsString(validClient);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(updatedClientStr)
                 .when()
                 .put("/clients/" + uuid)
@@ -217,6 +248,7 @@ class ClientControllerTest {
                 .statusCode(200);
         String firstName = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/clients/" + uuid)
                 .then()
@@ -230,6 +262,7 @@ class ClientControllerTest {
         String uuid = UUID.randomUUID().toString();
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validClientStr)
                 .when()
                 .put("/clients/" + uuid)
@@ -241,6 +274,7 @@ class ClientControllerTest {
     void updateOneClient_updateLogin() throws JsonProcessingException {
         String uuid = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validClientStr)
                 .when()
                 .post("/clients")
@@ -251,6 +285,7 @@ class ClientControllerTest {
         String updatedLogin = obj.writeValueAsString(validClient);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(updatedLogin)
                 .when()
                 .put("/clients/" + uuid)
@@ -262,6 +297,7 @@ class ClientControllerTest {
     void updateOneClient_illegalValues() throws JsonProcessingException {
         String uuid = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validClientStr)
                 .when()
                 .post("/clients")
@@ -272,6 +308,7 @@ class ClientControllerTest {
         String updatedLogin = obj.writeValueAsString(validClient);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(updatedLogin)
                 .when()
                 .put("/clients/" + uuid)
@@ -283,6 +320,7 @@ class ClientControllerTest {
     void activateDeactivateTest() throws JsonProcessingException {
         String uuid = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validClientStr)
                 .when()
                 .post("/clients")
@@ -293,12 +331,14 @@ class ClientControllerTest {
         // deactivate
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .put("/clients/" + uuid + "/deactivate")
                 .then()
                 .statusCode(204);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/clients/" + uuid)
                 .then()
@@ -307,12 +347,14 @@ class ClientControllerTest {
         // activate
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .put("/clients/" + uuid + "/activate")
                 .then()
                 .statusCode(204);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/clients/" + uuid)
                 .then()

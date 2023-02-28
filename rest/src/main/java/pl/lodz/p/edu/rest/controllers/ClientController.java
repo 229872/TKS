@@ -96,6 +96,7 @@ public class ClientController {
         JsonObject jsonDTO = new JsonObject();
         jsonDTO.addProperty("login", clientDTO.getLogin());
         try {
+
             jwtUtilities.verifySingedLogin(ifMatch, String.valueOf(jsonDTO));
         } catch (ParseException | AuthenticationFailureException | JOSEException e) {
             return Response.status(BAD_REQUEST).build();
@@ -125,8 +126,6 @@ public class ClientController {
     public Response deactivateUser(@PathParam("entityId") UUID entityId) {
         return userControllerMethods.deactivateUser("Client", entityId);
     }
-
-
 
     @POST
     @Path("/addFake")

@@ -11,6 +11,7 @@ import static org.hamcrest.Matchers.*;
 import static io.restassured.RestAssured.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import pl.lodz.p.edu.data.model.DTO.CredentialsDTO;
 import pl.lodz.p.edu.data.model.DTO.users.EmployeeDTO;
 import pl.lodz.p.edu.rest.util.DataFaker;
 
@@ -18,14 +19,27 @@ import java.util.UUID;
 
 class EmployeeControllerTest {
 
-    @BeforeAll
-    static void beforeAll() {
-        baseURI = "http://localhost:8080/rest/api";
-    }
 
     ObjectMapper obj = new ObjectMapper();
     EmployeeDTO validEmployee;
     String validEmployeeStr;
+    static String token;
+
+    @BeforeAll
+    static void beforeAll() {
+        baseURI = "http://localhost:8080/rest/api";
+
+        CredentialsDTO adminDTO = new CredentialsDTO("admin", "password");
+
+        token = given()
+                .header("Content-Type", "application/json")
+                .body(adminDTO)
+                .when()
+                .post("/login")
+                .then()
+                .statusCode(200)
+                .extract().path("jwt");
+    }
 
     @BeforeEach
     void beforeEach() throws JsonProcessingException {
@@ -39,6 +53,7 @@ class EmployeeControllerTest {
     void createEmployee_correct() {
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validEmployeeStr)
                 .when()
                 .post("/employees")
@@ -51,6 +66,7 @@ class EmployeeControllerTest {
     void createEmployee_noBody() {
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body("")
                 .when()
                 .post("/employees")
@@ -65,6 +81,7 @@ class EmployeeControllerTest {
         System.out.println(notValidEmployeeStr);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(notValidEmployeeStr)
                 .when()
                 .post("/employees")
@@ -76,6 +93,7 @@ class EmployeeControllerTest {
     void createEmployee_conflict() {
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validEmployeeStr)
                 .when()
                 .post("/employees")
@@ -83,6 +101,7 @@ class EmployeeControllerTest {
                 .statusCode(201);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validEmployeeStr)
                 .when()
                 .post("/employees")
@@ -95,6 +114,7 @@ class EmployeeControllerTest {
     void getAllEmployees_correct()  {
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/employees")
                 .then()
@@ -105,6 +125,7 @@ class EmployeeControllerTest {
     void getOneEmployee_byUUID_correct()  {
         String uuid = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validEmployeeStr)
                 .when()
                 .post("/employees")
@@ -112,6 +133,7 @@ class EmployeeControllerTest {
                 .extract().path("entityId");
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/employees/" + uuid)
                 .then()
@@ -124,6 +146,7 @@ class EmployeeControllerTest {
         String uuid = UUID.randomUUID().toString();
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/employees/" + uuid)
                 .then()
@@ -134,6 +157,7 @@ class EmployeeControllerTest {
     void getOneEmployee_byLogin_correct()  {
         String login = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validEmployeeStr)
                 .when()
                 .post("/employees")
@@ -142,6 +166,7 @@ class EmployeeControllerTest {
 
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/employees/login/" + login)
                 .then()
@@ -154,6 +179,7 @@ class EmployeeControllerTest {
         String login = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/employees/login/" + login)
                 .then()
@@ -167,6 +193,7 @@ class EmployeeControllerTest {
         String str1 = obj.writeValueAsString(validEmployee);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(str1)
                 .when()
                 .post("/employees")
@@ -177,6 +204,7 @@ class EmployeeControllerTest {
         String str2 = obj.writeValueAsString(validEmployee);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(str2)
                 .when()
                 .post("/employees")
@@ -186,6 +214,7 @@ class EmployeeControllerTest {
         // test
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/employees?login=" + uniqueLogin)
                 .then()
@@ -198,6 +227,7 @@ class EmployeeControllerTest {
     void updateOneEmployee_correct() throws JsonProcessingException {
         String uuid = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validEmployeeStr)
                 .when()
                 .post("/employees")
@@ -210,6 +240,7 @@ class EmployeeControllerTest {
         String updatedEmployeeStr = obj.writeValueAsString(validEmployee);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(updatedEmployeeStr)
                 .when()
                 .put("/employees/" + uuid)
@@ -217,6 +248,7 @@ class EmployeeControllerTest {
                 .statusCode(200);
         String desk = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/employees/" + uuid)
                 .then()
@@ -230,6 +262,7 @@ class EmployeeControllerTest {
         String uuid = UUID.randomUUID().toString();
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validEmployeeStr)
                 .when()
                 .put("/employees/" + uuid)
@@ -241,6 +274,7 @@ class EmployeeControllerTest {
     void updateOneEmployee_updateLogin() throws JsonProcessingException {
         String uuid = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validEmployeeStr)
                 .when()
                 .post("/employees")
@@ -251,6 +285,7 @@ class EmployeeControllerTest {
         String updatedLogin = obj.writeValueAsString(validEmployee);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(updatedLogin)
                 .when()
                 .put("/employees/" + uuid)
@@ -262,6 +297,7 @@ class EmployeeControllerTest {
     void updateOneEmployee_illegalValues() throws JsonProcessingException {
         String uuid = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validEmployeeStr)
                 .when()
                 .post("/employees")
@@ -272,6 +308,7 @@ class EmployeeControllerTest {
         String updatedLogin = obj.writeValueAsString(validEmployee);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(updatedLogin)
                 .when()
                 .put("/employees/" + uuid)
@@ -283,6 +320,7 @@ class EmployeeControllerTest {
     void activateDeactivateTest() throws JsonProcessingException {
         String uuid = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validEmployeeStr)
                 .when()
                 .post("/employees")
@@ -293,12 +331,14 @@ class EmployeeControllerTest {
         // deactivate
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .put("/employees/" + uuid + "/deactivate")
                 .then()
                 .statusCode(204);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/employees/" + uuid)
                 .then()
@@ -307,12 +347,14 @@ class EmployeeControllerTest {
         // activate
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .put("/employees/" + uuid + "/activate")
                 .then()
                 .statusCode(204);
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .when()
                 .get("/employees/" + uuid)
                 .then()

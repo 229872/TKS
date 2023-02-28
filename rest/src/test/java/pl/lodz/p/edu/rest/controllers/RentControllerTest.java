@@ -11,19 +11,18 @@ import static org.hamcrest.Matchers.*;
 import static io.restassured.RestAssured.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import pl.lodz.p.edu.data.model.DTO.CredentialsDTO;
 import pl.lodz.p.edu.data.model.DTO.RentDTO;
 import pl.lodz.p.edu.data.model.Equipment;
 import pl.lodz.p.edu.data.model.users.Client;
 import pl.lodz.p.edu.rest.util.DataFaker;
 
+import org.junit.jupiter.api.TestClassOrder;
+
 import java.util.UUID;
 
-public class RentControllerTest {
 
-    @BeforeAll
-    static void beforeAll() {
-        baseURI = "http://localhost:8080/rest/api";
-    }
+public class RentControllerTest {
 
     ObjectMapper obj = new ObjectMapper();
     RentDTO validRent;
@@ -36,7 +35,23 @@ public class RentControllerTest {
     String unvalidRentLogicStr;
     Client validClient;
     Equipment validEquipment;
+    static String token;
 
+    @BeforeAll
+    static void beforeAll() {
+        baseURI = "http://localhost:8080/rest/api";
+
+        CredentialsDTO adminDTO = new CredentialsDTO("admin", "password");
+
+        token = given()
+                .header("Content-Type", "application/json")
+                .body(adminDTO)
+                .when()
+                .post("/login")
+                .then()
+                .statusCode(200)
+                .extract().path("jwt");
+    }
 
     @BeforeEach
     void beforeEach() throws JsonProcessingException {
@@ -45,6 +60,7 @@ public class RentControllerTest {
         String validClientStr = obj.writeValueAsString(validClient);
         clientId = given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validClientStr)
                 .when()
                 .post("/clients")
@@ -55,6 +71,7 @@ public class RentControllerTest {
         String validEquipmentStr = obj.writeValueAsString(validEquipment);
         equipmentId = given()
                 .header("Content-Type", "application/json")
+//                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validEquipmentStr)
                 .when()
                 .post("/equipment")
@@ -79,6 +96,7 @@ public class RentControllerTest {
     void createRent_correct() {
         given()
                 .header("Content-Type", "application/json")
+                .header("AUTHORIZATION", "BEARER " + token)
                 .body(validRentStr)
                 .when()
                 .post("/rents")

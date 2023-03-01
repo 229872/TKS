@@ -6,8 +6,8 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import pl.lodz.p.edu.rest.data.model.DTO.CredentialsDTO;
-import pl.lodz.p.edu.rest.data.model.DTO.CredentialsNewPasswordDTO;
+import pl.lodz.p.edu.rest.DTO.CredentialsDTO;
+import pl.lodz.p.edu.rest.DTO.CredentialsNewPasswordDTO;
 import pl.lodz.p.edu.rest.exception.AuthenticationFailureException;
 import pl.lodz.p.edu.rest.managers.api.AuthenticationManager;
 

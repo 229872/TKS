@@ -9,8 +9,8 @@ import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
 import pl.lodz.p.edu.rest.exception.ConflictException;
 import pl.lodz.p.edu.rest.managers.api.EquipmentManager;
-import pl.lodz.p.edu.rest.data.model.DTO.EquipmentDTO;
-import pl.lodz.p.edu.rest.data.model.Equipment;
+import pl.lodz.p.edu.rest.DTO.EquipmentDTO;
+import pl.lodz.p.edu.rest.model.Equipment;
 import pl.lodz.p.edu.rest.managers.api.RentManager;
 import pl.lodz.p.edu.rest.util.DataFaker;
 

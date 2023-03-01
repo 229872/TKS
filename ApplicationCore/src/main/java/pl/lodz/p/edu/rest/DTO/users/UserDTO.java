@@ -1,8 +1,8 @@
-package pl.lodz.p.edu.rest.data.model.DTO.users;
+package pl.lodz.p.edu.rest.DTO.users;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import pl.lodz.p.edu.rest.data.model.users.User;
+import pl.lodz.p.edu.rest.model.users.User;
 
 public class UserDTO {
 

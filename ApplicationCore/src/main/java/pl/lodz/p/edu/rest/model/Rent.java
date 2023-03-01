@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.rest.data.model;
+package pl.lodz.p.edu.rest.model;
 
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
@@ -6,9 +6,9 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
-import pl.lodz.p.edu.rest.data.model.DTO.MvcRentDTO;
-import pl.lodz.p.edu.rest.data.model.DTO.RentDTO;
-import pl.lodz.p.edu.rest.data.model.users.Client;
+import pl.lodz.p.edu.rest.DTO.MvcRentDTO;
+import pl.lodz.p.edu.rest.DTO.RentDTO;
+import pl.lodz.p.edu.rest.model.users.Client;
 
 @Entity
 @Table(name = "rent")

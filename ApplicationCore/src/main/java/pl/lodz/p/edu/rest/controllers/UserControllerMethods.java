@@ -8,7 +8,7 @@ import jakarta.persistence.NoResultException;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.rest.managers.api.UserManager;
 import pl.lodz.p.edu.rest.util.JwtUtilities;
-import pl.lodz.p.edu.rest.data.model.users.User;
+import pl.lodz.p.edu.rest.model.users.User;
 
 import java.util.List;
 import java.util.UUID;

@@ -1,9 +1,9 @@
-package pl.lodz.p.edu.rest.data.model;
+package pl.lodz.p.edu.rest.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import pl.lodz.p.edu.rest.data.model.DTO.EquipmentDTO;
+import pl.lodz.p.edu.rest.DTO.EquipmentDTO;
 
 @Entity
 @Table(name = "equipment")

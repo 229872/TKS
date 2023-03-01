@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.rest.data.model;
+package pl.lodz.p.edu.rest.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.Constraint;

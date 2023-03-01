@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.rest.data.model.DTO;
+package pl.lodz.p.edu.rest.DTO;
 
 import jakarta.validation.constraints.NotEmpty;
 

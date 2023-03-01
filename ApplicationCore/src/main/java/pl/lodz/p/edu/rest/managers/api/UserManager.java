@@ -1,12 +1,12 @@
 package pl.lodz.p.edu.rest.managers.api;
 
-import pl.lodz.p.edu.rest.data.model.DTO.users.AdminDTO;
-import pl.lodz.p.edu.rest.data.model.DTO.users.ClientDTO;
-import pl.lodz.p.edu.rest.data.model.DTO.users.EmployeeDTO;
-import pl.lodz.p.edu.rest.data.model.users.Admin;
-import pl.lodz.p.edu.rest.data.model.users.Client;
-import pl.lodz.p.edu.rest.data.model.users.Employee;
-import pl.lodz.p.edu.rest.data.model.users.User;
+import pl.lodz.p.edu.rest.DTO.users.AdminDTO;
+import pl.lodz.p.edu.rest.DTO.users.ClientDTO;
+import pl.lodz.p.edu.rest.DTO.users.EmployeeDTO;
+import pl.lodz.p.edu.rest.model.users.Admin;
+import pl.lodz.p.edu.rest.model.users.Client;
+import pl.lodz.p.edu.rest.model.users.Employee;
+import pl.lodz.p.edu.rest.model.users.User;
 import pl.lodz.p.edu.rest.exception.ConflictException;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
 

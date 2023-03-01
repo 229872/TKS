@@ -7,11 +7,11 @@ import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
 import pl.lodz.p.edu.rest.exception.BusinessLogicInterruptException;
 import pl.lodz.p.edu.rest.exception.ObjectNotValidException;
-import pl.lodz.p.edu.rest.data.model.DTO.RentDTO;
-import pl.lodz.p.edu.rest.data.model.Equipment;
-import pl.lodz.p.edu.rest.data.model.Rent;
+import pl.lodz.p.edu.rest.DTO.RentDTO;
+import pl.lodz.p.edu.rest.model.Equipment;
+import pl.lodz.p.edu.rest.model.Rent;
 
-import pl.lodz.p.edu.rest.data.model.users.Client;
+import pl.lodz.p.edu.rest.model.users.Client;
 import pl.lodz.p.edu.rest.managers.api.RentManager;
 import pl.lodz.p.edu.rest.repository.api.EquipmentRepository;
 import pl.lodz.p.edu.rest.repository.api.RentRepository;

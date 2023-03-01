@@ -1,10 +1,10 @@
 package pl.lodz.p.edu.rest.util;
 
-import pl.lodz.p.edu.rest.data.model.Address;
-import pl.lodz.p.edu.rest.data.model.Equipment;
-import pl.lodz.p.edu.rest.data.model.users.Admin;
-import pl.lodz.p.edu.rest.data.model.users.Client;
-import pl.lodz.p.edu.rest.data.model.users.Employee;
+import pl.lodz.p.edu.rest.model.Address;
+import pl.lodz.p.edu.rest.model.Equipment;
+import pl.lodz.p.edu.rest.model.users.Admin;
+import pl.lodz.p.edu.rest.model.users.Client;
+import pl.lodz.p.edu.rest.model.users.Employee;
 
 public class DataFaker {
 

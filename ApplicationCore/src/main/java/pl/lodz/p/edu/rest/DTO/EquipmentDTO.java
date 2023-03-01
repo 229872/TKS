@@ -1,8 +1,8 @@
-package pl.lodz.p.edu.rest.data.model.DTO;
+package pl.lodz.p.edu.rest.DTO;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
-import pl.lodz.p.edu.rest.data.model.Equipment;
+import pl.lodz.p.edu.rest.model.Equipment;
 
 public class EquipmentDTO {
 

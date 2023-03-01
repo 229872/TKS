@@ -1,8 +1,8 @@
 package pl.lodz.p.edu.rest.repository.api;
 
-import pl.lodz.p.edu.rest.data.model.Equipment;
-import pl.lodz.p.edu.rest.data.model.Rent;
-import pl.lodz.p.edu.rest.data.model.users.Client;
+import pl.lodz.p.edu.rest.model.Equipment;
+import pl.lodz.p.edu.rest.model.Rent;
+import pl.lodz.p.edu.rest.model.users.Client;
 
 import java.util.List;
 

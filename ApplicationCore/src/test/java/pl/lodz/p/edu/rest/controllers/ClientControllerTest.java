@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import static io.restassured.RestAssured.*;
 
-import pl.lodz.p.edu.rest.data.model.DTO.CredentialsDTO;
-import pl.lodz.p.edu.rest.data.model.DTO.users.ClientDTO;
+import pl.lodz.p.edu.rest.DTO.CredentialsDTO;
+import pl.lodz.p.edu.rest.DTO.users.ClientDTO;
 import pl.lodz.p.edu.rest.util.DataFaker;
 
 import java.util.UUID;

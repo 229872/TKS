@@ -1,10 +1,10 @@
-package pl.lodz.p.edu.rest.data.model.DTO.users;
+package pl.lodz.p.edu.rest.DTO.users;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import pl.lodz.p.edu.rest.data.model.Address;
-import pl.lodz.p.edu.rest.data.model.users.Client;
+import pl.lodz.p.edu.rest.model.Address;
+import pl.lodz.p.edu.rest.model.users.Client;
 
 public class ClientDTO extends UserDTO {
 

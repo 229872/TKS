@@ -1,6 +1,6 @@
 package pl.lodz.p.edu.rest.repository.api;
 
-import pl.lodz.p.edu.rest.data.model.users.User;
+import pl.lodz.p.edu.rest.model.users.User;
 
 import java.util.List;
 import java.util.UUID;

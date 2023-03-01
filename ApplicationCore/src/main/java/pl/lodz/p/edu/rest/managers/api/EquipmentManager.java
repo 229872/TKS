@@ -1,7 +1,7 @@
 package pl.lodz.p.edu.rest.managers.api;
 
-import pl.lodz.p.edu.rest.data.model.DTO.EquipmentDTO;
-import pl.lodz.p.edu.rest.data.model.Equipment;
+import pl.lodz.p.edu.rest.DTO.EquipmentDTO;
+import pl.lodz.p.edu.rest.model.Equipment;
 import pl.lodz.p.edu.rest.exception.ConflictException;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
 

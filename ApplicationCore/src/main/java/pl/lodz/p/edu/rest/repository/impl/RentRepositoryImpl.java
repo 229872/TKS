@@ -5,10 +5,10 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
-import pl.lodz.p.edu.rest.data.model.Equipment;
-import pl.lodz.p.edu.rest.data.model.Rent;
-import pl.lodz.p.edu.rest.data.model.Rent_;
-import pl.lodz.p.edu.rest.data.model.users.Client;
+import pl.lodz.p.edu.rest.model.Equipment;
+import pl.lodz.p.edu.rest.model.Rent;
+import pl.lodz.p.edu.rest.model.Rent_;
+import pl.lodz.p.edu.rest.model.users.Client;
 import pl.lodz.p.edu.rest.repository.api.RentRepository;
 
 

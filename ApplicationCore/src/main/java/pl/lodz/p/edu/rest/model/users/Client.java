@@ -1,9 +1,9 @@
-package pl.lodz.p.edu.rest.data.model.users;
+package pl.lodz.p.edu.rest.model.users;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import pl.lodz.p.edu.rest.data.model.Address;
-import pl.lodz.p.edu.rest.data.model.DTO.users.ClientDTO;
+import pl.lodz.p.edu.rest.model.Address;
+import pl.lodz.p.edu.rest.DTO.users.ClientDTO;
 
 @Entity
 @DiscriminatorValue("client")

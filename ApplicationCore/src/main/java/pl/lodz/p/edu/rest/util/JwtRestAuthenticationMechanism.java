@@ -9,7 +9,7 @@ import jakarta.security.enterprise.authentication.mechanism.http.HttpAuthenticat
 import jakarta.security.enterprise.authentication.mechanism.http.HttpMessageContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import pl.lodz.p.edu.rest.data.model.users.User;
+import pl.lodz.p.edu.rest.model.users.User;
 import pl.lodz.p.edu.rest.repository.impl.UserRepositoryImpl;
 
 import java.util.*;

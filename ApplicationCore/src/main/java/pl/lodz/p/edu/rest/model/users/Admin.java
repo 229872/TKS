@@ -1,8 +1,8 @@
-package pl.lodz.p.edu.rest.data.model.users;
+package pl.lodz.p.edu.rest.model.users;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import pl.lodz.p.edu.rest.data.model.DTO.users.AdminDTO;
+import pl.lodz.p.edu.rest.DTO.users.AdminDTO;
 
 @Entity
 @DiscriminatorValue("admin")

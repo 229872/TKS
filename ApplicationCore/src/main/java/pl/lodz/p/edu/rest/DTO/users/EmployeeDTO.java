@@ -1,7 +1,7 @@
-package pl.lodz.p.edu.rest.data.model.DTO.users;
+package pl.lodz.p.edu.rest.DTO.users;
 
 import jakarta.validation.constraints.NotEmpty;
-import pl.lodz.p.edu.rest.data.model.users.Employee;
+import pl.lodz.p.edu.rest.model.users.Employee;
 
 public class EmployeeDTO extends UserDTO {
 

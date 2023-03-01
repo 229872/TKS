@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.lodz.p.edu.rest.data.model.DTO.EquipmentDTO;
-import pl.lodz.p.edu.rest.data.model.DTO.RentDTO;
-import pl.lodz.p.edu.rest.data.model.users.Client;
+import pl.lodz.p.edu.rest.DTO.EquipmentDTO;
+import pl.lodz.p.edu.rest.DTO.RentDTO;
+import pl.lodz.p.edu.rest.model.users.Client;
 import pl.lodz.p.edu.rest.util.DataFaker;
 
 import java.util.UUID;

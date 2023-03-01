@@ -14,7 +14,7 @@
     <!-- sub modules -->
     <modules>
         <module>ApplicationCore</module>
-<!--        <module>data</module>-->
+        <module>RepositoriesAdapters</module>
     </modules>
 
     <properties>
@@ -24,7 +24,6 @@
         <junit.version>5.8.2</junit.version>
     </properties>
 
-<!--    dependencies management-->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -161,8 +160,9 @@
     </dependencyManagement>
 
 
-<!--    plugin management-->
+
     <build>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

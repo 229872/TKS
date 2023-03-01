@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.rest.managers.impl;
+package pl.lodz.p.edu.rest.service.impl;
 
 import jakarta.inject.Inject;
 
@@ -12,7 +12,7 @@ import pl.lodz.p.edu.rest.model.Equipment;
 import pl.lodz.p.edu.rest.model.Rent;
 
 import pl.lodz.p.edu.rest.model.users.Client;
-import pl.lodz.p.edu.rest.managers.api.RentManager;
+import pl.lodz.p.edu.rest.service.api.RentService;
 import pl.lodz.p.edu.rest.repository.api.EquipmentRepository;
 import pl.lodz.p.edu.rest.repository.api.RentRepository;
 import pl.lodz.p.edu.rest.repository.api.UserRepository;
@@ -26,9 +26,9 @@ import java.util.logging.Logger;
 
 
 @Transactional
-public class RentManagerImpl implements RentManager {
+public class RentServiceImpl implements RentService {
 
-    Logger logger = Logger.getLogger(RentManagerImpl.class.getName());
+    Logger logger = Logger.getLogger(RentServiceImpl.class.getName());
 
     @Inject
     private RentRepository rentRepository;
@@ -39,7 +39,7 @@ public class RentManagerImpl implements RentManager {
     @Inject
     private EquipmentRepository equipmentRepository;
 
-    protected RentManagerImpl() {}
+    protected RentServiceImpl() {}
 
     public List<Rent> getRentByEq(Equipment equipment) {
         try {

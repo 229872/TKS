@@ -9,13 +9,13 @@ import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.rest.DTO.CredentialsDTO;
 import pl.lodz.p.edu.rest.DTO.CredentialsNewPasswordDTO;
 import pl.lodz.p.edu.rest.exception.AuthenticationFailureException;
-import pl.lodz.p.edu.rest.managers.api.AuthenticationManager;
+import pl.lodz.p.edu.rest.service.api.AuthenticationService;
 
 @Path("/")
 public class AuthenticationController {
 
     @Inject
-    private AuthenticationManager authManager;
+    private AuthenticationService authManager;
 
     @POST
     @Path("/login")

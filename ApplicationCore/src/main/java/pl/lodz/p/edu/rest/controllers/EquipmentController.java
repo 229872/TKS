@@ -8,10 +8,10 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
 import pl.lodz.p.edu.rest.exception.ConflictException;
-import pl.lodz.p.edu.rest.managers.api.EquipmentManager;
+import pl.lodz.p.edu.rest.service.api.EquipmentService;
 import pl.lodz.p.edu.rest.DTO.EquipmentDTO;
 import pl.lodz.p.edu.rest.model.Equipment;
-import pl.lodz.p.edu.rest.managers.api.RentManager;
+import pl.lodz.p.edu.rest.service.api.RentService;
 import pl.lodz.p.edu.rest.util.DataFaker;
 
 import java.time.LocalDateTime;
@@ -26,9 +26,9 @@ import static jakarta.ws.rs.core.Response.Status.BAD_REQUEST;
 public class EquipmentController {
 
     @Inject
-    private EquipmentManager equipmentManager;
+    private EquipmentService equipmentService;
     @Inject
-    private RentManager rentManager;
+    private RentService rentService;
 
     @POST
     @Path("/")
@@ -37,7 +37,7 @@ public class EquipmentController {
     public Response createEquipment(@Valid EquipmentDTO equipmentDTO) {
         try {
             Equipment equipment = new Equipment(equipmentDTO);
-            equipmentManager.add(equipment);
+            equipmentService.add(equipment);
             return Response.status(CREATED).entity(equipment).build();
         } catch(NullPointerException e) {
             return Response.status(BAD_REQUEST).build();
@@ -48,7 +48,7 @@ public class EquipmentController {
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllEquipment() {
-        List<Equipment> equipment = equipmentManager.getAll();
+        List<Equipment> equipment = equipmentService.getAll();
         return Response.status(Response.Status.OK).entity(equipment).build();
     }
 
@@ -56,9 +56,9 @@ public class EquipmentController {
     @Path("/available")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllAvailable() {
-        List<Equipment> allEquipment = equipmentManager.getAll();
+        List<Equipment> allEquipment = equipmentService.getAll();
         List<Equipment> availableEquipment = allEquipment.stream()
-                .filter(equipment -> rentManager.checkEquipmentAvailable(equipment, LocalDateTime.now()))
+                .filter(equipment -> rentService.checkEquipmentAvailable(equipment, LocalDateTime.now()))
                 .toList();
 
         return Response.status(OK).entity(availableEquipment).build();
@@ -69,7 +69,7 @@ public class EquipmentController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEquipment(@PathParam("uuid") UUID uuid) {
         try {
-            Equipment equipment = equipmentManager.get(uuid);
+            Equipment equipment = equipmentService.get(uuid);
             return Response.status(Response.Status.OK).entity(equipment).build();
         } catch(EntityNotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -81,7 +81,7 @@ public class EquipmentController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateEquipment(@PathParam("entityId") UUID entityId, @Valid EquipmentDTO equipmentDTO) {
         try {
-            equipmentManager.update(entityId, equipmentDTO);
+            equipmentService.update(entityId, equipmentDTO);
             return Response.status(OK).entity(equipmentDTO).build();
         } catch (IllegalModificationException e) {
             return Response.status(BAD_REQUEST).build();
@@ -94,7 +94,7 @@ public class EquipmentController {
     @Path("/{uuid}")
     public Response unregisterEquipment(@PathParam("uuid") UUID uuid) {
         try {
-            equipmentManager.remove(uuid);
+            equipmentService.remove(uuid);
             return Response.status(NO_CONTENT).build();
         } catch (ConflictException e) {
             return Response.status(CONFLICT).build();
@@ -108,7 +108,7 @@ public class EquipmentController {
     public Equipment addFakeEquipment() {
         Equipment e = DataFaker.getEquipment();
         try {
-            equipmentManager.add(e);
+            equipmentService.add(e);
         } catch(Exception ex) {
             return null;
         }

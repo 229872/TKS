@@ -13,7 +13,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import pl.lodz.p.edu.rest.DTO.users.ClientDTO;
-import pl.lodz.p.edu.rest.managers.api.UserManager;
+import pl.lodz.p.edu.rest.service.api.UserService;
 import pl.lodz.p.edu.rest.util.JwtUtilities;
 import pl.lodz.p.edu.rest.exception.AuthenticationFailureException;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
@@ -34,7 +34,7 @@ public class ClientController {
     Logger logger = Logger.getLogger(ClientController.class.getName());
 
     @Inject
-    private UserManager userManager;
+    private UserService userService;
 
     @Inject
     private UserControllerMethods userControllerMethods;
@@ -52,7 +52,7 @@ public class ClientController {
     public Response addClient(@Valid ClientDTO clientDTO) {
         try {
             Client client = new Client(clientDTO);
-            userManager.registerClient(client);
+            userService.registerClient(client);
             return Response.status(CREATED).entity(client).build();
         } catch(ConflictException | TransactionalException e) {
             return Response.status(CONFLICT).build();
@@ -101,7 +101,7 @@ public class ClientController {
             return Response.status(BAD_REQUEST).build();
         }
         try {
-            userManager.updateClient(entityId, clientDTO);
+            userService.updateClient(entityId, clientDTO);
             return Response.status(OK).entity(clientDTO).build();
         } catch (IllegalModificationException e) {
             return Response.status(BAD_REQUEST).build();
@@ -133,7 +133,7 @@ public class ClientController {
         Client c = DataFaker.getClient();
         logger.log(Level.INFO, c.toString());
         try {
-            userManager.registerClient(c);
+            userService.registerClient(c);
         } catch(Exception e) {
             System.out.println(e.getMessage());
             return null;

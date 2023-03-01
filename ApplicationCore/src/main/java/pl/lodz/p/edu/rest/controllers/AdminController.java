@@ -12,7 +12,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.rest.DTO.users.AdminDTO;
 import pl.lodz.p.edu.rest.model.users.Admin;
-import pl.lodz.p.edu.rest.managers.api.UserManager;
+import pl.lodz.p.edu.rest.service.api.UserService;
 import pl.lodz.p.edu.rest.util.JwtUtilities;
 import pl.lodz.p.edu.rest.exception.AuthenticationFailureException;
 import pl.lodz.p.edu.rest.exception.IllegalModificationException;
@@ -31,7 +31,7 @@ public class AdminController {
 
     Logger logger = Logger.getLogger(AdminController.class.getName());
     @Inject
-    private UserManager userManager;
+    private UserService userService;
 
     @Inject
     private UserControllerMethods userControllerMethods;
@@ -51,7 +51,7 @@ public class AdminController {
     public Response addAdmin(@Valid AdminDTO adminDTO) {
         try {
             Admin admin = new Admin(adminDTO);
-            userManager.registerAdmin(admin);
+            userService.registerAdmin(admin);
             return Response.status(CREATED).entity(admin).build();
         } catch(ConflictException e) {
             return Response.status(CONFLICT).build();
@@ -102,7 +102,7 @@ public class AdminController {
         }
 
         try {
-            userManager.updateAdmin(entityId, adminDTO);
+            userService.updateAdmin(entityId, adminDTO);
             return Response.status(OK).entity(adminDTO).build();
         } catch (IllegalModificationException e) {
             return Response.status(BAD_REQUEST).build();
@@ -136,7 +136,7 @@ public class AdminController {
     public Admin addFakeUserAdmin() {
         Admin c = DataFaker.getAdmin();
         try {
-            userManager.registerAdmin(c);
+            userService.registerAdmin(c);
         } catch(Exception e) {
             return null;
         }

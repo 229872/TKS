@@ -6,7 +6,7 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
 import jakarta.ws.rs.core.Response;
-import pl.lodz.p.edu.rest.managers.api.UserManager;
+import pl.lodz.p.edu.rest.service.api.UserService;
 import pl.lodz.p.edu.rest.util.JwtUtilities;
 import pl.lodz.p.edu.rest.model.users.User;
 
@@ -19,23 +19,23 @@ import static jakarta.ws.rs.core.Response.Status.*;
 public class UserControllerMethods {
 
     @Inject
-    private UserManager userManager;
+    private UserService userService;
 
     @Inject
     private JwtUtilities jwtUtilities;
 
     public Response searchUser(String type, String login) {
         if(login != null) {
-            List<User> searchResult = userManager.searchOfType(type, login);
+            List<User> searchResult = userService.searchOfType(type, login);
             return Response.status(OK).entity(searchResult).build();
         }
-        List<User> users = userManager.getAllUsersOfType(type);
+        List<User> users = userService.getAllUsersOfType(type);
         return Response.status(OK).entity(users).build();
     }
 
     public Response getSingleUser(String type, UUID entityId) {
         try {
-            User user = userManager.getUserByUuidOfType(type, entityId);
+            User user = userService.getUserByUuidOfType(type, entityId);
 
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("login", user.getLogin());
@@ -51,7 +51,7 @@ public class UserControllerMethods {
 
     public Response getSingleUser(String type, String login) {
         try {
-            User user = userManager.getUserByLoginOfType(type, login);
+            User user = userService.getUserByLoginOfType(type, login);
             return Response.status(OK).entity(user).build();
         } catch(NoResultException e) {
             return Response.status(NOT_FOUND).build();
@@ -60,7 +60,7 @@ public class UserControllerMethods {
 
     public Response activateUser(String type, UUID entityId) {
         try {
-            userManager.activateUser(type, entityId);
+            userService.activateUser(type, entityId);
             return Response.status(NO_CONTENT).build();
         } catch(NoResultException e) {
             return Response.status(NOT_FOUND).build();
@@ -69,7 +69,7 @@ public class UserControllerMethods {
 
     public Response deactivateUser(String type, UUID entityId) {
         try {
-            userManager.deactivateUser(type, entityId);
+            userService.deactivateUser(type, entityId);
             return Response.status(NO_CONTENT).build();
         } catch(NoResultException e) {
             return Response.status(NOT_FOUND).build();

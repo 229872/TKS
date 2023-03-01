@@ -14,9 +14,9 @@ import pl.lodz.p.edu.rest.model.Rent;
 import pl.lodz.p.edu.rest.model.users.Client;
 import pl.lodz.p.edu.rest.exception.BusinessLogicInterruptException;
 import pl.lodz.p.edu.rest.exception.ObjectNotValidException;
-import pl.lodz.p.edu.rest.managers.api.EquipmentManager;
-import pl.lodz.p.edu.rest.managers.api.RentManager;
-import pl.lodz.p.edu.rest.managers.api.UserManager;
+import pl.lodz.p.edu.rest.service.api.EquipmentService;
+import pl.lodz.p.edu.rest.service.api.RentService;
+import pl.lodz.p.edu.rest.service.api.UserService;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,13 +27,13 @@ import static jakarta.ws.rs.core.Response.Status.*;
 public class RentController {
 
     @Inject
-    private RentManager rentManager;
+    private RentService rentService;
 
     @Inject
-    private UserManager userManager;
+    private UserService userService;
 
     @Inject
-    private EquipmentManager equipmentManager;
+    private EquipmentService equipmentService;
 
     // create
 
@@ -43,7 +43,7 @@ public class RentController {
     @Path("/")
     public Response makeReservation(@Valid RentDTO rentDTO) {
         try {
-            Rent rent = rentManager.add(rentDTO);
+            Rent rent = rentService.add(rentDTO);
             return Response.status(CREATED).entity(rent).build();
         } catch (ObjectNotValidException e) {
             return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
@@ -57,8 +57,8 @@ public class RentController {
     @Path("/client/{uuid}")
     public Response getClientRents(@PathParam("uuid") UUID clientUuid) {
         try {
-            Client client = (Client) userManager.getUserByUuidOfType("Client", clientUuid);
-            List<Rent> rents = rentManager.getRentsByClient(client);
+            Client client = (Client) userService.getUserByUuidOfType("Client", clientUuid);
+            List<Rent> rents = rentService.getRentsByClient(client);
             return Response.status(Response.Status.OK).entity(rents).build();
         } catch (NoResultException e) {
             return Response.status(NOT_FOUND).build();
@@ -70,8 +70,8 @@ public class RentController {
     @Path("/equipment/{uuid}")
     public Response getEquipmentRents(@PathParam("uuid") UUID equipmentUuid) {
         try {
-            Equipment equipment = equipmentManager.get(equipmentUuid);
-            List<Rent> rents = rentManager.getRentByEq(equipment);
+            Equipment equipment = equipmentService.get(equipmentUuid);
+            List<Rent> rents = rentService.getRentByEq(equipment);
             return Response.status(Response.Status.OK).entity(rents).build();
         } catch (NoResultException | EntityNotFoundException e) {
             return Response.status(NOT_FOUND).build();
@@ -82,7 +82,7 @@ public class RentController {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/")
     public Response getAllRents() {
-        List<Rent> rents = rentManager.getAll();
+        List<Rent> rents = rentService.getAll();
         return Response.status(Response.Status.OK).entity(rents).build();
     }
 
@@ -91,7 +91,7 @@ public class RentController {
     @Path("/{uuid}")
     public Response getRent(@PathParam("uuid") UUID uuid) {
         try {
-            Rent rent = rentManager.get(uuid);
+            Rent rent = rentService.get(uuid);
             return Response.status(Response.Status.OK).entity(rent).build();
         } catch (EntityNotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -104,7 +104,7 @@ public class RentController {
     @Path("/{uuid}")
     public Response modifyRent(@PathParam("uuid") UUID entityId, @Valid RentDTO rentDTO) {
         try {
-            rentManager.update(entityId, rentDTO);
+            rentService.update(entityId, rentDTO);
             return Response.status(OK).entity(rentDTO).build();
         } catch (ObjectNotValidException | TransactionalException e) {
             return Response.status(BAD_REQUEST).build();
@@ -119,7 +119,7 @@ public class RentController {
     @Path("/{uuid}")
     public Response cancelReservation(@PathParam("uuid") UUID rentUuid) {
         try {
-            rentManager.remove(rentUuid);
+            rentService.remove(rentUuid);
             return Response.status(NO_CONTENT).build();
         } catch (EntityNotFoundException e) {
             return Response.status(NO_CONTENT).build();

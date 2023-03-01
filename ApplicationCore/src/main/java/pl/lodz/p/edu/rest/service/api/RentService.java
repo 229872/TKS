@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.rest.managers.api;
+package pl.lodz.p.edu.rest.service.api;
 
 import pl.lodz.p.edu.rest.DTO.RentDTO;
 import pl.lodz.p.edu.rest.model.Equipment;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public interface RentManager {
+public interface RentService {
     Rent add(RentDTO rentDTO) throws ObjectNotValidException, BusinessLogicInterruptException;
 
     List<Rent> getRentsByClient(Client client);

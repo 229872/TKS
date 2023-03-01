@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.rest.managers.impl;
+package pl.lodz.p.edu.rest.service.impl;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -13,7 +13,7 @@ import pl.lodz.p.edu.rest.model.users.Admin;
 import pl.lodz.p.edu.rest.model.users.Client;
 import pl.lodz.p.edu.rest.model.users.Employee;
 import pl.lodz.p.edu.rest.model.users.User;
-import pl.lodz.p.edu.rest.managers.api.UserManager;
+import pl.lodz.p.edu.rest.service.api.UserService;
 import pl.lodz.p.edu.rest.repository.api.UserRepository;
 
 import java.util.List;
@@ -22,14 +22,14 @@ import java.util.logging.Logger;
 
 @Transactional
 @RequestScoped
-public class UserManagerImpl implements UserManager {
+public class UserServiceImpl implements UserService {
 
-    Logger logger = Logger.getLogger(UserManagerImpl.class.getName());
+    Logger logger = Logger.getLogger(UserServiceImpl.class.getName());
 
     @Inject
     private UserRepository userRepository;
 
-    protected UserManagerImpl() {}
+    protected UserServiceImpl() {}
 
     public void registerClient(Client client) throws ConflictException {
         try {

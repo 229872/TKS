@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.rest.managers.impl;
+package pl.lodz.p.edu.rest.service.impl;
 
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
@@ -7,19 +7,19 @@ import jakarta.transaction.Transactional;
 import pl.lodz.p.edu.rest.exception.*;
 import pl.lodz.p.edu.rest.DTO.EquipmentDTO;
 import pl.lodz.p.edu.rest.model.Equipment;
-import pl.lodz.p.edu.rest.managers.api.EquipmentManager;
+import pl.lodz.p.edu.rest.service.api.EquipmentService;
 import pl.lodz.p.edu.rest.repository.api.EquipmentRepository;
 
 import java.util.List;
 import java.util.UUID;
 
 @Transactional
-public class EquipmentManagerImpl implements EquipmentManager {
+public class EquipmentServiceImpl implements EquipmentService {
 
     @Inject
     private EquipmentRepository equipmentRepository;
 
-    protected EquipmentManagerImpl() {
+    protected EquipmentServiceImpl() {
     }
 
     public void add(Equipment equipment) {

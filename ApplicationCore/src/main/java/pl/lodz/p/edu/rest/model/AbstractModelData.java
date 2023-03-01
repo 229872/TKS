@@ -1,7 +1,6 @@
 package pl.lodz.p.edu.rest.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.Constraint;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
@@ -9,7 +8,7 @@ import java.util.UUID;
 
 @MappedSuperclass
 @Embeddable
-public abstract class AbstractEntity implements Serializable {
+public abstract class AbstractModelData implements Serializable {
 
     @NotNull
     @Column(name = "entity_id", unique = true)
@@ -20,7 +19,7 @@ public abstract class AbstractEntity implements Serializable {
     @Column(name = "version")
     private long version;
 
-    public AbstractEntity() {}
+    public AbstractModelData() {}
 
     public UUID getEntityId() {
         return entityId;

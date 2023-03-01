@@ -1,20 +1,17 @@
-package pl.lodz.p.edu.rest.model;
+package entity;
 
+import entity.users.ClientEnt;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
-import pl.lodz.p.edu.rest.DTO.MvcRentDTO;
-import pl.lodz.p.edu.rest.DTO.RentDTO;
-import pl.lodz.p.edu.rest.model.users.Client;
-
 @Entity
 @Table(name = "rent")
 @Transactional
 @Access(AccessType.FIELD)
-public class Rent extends AbstractModelData {
+public class RentEnt extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -26,12 +23,12 @@ public class Rent extends AbstractModelData {
     @JoinColumn(name = "equipment_id")
     @ManyToOne(fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Equipment equipment;
+    private EquipmentEnt equipmentEnt;
 
     @NotNull
     @JoinColumn(name = "client_id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Client client;
+    private ClientEnt client;
 
     @NotNull
     @Column(name = "begin_time")
@@ -41,31 +38,20 @@ public class Rent extends AbstractModelData {
     private LocalDateTime endTime;
 
 
-    public Rent(LocalDateTime beginTime, LocalDateTime endTime,
-                Equipment equipment, Client client) {
+    public RentEnt(LocalDateTime beginTime, LocalDateTime endTime,
+                   EquipmentEnt equipmentEnt, ClientEnt client) {
         this.beginTime = beginTime;
         this.endTime = endTime;
-        this.equipment = equipment;
+        this.equipmentEnt = equipmentEnt;
         this.client = client;
     }
 
-    public Rent() {}
+    public RentEnt() {}
 
-    public Rent(RentDTO rentDTO, Equipment equipment, Client client) {
-        this.beginTime = LocalDateTime.parse(rentDTO.getBeginTime());
-        if(rentDTO.getEndTime() != null) {
-            this.endTime = LocalDateTime.parse(rentDTO.getEndTime());
-        } else {
-            this.endTime = null;
-        }
-        this.equipment = equipment;
-        this.client = client;
-    }
+    public RentEnt(long id, LocalDateTime beginTime, LocalDateTime endTime,
+                   EquipmentEnt equipmentEnt, ClientEnt client) {
 
-    public Rent(long id, LocalDateTime beginTime, LocalDateTime endTime,
-                Equipment equipment, Client client) {
-
-        this(beginTime, endTime, equipment, client);
+        this(beginTime, endTime, equipmentEnt, client);
         this.id = id;
     }
 
@@ -74,7 +60,7 @@ public class Rent extends AbstractModelData {
         if(endTime != null) {
             check = beginTime.isBefore(endTime);
         }
-        return check && client.verify() && equipment.verify();
+        return check && client.verify() && equipmentEnt.verify();
     }
 
 
@@ -100,34 +86,13 @@ public class Rent extends AbstractModelData {
         return sb.toString();
     }
 
-
-    public void merge(RentDTO rentDTO, Equipment equipment, Client client) {
-        this.beginTime = LocalDateTime.parse(rentDTO.getBeginTime());
-        if(rentDTO.getEndTime() != null) {
-            this.endTime = LocalDateTime.parse(rentDTO.getEndTime());
-        } else {
-            this.endTime = null;
-        }
-        this.equipment = equipment;
-        this.client = client;
-    }
-
-    public void merge(MvcRentDTO mvcRentDTO) {
-        this.beginTime = LocalDateTime.parse(mvcRentDTO.getBeginTime());
-        this.endTime = LocalDateTime.parse(mvcRentDTO.getEndTime());
-        this.client = mvcRentDTO.getClient();
-        this.client.setActive(mvcRentDTO.isActive());
-        this.equipment = mvcRentDTO.getEquipment();
-    }
-
-    public void merge(Rent rent) {
-        this.beginTime = rent.getBeginTime();
-        this.endTime = rent.getEndTime();
-        this.equipment = rent.getEquipment();
-        this.client = rent.getClient();
+    public void merge(RentEnt rentEnt) {
+        this.beginTime = rentEnt.getBeginTime();
+        this.endTime = rentEnt.getEndTime();
+        this.equipmentEnt = rentEnt.getEquipment();
+        this.client = rentEnt.getClient();
 //        this.client.setActive(rent.client.isActive());
     }
-    //Ja tu tak bardzo nie wiem co ty miałeś w planach robiąc to mvcRentDto
 
     public LocalDateTime getBeginTime() {
         return beginTime;
@@ -145,19 +110,19 @@ public class Rent extends AbstractModelData {
         this.endTime = endTime;
     }
 
-    public Equipment getEquipment() {
-        return equipment;
+    public EquipmentEnt getEquipment() {
+        return equipmentEnt;
     }
 
-    public void setEquipment(Equipment equipment) {
-        this.equipment = equipment;
+    public void setEquipment(EquipmentEnt equipmentEnt) {
+        this.equipmentEnt = equipmentEnt;
     }
 
-    public Client getClient() {
+    public ClientEnt getClient() {
         return client;
     }
 
-    public void setClient(Client client) {
+    public void setClient(ClientEnt client) {
         this.client = client;
     }
 }

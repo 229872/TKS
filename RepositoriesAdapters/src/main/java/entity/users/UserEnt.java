@@ -1,10 +1,10 @@
-package pl.lodz.p.edu.rest.model.users;
+package entity.users;
 
+import entity.AbstractEntity;
 import jakarta.json.bind.annotation.JsonbTypeAdapter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import pl.lodz.p.edu.rest.model.AbstractModelData;
-import pl.lodz.p.edu.rest.model.JsonPasswordCustomAdapter;
+
 //import pl.lodz.p.edu.data.model.JsonCustomAdapter;
 
 @Entity
@@ -12,7 +12,7 @@ import pl.lodz.p.edu.rest.model.JsonPasswordCustomAdapter;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
 //@JsonbTypeAdapter(c)
-public abstract class User extends AbstractModelData {
+public abstract class UserEnt extends AbstractEntity {
 
     public static String CLIENT_TYPE = "CLIENT";
     public static String EMPLOYEE_TYPE = "EMPLOYEE";
@@ -25,7 +25,6 @@ public abstract class User extends AbstractModelData {
     private String login;
 
     @Column(name = "password")
-    @JsonbTypeAdapter(JsonPasswordCustomAdapter.class)
     private String password;
 
     @Column(name = "archive")
@@ -34,13 +33,13 @@ public abstract class User extends AbstractModelData {
     @Column(name = "userType")
     protected String userType;
 
-    public User(String login, String password) {
+    public UserEnt(String login, String password) {
         this.login = login;
         this.active = true;
         this.password = password;
     }
 
-    public User() {}
+    public UserEnt() {}
 
     public String getLogin() {
         return login;
@@ -58,7 +57,7 @@ public abstract class User extends AbstractModelData {
         this.active = active;
     }
 
-    public void merge(User user) {
+    public void merge(UserEnt user) {
         this.login = user.login;
         this.active = user.active;
     }

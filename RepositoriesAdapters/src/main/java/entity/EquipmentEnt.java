@@ -1,14 +1,13 @@
-package pl.lodz.p.edu.rest.model;
+package entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import pl.lodz.p.edu.rest.DTO.EquipmentDTO;
 
 @Entity
 @Table(name = "equipment")
 @Access(AccessType.FIELD)
-public class Equipment extends AbstractModelData {
+public class EquipmentEnt extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -36,7 +35,7 @@ public class Equipment extends AbstractModelData {
     private String description;
 
 
-    public Equipment(double firstDayCost, double nextDaysCost, double bail, String name) {
+    public EquipmentEnt(double firstDayCost, double nextDaysCost, double bail, String name) {
         this.firstDayCost = firstDayCost;
         this.nextDaysCost = nextDaysCost;
         this.bail = bail;
@@ -44,24 +43,11 @@ public class Equipment extends AbstractModelData {
         this.description = null;
     }
 
-    public Equipment(EquipmentDTO equipmentDTO) {
-        this.merge(equipmentDTO);
-    }
-
     public boolean verify() {
         return !(firstDayCost <= 0.0 || nextDaysCost <= 0.0 || bail <= 0.0)
                 && !name.isEmpty();
     }
-
-    public void merge(EquipmentDTO equipmentDTO) {
-        this.name = equipmentDTO.getName();
-        this.bail = equipmentDTO.getBail();
-        this.firstDayCost = equipmentDTO.getFirstDayCost();
-        this.nextDaysCost = equipmentDTO.getNextDaysCost();
-        this.description = equipmentDTO.getDescription();
-    }
-
-    public Equipment() {}
+    public EquipmentEnt() {}
 
     @Override
     public String toString() {

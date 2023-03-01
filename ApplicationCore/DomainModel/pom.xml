@@ -6,20 +6,14 @@
 
     <parent>
         <groupId>pl.lodz.p.edu</groupId>
-        <artifactId>web-app</artifactId>
-        <version>1.0</version>
+        <artifactId>ApplicationCore</artifactId>
+        <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ApplicationPorts</artifactId>
+    <artifactId>DomainModel</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>ApplicationPorts</name>
-    <dependencies>
-        <dependency>
-            <groupId>pl.lodz.p.edu.rest</groupId>
-            <artifactId>ApplicationCore</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
+    <name>DomainModel</name>
+
+
 
 </project>

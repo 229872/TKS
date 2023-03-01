@@ -4,6 +4,7 @@
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/ApplicationCore" />
     <file type="web" url="file://$PROJECT_DIR$/mvc" />
+    <file type="web" url="file://$PROJECT_DIR$/RepositoriesAdapters" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
@@ -13,6 +14,8 @@
         <option value="$PROJECT_DIR$/mvc/pom.xml" />
         <option value="$PROJECT_DIR$/RepositoriesAdapters/pom.xml" />
         <option value="$PROJECT_DIR$/ApplicationPorts/pom.xml" />
+        <option value="$PROJECT_DIR$/ApplicationCore/DomainModel/pom.xml" />
+        <option value="$PROJECT_DIR$/ApplicationCore/ApplicationServices/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

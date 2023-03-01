@@ -11,12 +11,15 @@
         <version>1.0</version>
     </parent>
 
-    <groupId>pl.lodz.p.edu.rest</groupId>
     <artifactId>ApplicationCore</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>ApplicationCore</name>
 
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>DomainModel</module>
+    </modules>
 
     <dependencies>
         <dependency>

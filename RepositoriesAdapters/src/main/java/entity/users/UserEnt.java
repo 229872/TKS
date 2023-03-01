@@ -77,4 +77,9 @@ public abstract class UserEnt extends AbstractEntity {
     public void setUserType(String userType) {
         this.userType = userType;
     }
+
+    public void merge(UserEnt user) {
+        this.login = user.login;
+        this.active = user.active;
+    }
 }

@@ -30,11 +30,6 @@ public class ClientEnt extends UserEnt {
         this.userType = CLIENT_TYPE;
     }
 
-    public boolean verify() {
-        return super.verify() && !firstName.isEmpty()
-                && !lastName.isEmpty() && address.verify();
-    }
-
     public ClientEnt() {
         address = new AddressEnt();
         this.userType = CLIENT_TYPE;
@@ -71,11 +66,5 @@ public class ClientEnt extends UserEnt {
                 ", lastName='" + lastName + '\'' +
                 ", address=" + address +
                 "} " + super.toString();
-    }
-
-    public void updateClientData(String firstName, String lastName, AddressEnt address) {
-        setFirstName(firstName);
-        setLastName(lastName);
-        setAddress(address);
     }
 }

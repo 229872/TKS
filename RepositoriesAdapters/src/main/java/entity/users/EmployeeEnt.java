@@ -21,10 +21,6 @@ public class EmployeeEnt extends UserEnt {
         this.userType = UserEnt.EMPLOYEE_TYPE;
     }
 
-    public boolean verify() {
-        return super.verify() && !desk.isEmpty();
-    }
-
     public String getDesk() {
         return desk;
     }

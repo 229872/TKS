@@ -42,11 +42,6 @@ public class EquipmentEnt extends AbstractEntity {
         this.name = name;
         this.description = null;
     }
-
-    public boolean verify() {
-        return !(firstDayCost <= 0.0 || nextDaysCost <= 0.0 || bail <= 0.0)
-                && !name.isEmpty();
-    }
     public EquipmentEnt() {}
 
     @Override

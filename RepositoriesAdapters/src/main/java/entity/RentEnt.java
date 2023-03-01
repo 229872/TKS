@@ -2,14 +2,12 @@ package entity;
 
 import entity.users.ClientEnt;
 import jakarta.persistence.*;
-import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "rent")
-@Transactional
 @Access(AccessType.FIELD)
 public class RentEnt extends AbstractEntity {
 
@@ -55,24 +53,6 @@ public class RentEnt extends AbstractEntity {
         this.id = id;
     }
 
-    public boolean verify() {
-        boolean check = true;
-        if(endTime != null) {
-            check = beginTime.isBefore(endTime);
-        }
-        return check && client.verify() && equipmentEnt.verify();
-    }
-
-
-//    public double getRentCost() {
-//        long diffDays = Math.abs( ChronoUnit.DAYS.between(beginTime, endTime));
-//        if (diffDays > 1) {
-//            return equipment.getFirstDayCost() + equipment.getNextDaysCost() * (diffDays - 1);
-//        } else {
-//            return equipment.getFirstDayCost();
-//        }
-//    }
-
     public String toString() {
         final StringBuilder sb = new StringBuilder("Rent{");
         sb.append("id=").append(id);
@@ -84,14 +64,6 @@ public class RentEnt extends AbstractEntity {
         sb.append("Koniec=").append(endTime);
         sb.append('}');
         return sb.toString();
-    }
-
-    public void merge(RentEnt rentEnt) {
-        this.beginTime = rentEnt.getBeginTime();
-        this.endTime = rentEnt.getEndTime();
-        this.equipmentEnt = rentEnt.getEquipment();
-        this.client = rentEnt.getClient();
-//        this.client.setActive(rent.client.isActive());
     }
 
     public LocalDateTime getBeginTime() {

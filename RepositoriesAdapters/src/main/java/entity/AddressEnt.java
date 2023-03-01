@@ -53,9 +53,6 @@ public class AddressEnt {
         this.streetNr = streetNr;
     }
 
-    public boolean verify() {
-        return !(city == null || street == null || streetNr == null);
-    }
     String getAddressInfo() {
         final StringBuilder sb = new StringBuilder("Rent{");
         sb.append("Miasto=").append(getCity());

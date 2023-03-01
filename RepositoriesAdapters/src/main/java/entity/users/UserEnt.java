@@ -1,17 +1,13 @@
 package entity.users;
 
 import entity.AbstractEntity;
-import jakarta.json.bind.annotation.JsonbTypeAdapter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-
-//import pl.lodz.p.edu.data.model.JsonCustomAdapter;
 
 @Entity
 @Table(name = "tuser")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
-//@JsonbTypeAdapter(c)
 public abstract class UserEnt extends AbstractEntity {
 
     public static String CLIENT_TYPE = "CLIENT";
@@ -55,15 +51,6 @@ public abstract class UserEnt extends AbstractEntity {
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public void merge(UserEnt user) {
-        this.login = user.login;
-        this.active = user.active;
-    }
-
-    public boolean verify() {
-        return !login.isEmpty();
     }
 
     @Override

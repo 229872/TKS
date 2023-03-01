@@ -1,7 +1,5 @@
 package pl.lodz.p.edu.rest.model;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.util.UUID;

@@ -1,7 +1,5 @@
 package pl.lodz.p.edu.rest.model;
 
-import jakarta.persistence.*;
-import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
@@ -13,8 +11,6 @@ import pl.lodz.p.edu.rest.model.users.Client;
 public class Rent extends AbstractModelData {
 
     private long id;
-
-    @NotNull
     private Equipment equipment;
 
     @NotNull
@@ -22,7 +18,7 @@ public class Rent extends AbstractModelData {
 
     @NotNull
     private LocalDateTime beginTime;
-    
+
     private LocalDateTime endTime;
 
 

@@ -1,7 +1,5 @@
 package pl.lodz.p.edu.rest.model.users;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import pl.lodz.p.edu.rest.model.Address;
 import pl.lodz.p.edu.rest.DTO.users.ClientDTO;
 

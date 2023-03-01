@@ -1,8 +1,6 @@
 package pl.lodz.p.edu.rest.model.users;
 
 import jakarta.json.bind.annotation.JsonbTypeAdapter;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import pl.lodz.p.edu.rest.model.AbstractModelData;
 import pl.lodz.p.edu.rest.model.JsonPasswordCustomAdapter;
 //import pl.lodz.p.edu.data.model.JsonCustomAdapter;

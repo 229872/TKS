@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.rest.service.impl;
+package pl.lodz.p.edu.service;
 
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;

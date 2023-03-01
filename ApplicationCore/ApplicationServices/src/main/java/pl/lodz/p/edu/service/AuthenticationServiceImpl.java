@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.rest.service.impl;
+package pl.lodz.p.edu.service;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;

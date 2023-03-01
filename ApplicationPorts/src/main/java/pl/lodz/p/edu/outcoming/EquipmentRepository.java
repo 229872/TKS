@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.rest.repository.api;
+package pl.lodz.p.edu.outcoming;
 
 import pl.lodz.p.edu.rest.model.Equipment;
 

@@ -11,6 +11,7 @@ import pl.lodz.p.edu.rest.model.users.Client;
 public class Rent extends AbstractModelData {
 
     private long id;
+
     private Equipment equipment;
 
     @NotNull
@@ -108,7 +109,6 @@ public class Rent extends AbstractModelData {
         this.client = rent.getClient();
 //        this.client.setActive(rent.client.isActive());
     }
-    //Ja tu tak bardzo nie wiem co ty miałeś w planach robiąc to mvcRentDto
 
     public LocalDateTime getBeginTime() {
         return beginTime;

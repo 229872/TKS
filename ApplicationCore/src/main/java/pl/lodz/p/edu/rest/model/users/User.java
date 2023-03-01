@@ -13,10 +13,10 @@ public abstract class User extends AbstractModelData {
     public static String EMPLOYEE_TYPE = "EMPLOYEE";
     public static String ADMIN_TYPE = "ADMIN";
 
-
     private String login;
-    //Fixme instead adapter dto
+
     @JsonbTypeAdapter(JsonPasswordCustomAdapter.class)
+    //Fixme instead adapter dto
     private String password;
 
     private boolean active;

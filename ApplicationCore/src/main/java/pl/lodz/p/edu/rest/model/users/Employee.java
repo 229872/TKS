@@ -4,12 +4,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import pl.lodz.p.edu.rest.DTO.users.EmployeeDTO;
 
-@Entity
-@DiscriminatorValue("employee")
+
 public class Employee extends User {
 
-    @Column(name = "desk")
-    @NotEmpty
+
     private String desk;
 
     public Employee() {}

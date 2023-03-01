@@ -10,34 +10,19 @@ import pl.lodz.p.edu.rest.DTO.MvcRentDTO;
 import pl.lodz.p.edu.rest.DTO.RentDTO;
 import pl.lodz.p.edu.rest.model.users.Client;
 
-@Entity
-@Table(name = "rent")
-@Transactional
-@Access(AccessType.FIELD)
 public class Rent extends AbstractModelData {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(initialValue = 0, name = "rent_sequence_generator")
-    @Column(name = "rent_id")
     private long id;
 
     @NotNull
-    @JoinColumn(name = "equipment_id")
-    @ManyToOne(fetch = FetchType.EAGER,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Equipment equipment;
 
     @NotNull
-    @JoinColumn(name = "client_id")
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Client client;
 
     @NotNull
-    @Column(name = "begin_time")
     private LocalDateTime beginTime;
-
-    @Column(name = "end_time")
+    
     private LocalDateTime endTime;
 
 

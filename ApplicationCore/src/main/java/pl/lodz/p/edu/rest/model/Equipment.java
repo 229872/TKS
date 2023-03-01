@@ -5,34 +5,23 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import pl.lodz.p.edu.rest.DTO.EquipmentDTO;
 
-@Entity
-@Table(name = "equipment")
-@Access(AccessType.FIELD)
 public class Equipment extends AbstractModelData {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(initialValue = 0, name = "equipment_sequence_generator")
-    @Column(name = "equipment_id", updatable = false)
     private Long id;
 
-    @Column(name = "name")
-    @NotNull
+
     private String name;
 
-    @Column(name = "bail")
     @Positive
     private double bail;
 
-    @Column(name = "first_day_cost")
+
     @Positive
     private double firstDayCost;
 
-    @Column(name = "next_day_cost")
     @Positive
     private double nextDaysCost;
 
-    @Column(name = "description")
     private String description;
 
 

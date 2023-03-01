@@ -7,10 +7,7 @@ import pl.lodz.p.edu.rest.model.AbstractModelData;
 import pl.lodz.p.edu.rest.model.JsonPasswordCustomAdapter;
 //import pl.lodz.p.edu.data.model.JsonCustomAdapter;
 
-@Entity
-@Table(name = "tuser")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
+
 //@JsonbTypeAdapter(c)
 public abstract class User extends AbstractModelData {
 
@@ -19,19 +16,13 @@ public abstract class User extends AbstractModelData {
     public static String ADMIN_TYPE = "ADMIN";
 
 
-    @Id
-    @Column(name = "login")
-    @NotEmpty
     private String login;
-
-    @Column(name = "password")
+    //Fixme instead adapter dto
     @JsonbTypeAdapter(JsonPasswordCustomAdapter.class)
     private String password;
 
-    @Column(name = "archive")
     private boolean active;
 
-    @Column(name = "userType")
     protected String userType;
 
     public User(String login, String password) {

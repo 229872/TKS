@@ -4,11 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import pl.lodz.p.edu.rest.DTO.users.AdminDTO;
 
-@Entity
-@DiscriminatorValue("admin")
 public class Admin extends User {
-    @Column(name = "favourite_ice_cream")
-    @NotEmpty
+
     private String favouriteIceCream;
 
     public Admin() {

@@ -14,5 +14,12 @@
     <version>1.0-SNAPSHOT</version>
     <name>ApplicationServices</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>pl.lodz.p.edu</groupId>
+            <artifactId>ApplicationPorts</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>

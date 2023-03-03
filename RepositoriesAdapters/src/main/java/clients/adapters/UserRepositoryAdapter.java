@@ -1,7 +1,7 @@
 package clients.adapters;
 
-import clients.adapters.mapper.UserFromDataToDomainMapper;
-import clients.adapters.mapper.UserFromDomainToDataMapper;
+import clients.adapters.mapper.user.UserFromDataToDomainMapper;
+import clients.adapters.mapper.user.UserFromDomainToDataMapper;
 import clients.api.UserRepository;
 import clients.data.users.AdminEnt;
 import clients.data.users.ClientEnt;
@@ -52,7 +52,7 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     }
 
     @Override
-    public Long count() {
+    public long count() {
         return repository.count();
     }
 
@@ -80,7 +80,7 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     @Override
     public User getByLogin(String type, String login) {
         UserEnt userEnt = repository.getByLogin(type, login);
-        return  convertToDomainModelFactory(userEnt);
+        return convertToDomainModelFactory(userEnt);
     }
 
     @Override

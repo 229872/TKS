@@ -1,5 +1,7 @@
 package clients.adapters;
 
+import clients.adapters.mapper.equipment.EquipmentFromDataToDomainMapper;
+import clients.adapters.mapper.equipment.EquipmentFromDomainToDataMapper;
 import clients.api.EquipmentRepository;
 import clients.data.EquipmentEnt;
 import jakarta.inject.Inject;
@@ -16,6 +18,11 @@ public class EquipmentRepositoryAdapter implements EquipmentRepositoryPort {
     @Inject
     private EquipmentRepository repository;
 
+    @Inject
+    private EquipmentFromDataToDomainMapper toDomainMapper;
+
+    @Inject
+    private EquipmentFromDomainToDataMapper toDataMapper;
 
     @Override
     public boolean isEquipmentRented(UUID uuid) {
@@ -26,6 +33,14 @@ public class EquipmentRepositoryAdapter implements EquipmentRepositoryPort {
     public Equipment get(UUID entityId) {
         EquipmentEnt equipmentEnt = repository.get(entityId);
         return convertToDomainModel(equipmentEnt);
+    }
+
+    private Equipment convertToDomainModel(EquipmentEnt equipmentEnt) {
+        return toDomainMapper.convertToDomainModel(equipmentEnt);
+    }
+
+    private EquipmentEnt convertToDataModel(Equipment elem) {
+        return toDataMapper.convertToDataModel(elem);
     }
 
     @Override
@@ -47,29 +62,12 @@ public class EquipmentRepositoryAdapter implements EquipmentRepositoryPort {
 
     @Override
     public void update(Equipment elem) throws IllegalModificationException {
-        repository.update(convertToDataModel(elem));
+        repository.update(toDataMapper.convertToDataModel(elem));
     }
 
     @Override
-    public Long count() {
+    public long count() {
         return repository.count();
     }
 
-    private Equipment convertToDomainModel(EquipmentEnt equipmentEnt) {
-        return new Equipment(
-                equipmentEnt.getFirstDayCost(),
-                equipmentEnt.getNextDaysCost(),
-                equipmentEnt.getBail(),
-                equipmentEnt.getName()
-        );
-    }
-
-    private EquipmentEnt convertToDataModel(Equipment equipment) {
-        return new EquipmentEnt(
-                equipment.getFirstDayCost(),
-                equipment.getNextDaysCost(),
-                equipment.getBail(),
-                equipment.getName()
-        );
-    }
 }

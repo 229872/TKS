@@ -1,4 +1,4 @@
-package clients.adapters.mapper;
+package clients.adapters.mapper.user;
 
 import clients.data.AddressEnt;
 import clients.data.users.AdminEnt;

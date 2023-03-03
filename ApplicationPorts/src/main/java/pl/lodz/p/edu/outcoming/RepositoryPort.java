@@ -12,5 +12,5 @@ public interface RepositoryPort<T> {
     void add(T elem);
     void remove(UUID entityId);
     void update(T elem) throws IllegalModificationException;
-    Long count();
+    long count();
 }

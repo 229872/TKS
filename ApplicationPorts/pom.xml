@@ -15,7 +15,7 @@
     <name>ApplicationPorts</name>
     <dependencies>
         <dependency>
-            <groupId>pl.lodz.p.edu.rest</groupId>
+            <groupId>pl.lodz.p.edu</groupId>
             <artifactId>ApplicationCore</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>

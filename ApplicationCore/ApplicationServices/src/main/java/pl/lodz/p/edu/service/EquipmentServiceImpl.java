@@ -4,7 +4,6 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
-import pl.lodz.p.edu.rest.exception.*;
 import pl.lodz.p.edu.rest.DTO.EquipmentDTO;
 import pl.lodz.p.edu.rest.model.Equipment;
 import pl.lodz.p.edu.rest.service.api.EquipmentService;

@@ -37,6 +37,7 @@ public class RentServiceImpl implements RentServicePort {
 
     protected RentServiceImpl() {}
 
+    @Override
     public List<Rent> getRentByEq(Equipment equipment) {
         try {
             return rentRepository.getRentByEq(equipment);
@@ -45,6 +46,7 @@ public class RentServiceImpl implements RentServicePort {
         }
     }
 
+    @Override
     public List<Rent> getRentsByClient(Client client) {
         try {
             return rentRepository.getRentByClient(client);
@@ -53,15 +55,17 @@ public class RentServiceImpl implements RentServicePort {
         }
     }
 
-
+    @Override
     public Rent get(UUID uuid) {
         return rentRepository.get(uuid);
     }
 
+    @Override
     public List<Rent> getAll() {
         return rentRepository.getAll();
     }
 
+    @Override
     public Rent add(Rent rent) throws ObjectNotValidException, BusinessLogicInterruptException {
         Client client;
         Equipment equipment;
@@ -94,6 +98,7 @@ public class RentServiceImpl implements RentServicePort {
     }
 
 
+    @Override
     public Rent update(UUID entityId, Rent rent) throws ObjectNotValidException,
             BusinessLogicInterruptException {
         Rent rentDB;
@@ -143,6 +148,7 @@ public class RentServiceImpl implements RentServicePort {
         }
     }
 
+    @Override
     public void remove(UUID uuid) throws BusinessLogicInterruptException {
         Rent rent;
         try {
@@ -171,6 +177,7 @@ public class RentServiceImpl implements RentServicePort {
         return when;
     }
 
+    @Override
     public boolean checkEquipmentAvailable(Equipment equipment, LocalDateTime beginTime) {
         List<Rent> rentEquipmentList;
         try {

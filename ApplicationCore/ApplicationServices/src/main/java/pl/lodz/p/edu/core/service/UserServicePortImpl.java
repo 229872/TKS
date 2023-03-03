@@ -7,6 +7,8 @@ import jakarta.transaction.Transactional;
 import pl.lodz.p.edu.core.domain.exception.ConflictException;
 import pl.lodz.p.edu.core.domain.exception.IllegalModificationException;
 import pl.lodz.p.edu.core.domain.model.users.*;
+import pl.lodz.p.edu.ports.incoming.UserServicePort;
+import pl.lodz.p.edu.ports.outcoming.UserRepositoryPort;
 
 
 import java.util.List;
@@ -14,13 +16,14 @@ import java.util.UUID;
 
 @Transactional
 @RequestScoped
-public class UserServicePortImpl implements UserService {
+public class UserServicePortImpl implements UserServicePort {
 
     @Inject
-    private UserRepository userRepository;
+    private UserRepositoryPort userRepository;
 
     protected UserServicePortImpl() {}
 
+    @Override
     public void registerClient(Client client) throws ConflictException {
         try {
             userRepository.add(client);
@@ -29,6 +32,7 @@ public class UserServicePortImpl implements UserService {
         }
     }
 
+    @Override
     public void registerAdmin(Admin admin) throws ConflictException {
         try {
             userRepository.add(admin);
@@ -37,6 +41,7 @@ public class UserServicePortImpl implements UserService {
         }
     }
 
+    @Override
     public void registerEmployee(Employee employee) throws ConflictException {
         try {
             userRepository.add(employee);
@@ -45,64 +50,64 @@ public class UserServicePortImpl implements UserService {
         }
     }
 
+    @Override
     public User getUserByUuidOfType(String type, UUID entityId) {
         return userRepository.getOfType(type, entityId);
     }
 
+    @Override
     public List<User> getAllUsersOfType(String type) {
         return userRepository.getAllOfType(type);
     }
 
+    @Override
     public List<User> searchOfType(String type, String login) {
         return userRepository.getAllWithLogin(type, login);
     }
 
+    @Override
     public User getUserByLoginOfType(String type, String login) {
         return userRepository.getByLogin(type, login);
     }
 
 
-    public void updateClient(UUID entityId, ClientDTO clientDTO) throws IllegalModificationException {
-        Client client = (Client) userRepository.getOfType("Client", entityId); //possible npe
-        if (clientDTO.getPassword() == null) {
-            clientDTO.setPassword(client.getPassword());
-        }
-        client.merge(clientDTO);
+    @Override
+    public void updateClient(UUID entityId, Client client) throws IllegalModificationException {
+        Client clientDB = (Client) userRepository.getOfType("Client", entityId);
+        clientDB.merge(client);
 
         try {
-            userRepository.update(client);
+            userRepository.update(clientDB);
         } catch(PersistenceException e) {
             throw new IllegalModificationException("Cannot modify clients login");
         }
     }
 
-    public void updateAdmin(UUID entityId, AdminDTO adminDTO) throws IllegalModificationException {
-        Admin admin = (Admin) userRepository.getOfType("Admin", entityId); //possible npe
-        if (adminDTO.getPassword() == null) {
-            adminDTO.setPassword(admin.getPassword());
-        }
-        admin.merge(adminDTO);
+    @Override
+    public void updateAdmin(UUID entityId, Admin admin) throws IllegalModificationException {
+        Admin adminDB = (Admin) userRepository.getOfType("Admin", entityId);
+        adminDB.merge(admin);
 
         try {
-            userRepository.update(admin);
-        } catch(PersistenceException e) {
-            throw new IllegalModificationException("Cannot modify clients login");
-        }
-    }
-    public void updateEmployee(UUID entityId, EmployeeDTO employeeDTO) throws IllegalModificationException {
-        Employee employee = (Employee) userRepository.getOfType("Employee", entityId); //possible npe
-        if (employeeDTO.getPassword() == null) {
-            employeeDTO.setPassword(employee.getPassword());
-        }
-        employee.merge(employeeDTO);
-
-        try {
-            userRepository.update(employee);
+            userRepository.update(adminDB);
         } catch(PersistenceException e) {
             throw new IllegalModificationException("Cannot modify clients login");
         }
     }
 
+    @Override
+    public void updateEmployee(UUID entityId, Employee employee) throws IllegalModificationException {
+        Employee employeeDB = (Employee) userRepository.getOfType("Employee", entityId);
+        employeeDB.merge(employee);
+
+        try {
+            userRepository.update(employeeDB);
+        } catch(PersistenceException e) {
+            throw new IllegalModificationException("Cannot modify clients login");
+        }
+    }
+
+    @Override
     public void activateUser(String type, UUID entityId) {
         User user;
         synchronized (userRepository) {
@@ -112,6 +117,7 @@ public class UserServicePortImpl implements UserService {
         }
     }
 
+    @Override
     public void deactivateUser(String type, UUID entityId) {
         User user;
         synchronized (userRepository) {
@@ -121,7 +127,8 @@ public class UserServicePortImpl implements UserService {
         }
     }
 
-    public void updateUser(User user) throws IllegalModificationException {
+
+    public void updateUser(User user)  {
         userRepository.update(user);
     }
 }

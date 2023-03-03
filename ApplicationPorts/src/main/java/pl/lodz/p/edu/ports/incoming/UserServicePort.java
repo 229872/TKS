@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface UserServicePort {
+
     List<User> searchOfType(String type, String login);
 
     List<User> getAllUsersOfType(String type);

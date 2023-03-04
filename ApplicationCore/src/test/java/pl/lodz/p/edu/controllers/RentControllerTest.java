@@ -15,7 +15,7 @@ import pl.lodz.p.edu.DTO.CredentialsDTO;
 import pl.lodz.p.edu.DTO.RentDTO;
 import pl.lodz.p.edu.model.Equipment;
 import pl.lodz.p.edu.model.users.Client;
-import pl.lodz.p.edu.util.DataFaker;
+import pl.lodz.p.edu.DataFaker;
 
 import java.util.UUID;
 

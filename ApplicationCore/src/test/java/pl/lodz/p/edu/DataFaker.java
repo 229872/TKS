@@ -1,10 +1,6 @@
-package pl.lodz.p.edu.util;
+package pl.lodz.p.edu;
+import pl.lodz.p.edu.core.domain.model.*;
 
-import pl.lodz.p.edu.model.Address;
-import pl.lodz.p.edu.model.Equipment;
-import pl.lodz.p.edu.model.users.Admin;
-import pl.lodz.p.edu.model.users.Client;
-import pl.lodz.p.edu.model.users.Employee;
 
 public class DataFaker {
 

@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import pl.lodz.p.edu.DTO.CredentialsDTO;
 import pl.lodz.p.edu.DTO.users.EmployeeDTO;
-import pl.lodz.p.edu.util.DataFaker;
+import pl.lodz.p.edu.DataFaker;
 
 import java.util.UUID;
 

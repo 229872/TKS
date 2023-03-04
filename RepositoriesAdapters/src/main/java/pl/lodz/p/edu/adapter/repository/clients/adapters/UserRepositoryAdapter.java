@@ -83,6 +83,13 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
         return convertToDomainModelFactory(userEnt);
     }
 
+    //fixme change
+    @Override
+    public User getByOnlyLogin(String login) {
+        UserEnt userEnt = repository.getByOnlyLogin(login);
+        return convertToDomainModelFactory(userEnt);
+    }
+
     @Override
     public User getByLoginPassword(String login, String password) {
         UserEnt userEnt = repository.getByLoginPassword(login, password);

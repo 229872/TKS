@@ -13,7 +13,7 @@ import static io.restassured.RestAssured.*;
 
 import pl.lodz.p.edu.DTO.CredentialsDTO;
 import pl.lodz.p.edu.DTO.users.ClientDTO;
-import pl.lodz.p.edu.util.DataFaker;
+import pl.lodz.p.edu.DataFaker;
 
 import java.util.UUID;
 

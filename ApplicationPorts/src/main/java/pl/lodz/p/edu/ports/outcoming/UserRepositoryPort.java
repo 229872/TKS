@@ -17,4 +17,6 @@ public interface UserRepositoryPort extends RepositoryPort<User> {
     User getByLoginPassword(String login, String password);
     @Override
     void update(User elem);
+
+    User getByOnlyLogin(String userLogin);
 }

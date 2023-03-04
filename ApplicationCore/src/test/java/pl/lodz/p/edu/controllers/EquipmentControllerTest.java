@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import pl.lodz.p.edu.DTO.EquipmentDTO;
 import pl.lodz.p.edu.DTO.RentDTO;
 import pl.lodz.p.edu.model.users.Client;
-import pl.lodz.p.edu.util.DataFaker;
+import pl.lodz.p.edu.DataFaker;
 
 import java.util.UUID;
 

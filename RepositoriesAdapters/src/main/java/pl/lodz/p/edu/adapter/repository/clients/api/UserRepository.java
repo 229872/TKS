@@ -17,4 +17,6 @@ public interface UserRepository extends Repository<UserEnt> {
     UserEnt getByLoginPassword(String login, String password);
     @Override
     void update(UserEnt elem);
+
+    UserEnt getByOnlyLogin(String login);
 }

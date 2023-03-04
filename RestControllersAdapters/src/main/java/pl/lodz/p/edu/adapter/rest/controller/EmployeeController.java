@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.controllers;
+package pl.lodz.p.edu.adapter.rest.controller;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.shaded.gson.JsonObject;
@@ -10,14 +10,11 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import pl.lodz.p.edu.exception.AuthenticationFailureException;
-import pl.lodz.p.edu.exception.ConflictException;
-import pl.lodz.p.edu.exception.IllegalModificationException;
-import pl.lodz.p.edu.DTO.users.EmployeeDTO;
-import pl.lodz.p.edu.service.api.UserService;
-import pl.lodz.p.edu.util.JwtUtilities;
-import pl.lodz.p.edu.model.users.Employee;
-import pl.lodz.p.edu.util.DataFaker;
+import pl.lodz.p.edu.adapter.rest.api.UserService;
+import pl.lodz.p.edu.adapter.rest.dto.users.EmployeeDTO;
+import pl.lodz.p.edu.adapter.rest.exception.RestAuthenticationFailureException;
+import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
+import pl.lodz.p.edu.adapter.rest.exception.RestIllegalModificationException;
 
 import java.text.ParseException;
 import java.util.UUID;
@@ -29,16 +26,11 @@ import static jakarta.ws.rs.core.Response.Status.OK;
 @Path("/employees")
 public class EmployeeController {
 
-    Logger logger = Logger.getLogger(AdminController.class.getName());
-
     @Inject
     private UserService userService;
 
     @Inject
     private UserControllerMethods userControllerMethods;
-
-    @Inject
-    private JwtUtilities jwtUtilities;
 
     protected EmployeeController() {}
 
@@ -49,10 +41,9 @@ public class EmployeeController {
     @RolesAllowed({"ADMIN"})
     public Response addEmployee(@Valid EmployeeDTO employeeDTO) {
         try {
-            Employee employee = new Employee(employeeDTO);
-            userService.registerEmployee(employee);
-            return Response.status(CREATED).entity(employee).build();
-        } catch(ConflictException | TransactionalException e) {
+            userService.registerEmployee(employeeDTO);
+            return Response.status(CREATED).entity(employeeDTO).build();
+        } catch(RestConflictException | TransactionalException e) {
             return Response.status(CONFLICT).build();
         }
     }
@@ -90,14 +81,14 @@ public class EmployeeController {
         JsonObject jsonDTO = new JsonObject();
         jsonDTO.addProperty("login", employeeDTO.getLogin());
         try {
-            jwtUtilities.verifySingedLogin(ifMatch, String.valueOf(jsonDTO));
-        } catch (ParseException | AuthenticationFailureException | JOSEException e) {
+            userControllerMethods.verifySingedLogin(ifMatch, jsonDTO);
+        } catch (ParseException | RestAuthenticationFailureException | JOSEException e) {
             return Response.status(BAD_REQUEST).build();
         }
         try {
             userService.updateEmployee(entityId, employeeDTO);
             return Response.status(OK).entity(employeeDTO).build();
-        } catch (IllegalModificationException e) {
+        } catch (RestIllegalModificationException e) {
             return Response.status(BAD_REQUEST).build();
         } catch(TransactionalException e) { // login modification
             return Response.status(BAD_REQUEST).build();
@@ -118,19 +109,5 @@ public class EmployeeController {
     @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Response deactivateUser(@PathParam("entityId") UUID entityId) {
         return userControllerMethods.deactivateUser("Employee", entityId);
-    }
-
-    @POST
-    @Path("/addFake")
-    @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({"ADMIN", "EMPLOYEE"})
-    public Employee addFakeUserAdmin() {
-        Employee c = DataFaker.getEmployee();
-        try {
-            userService.registerEmployee(c);
-        } catch (Exception e) {
-            return null;
-        }
-        return c;
     }
 }

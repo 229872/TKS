@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.controllers;
+package pl.lodz.p.edu.adapter.rest.controller;
 
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
@@ -6,10 +6,10 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import pl.lodz.p.edu.exception.AuthenticationFailureException;
-import pl.lodz.p.edu.DTO.CredentialsDTO;
-import pl.lodz.p.edu.DTO.CredentialsNewPasswordDTO;
-import pl.lodz.p.edu.service.api.AuthenticationService;
+import pl.lodz.p.edu.adapter.rest.api.AuthenticationService;
+import pl.lodz.p.edu.adapter.rest.dto.CredentialsDTO;
+import pl.lodz.p.edu.adapter.rest.dto.CredentialsNewPasswordDTO;
+import pl.lodz.p.edu.adapter.rest.exception.RestAuthenticationFailureException;
 
 @Path("/")
 public class AuthenticationController {
@@ -25,7 +25,7 @@ public class AuthenticationController {
         try {
             return Response.status(200).entity(authManager.
                     login(credentialsDTO.getLogin(), credentialsDTO.getPassword())).build();
-        } catch (AuthenticationFailureException e) {
+        } catch (RestAuthenticationFailureException e) {
             return Response.status(401).entity(e.getMessage()).build();
         }
     }
@@ -38,7 +38,7 @@ public class AuthenticationController {
     public Response changePassword(@Valid CredentialsNewPasswordDTO credentials) {
         try {
             return Response.status(200).entity(authManager.changePassword(credentials)).build();
-        } catch (AuthenticationFailureException e) {
+        } catch (RestAuthenticationFailureException e) {
             return Response.status(401).entity(e.getMessage()).build();
         }
     }

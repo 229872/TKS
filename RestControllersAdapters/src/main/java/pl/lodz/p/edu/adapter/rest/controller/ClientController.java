@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.controllers;
+package pl.lodz.p.edu.adapter.rest.controller;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.shaded.gson.JsonObject;
@@ -11,27 +11,19 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
-import pl.lodz.p.edu.exception.AuthenticationFailureException;
-import pl.lodz.p.edu.exception.ConflictException;
-import pl.lodz.p.edu.exception.IllegalModificationException;
-import pl.lodz.p.edu.DTO.users.ClientDTO;
-import pl.lodz.p.edu.service.api.UserService;
-import pl.lodz.p.edu.util.JwtUtilities;
-import pl.lodz.p.edu.model.users.Client;
-import pl.lodz.p.edu.util.DataFaker;
+import pl.lodz.p.edu.adapter.rest.api.UserService;
+import pl.lodz.p.edu.adapter.rest.dto.users.ClientDTO;
+import pl.lodz.p.edu.adapter.rest.exception.RestAuthenticationFailureException;
+import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
+import pl.lodz.p.edu.adapter.rest.exception.RestIllegalModificationException;
 
 import java.text.ParseException;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static jakarta.ws.rs.core.Response.Status.*;
 
 @Path("/clients")
 public class ClientController {
-
-    Logger logger = Logger.getLogger(ClientController.class.getName());
 
     @Inject
     private UserService userService;
@@ -39,8 +31,6 @@ public class ClientController {
     @Inject
     private UserControllerMethods userControllerMethods;
 
-    @Inject
-    private JwtUtilities jwtUtilities;
 
     protected ClientController() {}
 
@@ -51,10 +41,9 @@ public class ClientController {
     @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response addClient(@Valid ClientDTO clientDTO) {
         try {
-            Client client = new Client(clientDTO);
-            userService.registerClient(client);
-            return Response.status(CREATED).entity(client).build();
-        } catch(ConflictException | TransactionalException e) {
+            userService.registerClient(clientDTO);
+            return Response.status(CREATED).entity(clientDTO).build();
+        } catch(RestConflictException | TransactionalException e ) {
             return Response.status(CONFLICT).build();
         } catch(NullPointerException e) {
             return Response.status(BAD_REQUEST).build();
@@ -66,7 +55,6 @@ public class ClientController {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response searchClients(@QueryParam("login") String login) {
-        logger.info(login);
         return userControllerMethods.searchUser("Client", login);
     }
 
@@ -96,14 +84,14 @@ public class ClientController {
         jsonDTO.addProperty("login", clientDTO.getLogin());
         try {
 
-            jwtUtilities.verifySingedLogin(ifMatch, String.valueOf(jsonDTO));
-        } catch (ParseException | AuthenticationFailureException | JOSEException e) {
+            userControllerMethods.verifySingedLogin(ifMatch, jsonDTO);
+        } catch (ParseException | RestAuthenticationFailureException | JOSEException e) {
             return Response.status(BAD_REQUEST).build();
         }
         try {
             userService.updateClient(entityId, clientDTO);
             return Response.status(OK).entity(clientDTO).build();
-        } catch (IllegalModificationException e) {
+        } catch (RestIllegalModificationException e) {
             return Response.status(BAD_REQUEST).build();
         } catch(TransactionalException e) { // login modification
             return Response.status(BAD_REQUEST).build();
@@ -124,20 +112,5 @@ public class ClientController {
     @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response deactivateUser(@PathParam("entityId") UUID entityId) {
         return userControllerMethods.deactivateUser("Client", entityId);
-    }
-
-    @POST
-    @Path("/addFake")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Client addFakeClient() {
-        Client c = DataFaker.getClient();
-        logger.log(Level.INFO, c.toString());
-        try {
-            userService.registerClient(c);
-        } catch(Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
-        return c;
     }
 }

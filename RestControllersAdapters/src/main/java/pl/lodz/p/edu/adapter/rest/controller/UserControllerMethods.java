@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.controllers;
+package pl.lodz.p.edu.adapter.rest.controller;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.shaded.gson.JsonObject;
@@ -6,10 +6,12 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
 import jakarta.ws.rs.core.Response;
-import pl.lodz.p.edu.service.api.UserService;
-import pl.lodz.p.edu.util.JwtUtilities;
-import pl.lodz.p.edu.model.users.User;
+import pl.lodz.p.edu.adapter.rest.api.AuthenticationService;
+import pl.lodz.p.edu.adapter.rest.api.UserService;
+import pl.lodz.p.edu.adapter.rest.dto.users.UserDTO;
+import pl.lodz.p.edu.adapter.rest.exception.RestAuthenticationFailureException;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,24 +24,24 @@ public class UserControllerMethods {
     private UserService userService;
 
     @Inject
-    private JwtUtilities jwtUtilities;
+    private AuthenticationService authenticationService;
 
     public Response searchUser(String type, String login) {
         if(login != null) {
-            List<User> searchResult = userService.searchOfType(type, login);
+            List<UserDTO> searchResult = userService.searchOfType(type, login);
             return Response.status(OK).entity(searchResult).build();
         }
-        List<User> users = userService.getAllUsersOfType(type);
+        List<UserDTO> users = userService.getAllUsersOfType(type);
         return Response.status(OK).entity(users).build();
     }
 
     public Response getSingleUser(String type, UUID entityId) {
         try {
-            User user = userService.getUserByUuidOfType(type, entityId);
+            UserDTO user = userService.getUserByUuidOfType(type, entityId);
 
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("login", user.getLogin());
-            String ifMatchTag = jwtUtilities.signLogin(jsonObject.toString());
+            String ifMatchTag = authenticationService.signLogin(jsonObject.toString());
 
             return Response.status(OK).entity(user).tag(ifMatchTag).build();
         } catch(NoResultException e) {
@@ -51,7 +53,7 @@ public class UserControllerMethods {
 
     public Response getSingleUser(String type, String login) {
         try {
-            User user = userService.getUserByLoginOfType(type, login);
+            UserDTO user = userService.getUserByLoginOfType(type, login);
             return Response.status(OK).entity(user).build();
         } catch(NoResultException e) {
             return Response.status(NOT_FOUND).build();
@@ -74,5 +76,12 @@ public class UserControllerMethods {
         } catch(NoResultException e) {
             return Response.status(NOT_FOUND).build();
         }
+    }
+
+
+    //tmp fixme
+    public void verifySingedLogin(String ifMatch, JsonObject jsonDTO) throws ParseException,
+            RestAuthenticationFailureException, JOSEException {
+        authenticationService.verifySingedLogin(ifMatch, String.valueOf(jsonDTO));
     }
 }

@@ -1,5 +1,6 @@
 package pl.lodz.p.edu.core.service;
 
+import com.nimbusds.jose.JOSEException;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
@@ -11,6 +12,8 @@ import pl.lodz.p.edu.core.domain.model.users.User;
 import pl.lodz.p.edu.core.security.JwtUtilities;
 import pl.lodz.p.edu.ports.incoming.AuthenticationServicePort;
 import pl.lodz.p.edu.ports.outcoming.UserRepositoryPort;
+
+import java.text.ParseException;
 
 
 @Transactional
@@ -48,5 +51,14 @@ public class AuthenticationServiceImpl implements AuthenticationServicePort {
         } catch (NoResultException e) {
             throw new AuthenticationFailureException("User not found");
         }
+    }
+
+    public void verifySingedLogin(String ifMatch, String json) throws ParseException,
+            AuthenticationFailureException, JOSEException {
+        utilities.verifySingedLogin(ifMatch, json);
+    }
+
+    public String signLogin(String login) throws JOSEException {
+        return utilities.signLogin(login);
     }
 }

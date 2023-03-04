@@ -16,6 +16,7 @@
         <option value="$PROJECT_DIR$/ApplicationPorts/pom.xml" />
         <option value="$PROJECT_DIR$/ApplicationCore/DomainModel/pom.xml" />
         <option value="$PROJECT_DIR$/ApplicationCore/ApplicationServices/pom.xml" />
+        <option value="$PROJECT_DIR$/RestControllersAdapters/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

@@ -157,9 +157,6 @@
                 <version>5.2.0</version>
                 <scope>test</scope>
             </dependency>
-
-
-
         </dependencies>
     </dependencyManagement>
 

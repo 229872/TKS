@@ -10,7 +10,6 @@ import pl.lodz.p.edu.core.domain.model.users.*;
 import pl.lodz.p.edu.ports.incoming.UserServicePort;
 import pl.lodz.p.edu.ports.outcoming.UserRepositoryPort;
 
-
 import java.util.List;
 import java.util.UUID;
 

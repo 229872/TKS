@@ -1,5 +1,6 @@
 package pl.lodz.p.edu.adapter.repository.clients.adapters;
 
+import jakarta.enterprise.context.RequestScoped;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.equipment.EquipmentFromDataToDomainMapper;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.equipment.EquipmentFromDomainToDataMapper;
 import pl.lodz.p.edu.adapter.repository.clients.api.EquipmentRepository;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@RequestScoped
 public class EquipmentRepositoryAdapter implements EquipmentRepositoryPort {
 
     @Inject

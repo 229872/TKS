@@ -1,5 +1,7 @@
 package pl.lodz.p.edu.adapter.repository.clients.adapters;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.user.UserFromDataToDomainMapper;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.user.UserFromDomainToDataMapper;
 import pl.lodz.p.edu.adapter.repository.clients.api.UserRepository;
@@ -17,6 +19,7 @@ import pl.lodz.p.edu.ports.outcoming.UserRepositoryPort;
 import java.util.List;
 import java.util.UUID;
 
+@RequestScoped
 public class UserRepositoryAdapter implements UserRepositoryPort {
 
     @Inject

@@ -1,6 +1,5 @@
 package pl.lodz.p.edu.core.domain.model;
 
-import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
@@ -12,10 +11,8 @@ public class Rent extends AbstractModelData {
 
     private Equipment equipment;
 
-    @NotNull
     private Client client;
 
-    @NotNull
     private LocalDateTime beginTime;
 
     private LocalDateTime endTime;

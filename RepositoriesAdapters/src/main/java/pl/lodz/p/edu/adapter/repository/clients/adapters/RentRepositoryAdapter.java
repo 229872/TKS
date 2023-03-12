@@ -1,5 +1,6 @@
 package pl.lodz.p.edu.adapter.repository.clients.adapters;
 
+import jakarta.enterprise.context.RequestScoped;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.equipment.EquipmentFromDomainToDataMapper;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.rent.RentFromDataToDomainMapper;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.rent.RentFromDomainToDataMapper;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@RequestScoped
 public class RentRepositoryAdapter implements RentRepositoryPort {
     @Inject
     private RentRepository repository;

@@ -1,4 +1,4 @@
-package pl.lodz.p.edu;
+package pl.lodz.p.edu.core;
 
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerResponseContext;

@@ -19,6 +19,7 @@
 
     <modules>
         <module>DomainModel</module>
+        <module>ApplicationServices</module>
     </modules>
 
     <dependencies>

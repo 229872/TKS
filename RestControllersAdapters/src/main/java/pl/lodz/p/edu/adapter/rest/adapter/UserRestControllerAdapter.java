@@ -136,6 +136,7 @@ public class UserRestControllerAdapter implements UserService {
             case "ADMIN" -> toDomainMapper.convertAdminToDomainModel((AdminDTO) userDTO);
             case "EMPLOYEE" -> toDomainMapper.convertEmployeeToDomainModel((EmployeeDTO) userDTO);
             case "CLIENT" -> toDomainMapper.convertClientToDomainModel((ClientDTO) userDTO);
+            default -> throw new IllegalArgumentException();
         };
     }
 
@@ -144,6 +145,7 @@ public class UserRestControllerAdapter implements UserService {
             case "ADMIN" -> toDTOMapper.convertAdminToAdminDTO((Admin) user);
             case "EMPLOYEE" -> toDTOMapper.convertEmployeeToEmployeeDTO((Employee) user);
             case "CLIENT" -> toDTOMapper.convertClientToClientDTO((Client) user);
+            default -> throw new IllegalArgumentException();
         };
     }
 }

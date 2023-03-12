@@ -3,7 +3,7 @@ package pl.lodz.p.edu.adapter.repository.clients.repo;
 import pl.lodz.p.edu.adapter.repository.clients.api.RentRepository;
 import pl.lodz.p.edu.adapter.repository.clients.data.EquipmentEnt;
 import pl.lodz.p.edu.adapter.repository.clients.data.RentEnt;
-import entity.RentEnt_;
+import pl.lodz.p.edu.adapter.repository.clients.data.RentEnt_;
 import pl.lodz.p.edu.adapter.repository.clients.data.users.ClientEnt;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -55,7 +55,7 @@ public class RentRepositoryImpl implements RentRepository {
         Root<RentEnt> rent = cq.from(RentEnt.class);
 
         cq.select(rent);
-        cq.where(cb.equal(rent.get(RentEnt_.EQUIPMENT), e));
+        cq.where(cb.equal(rent.get(RentEnt_.EQUIPMENT_ENT), e));
         //FIXME jakiś błąd z cascade type
 
         List<RentEnt> rents = em.createQuery(cq).getResultList();
@@ -89,7 +89,7 @@ public class RentRepositoryImpl implements RentRepository {
         Root<RentEnt> rent = cq.from(RentEnt.class);
 
         cq.select(rent);
-        cq.where(cb.equal(rent.get(RentEnt_.CLIENT), clientP));
+        cq.where(cb.equal(rent.get(RentEnt_.CLIENT_ENT), clientP));
 
         TypedQuery<RentEnt> q = em.createQuery(cq).setLockMode(LockModeType.OPTIMISTIC);
         List<RentEnt> rents = q.getResultList();
@@ -106,7 +106,7 @@ public class RentRepositoryImpl implements RentRepository {
         Root<RentEnt> rent = cq.from(RentEnt.class);
 
         cq.select(rent);
-        cq.where(cb.equal(rent.get(RentEnt_.EQUIPMENT), equipment));
+        cq.where(cb.equal(rent.get(RentEnt_.EQUIPMENT_ENT), equipment));
 
         TypedQuery<RentEnt> q = em.createQuery(cq).setLockMode(LockModeType.OPTIMISTIC);
         List<RentEnt> rents = q.getResultList();

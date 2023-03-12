@@ -105,10 +105,11 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
 
     //fixme change string to enum
     private User convertToDomainModelFactory(UserEnt userEnt) {
-      return switch (userEnt.getUserType()) {
+        return switch (userEnt.getUserType()) {
             case "ADMIN" -> toDomainMapper.convertAdminToDomainModel((AdminEnt) userEnt);
             case "EMPLOYEE" -> toDomainMapper.convertEmployeeToDomainModel((EmployeeEnt) userEnt);
             case "CLIENT" -> toDomainMapper.convertClientToDomainModel((ClientEnt) userEnt);
+            default -> throw new IllegalArgumentException();
         };
     }
 
@@ -117,6 +118,7 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
             case "ADMIN" -> toDataMapper.convertAdminToDataModel((Admin) user);
             case "EMPLOYEE" -> toDataMapper.convertEmployeeToDataModel((Employee) user);
             case "CLIENT" -> toDataMapper.convertClientToDataModel((Client) user);
+            default -> throw new IllegalArgumentException();
         };
     }
 }

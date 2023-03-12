@@ -5,6 +5,7 @@
     <file type="web" url="file://$PROJECT_DIR$/ApplicationCore" />
     <file type="web" url="file://$PROJECT_DIR$/mvc" />
     <file type="web" url="file://$PROJECT_DIR$/RepositoriesAdapters" />
+    <file type="web" url="file://$PROJECT_DIR$/RestControllersAdapters" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">

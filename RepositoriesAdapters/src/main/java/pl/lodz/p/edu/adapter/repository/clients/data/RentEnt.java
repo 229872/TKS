@@ -26,7 +26,7 @@ public class RentEnt extends AbstractEntity {
     @NotNull
     @JoinColumn(name = "client_id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private ClientEnt client;
+    private ClientEnt clientEnt;
 
     @NotNull
     @Column(name = "begin_time")
@@ -37,19 +37,19 @@ public class RentEnt extends AbstractEntity {
 
 
     public RentEnt(LocalDateTime beginTime, LocalDateTime endTime,
-                   EquipmentEnt equipmentEnt, ClientEnt client) {
+                   EquipmentEnt equipmentEnt, ClientEnt clientEnt) {
         this.beginTime = beginTime;
         this.endTime = endTime;
         this.equipmentEnt = equipmentEnt;
-        this.client = client;
+        this.clientEnt = clientEnt;
     }
 
     public RentEnt() {}
 
     public RentEnt(long id, LocalDateTime beginTime, LocalDateTime endTime,
-                   EquipmentEnt equipmentEnt, ClientEnt client) {
+                   EquipmentEnt equipmentEnt, ClientEnt clientEnt) {
 
-        this(beginTime, endTime, equipmentEnt, client);
+        this(beginTime, endTime, equipmentEnt, clientEnt);
         this.id = id;
     }
 
@@ -91,10 +91,10 @@ public class RentEnt extends AbstractEntity {
     }
 
     public ClientEnt getClient() {
-        return client;
+        return clientEnt;
     }
 
     public void setClient(ClientEnt client) {
-        this.client = client;
+        this.clientEnt = client;
     }
 }

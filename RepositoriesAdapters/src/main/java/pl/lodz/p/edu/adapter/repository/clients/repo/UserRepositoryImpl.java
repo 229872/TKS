@@ -2,6 +2,7 @@ package pl.lodz.p.edu.adapter.repository.clients.repo;
 
 import pl.lodz.p.edu.adapter.repository.clients.api.UserRepository;
 import pl.lodz.p.edu.adapter.repository.clients.data.users.UserEnt;
+import pl.lodz.p.edu.adapter.repository.clients.data.users.UserEnt_;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;

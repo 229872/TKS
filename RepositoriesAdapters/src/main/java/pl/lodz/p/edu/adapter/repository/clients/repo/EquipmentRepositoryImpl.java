@@ -2,7 +2,7 @@ package pl.lodz.p.edu.adapter.repository.clients.repo;
 
 import pl.lodz.p.edu.adapter.repository.clients.api.EquipmentRepository;
 import pl.lodz.p.edu.adapter.repository.clients.data.EquipmentEnt;
-import entity.EquipmentEnt_;
+import pl.lodz.p.edu.adapter.repository.clients.data.EquipmentEnt_;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;

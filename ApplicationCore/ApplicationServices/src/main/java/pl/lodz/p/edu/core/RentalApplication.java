@@ -1,4 +1,4 @@
-package pl.lodz.p.edu;
+package pl.lodz.p.edu.core;
 
 import jakarta.annotation.security.DeclareRoles;
 import jakarta.ws.rs.ApplicationPath;

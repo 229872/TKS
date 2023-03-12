@@ -14,8 +14,9 @@
     <!-- sub modules -->
     <modules>
         <module>ApplicationCore</module>
-        <module>RepositoriesAdapters</module>
         <module>ApplicationPorts</module>
+        <module>RepositoriesAdapters</module>
+        <module>RestControllersAdapters</module>
     </modules>
 
     <properties>
@@ -156,6 +157,8 @@
                 <version>5.2.0</version>
                 <scope>test</scope>
             </dependency>
+
+
 
         </dependencies>
     </dependencyManagement>

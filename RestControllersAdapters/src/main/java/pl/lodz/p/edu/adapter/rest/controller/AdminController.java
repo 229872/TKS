@@ -55,7 +55,7 @@ public class AdminController {
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({"ADMIN"})
+//    @RolesAllowed({"ADMIN"})
     public Response searchAdmin(@QueryParam("login") String login) {
         return userControllerMethods.searchUser("Admin", login);
     }
@@ -63,7 +63,7 @@ public class AdminController {
     @GET
     @Path("/{uuid}")
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({"ADMIN"})
+//    @RolesAllowed({"ADMIN"})
     public Response getUserByUuid(@PathParam("uuid") UUID entityId) {
         return userControllerMethods.getSingleUser("Admin", entityId);
     }
@@ -71,7 +71,7 @@ public class AdminController {
     @GET
     @Path("/login/{login}")
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({"ADMIN"})
+//    @RolesAllowed({"ADMIN"})
     public Response getUserByLogin(@PathParam("login") String login) {
         return userControllerMethods.getSingleUser("Admin", login);
     }
@@ -80,7 +80,7 @@ public class AdminController {
     @PUT
     @Path("/{entityId}")
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({"ADMIN"})
+//    @RolesAllowed({"ADMIN"})
     public Response updateAdmin(@PathParam("entityId") UUID entityId, @HeaderParam("IF-MATCH") String ifMatch,
                                 @Valid AdminDTO adminDTO) {
         JsonObject jsonDTO = new JsonObject();
@@ -105,14 +105,14 @@ public class AdminController {
 
     @PUT
     @Path("/{entityId}/activate")
-    @RolesAllowed({"ADMIN"})
+//    @RolesAllowed({"ADMIN"})
     public Response activateUser(@PathParam("entityId") UUID entityId) {
         return userControllerMethods.activateUser("Admin", entityId);
     }
 
     @PUT
     @Path("/{entityId}/deactivate")
-    @RolesAllowed({"ADMIN"})
+//    @RolesAllowed({"ADMIN"})
     public Response deactivateUser(@PathParam("entityId") UUID entityId) {
         return userControllerMethods.deactivateUser("Admin", entityId);
     }

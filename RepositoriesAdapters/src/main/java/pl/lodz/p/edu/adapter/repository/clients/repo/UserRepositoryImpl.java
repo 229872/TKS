@@ -16,7 +16,7 @@ import java.util.UUID;
 @RequestScoped
 public class UserRepositoryImpl implements UserRepository {
 
-    @PersistenceContext(name = "request")
+    @PersistenceContext(name = "app")
     protected EntityManager em;
 
     public UserRepositoryImpl() {}

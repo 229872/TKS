@@ -9,14 +9,4 @@
             30
         </session-timeout>
     </session-config>
-
-    <data-source>
-        <name>java:global/PgDataSource</name>
-        <class-name>org.postgresql.ds.PGSimpleDataSource</class-name>
-        <server-name>localhost</server-name>
-        <port-number>5432</port-number>
-        <database-name>nbddb</database-name>
-        <user>nbd</user>
-        <password>nbdpassword</password>
-    </data-source>
 </web-app>

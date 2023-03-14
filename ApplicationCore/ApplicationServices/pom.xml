@@ -20,7 +20,11 @@
             <artifactId>ApplicationPorts</artifactId>
         </dependency>
 
-        <!--    ??????????/???    -->
+        <dependency>
+            <groupId>pl.lodz.p.edu</groupId>
+            <artifactId>RepositoriesAdapters</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>

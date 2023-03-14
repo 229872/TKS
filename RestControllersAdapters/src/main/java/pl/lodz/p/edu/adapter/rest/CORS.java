@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.core;
+package pl.lodz.p.edu.adapter.rest;
 
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerResponseContext;

@@ -1,5 +1,7 @@
 package pl.lodz.p.edu.adapter.repository.clients.repo;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import lombok.NoArgsConstructor;
 import pl.lodz.p.edu.adapter.repository.clients.api.RentRepository;
 import pl.lodz.p.edu.adapter.repository.clients.data.EquipmentEnt;
 import pl.lodz.p.edu.adapter.repository.clients.data.RentEnt;
@@ -16,105 +18,57 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Transactional
+@ApplicationScoped
+@NoArgsConstructor
 public class RentRepositoryImpl implements RentRepository {
 
     @PersistenceContext(unitName = "app")
     private EntityManager em;
 
-    public RentRepositoryImpl() {}
-
+    @Override
     public RentEnt get(UUID entityId) {
-
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<RentEnt> cq = cb.createQuery(RentEnt.class);
-        Root<RentEnt> rent = cq.from(RentEnt.class);
-
-        cq.select(rent);
-        cq.where(cb.equal(rent.get(RentEnt_.ENTITY_ID), entityId));
-
-        List<RentEnt> rents = em.createQuery(cq).getResultList();
-
-        if (rents.isEmpty()) {
-            throw new EntityNotFoundException("Rent not found for uniqueId: " + entityId);
-        }
-        return rents.get(0);
+        return em.createNamedQuery(RentEnt.FIND_BY_ID, RentEnt.class)
+                .setParameter("id", entityId)
+                .getSingleResult();
     }
 
-    @Transactional
+    @Override
     public List<RentEnt> getAll() {
-        TypedQuery<RentEnt> rentQuery = em.createQuery("Select r from RentEnt r", RentEnt.class);
-        return rentQuery.getResultList();
+        return em.createNamedQuery(RentEnt.FIND_ALL, RentEnt.class)
+                .getResultList();
     }
 
-    public List<RentEnt> getEquipmentRents(EquipmentEnt e) {
-        if(e.getId() == null) {
-            return new ArrayList<RentEnt>();
-        }
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<RentEnt> cq = cb.createQuery(RentEnt.class);
-        Root<RentEnt> rent = cq.from(RentEnt.class);
-
-        cq.select(rent);
-        cq.where(cb.equal(rent.get(RentEnt_.EQUIPMENT_ENT), e));
-        //FIXME jakiś błąd z cascade type
-
-        List<RentEnt> rents = em.createQuery(cq).getResultList();
-        return rents;
-    }
-
-    @Transactional
+    @Override
     public void add(RentEnt elem) {
-        em.merge(elem);
+        em.persist(elem);
     }
 
-    @Transactional
-    public void remove(UUID entityId) {
-        RentEnt elem = get(entityId);
-        em.remove(elem);
-    }
-
-    @Transactional
-    public void update(RentEnt elem) {
-        em.merge(elem);
-    }
-
-    public Long count() {
-        Long count = em.createQuery("Select count(rent) from RentEnt rent", Long.class).getSingleResult();
-        return count;
-    }
-
-    public List<RentEnt> getRentByClient(ClientEnt clientP) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<RentEnt> cq = cb.createQuery(RentEnt.class);
-        Root<RentEnt> rent = cq.from(RentEnt.class);
-
-        cq.select(rent);
-        cq.where(cb.equal(rent.get(RentEnt_.CLIENT_ENT), clientP));
-
-        TypedQuery<RentEnt> q = em.createQuery(cq).setLockMode(LockModeType.OPTIMISTIC);
-        List<RentEnt> rents = q.getResultList();
-
-        if(rents.isEmpty()) {
-            throw new EntityNotFoundException("Rent not found for Client: " + clientP);
+    @Override
+    public void remove(RentEnt entity) {
+        if (!em.contains(entity)) {
+            entity = em.merge(entity);
         }
-        return rents;
+        em.remove(entity);
     }
 
-    public List<RentEnt> getRentByEq(EquipmentEnt equipment) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<RentEnt> cq = cb.createQuery(RentEnt.class);
-        Root<RentEnt> rent = cq.from(RentEnt.class);
+    @Override
+    public RentEnt update(RentEnt elem) {
+        return em.merge(elem);
+    }
 
-        cq.select(rent);
-        cq.where(cb.equal(rent.get(RentEnt_.EQUIPMENT_ENT), equipment));
+    @Override
+    public List<RentEnt> getRentsByClient(ClientEnt client) {
+        return em.createNamedQuery(RentEnt.FIND_BY_CLIENT, RentEnt.class)
+                .setParameter("client", client)
+                .getResultList();
+    }
 
-        TypedQuery<RentEnt> q = em.createQuery(cq).setLockMode(LockModeType.OPTIMISTIC);
-        List<RentEnt> rents = q.getResultList();
-
-        if(rents.isEmpty()) {
-            throw new EntityNotFoundException("Rent not found for equipment: " + equipment);
-        }
-        return rents;
+    @Override
+    public List<RentEnt> getRentsByEquipment(EquipmentEnt equipment) {
+        return em.createNamedQuery(RentEnt.FIND_BY_EQUIPMENT, RentEnt.class)
+                .setParameter("equipment", equipment)
+                .getResultList();
     }
 
 

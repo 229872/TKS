@@ -7,12 +7,8 @@ import pl.lodz.p.edu.adapter.repository.clients.data.users.ClientEnt;
 import java.util.List;
 
 public interface RentRepository extends Repository<RentEnt> {
-    List<RentEnt> getRentByEq(EquipmentEnt equipment);
-
-    List<RentEnt> getRentByClient(ClientEnt client);
-
-    List<RentEnt> getEquipmentRents(EquipmentEnt equipment);
-
+    List<RentEnt> getRentsByEquipment(EquipmentEnt equipment);
+    List<RentEnt> getRentsByClient(ClientEnt client);
     @Override
-    void update(RentEnt elem);
+    RentEnt update(RentEnt elem);
 }

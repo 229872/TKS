@@ -1,80 +1,64 @@
 package pl.lodz.p.edu.adapter.repository.clients.repo;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import lombok.NoArgsConstructor;
 import pl.lodz.p.edu.adapter.repository.clients.api.EquipmentRepository;
 import pl.lodz.p.edu.adapter.repository.clients.data.EquipmentEnt;
-import pl.lodz.p.edu.adapter.repository.clients.data.EquipmentEnt_;
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
+import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundException;
 
 
 import java.util.List;
 import java.util.UUID;
 
-
+@Transactional
+@ApplicationScoped
+@NoArgsConstructor
 public class EquipmentRepositoryImpl implements EquipmentRepository {
 
     @PersistenceContext(unitName = "app")
     private EntityManager em;
 
-    public EquipmentRepositoryImpl() {}
-
-
-    public EquipmentEnt get(UUID entityId) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<EquipmentEnt> cq = cb.createQuery(EquipmentEnt.class);
-        Root<EquipmentEnt> equipment = cq.from(EquipmentEnt.class);
-
-        cq.select(equipment);
-        cq.where(cb.equal(equipment.get(EquipmentEnt_.ENTITY_ID), entityId));
-
-        EntityTransaction et = em.getTransaction();
-        et.begin();
-        List<EquipmentEnt> equipmentList = em.createQuery(cq).setLockMode(LockModeType.OPTIMISTIC).getResultList();
-        et.commit();
-
-
-        if(equipmentList.isEmpty()) {
-            throw new EntityNotFoundException("Equipment not found for uniqueId: " + entityId);
+    @Override
+    public EquipmentEnt get(UUID entityId) throws EntityNotFoundException {
+        try {
+            return em.createNamedQuery(EquipmentEnt.FIND_BY_ID, EquipmentEnt.class)
+                    .setParameter("id", entityId)
+                    .getSingleResult();
+        } catch (PersistenceException e) {
+            throw new EntityNotFoundException(e.getMessage(), e.getCause());
         }
-        return equipmentList.get(0);
     }
 
+    @Override
     public List<EquipmentEnt> getAll() {
-        EntityTransaction et = em.getTransaction();
-        et.begin();
-        List<EquipmentEnt> equipmentList = em.createQuery("Select eq from EquipmentEnt eq", EquipmentEnt.class)
-                .setLockMode(LockModeType.OPTIMISTIC).getResultList();
-        et.commit();
-        return equipmentList;
+        return em.createNamedQuery(EquipmentEnt.FIND_ALL, EquipmentEnt.class)
+                .setLockMode(LockModeType.OPTIMISTIC)
+                .getResultList();
     }
 
-    @Transactional
+    @Override
     public void add(EquipmentEnt elem) {
         em.persist(elem);
+    }
+
+    @Override
+    public void remove(EquipmentEnt entity) {
+        if (!em.contains(entity)) {
+            entity = em.merge(entity);
+        }
+        em.lock(entity, LockModeType.OPTIMISTIC);
+        em.remove(entity);
+    }
+
+    @Override
+    public EquipmentEnt update(EquipmentEnt elem) {
         em.lock(elem, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+        return em.merge(elem);
     }
 
-    @Transactional
-    public void remove(UUID entityId) {
-        EquipmentEnt equipment = get(entityId);
-        em.lock(equipment, LockModeType.OPTIMISTIC);
-        em.remove(equipment);
-    }
-
-    @Transactional
-    public void update(EquipmentEnt elem) {
-        em.lock(elem, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
-        em.merge(elem);
-    }
-
-    @Transactional
-    public Long count() {
-        return em.createQuery("Select count(eq) from EquipmentEnt eq", Long.class).getSingleResult();
-    }
-
+    @Override
     public boolean isEquipmentRented(UUID entityId) {
         Query q = em.createQuery("Select count(rent) from RentEnt rent where rent.equipmentEnt.entityId = :id", Long.class);
         q.setParameter("id", entityId);

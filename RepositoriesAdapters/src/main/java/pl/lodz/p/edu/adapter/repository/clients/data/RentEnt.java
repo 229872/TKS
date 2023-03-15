@@ -1,100 +1,39 @@
 package pl.lodz.p.edu.adapter.repository.clients.data;
 
+import lombok.*;
 import pl.lodz.p.edu.adapter.repository.clients.data.users.ClientEnt;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "rent")
-@Access(AccessType.FIELD)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+@NamedQuery(name = RentEnt.FIND_ALL, query = "SELECT rent FROM RentEnt rent")
+@NamedQuery(name = RentEnt.FIND_BY_ID, query = "SELECT rent FROM RentEnt rent WHERE rent.id = :id")
+@NamedQuery(name = RentEnt.FIND_BY_EQUIPMENT, query = "SELECT rent FROM RentEnt rent WHERE rent.equipmentEnt = :equipment")
+@NamedQuery(name = RentEnt.FIND_BY_CLIENT, query = "SELECT rent FROM RentEnt rent WHERE rent.clientEnt = :client")
 public class RentEnt extends AbstractEntity {
+    public static final String FIND_ALL = "RentEnt.findAll";
+    public static final String FIND_BY_ID = "RentEnt.findById";
+    public static final String FIND_BY_EQUIPMENT = "RentEnt.findByEquipment";
+    public static final String FIND_BY_CLIENT = "RentEnt.findByClient";
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(initialValue = 0, name = "rent_sequence_generator")
-    @Column(name = "rent_id")
-    private long id;
-
-    @NotNull
     @JoinColumn(name = "equipment_id")
     @ManyToOne(fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private EquipmentEnt equipmentEnt;
 
-    @NotNull
     @JoinColumn(name = "client_id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private ClientEnt clientEnt;
 
-    @NotNull
     @Column(name = "begin_time")
     private LocalDateTime beginTime;
 
     @Column(name = "end_time")
     private LocalDateTime endTime;
-
-
-    public RentEnt(LocalDateTime beginTime, LocalDateTime endTime,
-                   EquipmentEnt equipmentEnt, ClientEnt clientEnt) {
-        this.beginTime = beginTime;
-        this.endTime = endTime;
-        this.equipmentEnt = equipmentEnt;
-        this.clientEnt = clientEnt;
-    }
-
-    public RentEnt() {}
-
-    public RentEnt(long id, LocalDateTime beginTime, LocalDateTime endTime,
-                   EquipmentEnt equipmentEnt, ClientEnt clientEnt) {
-
-        this(beginTime, endTime, equipmentEnt, clientEnt);
-        this.id = id;
-    }
-
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Rent{");
-        sb.append("id=").append(id);
-        sb.append("Klient=").append(getClient().toString());
-        sb.append("Sprzęt=").append(getEquipment().toString());
-        sb.append("Czas wypożyczenia=");
-        sb.append("Początek=").append(beginTime);
-        sb.append(" do ");
-        sb.append("Koniec=").append(endTime);
-        sb.append('}');
-        return sb.toString();
-    }
-
-    public LocalDateTime getBeginTime() {
-        return beginTime;
-    }
-
-    public void setBeginTime(LocalDateTime beginTime) {
-        this.beginTime = beginTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public EquipmentEnt getEquipment() {
-        return equipmentEnt;
-    }
-
-    public void setEquipment(EquipmentEnt equipmentEnt) {
-        this.equipmentEnt = equipmentEnt;
-    }
-
-    public ClientEnt getClient() {
-        return clientEnt;
-    }
-
-    public void setClient(ClientEnt client) {
-        this.clientEnt = client;
-    }
 }

@@ -1,111 +1,72 @@
 package pl.lodz.p.edu.adapter.repository.clients.repo;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import lombok.NoArgsConstructor;
 import pl.lodz.p.edu.adapter.repository.clients.api.UserRepository;
 import pl.lodz.p.edu.adapter.repository.clients.data.users.UserEnt;
-import pl.lodz.p.edu.adapter.repository.clients.data.users.UserEnt_;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
+import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundException;
 
 import java.util.List;
 import java.util.UUID;
 
-@RequestScoped
+@Transactional
+@ApplicationScoped
+@NoArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
 
     @PersistenceContext(name = "app")
-    protected EntityManager em;
+    private EntityManager em;
 
-    public UserRepositoryImpl() {}
+    @Override
+    public UserEnt get(UUID entityId) throws EntityNotFoundException {
+        try {
+            return em.createNamedQuery(UserEnt.FIND_BY_ID, UserEnt.class)
+                    .setParameter("id", entityId)
+                    .getSingleResult();
 
-    // get user of any type
-    @Transactional
-    public UserEnt get(UUID entityId) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<UserEnt> cq = cb.createQuery(UserEnt.class);
-        Root<UserEnt> user = cq.from(UserEnt.class);
-
-        cq.select(user);
-        cq.where(cb.equal(user.get(UserEnt_.ENTITY_ID), entityId));
-
-        List<UserEnt> users = em.createQuery(cq).getResultList();
-
-        if(users.isEmpty()) {
-            throw new EntityNotFoundException("Client not found for uniqueId: " + entityId);
+        } catch (PersistenceException e) {
+            throw new EntityNotFoundException(e.getMessage(), e.getCause());
         }
-        return users.get(0);
     }
 
-    public UserEnt getOfType(String type, UUID entityId) {
-        Query q = em.createQuery("SELECT user FROM UserEnt user WHERE user.entityId = :entityId and type(user) = " + type, UserEnt.class);
-        q.setParameter("entityId", entityId);
-        return (UserEnt) q.getSingleResult();
-    }
-
-    public UserEnt getByLogin(String type, String login) {
-        Query q = em.createQuery("SELECT user FROM UserEnt user WHERE user.login = :login and type(user) = " + type, UserEnt.class);
-        q.setParameter("login", login);
-        return (UserEnt) q.getSingleResult();
-    }
-
-    public UserEnt getByOnlyLogin(String login) {
-        Query q = em.createQuery("SELECT user FROM UserEnt user WHERE user.login = :login", UserEnt.class);
-        q.setParameter("login", login);
-        return (UserEnt) q.getSingleResult();
-    }
-
-    public UserEnt getByLoginPassword(String login, String password) {
-        Query q = em.createQuery("SELECT user FROM UserEnt user WHERE user.login = :login and user.password = :password", UserEnt.class);
-        q.setParameter("login", login);
-        q.setParameter("password", password);
-        return (UserEnt) q.getSingleResult();
-    }
-
-    public List<UserEnt> getAllWithLogin(String type, String login) {
-        Query q = em.createQuery("SELECT user FROM UserEnt user WHERE user.login like :login and type(user) = " + type, UserEnt.class);
-        q.setParameter("login", login + "%");
-        return q.getResultList();
-    }
-
+    @Override
     public List<UserEnt> getAll()  {
-        return em.createQuery("SELECT user FROM UserEnt user", UserEnt.class).getResultList();
+        return em.createNamedQuery(UserEnt.FIND_ALL, UserEnt.class)
+                .getResultList();
     }
 
-    public List<UserEnt> getAllOfType(String type) {
-        return em.createQuery("SELECT user FROM UserEnt user WHERE type(user) = " + type, UserEnt.class).getResultList();
-    }
 
-    @Transactional
+    @Override
+    //TODO it can be added entity with same login, need catch exception
     public void add(UserEnt elem) {
         em.persist(elem);
     }
 
-    @Transactional
-    public void remove(UUID entityId) {
-        UserEnt elem = get(entityId);
-        em.remove(elem);
+    @Override
+    public void remove(UserEnt entity) {
+        if (!em.contains(entity)) {
+            entity = em.merge(entity);
+        }
+        em.remove(entity);
     }
 
-    @Transactional
-    public void update(UserEnt elem) {
+    @Override
+    public UserEnt update(UserEnt elem) {
         em.lock(elem, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
-        em.merge(elem);
+        return em.merge(elem);
     }
 
-    @Transactional
-    public void updateUuid(UUID entityId, UserEnt elem) {
-        Query q = em.createQuery("SELECT user FROM UserEnt user WHERE user.entityId = :entityId", UserEnt.class);
-        q.setParameter("entityId", entityId);
-        UserEnt existing = (UserEnt) q.getSingleResult();
-        existing.merge(elem);
-    }
+    @Override
+    public UserEnt getByLogin(String login) throws EntityNotFoundException {
+        try {
+            return em.createNamedQuery(UserEnt.FIND_BY_LOGIN, UserEnt.class)
+                    .setParameter("login", login)
+                    .getSingleResult();
 
-    @Transactional
-    public Long count() {
-        return em.createQuery("Select count(Client) from ClientEnt client", Long.class)
-                .setLockMode(LockModeType.OPTIMISTIC).getSingleResult();
+        } catch (PersistenceException e) {
+            throw new EntityNotFoundException(e.getMessage(), e.getCause());
+        }
     }
 }

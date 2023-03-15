@@ -7,12 +7,10 @@ import pl.lodz.p.edu.core.domain.model.users.Client;
 import java.util.List;
 
 public interface RentRepositoryPort extends RepositoryPort<Rent> {
-    List<Rent> getRentByEq(Equipment equipment);
+    List<Rent> getRentsByEquipment(Equipment equipment);
 
-    List<Rent> getRentByClient(Client client);
-
-    List<Rent> getEquipmentRents(Equipment equipment);
+    List<Rent> getRentsByClient(Client client);
 
     @Override
-    void update(Rent elem);
+    Rent update(Rent object);
 }

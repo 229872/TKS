@@ -1,16 +1,16 @@
 package pl.lodz.p.edu.ports.outcoming;
 
 import pl.lodz.p.edu.core.domain.exception.IllegalModificationException;
+import pl.lodz.p.edu.core.domain.model.AbstractModelData;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface RepositoryPort<T> {
+public interface RepositoryPort <T extends AbstractModelData> {
 
-    T get(UUID entityId);
+    T get(UUID objectId);
     List<T> getAll();
-    void add(T elem);
-    void remove(UUID entityId);
-    void update(T elem) throws IllegalModificationException;
-    long count();
+    void add(T object);
+    void remove(T object);
+    T update(T object) throws IllegalModificationException;
 }

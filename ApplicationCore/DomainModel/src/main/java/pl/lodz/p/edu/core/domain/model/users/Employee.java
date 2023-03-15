@@ -9,7 +9,7 @@ public class Employee extends User {
     public Employee(String login, String password, String desk) {
         super(login, password);
         this.desk = desk;
-        this.userType = User.EMPLOYEE_TYPE;
+        this.userType = UserType.EMPLOYEE;
     }
 
     public void merge(Employee employee) {

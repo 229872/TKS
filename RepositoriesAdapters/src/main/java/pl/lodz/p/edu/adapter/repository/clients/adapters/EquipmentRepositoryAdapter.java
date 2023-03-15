@@ -1,11 +1,13 @@
 package pl.lodz.p.edu.adapter.repository.clients.adapters;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.equipment.EquipmentFromDataToDomainMapper;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.equipment.EquipmentFromDomainToDataMapper;
 import pl.lodz.p.edu.adapter.repository.clients.api.EquipmentRepository;
 import pl.lodz.p.edu.adapter.repository.clients.data.EquipmentEnt;
 import jakarta.inject.Inject;
+import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundException;
 import pl.lodz.p.edu.core.domain.exception.IllegalModificationException;
 import pl.lodz.p.edu.core.domain.model.Equipment;
 import pl.lodz.p.edu.ports.outcoming.EquipmentRepositoryPort;
@@ -14,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@RequestScoped
+@ApplicationScoped
 public class EquipmentRepositoryAdapter implements EquipmentRepositoryPort {
 
     @Inject
@@ -32,17 +34,23 @@ public class EquipmentRepositoryAdapter implements EquipmentRepositoryPort {
     }
 
     @Override
-    public Equipment get(UUID entityId) {
-        EquipmentEnt equipmentEnt = repository.get(entityId);
-        return convertToDomainModel(equipmentEnt);
+    public Equipment get(UUID objectId) {
+        try {
+            EquipmentEnt equipmentEnt = repository.get(objectId);
+            return convertToDomainModel(equipmentEnt);
+
+        } catch (EntityNotFoundException e) {
+            //FIXME ADD CUSTOM EXCEPTION TO INTERFACE
+            throw new RuntimeException(e);
+        }
     }
 
     private Equipment convertToDomainModel(EquipmentEnt equipmentEnt) {
         return toDomainMapper.convertToDomainModel(equipmentEnt);
     }
 
-    private EquipmentEnt convertToDataModel(Equipment elem) {
-        return toDataMapper.convertToDataModel(elem);
+    private EquipmentEnt convertToDataModel(Equipment object) {
+        return toDataMapper.convertToDataModel(object);
     }
 
     @Override
@@ -53,23 +61,19 @@ public class EquipmentRepositoryAdapter implements EquipmentRepositoryPort {
     }
 
     @Override
-    public void add(Equipment elem) {
-        repository.add(convertToDataModel(elem));
+    public void add(Equipment object) {
+        repository.add(convertToDataModel(object));
     }
 
     @Override
-    public void remove(UUID entityId) {
-        repository.remove(entityId);
+    public void remove(Equipment object) {
+        repository.remove(convertToDataModel(object));
     }
 
     @Override
-    public void update(Equipment elem) throws IllegalModificationException {
-        repository.update(toDataMapper.convertToDataModel(elem));
-    }
-
-    @Override
-    public long count() {
-        return repository.count();
+    public Equipment update(Equipment object) throws IllegalModificationException {
+        EquipmentEnt equipmentEnt = repository.update(toDataMapper.convertToDataModel(object));
+        return toDomainMapper.convertToDomainModel(equipmentEnt);
     }
 
 }

@@ -1,5 +1,6 @@
 package pl.lodz.p.edu.adapter.repository.clients.adapters;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.equipment.EquipmentFromDomainToDataMapper;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.rent.RentFromDataToDomainMapper;
@@ -8,6 +9,7 @@ import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.user.UserFromDom
 import pl.lodz.p.edu.adapter.repository.clients.api.RentRepository;
 import pl.lodz.p.edu.adapter.repository.clients.data.RentEnt;
 import jakarta.inject.Inject;
+import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundException;
 import pl.lodz.p.edu.core.domain.model.Equipment;
 import pl.lodz.p.edu.core.domain.model.Rent;
 import pl.lodz.p.edu.core.domain.model.users.Client;
@@ -17,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@RequestScoped
+@ApplicationScoped
 public class RentRepositoryAdapter implements RentRepositoryPort {
     @Inject
     private RentRepository repository;
@@ -44,32 +46,29 @@ public class RentRepositoryAdapter implements RentRepositoryPort {
     }
 
     @Override
-    public List<Rent> getRentByEq(Equipment equipment) {
-        return repository.getRentByEq(equipmentToDataMapper.convertToDataModel(equipment))
+    public List<Rent> getRentsByEquipment(Equipment equipment) {
+        return repository.getRentsByEquipment(equipmentToDataMapper.convertToDataModel(equipment))
                 .stream()
                 .map(this::convertToDomainModel)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Rent> getRentByClient(Client client) {
-        return repository.getRentByClient(userToDataMapper.convertClientToDataModel(client))
+    public List<Rent> getRentsByClient(Client client) {
+        return repository.getRentsByClient(userToDataMapper.convertClientToDataModel(client))
                 .stream()
                 .map(this::convertToDomainModel)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Rent> getEquipmentRents(Equipment equipment) {
-        return repository.getEquipmentRents(equipmentToDataMapper.convertToDataModel(equipment))
-                .stream()
-                .map(this::convertToDomainModel)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public Rent get(UUID entityId) {
-        return convertToDomainModel(repository.get(entityId));
+    public Rent get(UUID objectId) {
+        try {
+            return convertToDomainModel(repository.get(objectId));
+        } catch (EntityNotFoundException e) {
+            //FIXME CUSTOM EXCEPTION
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -81,24 +80,19 @@ public class RentRepositoryAdapter implements RentRepositoryPort {
     }
 
     @Override
-    public void add(Rent elem) {
-        RentEnt rentEnt = convertToDataModel(elem);
+    public void add(Rent object) {
+        RentEnt rentEnt = convertToDataModel(object);
         repository.add(rentEnt);
     }
 
     @Override
-    public void remove(UUID entityId) {
-        repository.remove(entityId);
+    public void remove(Rent object) {
+        repository.remove(convertToDataModel(object));
     }
 
     @Override
-    public void update(Rent elem) {
-        RentEnt rentEnt = convertToDataModel(elem);
-        repository.update(rentEnt);
-    }
-
-    @Override
-    public long count() {
-        return repository.count();
+    public Rent update(Rent object) {
+        RentEnt rentEnt = repository.update(convertToDataModel(object));
+        return convertToDomainModel(rentEnt);
     }
 }

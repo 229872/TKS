@@ -19,7 +19,7 @@ public class Client extends User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
-        this.userType = CLIENT_TYPE;
+        this.userType = UserType.CLIENT;
     }
 
     public Client(Client elem) {
@@ -27,7 +27,7 @@ public class Client extends User {
         this.firstName = elem.getFirstName();
         this.lastName = elem.getLastName();
         this.address = elem.getAddress();
-        this.userType = CLIENT_TYPE;
+        this.userType = UserType.CLIENT;
     }
 
     public void merge(Client client) {
@@ -36,12 +36,12 @@ public class Client extends User {
         this.firstName = client.getFirstName();
         this.lastName = client.getLastName();
         this.address = client.getAddress();
-        this.userType = CLIENT_TYPE;
+        this.userType = UserType.CLIENT;
     }
 
     public Client() {
         address = new Address();
-        this.userType = CLIENT_TYPE;
+        this.userType = UserType.CLIENT;
     }
 
     public String getFirstName() {

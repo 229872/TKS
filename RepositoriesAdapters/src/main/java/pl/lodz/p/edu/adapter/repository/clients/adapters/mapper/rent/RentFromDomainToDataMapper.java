@@ -15,10 +15,11 @@ public class RentFromDomainToDataMapper {
     private EquipmentFromDomainToDataMapper equipmentToDataMapper;
 
     public RentEnt convertToDataModel(Rent rent) {
-        return new RentEnt(rent.getBeginTime(),
-                rent.getEndTime(),
+        return new RentEnt(
                 equipmentToDataMapper.convertToDataModel(rent.getEquipment()),
-                userToDataMapper.convertClientToDataModel(rent.getClient())
+                userToDataMapper.convertClientToDataModel(rent.getClient()),
+                rent.getBeginTime(),
+                rent.getEndTime()
         );
     }
 }

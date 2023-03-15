@@ -5,18 +5,13 @@ import pl.lodz.p.edu.core.domain.model.AbstractModelData;
 
 public abstract class User extends AbstractModelData {
 
-    // fixme check if it is possible to convert to enum
-    public static String CLIENT_TYPE = "CLIENT";
-    public static String EMPLOYEE_TYPE = "EMPLOYEE";
-    public static String ADMIN_TYPE = "ADMIN";
-
     private String login;
 
     private String password;
 
     private boolean active;
 
-    protected String userType;
+    protected UserType userType;
 
     public User(String login, String password) {
         this.login = login;
@@ -64,11 +59,11 @@ public abstract class User extends AbstractModelData {
         this.password = password;
     }
 
-    public String getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 }

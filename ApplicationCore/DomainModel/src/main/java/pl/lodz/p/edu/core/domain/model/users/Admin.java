@@ -11,7 +11,7 @@ public class Admin extends User {
     public Admin(String login, String password, String favouriteIceCream) {
         super(login, password);
         this.favouriteIceCream = favouriteIceCream;
-        this.userType = ADMIN_TYPE;
+        this.userType = UserType.ADMIN;
     }
 
     public void merge(Admin admin) {

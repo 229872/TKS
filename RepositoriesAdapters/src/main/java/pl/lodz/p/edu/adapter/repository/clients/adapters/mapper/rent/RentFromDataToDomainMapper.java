@@ -19,10 +19,10 @@ public class RentFromDataToDomainMapper {
                 rentEnt.getBeginTime(),
                 rentEnt.getEndTime(),
                 equipmentToDomainMapper.convertToDomainModel(
-                        rentEnt.getEquipment()
+                        rentEnt.getEquipmentEnt()
                 ),
                 userToDomainMapper.convertClientToDomainModel(
-                        rentEnt.getClient()
+                        rentEnt.getClientEnt()
                 )
         );
     }

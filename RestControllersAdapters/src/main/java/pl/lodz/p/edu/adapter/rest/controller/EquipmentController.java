@@ -9,6 +9,7 @@ import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.adapter.rest.api.EquipmentService;
 import pl.lodz.p.edu.adapter.rest.api.RentService;
 import pl.lodz.p.edu.adapter.rest.dto.EquipmentDTO;
+import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalModificationException;
 
@@ -66,7 +67,7 @@ public class EquipmentController {
         try {
             EquipmentDTO equipment = equipmentService.get(uuid);
             return Response.status(Response.Status.OK).entity(equipment).build();
-        } catch(EntityNotFoundException e) {
+        } catch(ObjectNotFoundRestException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
@@ -76,11 +77,11 @@ public class EquipmentController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateEquipment(@PathParam("entityId") UUID entityId, @Valid EquipmentDTO equipmentDTO) {
         try {
-            equipmentService.update(entityId, equipmentDTO);
-            return Response.status(OK).entity(equipmentDTO).build();
+            EquipmentDTO updated = equipmentService.update(entityId, equipmentDTO);
+            return Response.status(OK).entity(updated).build();
         } catch (RestIllegalModificationException e) {
             return Response.status(BAD_REQUEST).build();
-        } catch(EntityNotFoundException e) {
+        } catch(ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).build();
         }
     }
@@ -93,6 +94,8 @@ public class EquipmentController {
             return Response.status(NO_CONTENT).build();
         } catch (RestConflictException e) {
             return Response.status(CONFLICT).build();
+        } catch (ObjectNotFoundRestException e) {
+            return Response.status(NOT_FOUND).build();
         }
     }
 }

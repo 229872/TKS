@@ -9,6 +9,7 @@ import jakarta.security.enterprise.authentication.mechanism.http.HttpAuthenticat
 import jakarta.security.enterprise.authentication.mechanism.http.HttpMessageContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.core.domain.model.users.User;
 import pl.lodz.p.edu.ports.outcoming.UserRepositoryPort;
 
@@ -26,7 +27,8 @@ public class JwtRestAuthenticationMechanism implements HttpAuthenticationMechani
     private UserRepositoryPort userRepository;
 
     @Override
-    public AuthenticationStatus validateRequest(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, HttpMessageContext httpMessageContext) throws AuthenticationException {
+    public AuthenticationStatus validateRequest(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+                                                HttpMessageContext httpMessageContext) throws AuthenticationException {
         String authorizationHeader = httpServletRequest.getHeader("AUTHORIZATION");
         if(authorizationHeader == null) {
             return httpMessageContext.notifyContainerAboutLogin("GUEST", new HashSet<>(List.of("GUEST")));
@@ -50,7 +52,12 @@ public class JwtRestAuthenticationMechanism implements HttpAuthenticationMechani
         System.out.println(userType);
 //        User dbUser = userRepository.getByLogin(userType, userLogin); //TODO Kinda bad but whatever
         //Return object that counts as a null???
-        User dbUser = userRepository.getByOnlyLogin(userLogin);
+        User dbUser = null;
+        try {
+            dbUser = userRepository.getByLogin(userLogin);
+        } catch (ObjectNotFoundServiceException e) {
+            throw new AuthenticationException(e.getMessage(), e.getCause());
+        }
 
         if (dbUser == null) {
             return httpMessageContext.notifyContainerAboutLogin("GUEST", new HashSet<>(List.of("GUEST")));

@@ -1,13 +1,13 @@
 package pl.lodz.p.edu.adapter.repository.clients.adapters;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.RequestScoped;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.user.UserFromDataToDomainMapper;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.user.UserFromDomainToDataMapper;
 import pl.lodz.p.edu.adapter.repository.clients.api.UserRepository;
 import pl.lodz.p.edu.adapter.repository.clients.data.users.*;
 import jakarta.inject.Inject;
-import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundException;
+import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundRepositoryException;
+import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.core.domain.model.users.*;
 import pl.lodz.p.edu.ports.outcoming.UserRepositoryPort;
 
@@ -27,13 +27,12 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     private UserFromDomainToDataMapper toDataMapper;
 
     @Override
-    public User get(UUID entityId) {
+    public User get(UUID entityId) throws ObjectNotFoundServiceException {
         try {
             UserEnt userEnt = repository.get(entityId);
             return convertToDomainModelFactory(userEnt);
-        } catch (EntityNotFoundException e) {
-            //FIXME THROW CUSTOM EXCEPTION
-            throw new RuntimeException(e);
+        } catch (EntityNotFoundRepositoryException e) {
+            throw new ObjectNotFoundServiceException(e.getMessage(), e.getCause());
         }
     }
 
@@ -55,13 +54,12 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     }
 
     @Override
-    public User getByLogin(String login) {
+    public User getByLogin(String login) throws ObjectNotFoundServiceException {
         try {
             UserEnt userEnt = repository.getByLogin(login);
             return convertToDomainModelFactory(userEnt);
-        } catch (EntityNotFoundException e) {
-            //FIXME THROW CUSTOM EXCEPTION
-            throw new RuntimeException(e);
+        } catch (EntityNotFoundRepositoryException e) {
+            throw new ObjectNotFoundServiceException(e.getMessage(), e.getCause());
         }
     }
 

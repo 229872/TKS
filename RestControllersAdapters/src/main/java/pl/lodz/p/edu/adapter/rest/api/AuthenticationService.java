@@ -10,7 +10,7 @@ import java.text.ParseException;
 public interface AuthenticationService {
     TokenDTO login(String login, String password) throws RestAuthenticationFailureException;
 
-    String changePassword(CredentialsNewPasswordDTO credentials) throws RestAuthenticationFailureException;
+    void changePassword(CredentialsNewPasswordDTO credentials) throws RestAuthenticationFailureException;
 
     void verifySingedLogin(String ifMatch, String json) throws ParseException,
             RestAuthenticationFailureException, JOSEException;

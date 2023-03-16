@@ -1,11 +1,13 @@
 package pl.lodz.p.edu.core.service;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 import pl.lodz.p.edu.core.domain.exception.ConflictException;
 import pl.lodz.p.edu.core.domain.exception.IllegalModificationException;
+import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.ports.incoming.EquipmentServicePort;
 import pl.lodz.p.edu.ports.outcoming.EquipmentRepositoryPort;
 import pl.lodz.p.edu.core.domain.model.Equipment;
@@ -14,21 +16,24 @@ import java.util.List;
 import java.util.UUID;
 
 @Transactional
+@ApplicationScoped
 public class EquipmentServiceImpl implements EquipmentServicePort {
 
+    private final EquipmentRepositoryPort equipmentRepository;
+
     @Inject
-    private EquipmentRepositoryPort equipmentRepository;
-
-    protected EquipmentServiceImpl() {
+    public EquipmentServiceImpl(EquipmentRepositoryPort equipmentRepository) {
+        this.equipmentRepository = equipmentRepository;
     }
 
     @Override
-    public void add(Equipment equipment) {
+    public Equipment add(Equipment equipment) {
         equipmentRepository.add(equipment);
+        return equipment;
     }
 
     @Override
-    public Equipment get(UUID uuid) {
+    public Equipment get(UUID uuid) throws ObjectNotFoundServiceException {
         return equipmentRepository.get(uuid);
     }
 
@@ -37,30 +42,22 @@ public class EquipmentServiceImpl implements EquipmentServicePort {
         return equipmentRepository.getAll();
     }
 
-    //FIXME ??????????
-    public List<Equipment> getAvailable() {
-        List<Equipment> allEquipment = equipmentRepository.getAll();
-        List<Equipment> availableEquipment;
-        return allEquipment;
-    }
-
     @Override
-    public void update(UUID entityId, Equipment elem) throws IllegalModificationException {
+    public Equipment update(UUID uuid, Equipment newEquipmentData) throws IllegalModificationException, ObjectNotFoundServiceException {
         synchronized (equipmentRepository) {
-            Equipment equipment = equipmentRepository.get(entityId);
-            elem.merge(equipment);
-            equipmentRepository.update(equipment);
+            Equipment equipment = equipmentRepository.get(uuid);
+            equipment.merge(equipment);
+            return equipmentRepository.update(equipment);
         }
     }
 
     @Override
-    public void remove(UUID uuid) throws ConflictException {
-        try {
-            if(!equipmentRepository.isEquipmentRented(uuid)) {
-                equipmentRepository.remove(uuid);
-            } else {
-                throw new ConflictException("There exists unfinished rent for this equipment");
-            }
-        } catch(EntityNotFoundException ignored) {}
+    public void remove(UUID uuid) throws ConflictException, ObjectNotFoundServiceException {
+        Equipment equipment = equipmentRepository.get(uuid);
+        if (!equipmentRepository.isEquipmentRented(uuid)) {
+            equipmentRepository.remove(equipment);
+        } else {
+            throw new ConflictException("There exists ufinished rent for this equipment");
+        }
     }
 }

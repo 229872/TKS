@@ -6,7 +6,7 @@ import pl.lodz.p.edu.adapter.repository.clients.api.UserRepository;
 import pl.lodz.p.edu.adapter.repository.clients.data.users.UserEnt;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
-import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundException;
+import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundRepositoryException;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,14 +20,14 @@ public class UserRepositoryImpl implements UserRepository {
     private EntityManager em;
 
     @Override
-    public UserEnt get(UUID entityId) throws EntityNotFoundException {
+    public UserEnt get(UUID entityId) throws EntityNotFoundRepositoryException {
         try {
             return em.createNamedQuery(UserEnt.FIND_BY_ID, UserEnt.class)
                     .setParameter("id", entityId)
                     .getSingleResult();
 
         } catch (PersistenceException e) {
-            throw new EntityNotFoundException(e.getMessage(), e.getCause());
+            throw new EntityNotFoundRepositoryException(e.getMessage(), e.getCause());
         }
     }
 
@@ -59,14 +59,14 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public UserEnt getByLogin(String login) throws EntityNotFoundException {
+    public UserEnt getByLogin(String login) throws EntityNotFoundRepositoryException {
         try {
             return em.createNamedQuery(UserEnt.FIND_BY_LOGIN, UserEnt.class)
                     .setParameter("login", login)
                     .getSingleResult();
 
         } catch (PersistenceException e) {
-            throw new EntityNotFoundException(e.getMessage(), e.getCause());
+            throw new EntityNotFoundRepositoryException(e.getMessage(), e.getCause());
         }
     }
 }

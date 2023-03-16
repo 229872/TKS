@@ -7,10 +7,12 @@ public class EmployeeDTO extends UserDTO {
     @NotEmpty
     private String desk;
 
-    public EmployeeDTO() {}
+    public EmployeeDTO() {
+        super(UserTypeDTO.EMPLOYEE);
+    }
 
     public EmployeeDTO(String login, String password, String desk) {
-        super(login, password);
+        super(login, password, UserTypeDTO.EMPLOYEE);
         this.desk = desk;
     }
 

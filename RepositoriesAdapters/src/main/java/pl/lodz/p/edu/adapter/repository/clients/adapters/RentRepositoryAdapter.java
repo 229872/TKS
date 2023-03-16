@@ -1,7 +1,6 @@
 package pl.lodz.p.edu.adapter.repository.clients.adapters;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.RequestScoped;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.equipment.EquipmentFromDomainToDataMapper;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.rent.RentFromDataToDomainMapper;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.rent.RentFromDomainToDataMapper;
@@ -9,7 +8,8 @@ import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.user.UserFromDom
 import pl.lodz.p.edu.adapter.repository.clients.api.RentRepository;
 import pl.lodz.p.edu.adapter.repository.clients.data.RentEnt;
 import jakarta.inject.Inject;
-import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundException;
+import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundRepositoryException;
+import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.core.domain.model.Equipment;
 import pl.lodz.p.edu.core.domain.model.Rent;
 import pl.lodz.p.edu.core.domain.model.users.Client;
@@ -62,12 +62,11 @@ public class RentRepositoryAdapter implements RentRepositoryPort {
     }
 
     @Override
-    public Rent get(UUID objectId) {
+    public Rent get(UUID objectId) throws ObjectNotFoundServiceException {
         try {
             return convertToDomainModel(repository.get(objectId));
-        } catch (EntityNotFoundException e) {
-            //FIXME CUSTOM EXCEPTION
-            throw new RuntimeException(e);
+        } catch (EntityNotFoundRepositoryException e) {
+            throw new ObjectNotFoundServiceException(e.getMessage(), e.getCause());
         }
     }
 

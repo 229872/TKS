@@ -2,6 +2,7 @@ package pl.lodz.p.edu.ports.incoming;
 
 import pl.lodz.p.edu.core.domain.exception.ConflictException;
 import pl.lodz.p.edu.core.domain.exception.IllegalModificationException;
+import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.core.domain.model.users.*;
 
 
@@ -10,27 +11,19 @@ import java.util.UUID;
 
 public interface UserServicePort {
 
-    List<User> searchOfType(String type, String login);
+    List<User> getAllUsersOfType(UserType type);
+    List<User> getAll();
+    User get(UUID uuid) throws ObjectNotFoundServiceException;
+    User get(String login) throws ObjectNotFoundServiceException;
+    void activateUser(UUID entityId) throws ObjectNotFoundServiceException;
 
-    List<User> getAllUsersOfType(String type);
+    void deactivateUser(UUID entityId) throws ObjectNotFoundServiceException;
 
-    User getUserByUuidOfType(String type, UUID entityId);
+    User registerUser(User user) throws ConflictException;
 
-    User getUserByLoginOfType(String type, String login);
+    Employee updateEmployee(UUID entityId, Employee employee) throws IllegalModificationException, ObjectNotFoundServiceException;
 
-    void activateUser(String type, UUID entityId);
+    Client updateClient(UUID entityId, Client client) throws IllegalModificationException, ObjectNotFoundServiceException;
 
-    void deactivateUser(String type, UUID entityId);
-
-    void registerEmployee(Employee employee) throws ConflictException;
-
-    void updateEmployee(UUID entityId, Employee employee) throws IllegalModificationException;
-
-    void registerClient(Client client) throws ConflictException;
-
-    void updateClient(UUID entityId, Client client) throws IllegalModificationException;
-
-    void registerAdmin(Admin admin) throws ConflictException;
-
-    void updateAdmin(UUID entityId, Admin admin) throws IllegalModificationException;
+    Admin updateAdmin(UUID entityId, Admin admin) throws IllegalModificationException, ObjectNotFoundServiceException;
 }

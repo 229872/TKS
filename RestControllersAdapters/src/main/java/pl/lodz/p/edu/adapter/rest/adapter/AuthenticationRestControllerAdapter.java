@@ -1,6 +1,7 @@
 package pl.lodz.p.edu.adapter.rest.adapter;
 
 import com.nimbusds.jose.JOSEException;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import pl.lodz.p.edu.adapter.rest.adapter.mapper.security.credential.CredentialsFromNewPasswordDTOToDomainMapper;
 import pl.lodz.p.edu.adapter.rest.adapter.mapper.security.token.TokenFromDomainToDTOMapper;
@@ -15,6 +16,7 @@ import pl.lodz.p.edu.ports.incoming.AuthenticationServicePort;
 
 import java.text.ParseException;
 
+@ApplicationScoped
 public class AuthenticationRestControllerAdapter implements AuthenticationService {
 
     @Inject
@@ -37,10 +39,10 @@ public class AuthenticationRestControllerAdapter implements AuthenticationServic
     }
 
     @Override
-    public String changePassword(CredentialsNewPasswordDTO credentials) throws RestAuthenticationFailureException {
+    public void changePassword(CredentialsNewPasswordDTO credentials) throws RestAuthenticationFailureException {
         try {
             CredentialsNewPassword cnp = credentialsFromNewPasswordDTOToDomainMapper.convertToDomainModel(credentials);
-            return authenticationPort.changePassword(cnp);
+            authenticationPort.changePassword(cnp);
         } catch (AuthenticationFailureException e) {
             throw new RestAuthenticationFailureException(e.getMessage(), e.getCause());
         }

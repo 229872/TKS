@@ -6,7 +6,7 @@ import pl.lodz.p.edu.adapter.repository.clients.api.EquipmentRepository;
 import pl.lodz.p.edu.adapter.repository.clients.data.EquipmentEnt;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
-import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundException;
+import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundRepositoryException;
 
 
 import java.util.List;
@@ -21,13 +21,13 @@ public class EquipmentRepositoryImpl implements EquipmentRepository {
     private EntityManager em;
 
     @Override
-    public EquipmentEnt get(UUID entityId) throws EntityNotFoundException {
+    public EquipmentEnt get(UUID entityId) throws EntityNotFoundRepositoryException {
         try {
             return em.createNamedQuery(EquipmentEnt.FIND_BY_ID, EquipmentEnt.class)
                     .setParameter("id", entityId)
                     .getSingleResult();
         } catch (PersistenceException e) {
-            throw new EntityNotFoundException(e.getMessage(), e.getCause());
+            throw new EntityNotFoundRepositoryException(e.getMessage(), e.getCause());
         }
     }
 

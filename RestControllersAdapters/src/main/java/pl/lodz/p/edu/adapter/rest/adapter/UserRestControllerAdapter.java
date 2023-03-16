@@ -1,5 +1,6 @@
 package pl.lodz.p.edu.adapter.rest.adapter;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import pl.lodz.p.edu.adapter.rest.adapter.mapper.user.UserFromDTOToDomainMapper;
 import pl.lodz.p.edu.adapter.rest.adapter.mapper.user.UserFromDomainToDTOMapper;
@@ -8,20 +9,20 @@ import pl.lodz.p.edu.adapter.rest.dto.users.AdminDTO;
 import pl.lodz.p.edu.adapter.rest.dto.users.ClientDTO;
 import pl.lodz.p.edu.adapter.rest.dto.users.EmployeeDTO;
 import pl.lodz.p.edu.adapter.rest.dto.users.UserDTO;
+import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalModificationException;
 import pl.lodz.p.edu.core.domain.exception.ConflictException;
 import pl.lodz.p.edu.core.domain.exception.IllegalModificationException;
-import pl.lodz.p.edu.core.domain.model.users.Admin;
-import pl.lodz.p.edu.core.domain.model.users.Client;
-import pl.lodz.p.edu.core.domain.model.users.Employee;
-import pl.lodz.p.edu.core.domain.model.users.User;
+import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
+import pl.lodz.p.edu.core.domain.model.users.*;
 import pl.lodz.p.edu.ports.incoming.UserServicePort;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@ApplicationScoped
 public class UserRestControllerAdapter implements UserService {
 
     @Inject
@@ -34,118 +35,122 @@ public class UserRestControllerAdapter implements UserService {
     private UserFromDomainToDTOMapper toDTOMapper;
 
     @Override
-    public List<UserDTO> searchOfType(String type, String login) {
-        return servicePort.searchOfType(type, login).stream()
-                .map(this::convertToDTOFactory)
-                .toList();
-    }
-
-    @Override
-    public List<UserDTO> getAllUsersOfType(String type) {
+    public List<UserDTO> getAllUsersOfType(UserType type) {
         return servicePort.getAllUsersOfType(type).stream()
                 .map(this::convertToDTOFactory)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public UserDTO getUserByUuidOfType(String type, UUID entityId) {
-        User user = servicePort.getUserByUuidOfType(type, entityId);
-        return convertToDTOFactory(user);
+    public List<UserDTO> getAll() {
+        return servicePort.getAll().stream()
+                .map(this::convertToDTOFactory)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public UserDTO getUserByLoginOfType(String type, String login) {
-        User user = servicePort.getUserByLoginOfType(type, login);
-        return convertToDTOFactory(user);
-    }
-
-    @Override
-    public void activateUser(String type, UUID entityId) {
-        servicePort.activateUser(type, entityId);
-    }
-
-    @Override
-    public void deactivateUser(String type, UUID entityId) {
-        servicePort.deactivateUser(type, entityId);
-    }
-
-    //TODO change all methods to one with user instead employee, client, admin
-    @Override
-    public void registerEmployee(EmployeeDTO employee) throws RestConflictException {
-        User user = convertToDomainModelFactory(employee, "EMPLOYEE");
+    public UserDTO get(UUID uuid) throws ObjectNotFoundRestException {
         try {
-            servicePort.registerEmployee((Employee) user);
+            User user = servicePort.get(uuid);
+            return convertToDTOFactory(user);
+
+        } catch (ObjectNotFoundServiceException e) {
+            throw new ObjectNotFoundRestException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @Override
+    public UserDTO getByLogin(String login) throws ObjectNotFoundRestException {
+        try {
+            User user = servicePort.get(login);
+            return convertToDTOFactory(user);
+        } catch (ObjectNotFoundServiceException e) {
+            throw new ObjectNotFoundRestException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @Override
+    public void activateUser(UUID entityId) throws ObjectNotFoundRestException {
+        try {
+            servicePort.activateUser(entityId);
+        } catch (ObjectNotFoundServiceException e) {
+            throw new ObjectNotFoundRestException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @Override
+    public void deactivateUser(UUID entityId) throws ObjectNotFoundRestException {
+        try {
+            servicePort.deactivateUser(entityId);
+        } catch (ObjectNotFoundServiceException e) {
+            throw new ObjectNotFoundRestException(e.getMessage(), e.getCause());
+        }
+    }
+    @Override
+    public UserDTO registerUser(UserDTO userDTO) throws RestConflictException {
+        User user = convertToDomainModelFactory(userDTO);
+        try {
+            User registeredUser = servicePort.registerUser(user);
+            return convertToDTOFactory(registeredUser);
         } catch (ConflictException e) {
             throw new RestConflictException(e.getMessage(), e.getCause());
         }
     }
-
     @Override
-    public void updateEmployee(UUID entityId, EmployeeDTO employeeDTO) throws RestIllegalModificationException {
-        User user = convertToDomainModelFactory(employeeDTO, "EMPLOYEE");
+    public EmployeeDTO updateEmployee(UUID entityId, EmployeeDTO employeeDTO) throws RestIllegalModificationException,
+            ObjectNotFoundRestException {
+        User user = convertToDomainModelFactory(employeeDTO);
         try {
-            servicePort.updateEmployee(entityId,(Employee) user);
+            Employee employee = servicePort.updateEmployee(entityId, (Employee) user);
+            return (EmployeeDTO) convertToDTOFactory(employee);
+
         } catch (IllegalModificationException e) {
             throw new RestIllegalModificationException(e.getMessage(), e.getCause());
+        } catch (ObjectNotFoundServiceException | ClassCastException e) {
+            throw new ObjectNotFoundRestException(e.getMessage(), e.getCause());
         }
     }
-
     @Override
-    public void registerClient(ClientDTO clientDTO) throws RestConflictException {
-        User user = convertToDomainModelFactory(clientDTO, "CLIENT");
+    public ClientDTO updateClient(UUID entityId, ClientDTO clientDTO) throws RestIllegalModificationException,
+            ObjectNotFoundRestException {
+        User user = convertToDomainModelFactory(clientDTO);
         try {
-            servicePort.registerClient((Client) user);
-        } catch (ConflictException e) {
-            throw new RestConflictException(e.getMessage(), e.getCause());
-        }
-    }
+            Client client = servicePort.updateClient(entityId, (Client) user);
+            return (ClientDTO) convertToDTOFactory(client);
 
-    @Override
-    public void updateClient(UUID entityId, ClientDTO clientDTO) throws RestIllegalModificationException {
-        User user = convertToDomainModelFactory(clientDTO, "CLIENT");
-        try {
-            servicePort.updateClient(entityId,(Client) user);
         } catch (IllegalModificationException e) {
             throw new RestIllegalModificationException(e.getMessage(), e.getCause());
+        } catch (ObjectNotFoundServiceException | ClassCastException e) {
+            throw new ObjectNotFoundRestException(e.getMessage(), e.getCause());
         }
     }
-
     @Override
-    public void registerAdmin(AdminDTO adminDTO) throws RestConflictException {
-        User user = convertToDomainModelFactory(adminDTO, "ADMIN");
+    public AdminDTO updateAdmin(UUID entityId, AdminDTO adminDTO) throws RestIllegalModificationException,
+            ObjectNotFoundRestException {
+        User user = convertToDomainModelFactory(adminDTO);
         try {
-            servicePort.registerAdmin((Admin) user);
-        } catch (ConflictException e) {
-            throw new RestConflictException(e.getMessage(), e.getCause());
-        }
-    }
+            Admin admin = servicePort.updateAdmin(entityId, (Admin) user);
+            return (AdminDTO) convertToDTOFactory(admin);
 
-    @Override
-    public void updateAdmin(UUID entityId, AdminDTO adminDTO) throws RestIllegalModificationException {
-        User user = convertToDomainModelFactory(adminDTO, "ADMIN");
-        try {
-            servicePort.updateAdmin(entityId,(Admin) user);
         } catch (IllegalModificationException e) {
             throw new RestIllegalModificationException(e.getMessage(), e.getCause());
+        } catch (ObjectNotFoundServiceException e) {
+            throw new ObjectNotFoundRestException(e.getMessage(), e.getCause());
         }
     }
-
-    //fixme change string to enum
-    private User convertToDomainModelFactory(UserDTO userDTO, String userType) {
-        return switch (userType) {
-            case "ADMIN" -> toDomainMapper.convertAdminToDomainModel((AdminDTO) userDTO);
-            case "EMPLOYEE" -> toDomainMapper.convertEmployeeToDomainModel((EmployeeDTO) userDTO);
-            case "CLIENT" -> toDomainMapper.convertClientToDomainModel((ClientDTO) userDTO);
-            default -> throw new IllegalArgumentException();
+    private User convertToDomainModelFactory(UserDTO userDTO) {
+        return switch (userDTO.getUserType()) {
+            case ADMIN -> toDomainMapper.convertAdminToDomainModel((AdminDTO) userDTO);
+            case EMPLOYEE -> toDomainMapper.convertEmployeeToDomainModel((EmployeeDTO) userDTO);
+            case CLIENT -> toDomainMapper.convertClientToDomainModel((ClientDTO) userDTO);
         };
     }
 
     private UserDTO convertToDTOFactory(User user) {
         return switch (user.getUserType()) {
-            case "ADMIN" -> toDTOMapper.convertAdminToAdminDTO((Admin) user);
-            case "EMPLOYEE" -> toDTOMapper.convertEmployeeToEmployeeDTO((Employee) user);
-            case "CLIENT" -> toDTOMapper.convertClientToClientDTO((Client) user);
-            default -> throw new IllegalArgumentException();
+            case ADMIN -> toDTOMapper.convertAdminToAdminDTO((Admin) user);
+            case EMPLOYEE -> toDTOMapper.convertEmployeeToEmployeeDTO((Employee) user);
+            case CLIENT -> toDTOMapper.convertClientToClientDTO((Client) user);
         };
     }
 }

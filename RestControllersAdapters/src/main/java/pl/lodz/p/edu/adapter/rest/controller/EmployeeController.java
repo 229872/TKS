@@ -12,6 +12,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.adapter.rest.api.UserService;
 import pl.lodz.p.edu.adapter.rest.dto.users.EmployeeDTO;
+import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestAuthenticationFailureException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalModificationException;
@@ -41,8 +42,8 @@ public class EmployeeController {
 //    @RolesAllowed({"ADMIN"})
     public Response addEmployee(@Valid EmployeeDTO employeeDTO) {
         try {
-            userService.registerEmployee(employeeDTO);
-            return Response.status(CREATED).entity(employeeDTO).build();
+            EmployeeDTO registeredEmployee = (EmployeeDTO) userService.registerUser(employeeDTO);
+            return Response.status(CREATED).entity(registeredEmployee).build();
         } catch(RestConflictException | TransactionalException e) {
             return Response.status(CONFLICT).build();
         }
@@ -53,7 +54,7 @@ public class EmployeeController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Response searchAdmin(@QueryParam("login") String login) {
-        return userControllerMethods.searchUser("Employee", login);
+        return userControllerMethods.getSingleUser(login);
     }
 
     @GET
@@ -61,7 +62,7 @@ public class EmployeeController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Response getUserByUuid(@PathParam("entityId") UUID entityId) {
-        return userControllerMethods.getSingleUser("Employee", entityId);
+        return userControllerMethods.getSingleUser(entityId);
     }
 
     @GET
@@ -69,7 +70,7 @@ public class EmployeeController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Response getUserByLogin(@PathParam("login") String login) {
-        return userControllerMethods.getSingleUser("Employee", login);
+        return userControllerMethods.getSingleUser(login);
     }
 
     @PUT
@@ -92,7 +93,7 @@ public class EmployeeController {
             return Response.status(BAD_REQUEST).build();
         } catch(TransactionalException e) { // login modification
             return Response.status(BAD_REQUEST).build();
-        } catch(NoResultException e) {
+        } catch(ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).build();
         }
     }
@@ -101,13 +102,13 @@ public class EmployeeController {
     @Path("/{entityId}/activate")
 //    @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Response activateUser(@PathParam("entityId") UUID entityId) {
-        return userControllerMethods.activateUser("Employee", entityId);
+        return userControllerMethods.activateUser(entityId);
     }
 
     @PUT
     @Path("/{entityId}/deactivate")
 //    @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Response deactivateUser(@PathParam("entityId") UUID entityId) {
-        return userControllerMethods.deactivateUser("Employee", entityId);
+        return userControllerMethods.deactivateUser(entityId);
     }
 }

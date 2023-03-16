@@ -16,9 +16,9 @@ import java.util.Date;
 @ApplicationScoped
 public class JwtUtilities {
 
-    private String secret = "MHDVHZCNLNMHDVHZCNLNMHDVHZCNLNMHDVHZCNLNMHDVHZCNLNMHDVHZCNLN";
+    private final String secret = "MHDVHZCNLNMHDVHZCNLNMHDVHZCNLNMHDVHZCNLNMHDVHZCNLNMHDVHZCNLN";
 
-    private int exp_time = 2137000;
+    private final int exp_time = 2137000;
 
     public Jws<Claims> parseJWT(String token) {
         return Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(token);

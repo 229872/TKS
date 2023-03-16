@@ -4,35 +4,31 @@ import pl.lodz.p.edu.adapter.rest.dto.users.AdminDTO;
 import pl.lodz.p.edu.adapter.rest.dto.users.ClientDTO;
 import pl.lodz.p.edu.adapter.rest.dto.users.EmployeeDTO;
 import pl.lodz.p.edu.adapter.rest.dto.users.UserDTO;
+import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalModificationException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
+import pl.lodz.p.edu.core.domain.model.users.UserType;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
+    List<UserDTO> getAllUsersOfType(UserType type);
+    List<UserDTO> getAll();
 
-    List<UserDTO> searchOfType(String type, String login);
+    UserDTO get(UUID uuid) throws ObjectNotFoundRestException;
 
-    List<UserDTO> getAllUsersOfType(String type);
+    UserDTO getByLogin(String login) throws ObjectNotFoundRestException;
 
-    UserDTO getUserByUuidOfType(String type, UUID entityId);
+    void activateUser(UUID entityId) throws ObjectNotFoundRestException;
 
-    UserDTO getUserByLoginOfType(String type, String login);
+    void deactivateUser(UUID entityId) throws ObjectNotFoundRestException;
 
-    void activateUser(String type, UUID entityId);
+    UserDTO registerUser(UserDTO userDTO) throws RestConflictException;
 
-    void deactivateUser(String type, UUID entityId);
+    EmployeeDTO updateEmployee(UUID entityId, EmployeeDTO employeeDTO) throws RestIllegalModificationException, ObjectNotFoundRestException;
 
-    void registerEmployee(EmployeeDTO employee) throws RestConflictException;
+    ClientDTO updateClient(UUID entityId, ClientDTO clientDTO) throws RestIllegalModificationException, ObjectNotFoundRestException;
 
-    void updateEmployee(UUID entityId, EmployeeDTO employeeDTO) throws RestIllegalModificationException;
-
-    void registerClient(ClientDTO client) throws RestConflictException;
-
-    void updateClient(UUID entityId, ClientDTO clientDTO) throws RestIllegalModificationException;
-
-    void registerAdmin(AdminDTO admin) throws RestConflictException;
-
-    void updateAdmin(UUID entityId, AdminDTO adminDTO) throws RestIllegalModificationException;
+    AdminDTO updateAdmin(UUID entityId, AdminDTO adminDTO) throws RestIllegalModificationException, ObjectNotFoundRestException;
 }

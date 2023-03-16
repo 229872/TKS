@@ -1,14 +1,14 @@
 package pl.lodz.p.edu.adapter.repository.clients.adapters;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.RequestScoped;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.equipment.EquipmentFromDataToDomainMapper;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.equipment.EquipmentFromDomainToDataMapper;
 import pl.lodz.p.edu.adapter.repository.clients.api.EquipmentRepository;
 import pl.lodz.p.edu.adapter.repository.clients.data.EquipmentEnt;
 import jakarta.inject.Inject;
-import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundException;
+import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundRepositoryException;
 import pl.lodz.p.edu.core.domain.exception.IllegalModificationException;
+import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.core.domain.model.Equipment;
 import pl.lodz.p.edu.ports.outcoming.EquipmentRepositoryPort;
 
@@ -29,19 +29,14 @@ public class EquipmentRepositoryAdapter implements EquipmentRepositoryPort {
     private EquipmentFromDomainToDataMapper toDataMapper;
 
     @Override
-    public boolean isEquipmentRented(UUID uuid) {
-        return repository.isEquipmentRented(uuid);
-    }
-
-    @Override
-    public Equipment get(UUID objectId) {
+    public Equipment get(UUID objectId) throws ObjectNotFoundServiceException {
         try {
             EquipmentEnt equipmentEnt = repository.get(objectId);
             return convertToDomainModel(equipmentEnt);
 
-        } catch (EntityNotFoundException e) {
-            //FIXME ADD CUSTOM EXCEPTION TO INTERFACE
-            throw new RuntimeException(e);
+        } catch (EntityNotFoundRepositoryException e) {
+
+            throw new ObjectNotFoundServiceException(e.getMessage(), e.getCause());
         }
     }
 
@@ -76,4 +71,8 @@ public class EquipmentRepositoryAdapter implements EquipmentRepositoryPort {
         return toDomainMapper.convertToDomainModel(equipmentEnt);
     }
 
+    @Override
+    public boolean isEquipmentRented(UUID uuid) {
+        return repository.isEquipmentRented(uuid);
+    }
 }

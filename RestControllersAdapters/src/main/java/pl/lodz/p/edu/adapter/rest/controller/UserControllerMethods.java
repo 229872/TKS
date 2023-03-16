@@ -9,6 +9,7 @@ import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.adapter.rest.api.AuthenticationService;
 import pl.lodz.p.edu.adapter.rest.api.UserService;
 import pl.lodz.p.edu.adapter.rest.dto.users.UserDTO;
+import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestAuthenticationFailureException;
 
 import java.text.ParseException;
@@ -26,54 +27,47 @@ public class UserControllerMethods {
     @Inject
     private AuthenticationService authenticationService;
 
-    public Response searchUser(String type, String login) {
-        if(login != null) {
-            List<UserDTO> searchResult = userService.searchOfType(type, login);
-            return Response.status(OK).entity(searchResult).build();
-        }
-        List<UserDTO> users = userService.getAllUsersOfType(type);
-        return Response.status(OK).entity(users).build();
-    }
 
-    public Response getSingleUser(String type, UUID entityId) {
+    //FIXME what does id do ?
+    public Response getSingleUser(UUID entityId) {
         try {
-            UserDTO user = userService.getUserByUuidOfType(type, entityId);
+            UserDTO user = userService.get(entityId);
 
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("login", user.getLogin());
             String ifMatchTag = authenticationService.signLogin(jsonObject.toString());
 
             return Response.status(OK).entity(user).tag(ifMatchTag).build();
-        } catch(NoResultException e) {
+        } catch(ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).build();
         } catch (JOSEException e) {
             return Response.status(BAD_REQUEST).build();
         }
     }
 
-    public Response getSingleUser(String type, String login) {
+    public Response getSingleUser(String login) {
         try {
-            UserDTO user = userService.getUserByLoginOfType(type, login);
+            UserDTO user = userService.getByLogin(login);
             return Response.status(OK).entity(user).build();
-        } catch(NoResultException e) {
+        } catch(ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).build();
         }
     }
 
-    public Response activateUser(String type, UUID entityId) {
+    public Response activateUser(UUID entityId) {
         try {
-            userService.activateUser(type, entityId);
+            userService.activateUser(entityId);
             return Response.status(NO_CONTENT).build();
-        } catch(NoResultException e) {
+        } catch(ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).build();
         }
     }
 
-    public Response deactivateUser(String type, UUID entityId) {
+    public Response deactivateUser(UUID entityId) {
         try {
-            userService.deactivateUser(type, entityId);
+            userService.deactivateUser(entityId);
             return Response.status(NO_CONTENT).build();
-        } catch(NoResultException e) {
+        } catch(ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).build();
         }
     }

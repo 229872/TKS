@@ -1,5 +1,6 @@
 package pl.lodz.p.edu.adapter.rest.adapter;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import pl.lodz.p.edu.adapter.rest.adapter.mapper.equipment.EquipmentFromDTOToDomainMapper;
 import pl.lodz.p.edu.adapter.rest.adapter.mapper.user.UserFromDTOToDomainMapper;
@@ -9,9 +10,11 @@ import pl.lodz.p.edu.adapter.rest.api.RentService;
 import pl.lodz.p.edu.adapter.rest.dto.EquipmentDTO;
 import pl.lodz.p.edu.adapter.rest.dto.RentDTO;
 import pl.lodz.p.edu.adapter.rest.dto.users.ClientDTO;
+import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestBusinessLogicInterruptException;
 import pl.lodz.p.edu.adapter.rest.exception.RestObjectNotValidException;
 import pl.lodz.p.edu.core.domain.exception.BusinessLogicInterruptException;
+import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotValidException;
 import pl.lodz.p.edu.core.domain.model.Equipment;
 import pl.lodz.p.edu.core.domain.model.users.*;
@@ -25,7 +28,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-
+@ApplicationScoped
 public class RentRestControllerAdapter implements RentService {
 
     @Inject
@@ -50,18 +53,19 @@ public class RentRestControllerAdapter implements RentService {
     private UserFromDTOToDomainMapper userToDomainMapper;
 
     @Override
-    public RentDTO add(RentDTO rentDTO) throws RestObjectNotValidException {
-        User client = userServicePort.getUserByUuidOfType("CLIENT",
-                rentDTO.getClientUUIDFromString());
-
-        Equipment equipment = equipmentServicePort.get(rentDTO.getEquipmentUUIDFromString());
-        Rent rent = convertToDomainModel(rentDTO, equipment, (Client) client);
+    public RentDTO add(RentDTO rentDTO) throws RestObjectNotValidException, ObjectNotFoundRestException {
         try {
-            rentServicePort.add(rent);
+            Client client = (Client) userServicePort.get(rentDTO.getClientUUIDFromString());
+            Equipment equipment = equipmentServicePort.get(rentDTO.getEquipmentUUIDFromString());
+            Rent rent = convertToDomainModel(rentDTO, equipment, client);
+            return convertToDTO(rentServicePort.add(rent));
+
         } catch (ObjectNotValidException | BusinessLogicInterruptException e) {
             throw new RestObjectNotValidException(e.getMessage(), e.getCause());
+
+        } catch (ObjectNotFoundServiceException | ClassCastException e) {
+            throw new ObjectNotFoundRestException(e.getMessage(), e.getCause());
         }
-        return rentDTO;
     }
 
     @Override
@@ -73,9 +77,9 @@ public class RentRestControllerAdapter implements RentService {
     }
 
     @Override
-    public List<RentDTO> getRentByEq(EquipmentDTO equipmentDTO) {
+    public List<RentDTO> getRentsByEquipment(EquipmentDTO equipmentDTO) {
         Equipment equipment = equipmentToDomainMapper.convertToDomainModel(equipmentDTO);
-        List<Rent> rentList = rentServicePort.getRentByEq(equipment);
+        List<Rent> rentList = rentServicePort.getRentsByEquipment(equipment);
         return rentList.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
@@ -86,33 +90,45 @@ public class RentRestControllerAdapter implements RentService {
     }
 
     @Override
-    public RentDTO get(UUID uuid) {
-        Rent rent = rentServicePort.get(uuid);
-        return convertToDTO(rent);
-    }
-
-    @Override
-    public RentDTO update(UUID entityId, RentDTO rentDTO) throws RestObjectNotValidException, RestBusinessLogicInterruptException {
-        Equipment equipment = equipmentServicePort.get(rentDTO.getEquipmentUUIDFromString());
-
-        User user = userServicePort.getUserByUuidOfType("CLIENT", rentDTO.getClientUUIDFromString());
-        Rent rent = convertToDomainModel(rentDTO, equipment, (Client) user); //FIXME XD
+    public RentDTO get(UUID uuid) throws ObjectNotFoundRestException {
         try {
-            Rent rentReturn = rentServicePort.update(entityId, rent);
-            return convertToDTO(rentReturn);
-        } catch (ObjectNotValidException e) {
-            throw new RestObjectNotValidException(e.getMessage(), e.getCause());
-        } catch (BusinessLogicInterruptException e) {
-            throw new RestBusinessLogicInterruptException(e.getMessage(), e.getCause());
+            Rent rent = rentServicePort.get(uuid);
+            return convertToDTO(rent);
+
+        } catch (ObjectNotFoundServiceException e) {
+            throw new ObjectNotFoundRestException(e.getMessage(), e.getCause());
         }
     }
 
     @Override
-    public void remove(UUID rentUuid) throws RestBusinessLogicInterruptException {
+    public RentDTO update(UUID entityId, RentDTO rentDTO) throws RestObjectNotValidException,
+            RestBusinessLogicInterruptException, ObjectNotFoundRestException {
+        try {
+            Equipment equipment = equipmentServicePort.get(rentDTO.getEquipmentUUIDFromString());
+            Client client = (Client) userServicePort.get(rentDTO.getClientUUIDFromString());
+            Rent rent = convertToDomainModel(rentDTO, equipment, client);
+            Rent rentReturn = rentServicePort.update(entityId, rent);
+            return convertToDTO(rentReturn);
+
+        } catch (ObjectNotValidException e) {
+            throw new RestObjectNotValidException(e.getMessage(), e.getCause());
+
+        } catch (BusinessLogicInterruptException e) {
+            throw new RestBusinessLogicInterruptException(e.getMessage(), e.getCause());
+
+        } catch (ObjectNotFoundServiceException | ClassCastException e) {
+            throw new ObjectNotFoundRestException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @Override
+    public void remove(UUID rentUuid) throws RestBusinessLogicInterruptException, ObjectNotFoundRestException {
         try {
             rentServicePort.remove(rentUuid);
         } catch (BusinessLogicInterruptException e) {
             throw new RestBusinessLogicInterruptException(e.getMessage(), e.getCause());
+        } catch (ObjectNotFoundServiceException e) {
+            throw new ObjectNotFoundRestException(e.getMessage(), e.getCause());
         }
     }
 

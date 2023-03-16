@@ -7,10 +7,12 @@ public class AdminDTO extends UserDTO {
     @NotEmpty
     private String favouriteIceCream;
 
-    public AdminDTO() {}
+    public AdminDTO() {
+        super(UserTypeDTO.ADMIN);
+    }
 
     public AdminDTO(String login, String password, String favouriteIceCream) {
-        super(login, password);
+        super(login, password, UserTypeDTO.ADMIN);
         this.favouriteIceCream = favouriteIceCream;
     }
 

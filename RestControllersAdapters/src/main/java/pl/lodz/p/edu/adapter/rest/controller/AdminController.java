@@ -12,6 +12,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.adapter.rest.api.UserService;
 import pl.lodz.p.edu.adapter.rest.dto.users.AdminDTO;
+import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestAuthenticationFailureException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalModificationException;
@@ -43,7 +44,7 @@ public class AdminController {
     @RolesAllowed({"ADMIN"})
     public Response addAdmin(@Valid AdminDTO adminDTO) {
         try {
-            userService.registerAdmin(adminDTO);
+            userService.registerUser(adminDTO);
             return Response.status(CREATED).entity(adminDTO).build();
         } catch(RestConflictException | TransactionalException e) {
             return Response.status(CONFLICT).build();
@@ -57,7 +58,7 @@ public class AdminController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN"})
     public Response searchAdmin(@QueryParam("login") String login) {
-        return userControllerMethods.searchUser("Admin", login);
+        return userControllerMethods.getSingleUser(login);
     }
 
     @GET
@@ -65,7 +66,7 @@ public class AdminController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN"})
     public Response getUserByUuid(@PathParam("uuid") UUID entityId) {
-        return userControllerMethods.getSingleUser("Admin", entityId);
+        return userControllerMethods.getSingleUser(entityId);
     }
 
     @GET
@@ -73,7 +74,7 @@ public class AdminController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN"})
     public Response getUserByLogin(@PathParam("login") String login) {
-        return userControllerMethods.getSingleUser("Admin", login);
+        return userControllerMethods.getSingleUser(login);
     }
 
     // update
@@ -98,7 +99,7 @@ public class AdminController {
             return Response.status(BAD_REQUEST).build();
         } catch(TransactionalException e) { // login modification
             return Response.status(BAD_REQUEST).build();
-        } catch(NoResultException e) {
+        } catch(ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).build();
         }
     }
@@ -107,13 +108,13 @@ public class AdminController {
     @Path("/{entityId}/activate")
 //    @RolesAllowed({"ADMIN"})
     public Response activateUser(@PathParam("entityId") UUID entityId) {
-        return userControllerMethods.activateUser("Admin", entityId);
+        return userControllerMethods.activateUser(entityId);
     }
 
     @PUT
     @Path("/{entityId}/deactivate")
 //    @RolesAllowed({"ADMIN"})
     public Response deactivateUser(@PathParam("entityId") UUID entityId) {
-        return userControllerMethods.deactivateUser("Admin", entityId);
+        return userControllerMethods.deactivateUser(entityId);
     }
 }

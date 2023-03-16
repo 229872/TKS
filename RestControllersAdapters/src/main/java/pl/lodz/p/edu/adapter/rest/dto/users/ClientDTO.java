@@ -20,12 +20,13 @@ public class ClientDTO extends UserDTO {
     private AddressDTO address;
 
     public ClientDTO() {
+        super(UserTypeDTO.CLIENT);
         address = new AddressDTO("", "", "");
     }
 
 
     public ClientDTO(String login, String password, String firstName, String lastName, AddressDTO address) {
-        super(login, password);
+        super(login, password, UserTypeDTO.CLIENT);
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;

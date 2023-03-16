@@ -11,7 +11,7 @@ import java.text.ParseException;
 public interface AuthenticationServicePort {
     Token login(String login, String password) throws AuthenticationFailureException;
 
-    String changePassword(CredentialsNewPassword credentials) throws AuthenticationFailureException;
+    void changePassword(CredentialsNewPassword credentials) throws AuthenticationFailureException;
 
     String signLogin(String login) throws JOSEException;
 

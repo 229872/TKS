@@ -3,7 +3,7 @@ package pl.lodz.p.edu.adapter.rest.dto.users;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-public class UserDTO {
+public abstract class UserDTO {
 
     @NotNull
     @NotEmpty
@@ -19,11 +19,16 @@ public class UserDTO {
 
     private String password;
 
-    public UserDTO() {}
+    private UserTypeDTO userType;
 
-    public UserDTO(String login, String password) {
+    public UserDTO(UserTypeDTO userType) {
+        this.userType = userType;
+    }
+
+    public UserDTO(String login, String password, UserTypeDTO userType) {
         this.login = login;
         this.password = password;
+        this.userType = userType;
     }
 
     public String getLogin() {
@@ -32,5 +37,9 @@ public class UserDTO {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public UserTypeDTO getUserType() {
+        return userType;
     }
 }

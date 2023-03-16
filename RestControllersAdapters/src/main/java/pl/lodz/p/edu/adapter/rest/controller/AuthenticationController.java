@@ -37,7 +37,8 @@ public class AuthenticationController {
     @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response changePassword(@Valid CredentialsNewPasswordDTO credentials) {
         try {
-            return Response.status(200).entity(authManager.changePassword(credentials)).build();
+            authManager.changePassword(credentials);
+            return Response.ok().build();
         } catch (RestAuthenticationFailureException e) {
             return Response.status(401).entity(e.getMessage()).build();
         }

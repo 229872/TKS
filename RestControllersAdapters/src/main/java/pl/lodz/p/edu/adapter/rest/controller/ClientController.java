@@ -13,6 +13,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.adapter.rest.api.UserService;
 import pl.lodz.p.edu.adapter.rest.dto.users.ClientDTO;
+import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestAuthenticationFailureException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalModificationException;
@@ -41,12 +42,10 @@ public class ClientController {
 //    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response addClient(@Valid ClientDTO clientDTO) {
         try {
-            userService.registerClient(clientDTO);
-            return Response.status(CREATED).entity(clientDTO).build();
+            ClientDTO registeredClient = (ClientDTO) userService.registerUser(clientDTO);
+            return Response.status(CREATED).entity(registeredClient).build();
         } catch(RestConflictException | TransactionalException e ) {
             return Response.status(CONFLICT).build();
-        } catch(NullPointerException e) {
-            return Response.status(BAD_REQUEST).build();
         }
     }
 
@@ -55,7 +54,7 @@ public class ClientController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response searchClients(@QueryParam("login") String login) {
-        return userControllerMethods.searchUser("Client", login);
+        return userControllerMethods.getSingleUser(login);
     }
 
     @GET
@@ -63,7 +62,7 @@ public class ClientController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response getUserByUuid(@PathParam("uuid") UUID entityId) {
-        return userControllerMethods.getSingleUser("Client", entityId);
+        return userControllerMethods.getSingleUser(entityId);
     }
 
     @GET
@@ -71,7 +70,7 @@ public class ClientController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response getUserByLogin(@PathParam("login") String login) {
-        return userControllerMethods.getSingleUser("Client", login);
+        return userControllerMethods.getSingleUser(login);
     }
 
     @PUT
@@ -95,7 +94,7 @@ public class ClientController {
             return Response.status(BAD_REQUEST).build();
         } catch(TransactionalException e) { // login modification
             return Response.status(BAD_REQUEST).build();
-        } catch(NoResultException e) {
+        } catch(ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).build();
         }
     }
@@ -104,13 +103,13 @@ public class ClientController {
     @Path("/{entityId}/activate")
 //    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response activateUser(@PathParam("entityId") UUID entityId) {
-        return userControllerMethods.activateUser("Client", entityId);
+        return userControllerMethods.activateUser(entityId);
     }
 
     @PUT
     @Path("/{entityId}/deactivate")
 //    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response deactivateUser(@PathParam("entityId") UUID entityId) {
-        return userControllerMethods.deactivateUser("Client", entityId);
+        return userControllerMethods.deactivateUser(entityId);
     }
 }

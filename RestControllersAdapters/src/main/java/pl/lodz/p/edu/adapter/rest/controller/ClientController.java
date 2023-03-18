@@ -2,10 +2,8 @@ package pl.lodz.p.edu.adapter.rest.controller;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.shaded.gson.JsonObject;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 
-import jakarta.persistence.NoResultException;
 import jakarta.transaction.TransactionalException;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -19,6 +17,7 @@ import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalModificationException;
 
 import java.text.ParseException;
+import java.util.List;
 import java.util.UUID;
 
 import static jakarta.ws.rs.core.Response.Status.*;
@@ -30,7 +29,7 @@ public class ClientController {
     private UserService userService;
 
     @Inject
-    private UserControllerMethods userControllerMethods;
+    private UserServiceFacade userServiceFacade;
 
 
     protected ClientController() {}
@@ -53,8 +52,9 @@ public class ClientController {
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
-    public Response searchClients(@QueryParam("login") String login) {
-        return userControllerMethods.getSingleUser(login);
+    public Response getAll() {
+        List<ClientDTO> clients = userServiceFacade.getClients();
+        return Response.ok(clients).build();
     }
 
     @GET
@@ -62,7 +62,7 @@ public class ClientController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response getUserByUuid(@PathParam("uuid") UUID entityId) {
-        return userControllerMethods.getSingleUser(entityId);
+        return userServiceFacade.getSingleUser(entityId);
     }
 
     @GET
@@ -70,7 +70,7 @@ public class ClientController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response getUserByLogin(@PathParam("login") String login) {
-        return userControllerMethods.getSingleUser(login);
+        return userServiceFacade.getSingleUser(login);
     }
 
     @PUT
@@ -83,7 +83,7 @@ public class ClientController {
         jsonDTO.addProperty("login", clientDTO.getLogin());
         try {
 
-            userControllerMethods.verifySingedLogin(ifMatch, jsonDTO);
+            userServiceFacade.verifySingedLogin(ifMatch, jsonDTO);
         } catch (ParseException | RestAuthenticationFailureException | JOSEException e) {
             return Response.status(BAD_REQUEST).build();
         }
@@ -103,13 +103,13 @@ public class ClientController {
     @Path("/{entityId}/activate")
 //    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response activateUser(@PathParam("entityId") UUID entityId) {
-        return userControllerMethods.activateUser(entityId);
+        return userServiceFacade.activateUser(entityId);
     }
 
     @PUT
     @Path("/{entityId}/deactivate")
 //    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response deactivateUser(@PathParam("entityId") UUID entityId) {
-        return userControllerMethods.deactivateUser(entityId);
+        return userServiceFacade.deactivateUser(entityId);
     }
 }

@@ -7,6 +7,7 @@ import pl.lodz.p.edu.adapter.rest.dto.users.UserDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalModificationException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
+import pl.lodz.p.edu.core.domain.model.users.Employee;
 import pl.lodz.p.edu.core.domain.model.users.UserType;
 
 import java.util.List;
@@ -15,7 +16,6 @@ import java.util.UUID;
 public interface UserService {
     List<UserDTO> getAllUsersOfType(UserType type);
     List<UserDTO> getAll();
-
     UserDTO get(UUID uuid) throws ObjectNotFoundRestException;
 
     UserDTO getByLogin(String login) throws ObjectNotFoundRestException;

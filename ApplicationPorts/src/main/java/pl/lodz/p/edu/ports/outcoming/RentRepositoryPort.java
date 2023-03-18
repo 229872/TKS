@@ -13,4 +13,6 @@ public interface RentRepositoryPort extends RepositoryPort<Rent> {
 
     @Override
     Rent update(Rent object);
+
+    List<Rent> getEquipmentRents(Equipment equipment);
 }

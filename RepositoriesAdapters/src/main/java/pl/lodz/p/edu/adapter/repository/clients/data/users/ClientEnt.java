@@ -35,4 +35,9 @@ public class ClientEnt extends UserEnt {
     protected ClientEnt() {
         address = new AddressEnt();
     }
+
+    @Override
+    public UserTypeEnt getUserType() {
+        return UserTypeEnt.CLIENT;
+    }
 }

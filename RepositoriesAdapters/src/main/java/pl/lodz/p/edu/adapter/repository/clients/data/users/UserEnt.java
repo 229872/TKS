@@ -25,9 +25,7 @@ public abstract class UserEnt extends AbstractEntity {
     private String password;
     private boolean active;
 
-    @Column(name = "user_type")
-    @Enumerated(value = EnumType.STRING)
-    protected UserTypeEnt userType;
+    abstract public UserTypeEnt getUserType();
 
     public UserEnt(String login, String password) {
         this.login = login;

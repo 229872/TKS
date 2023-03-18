@@ -9,6 +9,8 @@ import java.util.List;
 public interface RentRepository extends Repository<RentEnt> {
     List<RentEnt> getRentsByEquipment(EquipmentEnt equipment);
     List<RentEnt> getRentsByClient(ClientEnt client);
+
+    List<RentEnt> getEquipmentRents(EquipmentEnt equipment);
     @Override
     RentEnt update(RentEnt elem);
 }

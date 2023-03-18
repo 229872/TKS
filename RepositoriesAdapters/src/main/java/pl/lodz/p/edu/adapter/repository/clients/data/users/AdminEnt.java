@@ -3,7 +3,6 @@ package pl.lodz.p.edu.adapter.repository.clients.data.users;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -26,4 +25,8 @@ public class AdminEnt extends UserEnt {
         this.favouriteIceCream = favouriteIceCream;
     }
 
+    @Override
+    public UserTypeEnt getUserType() {
+        return UserTypeEnt.ADMIN;
+    }
 }

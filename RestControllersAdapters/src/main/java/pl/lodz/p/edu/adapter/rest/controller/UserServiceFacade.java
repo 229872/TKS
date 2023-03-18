@@ -2,24 +2,23 @@ package pl.lodz.p.edu.adapter.rest.controller;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.shaded.gson.JsonObject;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import jakarta.persistence.NoResultException;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.adapter.rest.api.AuthenticationService;
 import pl.lodz.p.edu.adapter.rest.api.UserService;
-import pl.lodz.p.edu.adapter.rest.dto.users.UserDTO;
+import pl.lodz.p.edu.adapter.rest.dto.users.*;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestAuthenticationFailureException;
 
 import java.text.ParseException;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static jakarta.ws.rs.core.Response.Status.*;
 
-@RequestScoped
-public class UserControllerMethods {
+
+public class UserServiceFacade {
 
     @Inject
     private UserService userService;
@@ -77,5 +76,31 @@ public class UserControllerMethods {
     public void verifySingedLogin(String ifMatch, JsonObject jsonDTO) throws ParseException,
             RestAuthenticationFailureException, JOSEException {
         authenticationService.verifySingedLogin(ifMatch, String.valueOf(jsonDTO));
+    }
+
+
+    public List<UserDTO> getAll() {
+       return userService.getAll();
+    }
+
+    public List<ClientDTO> getClients() {
+        return userService.getAll().stream()
+                .filter(user -> user.getUserType().equals(UserTypeDTO.CLIENT))
+                .map(user -> (ClientDTO) user)
+                .collect(Collectors.toList());
+    }
+
+    public List<AdminDTO> getAdmins() {
+      return userService.getAll().stream()
+                .filter(user -> user.getUserType().equals(UserTypeDTO.ADMIN))
+                .map(user -> (AdminDTO) user)
+                .collect(Collectors.toList());
+    }
+
+    public List<EmployeeDTO> getEmployees() {
+        return userService.getAll().stream()
+                .filter(user -> user.getUserType().equals(UserTypeDTO.EMPLOYEE))
+                .map(user -> (EmployeeDTO) user)
+                .collect(Collectors.toList());
     }
 }

@@ -2,9 +2,7 @@ package pl.lodz.p.edu.adapter.rest.controller;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.shaded.gson.JsonObject;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
-import jakarta.persistence.NoResultException;
 import jakarta.transaction.TransactionalException;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -18,8 +16,8 @@ import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalModificationException;
 
 import java.text.ParseException;
+import java.util.List;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 import static jakarta.ws.rs.core.Response.Status.*;
 import static jakarta.ws.rs.core.Response.Status.OK;
@@ -31,7 +29,7 @@ public class EmployeeController {
     private UserService userService;
 
     @Inject
-    private UserControllerMethods userControllerMethods;
+    private UserServiceFacade userServiceFacade;
 
     protected EmployeeController() {}
 
@@ -53,8 +51,9 @@ public class EmployeeController {
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN", "EMPLOYEE"})
-    public Response searchAdmin(@QueryParam("login") String login) {
-        return userControllerMethods.getSingleUser(login);
+    public Response getAll() {
+        List<EmployeeDTO> employees = userServiceFacade.getEmployees();
+        return Response.ok(employees).build();
     }
 
     @GET
@@ -62,7 +61,7 @@ public class EmployeeController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Response getUserByUuid(@PathParam("entityId") UUID entityId) {
-        return userControllerMethods.getSingleUser(entityId);
+        return userServiceFacade.getSingleUser(entityId);
     }
 
     @GET
@@ -70,7 +69,7 @@ public class EmployeeController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Response getUserByLogin(@PathParam("login") String login) {
-        return userControllerMethods.getSingleUser(login);
+        return userServiceFacade.getSingleUser(login);
     }
 
     @PUT
@@ -82,7 +81,7 @@ public class EmployeeController {
         JsonObject jsonDTO = new JsonObject();
         jsonDTO.addProperty("login", employeeDTO.getLogin());
         try {
-            userControllerMethods.verifySingedLogin(ifMatch, jsonDTO);
+            userServiceFacade.verifySingedLogin(ifMatch, jsonDTO);
         } catch (ParseException | RestAuthenticationFailureException | JOSEException e) {
             return Response.status(BAD_REQUEST).build();
         }
@@ -102,13 +101,13 @@ public class EmployeeController {
     @Path("/{entityId}/activate")
 //    @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Response activateUser(@PathParam("entityId") UUID entityId) {
-        return userControllerMethods.activateUser(entityId);
+        return userServiceFacade.activateUser(entityId);
     }
 
     @PUT
     @Path("/{entityId}/deactivate")
 //    @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Response deactivateUser(@PathParam("entityId") UUID entityId) {
-        return userControllerMethods.deactivateUser(entityId);
+        return userServiceFacade.deactivateUser(entityId);
     }
 }

@@ -65,6 +65,21 @@ public class RentRepositoryImpl implements RentRepository {
     }
 
     @Override
+    public List<RentEnt> getEquipmentRents(EquipmentEnt equipment) {
+        if(equipment.getEntityId() == null) {
+            return new ArrayList<RentEnt>();
+        }
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<RentEnt> cq = cb.createQuery(RentEnt.class);
+        Root<RentEnt> rent = cq.from(RentEnt.class);
+
+        cq.select(rent);
+        cq.where(cb.equal(rent.get(RentEnt_.EQUIPMENT_ENT), equipment));
+
+        return em.createQuery(cq).getResultList();
+    }
+
+    @Override
     public List<RentEnt> getRentsByEquipment(EquipmentEnt equipment) {
         return em.createNamedQuery(RentEnt.FIND_BY_EQUIPMENT, RentEnt.class)
                 .setParameter("equipment", equipment)

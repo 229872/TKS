@@ -4,7 +4,6 @@ import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
-import jakarta.persistence.NoResultException;
 import jakarta.transaction.TransactionalException;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -12,14 +11,17 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.adapter.rest.api.UserService;
 import pl.lodz.p.edu.adapter.rest.dto.users.AdminDTO;
+import pl.lodz.p.edu.adapter.rest.dto.users.UserDTO;
+import pl.lodz.p.edu.adapter.rest.dto.users.UserTypeDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestAuthenticationFailureException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalModificationException;
-import pl.lodz.p.edu.core.domain.exception.AuthenticationFailureException;
 
 import java.text.ParseException;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static jakarta.ws.rs.core.Response.Status.*;
 
@@ -30,7 +32,7 @@ public class AdminController {
     private UserService userService;
 
     @Inject
-    private UserControllerMethods userControllerMethods;
+    private UserServiceFacade userServiceFacade;
 
 
     protected AdminController() {}
@@ -52,13 +54,13 @@ public class AdminController {
     }
 
     // read
-
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN"})
-    public Response searchAdmin(@QueryParam("login") String login) {
-        return userControllerMethods.getSingleUser(login);
+    public Response getAll() {
+        List<AdminDTO> admins = userServiceFacade.getAdmins();
+        return Response.ok(admins).build();
     }
 
     @GET
@@ -66,7 +68,7 @@ public class AdminController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN"})
     public Response getUserByUuid(@PathParam("uuid") UUID entityId) {
-        return userControllerMethods.getSingleUser(entityId);
+        return userServiceFacade.getSingleUser(entityId);
     }
 
     @GET
@@ -74,7 +76,7 @@ public class AdminController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN"})
     public Response getUserByLogin(@PathParam("login") String login) {
-        return userControllerMethods.getSingleUser(login);
+        return userServiceFacade.getSingleUser(login);
     }
 
     // update
@@ -87,7 +89,7 @@ public class AdminController {
         JsonObject jsonDTO = new JsonObject();
         jsonDTO.addProperty("login", adminDTO.getLogin());
         try {
-            userControllerMethods.verifySingedLogin(ifMatch, jsonDTO);
+            userServiceFacade.verifySingedLogin(ifMatch, jsonDTO);
         } catch (ParseException | RestAuthenticationFailureException | JOSEException e) {
             return Response.status(BAD_REQUEST).build();
         }
@@ -108,13 +110,13 @@ public class AdminController {
     @Path("/{entityId}/activate")
 //    @RolesAllowed({"ADMIN"})
     public Response activateUser(@PathParam("entityId") UUID entityId) {
-        return userControllerMethods.activateUser(entityId);
+        return userServiceFacade.activateUser(entityId);
     }
 
     @PUT
     @Path("/{entityId}/deactivate")
 //    @RolesAllowed({"ADMIN"})
     public Response deactivateUser(@PathParam("entityId") UUID entityId) {
-        return userControllerMethods.deactivateUser(entityId);
+        return userServiceFacade.deactivateUser(entityId);
     }
 }

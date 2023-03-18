@@ -6,6 +6,7 @@ import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.rent.RentFromDat
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.rent.RentFromDomainToDataMapper;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.user.UserFromDomainToDataMapper;
 import pl.lodz.p.edu.adapter.repository.clients.api.RentRepository;
+import pl.lodz.p.edu.adapter.repository.clients.data.EquipmentEnt;
 import pl.lodz.p.edu.adapter.repository.clients.data.RentEnt;
 import jakarta.inject.Inject;
 import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundRepositoryException;
@@ -93,5 +94,14 @@ public class RentRepositoryAdapter implements RentRepositoryPort {
     public Rent update(Rent object) {
         RentEnt rentEnt = repository.update(convertToDataModel(object));
         return convertToDomainModel(rentEnt);
+    }
+
+    @Override
+    public List<Rent> getEquipmentRents(Equipment equipment) {
+        EquipmentEnt equipmentEnt = equipmentToDataMapper.convertToDataModel(equipment);
+        List<RentEnt> rentList = repository.getEquipmentRents(equipmentEnt);
+        return rentList.stream()
+                .map(this::convertToDomainModel)
+                .collect(Collectors.toList());
     }
 }

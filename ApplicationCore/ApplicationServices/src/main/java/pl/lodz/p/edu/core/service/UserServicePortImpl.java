@@ -32,7 +32,7 @@ public class UserServicePortImpl implements UserServicePort {
             userRepository.add(user);
             return user;
         } catch(PersistenceException e) {
-            throw new ConflictException("Already exists user with given login");
+            throw new ConflictException("Already exists user with given login"); //FIXME throw no login if rly no login
         }
     }
 
@@ -63,7 +63,7 @@ public class UserServicePortImpl implements UserServicePort {
             ObjectNotFoundServiceException {
         try {
             Client clientDB = (Client) userRepository.get(entityId);
-            clientDB.merge(client);
+            clientDB.update(client);
             return (Client) userRepository.update(clientDB);
         } catch (ClassCastException e) {
             throw new ObjectNotFoundServiceException("User not found");
@@ -76,7 +76,7 @@ public class UserServicePortImpl implements UserServicePort {
     public Admin updateAdmin(UUID entityId, Admin admin) throws IllegalModificationException, ObjectNotFoundServiceException {
         try {
             Admin adminDB = (Admin) userRepository.get(entityId);
-            adminDB.merge(admin);
+            adminDB.update(admin);
             return (Admin) userRepository.update(adminDB);
 
         } catch (ClassCastException e) {
@@ -91,7 +91,7 @@ public class UserServicePortImpl implements UserServicePort {
             ObjectNotFoundServiceException {
         try {
             Employee employeeDB = (Employee) userRepository.get(entityId);
-            employeeDB.merge(employee);
+            employeeDB.update(employee);
             return (Employee) userRepository.update(employeeDB);
         } catch (ClassCastException e) {
             throw new ObjectNotFoundServiceException("User not found");
@@ -116,10 +116,5 @@ public class UserServicePortImpl implements UserServicePort {
             user.setActive(false);
             userRepository.update(user);
         }
-    }
-
-
-    public void updateUser(User user)  {
-        userRepository.update(user);
     }
 }

@@ -36,7 +36,7 @@ public class EquipmentController {
             equipmentService.add(equipmentDTO);
             return Response.status(CREATED).entity(equipmentDTO).build();
         } catch(NullPointerException e) {
-            return Response.status(BAD_REQUEST).build();
+            return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
 
@@ -45,7 +45,7 @@ public class EquipmentController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllEquipment() {
         List<EquipmentDTO> equipment = equipmentService.getAll();
-        return Response.status(Response.Status.OK).entity(equipment).build();
+        return Response.ok(equipment).build();
     }
 
     @GET
@@ -57,7 +57,7 @@ public class EquipmentController {
                 .filter(equipment -> rentService.checkEquipmentAvailable(equipment, LocalDateTime.now()))
                 .toList();
 
-        return Response.status(OK).entity(availableEquipment).build();
+        return Response.ok(availableEquipment).build();
     }
 
     @GET
@@ -66,9 +66,9 @@ public class EquipmentController {
     public Response getEquipment(@PathParam("uuid") UUID uuid) {
         try {
             EquipmentDTO equipment = equipmentService.get(uuid);
-            return Response.status(Response.Status.OK).entity(equipment).build();
+            return Response.ok(equipment).build();
         } catch(ObjectNotFoundRestException e) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 
@@ -78,11 +78,11 @@ public class EquipmentController {
     public Response updateEquipment(@PathParam("entityId") UUID entityId, @Valid EquipmentDTO equipmentDTO) {
         try {
             EquipmentDTO updated = equipmentService.update(entityId, equipmentDTO);
-            return Response.status(OK).entity(updated).build();
+            return Response.ok(updated).build();
         } catch (RestIllegalModificationException e) {
-            return Response.status(BAD_REQUEST).build();
+            return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         } catch(ObjectNotFoundRestException e) {
-            return Response.status(NOT_FOUND).build();
+            return Response.status(NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 
@@ -93,9 +93,9 @@ public class EquipmentController {
             equipmentService.remove(uuid);
             return Response.status(NO_CONTENT).build();
         } catch (RestConflictException e) {
-            return Response.status(CONFLICT).build();
+            return Response.status(CONFLICT).entity(e.getMessage()).build();
         } catch (ObjectNotFoundRestException e) {
-            return Response.status(NOT_FOUND).build();
+            return Response.status(NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 }

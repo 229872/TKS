@@ -49,7 +49,7 @@ public class RentController {
         } catch (RestObjectNotValidException e) {
             return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         } catch (RestBusinessLogicInterruptException e) {
-            return Response.status(CONFLICT).build();
+            return Response.status(CONFLICT).entity(e.getMessage()).build();
         } catch (ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).entity(e.getMessage()).build();
         }
@@ -62,9 +62,9 @@ public class RentController {
         try {
             ClientDTO clientDTO = (ClientDTO) userService.get(clientUuid);
             List<RentDTO> rentsDTO = rentService.getRentsByClient(clientDTO);
-            return Response.status(Response.Status.OK).entity(rentsDTO).build();
+            return Response.ok(rentsDTO).build();
         } catch (ObjectNotFoundRestException e) {
-            return Response.status(NOT_FOUND).build();
+            return Response.status(NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 
@@ -75,9 +75,9 @@ public class RentController {
         try {
             EquipmentDTO equipmentDTO = equipmentService.get(equipmentUuid);
             List<RentDTO> rentsDTO = rentService.getRentsByEquipment(equipmentDTO);
-            return Response.status(Response.Status.OK).entity(rentsDTO).build();
+            return Response.ok(rentsDTO).build();
         } catch (ObjectNotFoundRestException e) {
-            return Response.status(NOT_FOUND).build();
+            return Response.status(NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 
@@ -86,7 +86,7 @@ public class RentController {
     @Path("/")
     public Response getAllRents() {
         List<RentDTO> rentsDTO = rentService.getAll();
-        return Response.status(Response.Status.OK).entity(rentsDTO).build();
+        return Response.ok(rentsDTO).build();
     }
 
     @GET
@@ -95,9 +95,9 @@ public class RentController {
     public Response getRent(@PathParam("uuid") UUID uuid) {
         try {
             RentDTO rentDTO = rentService.get(uuid);
-            return Response.status(Response.Status.OK).entity(rentDTO).build();
+            return Response.ok(rentDTO).build();
         } catch (ObjectNotFoundRestException e) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 
@@ -108,13 +108,13 @@ public class RentController {
     public Response modifyRent(@PathParam("uuid") UUID entityId, @Valid RentDTO rentDTO) {
         try {
             RentDTO updatedRent = rentService.update(entityId, rentDTO);
-            return Response.status(OK).entity(updatedRent).build();
+            return Response.ok(updatedRent).build();
         } catch (RestObjectNotValidException | TransactionalException e) {
             return Response.status(BAD_REQUEST).build();
         } catch (ObjectNotFoundRestException e) {
-            return Response.status(NOT_FOUND).build();
+            return Response.status(NOT_FOUND).entity(e.getMessage()).build();
         } catch (RestBusinessLogicInterruptException e) {
-            return Response.status(CONFLICT).build();
+            return Response.status(CONFLICT).entity(e.getMessage()).build();
         }
     }
 
@@ -125,9 +125,9 @@ public class RentController {
             rentService.remove(rentUuid);
             return Response.status(NO_CONTENT).build();
         } catch (ObjectNotFoundRestException e) {
-            return Response.status(NO_CONTENT).build();
+            return Response.status(NO_CONTENT).entity(e.getMessage()).build();
         } catch (RestBusinessLogicInterruptException e) {
-            return Response.status(CONFLICT).build();
+            return Response.status(CONFLICT).entity(e.getMessage()).build();
         }
     }
 }

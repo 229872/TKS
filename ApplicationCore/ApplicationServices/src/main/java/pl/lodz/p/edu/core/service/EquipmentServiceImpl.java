@@ -2,7 +2,6 @@ package pl.lodz.p.edu.core.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 import pl.lodz.p.edu.core.domain.exception.ConflictException;
@@ -46,7 +45,7 @@ public class EquipmentServiceImpl implements EquipmentServicePort {
     public Equipment update(UUID uuid, Equipment newEquipmentData) throws IllegalModificationException, ObjectNotFoundServiceException {
         synchronized (equipmentRepository) {
             Equipment equipment = equipmentRepository.get(uuid);
-            equipment.merge(equipment);
+            equipment.update(equipment);
             return equipmentRepository.update(equipment);
         }
     }

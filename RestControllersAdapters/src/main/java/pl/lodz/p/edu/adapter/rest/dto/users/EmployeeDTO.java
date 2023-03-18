@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 public class EmployeeDTO extends UserDTO {
 
-    @NotEmpty
+    @NotEmpty(message = "Desk can't be empty")
     private String desk;
 
     public EmployeeDTO() {

@@ -44,7 +44,7 @@ public class ClientController {
             ClientDTO registeredClient = (ClientDTO) userService.registerUser(clientDTO);
             return Response.status(CREATED).entity(registeredClient).build();
         } catch(RestConflictException | TransactionalException e ) {
-            return Response.status(CONFLICT).build();
+            return Response.status(CONFLICT).entity(e.getMessage()).build();
         }
     }
 
@@ -85,17 +85,17 @@ public class ClientController {
 
             userServiceFacade.verifySingedLogin(ifMatch, jsonDTO);
         } catch (ParseException | RestAuthenticationFailureException | JOSEException e) {
-            return Response.status(BAD_REQUEST).build();
+            return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         }
         try {
             userService.updateClient(entityId, clientDTO);
             return Response.status(OK).entity(clientDTO).build();
         } catch (RestIllegalModificationException e) {
-            return Response.status(BAD_REQUEST).build();
+            return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         } catch(TransactionalException e) { // login modification
-            return Response.status(BAD_REQUEST).build();
+            return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         } catch(ObjectNotFoundRestException e) {
-            return Response.status(NOT_FOUND).build();
+            return Response.status(NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 

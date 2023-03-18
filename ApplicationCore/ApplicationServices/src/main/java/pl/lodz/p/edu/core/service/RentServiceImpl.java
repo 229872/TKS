@@ -3,7 +3,6 @@ package pl.lodz.p.edu.core.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
 import pl.lodz.p.edu.core.domain.exception.BusinessLogicInterruptException;
@@ -64,7 +63,7 @@ public class RentServiceImpl implements RentServicePort {
             ObjectNotFoundServiceException, ObjectNotValidException {
 
         LocalDateTime now = LocalDateTime.now();
-        validateTime(rent, now);
+        rent.validateTime(now);
 
         synchronized (userRepository) {
             userRepository.get(rent.getClient().getEntityId());
@@ -87,7 +86,7 @@ public class RentServiceImpl implements RentServicePort {
 
         Rent rentDB = rentRepository.get(uuid);
         LocalDateTime now = LocalDateTime.now();
-        validateTime(rent, now);
+        rent.validateTime(now);
 
         synchronized (userRepository) {
             Client clientDB = (Client) userRepository.get(rent.getEntityId());
@@ -96,7 +95,7 @@ public class RentServiceImpl implements RentServicePort {
                 boolean available = this.checkEquipmentAvailable(equipmentDB, rent.getBeginTime());
 
                 if(available) {
-                    rentDB.merge(rent, equipmentDB, clientDB);
+                    rentDB.update(rent, equipmentDB, clientDB);
                     return rentRepository.update(rent);
                 } else {
                     throw new BusinessLogicInterruptException("Equipment not available");
@@ -105,14 +104,7 @@ public class RentServiceImpl implements RentServicePort {
         }
     }
 
-    private static void validateTime(Rent rent, LocalDateTime now) throws ObjectNotValidException {
-        if (rent.getEndTime() != null && rent.getBeginTime().isAfter(rent.getEndTime())) {
-            throw new ObjectNotValidException("Given dates were invalid");
-        }
-        if(rent.getBeginTime().isBefore(now)) {
-            throw new ObjectNotValidException("Given dates were invalid");
-        }
-    }
+
 
     @Override
     public void remove(UUID uuid) throws BusinessLogicInterruptException, ObjectNotFoundServiceException {

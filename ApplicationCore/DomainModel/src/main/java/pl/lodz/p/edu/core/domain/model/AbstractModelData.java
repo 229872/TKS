@@ -1,27 +1,17 @@
 package pl.lodz.p.edu.core.domain.model;
 
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+
 import java.io.Serializable;
 import java.util.UUID;
 
-
+@ToString
+@RequiredArgsConstructor
 public abstract class AbstractModelData implements Serializable {
 
-    private UUID entityId = UUID.randomUUID();
-
-    private long version;
-
-    public AbstractModelData() {}
-
-    public UUID getEntityId() {
-        return entityId;
-    }
-
-    @Override
-    public String toString() {
-        return "AbstractEntity{" +
-                "entityId=" + entityId +
-                ", version=" + version +
-                '}';
-    }
+    @Getter
+    private final UUID entityId;
 }

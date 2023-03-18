@@ -10,6 +10,13 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
+
     <artifactId>DomainModel</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>DomainModel</name>

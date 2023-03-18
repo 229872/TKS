@@ -7,6 +7,7 @@ public class EquipmentFromDataToDomainMapper {
 
     public Equipment convertToDomainModel(EquipmentEnt equipmentEnt) {
         return new Equipment(
+                equipmentEnt.getEntityId(),
                 equipmentEnt.getFirstDayCost(),
                 equipmentEnt.getNextDaysCost(),
                 equipmentEnt.getBail(),

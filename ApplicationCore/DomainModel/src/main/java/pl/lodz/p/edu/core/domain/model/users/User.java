@@ -1,69 +1,40 @@
 package pl.lodz.p.edu.core.domain.model.users;
 
+import lombok.*;
 import pl.lodz.p.edu.core.domain.model.AbstractModelData;
 
+import java.util.UUID;
 
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public abstract class User extends AbstractModelData {
 
-    private String login;
-
+    @Getter
+    private final String login;
+    @Getter @Setter
     private String password;
-
+    @Getter @Setter
     private boolean active;
-
+    @Getter
     protected UserType userType;
 
+
     public User(String login, String password) {
+        super(null);
         this.login = login;
         this.active = true;
         this.password = password;
     }
 
-    public User() {}
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
+    public User(UUID id, String login, String password) {
+        super(id);
         this.login = login;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public void merge(User user) {
-        this.login = user.login;
-        this.active = user.active;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "login='" + login + '\'' +
-                ", active=" + active +
-                ", abstractEntity=" + super.toString() +
-                '}';
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
+        this.active = true;
         this.password = password;
     }
 
-    public UserType getUserType() {
-        return userType;
-    }
-
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+    public void update(User user) {
+        this.password = user.password;
+        this.active = user.active;
     }
 }

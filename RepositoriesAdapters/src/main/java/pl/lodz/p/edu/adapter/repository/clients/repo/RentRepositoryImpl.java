@@ -12,6 +12,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
+import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundRepositoryException;
 
 
 import java.util.ArrayList;
@@ -27,10 +28,14 @@ public class RentRepositoryImpl implements RentRepository {
     private EntityManager em;
 
     @Override
-    public RentEnt get(UUID entityId) {
-        return em.createNamedQuery(RentEnt.FIND_BY_ID, RentEnt.class)
-                .setParameter("id", entityId)
-                .getSingleResult();
+    public RentEnt get(UUID entityId) throws EntityNotFoundRepositoryException {
+        try {
+            return em.createNamedQuery(RentEnt.FIND_BY_ID, RentEnt.class)
+                    .setParameter("id", entityId)
+                    .getSingleResult();
+        } catch (PersistenceException e) {
+            throw new EntityNotFoundRepositoryException(e.getMessage(), e.getCause());
+        }
     }
 
     @Override

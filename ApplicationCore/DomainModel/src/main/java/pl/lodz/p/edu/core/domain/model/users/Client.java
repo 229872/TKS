@@ -1,21 +1,31 @@
 package pl.lodz.p.edu.core.domain.model.users;
 
+import lombok.*;
 import pl.lodz.p.edu.core.domain.model.Address;
+import java.util.UUID;
 
 
+@Getter
+@Setter
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class Client extends User {
 
-
     private String firstName;
-
-
     private String lastName;
-
     private Address address;
 
 
     public Client(String login, String password, String firstName, String lastName, Address address) {
         super(login, password);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.userType = UserType.CLIENT;
+    }
+
+    public Client(UUID id, String login, String password, String firstName, String lastName, Address address) {
+        super(id, login, password);
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -30,56 +40,12 @@ public class Client extends User {
         this.userType = UserType.CLIENT;
     }
 
-    public void merge(Client client) {
-        this.setLogin(client.getLogin());
-        this.setPassword(client.getPassword());
-        this.firstName = client.getFirstName();
-        this.lastName = client.getLastName();
-        this.address = client.getAddress();
-        this.userType = UserType.CLIENT;
-    }
-
-    public Client() {
-        address = new Address();
-        this.userType = UserType.CLIENT;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
     @Override
-    public String toString() {
-        return "Client{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", address=" + address +
-                "} " + super.toString();
-    }
-
-    public void updateClientData(String firstName, String lastName, Address address) {
-        setFirstName(firstName);
-        setLastName(lastName);
-        setAddress(address);
+    public void update(User user) {
+        super.update(user);
+        Client client = (Client) user;
+        this.firstName = client.firstName;
+        this.lastName = client.lastName;
+        this.address = client.address;
     }
 }

@@ -43,13 +43,13 @@ public class AdminController {
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({"ADMIN"})
+//    @RolesAllowed({"ADMIN"})
     public Response addAdmin(@Valid AdminDTO adminDTO) {
         try {
             userService.registerUser(adminDTO);
             return Response.status(CREATED).entity(adminDTO).build();
         } catch(RestConflictException | TransactionalException e) {
-            return Response.status(CONFLICT).build();
+            return Response.status(CONFLICT).entity(e.getMessage()).build();
         }
     }
 
@@ -91,18 +91,18 @@ public class AdminController {
         try {
             userServiceFacade.verifySingedLogin(ifMatch, jsonDTO);
         } catch (ParseException | RestAuthenticationFailureException | JOSEException e) {
-            return Response.status(BAD_REQUEST).build();
+            return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         }
 
         try {
             userService.updateAdmin(entityId, adminDTO);
             return Response.status(OK).entity(adminDTO).build();
         } catch (RestIllegalModificationException e) {
-            return Response.status(BAD_REQUEST).build();
+            return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         } catch(TransactionalException e) { // login modification
-            return Response.status(BAD_REQUEST).build();
+            return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         } catch(ObjectNotFoundRestException e) {
-            return Response.status(NOT_FOUND).build();
+            return Response.status(NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 

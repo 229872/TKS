@@ -38,9 +38,9 @@ public class UserServiceFacade {
 
             return Response.status(OK).entity(user).tag(ifMatchTag).build();
         } catch(ObjectNotFoundRestException e) {
-            return Response.status(NOT_FOUND).build();
+            return Response.status(NOT_FOUND).entity(e.getMessage()).build();
         } catch (JOSEException e) {
-            return Response.status(BAD_REQUEST).build();
+            return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
 
@@ -49,7 +49,7 @@ public class UserServiceFacade {
             UserDTO user = userService.getByLogin(login);
             return Response.status(OK).entity(user).build();
         } catch(ObjectNotFoundRestException e) {
-            return Response.status(NOT_FOUND).build();
+            return Response.status(NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 
@@ -58,7 +58,7 @@ public class UserServiceFacade {
             userService.activateUser(entityId);
             return Response.status(NO_CONTENT).build();
         } catch(ObjectNotFoundRestException e) {
-            return Response.status(NOT_FOUND).build();
+            return Response.status(NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 
@@ -67,7 +67,7 @@ public class UserServiceFacade {
             userService.deactivateUser(entityId);
             return Response.status(NO_CONTENT).build();
         } catch(ObjectNotFoundRestException e) {
-            return Response.status(NOT_FOUND).build();
+            return Response.status(NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 

@@ -39,7 +39,6 @@ public class UserRepositoryImpl implements UserRepository {
 
 
     @Override
-    //TODO it can be added entity with same login, need catch exception
     public void add(UserEnt elem) {
         em.persist(elem);
     }

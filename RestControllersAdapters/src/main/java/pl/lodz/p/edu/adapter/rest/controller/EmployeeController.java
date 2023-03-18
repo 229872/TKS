@@ -43,7 +43,7 @@ public class EmployeeController {
             EmployeeDTO registeredEmployee = (EmployeeDTO) userService.registerUser(employeeDTO);
             return Response.status(CREATED).entity(registeredEmployee).build();
         } catch(RestConflictException | TransactionalException e) {
-            return Response.status(CONFLICT).build();
+            return Response.status(CONFLICT).entity(e.getMessage()).build();
         }
     }
 
@@ -83,17 +83,17 @@ public class EmployeeController {
         try {
             userServiceFacade.verifySingedLogin(ifMatch, jsonDTO);
         } catch (ParseException | RestAuthenticationFailureException | JOSEException e) {
-            return Response.status(BAD_REQUEST).build();
+            return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         }
         try {
             userService.updateEmployee(entityId, employeeDTO);
             return Response.status(OK).entity(employeeDTO).build();
         } catch (RestIllegalModificationException e) {
-            return Response.status(BAD_REQUEST).build();
+            return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         } catch(TransactionalException e) { // login modification
-            return Response.status(BAD_REQUEST).build();
+            return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         } catch(ObjectNotFoundRestException e) {
-            return Response.status(NOT_FOUND).build();
+            return Response.status(NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 

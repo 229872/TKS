@@ -7,15 +7,13 @@ import pl.lodz.p.edu.adapter.rest.dto.AddressDTO;
 
 public class ClientDTO extends UserDTO {
 
-    @NotNull
-    @NotEmpty
+    @NotEmpty(message = "First name can't be empty")
     private String firstName;
 
-    @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Last name can't be empty")
     private String lastName;
 
-    @NotNull
+    @NotNull(message = "Address can't be null")
     @Valid
     private AddressDTO address;
 

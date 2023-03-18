@@ -16,6 +16,7 @@ public class RentFromDataToDomainMapper {
 
     public Rent convertToDomainModel(RentEnt rentEnt) {
         return new Rent (
+                rentEnt.getEntityId(),
                 rentEnt.getBeginTime(),
                 rentEnt.getEndTime(),
                 equipmentToDomainMapper.convertToDomainModel(

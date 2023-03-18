@@ -2,12 +2,16 @@ package pl.lodz.p.edu.adapter.rest.dto.users;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public abstract class UserDTO {
 
-    @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Login can't be empty")
     private String login;
+
+    @NotEmpty(message = "Password can't be empty")
+    @Size(min = 8, message = "Password must have at least 8 characters")
+    private String password;
 
     public String getPassword() {
         return password;
@@ -17,7 +21,8 @@ public abstract class UserDTO {
         this.password = password;
     }
 
-    private String password;
+
+
 
     private UserTypeDTO userType;
 

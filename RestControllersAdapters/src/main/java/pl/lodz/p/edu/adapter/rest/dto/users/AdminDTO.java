@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 public class AdminDTO extends UserDTO {
 
-    @NotEmpty
+    @NotEmpty(message = "Admin must have ice creams")
     private String favouriteIceCream;
 
     public AdminDTO() {

@@ -1,6 +1,6 @@
 package pl.lodz.p.edu.adapter.rest.api;
 
-import pl.lodz.p.edu.adapter.rest.dto.EquipmentDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.EquipmentInputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalModificationException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
@@ -9,13 +9,13 @@ import java.util.UUID;
 
 public interface EquipmentService {
 
-    EquipmentDTO add(EquipmentDTO equipment);
+    EquipmentInputDTO add(EquipmentInputDTO equipment);
 
-    List<EquipmentDTO> getAll();
+    List<EquipmentInputDTO> getAll();
 
-    EquipmentDTO get(UUID uuid) throws ObjectNotFoundRestException;
+    EquipmentInputDTO get(UUID uuid) throws ObjectNotFoundRestException;
 
-    EquipmentDTO update(UUID entityId, EquipmentDTO equipmentDTO) throws RestIllegalModificationException, ObjectNotFoundRestException;
+    EquipmentInputDTO update(UUID entityId, EquipmentInputDTO equipmentInputDTO) throws RestIllegalModificationException, ObjectNotFoundRestException;
 
     void remove(UUID uuid) throws RestConflictException, ObjectNotFoundRestException;
 }

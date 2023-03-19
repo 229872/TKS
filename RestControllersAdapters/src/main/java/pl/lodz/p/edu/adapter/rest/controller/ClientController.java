@@ -10,7 +10,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.adapter.rest.api.UserService;
-import pl.lodz.p.edu.adapter.rest.dto.users.ClientDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.users.ClientInputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestAuthenticationFailureException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
@@ -39,9 +39,9 @@ public class ClientController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
-    public Response addClient(@Valid ClientDTO clientDTO) {
+    public Response addClient(@Valid ClientInputDTO clientDTO) {
         try {
-            ClientDTO registeredClient = (ClientDTO) userService.registerUser(clientDTO);
+            ClientInputDTO registeredClient = (ClientInputDTO) userService.registerUser(clientDTO);
             return Response.status(CREATED).entity(registeredClient).build();
         } catch(RestConflictException | TransactionalException e ) {
             return Response.status(CONFLICT).entity(e.getMessage()).build();
@@ -53,7 +53,7 @@ public class ClientController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response getAll() {
-        List<ClientDTO> clients = userServiceFacade.getClients();
+        List<ClientInputDTO> clients = userServiceFacade.getClients();
         return Response.ok(clients).build();
     }
 
@@ -78,7 +78,7 @@ public class ClientController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @Allowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response updateClient(@PathParam("entityId") UUID entityId, @HeaderParam("IF-MATCH") String ifMatch,
-                                 @Valid ClientDTO clientDTO) {
+                                 @Valid ClientInputDTO clientDTO) {
         JsonObject jsonDTO = new JsonObject();
         jsonDTO.addProperty("login", clientDTO.getLogin());
         try {

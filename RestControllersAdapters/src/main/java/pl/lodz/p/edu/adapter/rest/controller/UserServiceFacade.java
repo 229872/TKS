@@ -6,7 +6,8 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.adapter.rest.api.AuthenticationService;
 import pl.lodz.p.edu.adapter.rest.api.UserService;
-import pl.lodz.p.edu.adapter.rest.dto.users.*;
+import pl.lodz.p.edu.adapter.rest.dto.UserTypeDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.users.*;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestAuthenticationFailureException;
 
@@ -30,7 +31,7 @@ public class UserServiceFacade {
     //FIXME what does id do ?
     public Response getSingleUser(UUID entityId) {
         try {
-            UserDTO user = userService.get(entityId);
+            UserInputDTO user = userService.get(entityId);
 
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("login", user.getLogin());
@@ -46,7 +47,7 @@ public class UserServiceFacade {
 
     public Response getSingleUser(String login) {
         try {
-            UserDTO user = userService.getByLogin(login);
+            UserInputDTO user = userService.getByLogin(login);
             return Response.status(OK).entity(user).build();
         } catch(ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).entity(e.getMessage()).build();
@@ -79,28 +80,28 @@ public class UserServiceFacade {
     }
 
 
-    public List<UserDTO> getAll() {
+    public List<UserInputDTO> getAll() {
        return userService.getAll();
     }
 
-    public List<ClientDTO> getClients() {
+    public List<ClientInputDTO> getClients() {
         return userService.getAll().stream()
                 .filter(user -> user.getUserType().equals(UserTypeDTO.CLIENT))
-                .map(user -> (ClientDTO) user)
+                .map(user -> (ClientInputDTO) user)
                 .collect(Collectors.toList());
     }
 
-    public List<AdminDTO> getAdmins() {
+    public List<AdminInputDTO> getAdmins() {
       return userService.getAll().stream()
                 .filter(user -> user.getUserType().equals(UserTypeDTO.ADMIN))
-                .map(user -> (AdminDTO) user)
+                .map(user -> (AdminInputDTO) user)
                 .collect(Collectors.toList());
     }
 
-    public List<EmployeeDTO> getEmployees() {
+    public List<EmployeeInputDTO> getEmployees() {
         return userService.getAll().stream()
                 .filter(user -> user.getUserType().equals(UserTypeDTO.EMPLOYEE))
-                .map(user -> (EmployeeDTO) user)
+                .map(user -> (EmployeeInputDTO) user)
                 .collect(Collectors.toList());
     }
 }

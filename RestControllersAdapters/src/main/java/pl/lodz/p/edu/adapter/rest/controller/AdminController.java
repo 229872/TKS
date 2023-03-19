@@ -2,17 +2,13 @@ package pl.lodz.p.edu.adapter.rest.controller;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.shaded.gson.JsonObject;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
-import jakarta.transaction.TransactionalException;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.adapter.rest.api.UserService;
-import pl.lodz.p.edu.adapter.rest.dto.users.AdminDTO;
-import pl.lodz.p.edu.adapter.rest.dto.users.UserDTO;
-import pl.lodz.p.edu.adapter.rest.dto.users.UserTypeDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.users.AdminInputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestAuthenticationFailureException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
@@ -21,7 +17,6 @@ import pl.lodz.p.edu.adapter.rest.exception.RestIllegalModificationException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static jakarta.ws.rs.core.Response.Status.*;
 
@@ -44,11 +39,11 @@ public class AdminController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN"})
-    public Response addAdmin(@Valid AdminDTO adminDTO) {
+    public Response addAdmin(@Valid AdminInputDTO adminDTO) {
         try {
             userService.registerUser(adminDTO);
             return Response.status(CREATED).entity(adminDTO).build();
-        } catch(RestConflictException | TransactionalException e) {
+        } catch(RestConflictException e) {
             return Response.status(CONFLICT).entity(e.getMessage()).build();
         }
     }
@@ -59,7 +54,7 @@ public class AdminController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN"})
     public Response getAll() {
-        List<AdminDTO> admins = userServiceFacade.getAdmins();
+        List<AdminInputDTO> admins = userServiceFacade.getAdmins();
         return Response.ok(admins).build();
     }
 
@@ -85,7 +80,7 @@ public class AdminController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN"})
     public Response updateAdmin(@PathParam("entityId") UUID entityId, @HeaderParam("IF-MATCH") String ifMatch,
-                                @Valid AdminDTO adminDTO) {
+                                @Valid AdminInputDTO adminDTO) {
         JsonObject jsonDTO = new JsonObject();
         jsonDTO.addProperty("login", adminDTO.getLogin());
         try {
@@ -98,8 +93,6 @@ public class AdminController {
             userService.updateAdmin(entityId, adminDTO);
             return Response.status(OK).entity(adminDTO).build();
         } catch (RestIllegalModificationException e) {
-            return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
-        } catch(TransactionalException e) { // login modification
             return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         } catch(ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).entity(e.getMessage()).build();

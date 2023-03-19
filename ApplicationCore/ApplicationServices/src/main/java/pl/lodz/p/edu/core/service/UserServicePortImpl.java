@@ -4,18 +4,17 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceException;
 import jakarta.transaction.Transactional;
+import jakarta.transaction.TransactionalException;
 import pl.lodz.p.edu.core.domain.exception.ConflictException;
 import pl.lodz.p.edu.core.domain.exception.IllegalModificationException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.core.domain.model.users.*;
 import pl.lodz.p.edu.ports.incoming.UserServicePort;
 import pl.lodz.p.edu.ports.outcoming.UserRepositoryPort;
-
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Transactional
 @ApplicationScoped
 public class UserServicePortImpl implements UserServicePort {
 
@@ -31,7 +30,7 @@ public class UserServicePortImpl implements UserServicePort {
         try {
             userRepository.add(user);
             return user;
-        } catch(PersistenceException e) {
+        } catch(PersistenceException | TransactionalException e) {
             throw new ConflictException("Already exists user with given login"); //FIXME throw no login if rly no login
         }
     }

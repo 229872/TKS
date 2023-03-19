@@ -1,9 +1,9 @@
 package pl.lodz.p.edu.adapter.rest.adapter.mapper.user;
 
 import pl.lodz.p.edu.adapter.rest.dto.AddressDTO;
-import pl.lodz.p.edu.adapter.rest.dto.users.AdminDTO;
-import pl.lodz.p.edu.adapter.rest.dto.users.ClientDTO;
-import pl.lodz.p.edu.adapter.rest.dto.users.EmployeeDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.users.AdminInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.users.ClientInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.users.EmployeeInputDTO;
 import pl.lodz.p.edu.core.domain.model.Address;
 import pl.lodz.p.edu.core.domain.model.users.Admin;
 import pl.lodz.p.edu.core.domain.model.users.Client;
@@ -18,7 +18,7 @@ public class UserFromDTOToDomainMapper {
         );
     }
 
-    public Client convertClientToDomainModel(ClientDTO clientDTO) {
+    public Client convertClientToDomainModel(ClientInputDTO clientDTO) {
         return new Client (
                 clientDTO.getLogin(),
                 clientDTO.getPassword(),
@@ -28,7 +28,7 @@ public class UserFromDTOToDomainMapper {
         );
     }
 
-    public Admin convertAdminToDomainModel(AdminDTO adminDTO) {
+    public Admin convertAdminToDomainModel(AdminInputDTO adminDTO) {
         return new Admin (
                 adminDTO.getLogin(),
                 adminDTO.getPassword(),
@@ -36,7 +36,7 @@ public class UserFromDTOToDomainMapper {
         );
     }
 
-    public Employee convertEmployeeToDomainModel(EmployeeDTO employeeDTO) {
+    public Employee convertEmployeeToDomainModel(EmployeeInputDTO employeeDTO) {
         return new Employee (
                 employeeDTO.getLogin(),
                 employeeDTO.getPassword(),

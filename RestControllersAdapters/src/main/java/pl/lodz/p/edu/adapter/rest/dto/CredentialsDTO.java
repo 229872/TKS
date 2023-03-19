@@ -1,37 +1,20 @@
 package pl.lodz.p.edu.adapter.rest.dto;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class CredentialsDTO {
 
-    @NotEmpty
+    @NotBlank(message = "{login.empty}")
     private String login;
 
-    @NotEmpty
+    @NotBlank(message = "{password.empty}")
+    @Size(min = 8, message = "{password.size}")
     private String password;
-
-    public CredentialsDTO() {
-
-    }
-
-    public CredentialsDTO(String login, String password) {
-        this.login = login;
-        this.password = password;
-    }
-
-    public String getLogin() {
-        return this.login;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

@@ -1,9 +1,9 @@
 package pl.lodz.p.edu.adapter.rest.adapter.mapper.user;
 
 import pl.lodz.p.edu.adapter.rest.dto.AddressDTO;
-import pl.lodz.p.edu.adapter.rest.dto.users.AdminDTO;
-import pl.lodz.p.edu.adapter.rest.dto.users.ClientDTO;
-import pl.lodz.p.edu.adapter.rest.dto.users.EmployeeDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.users.AdminInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.users.ClientInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.users.EmployeeInputDTO;
 import pl.lodz.p.edu.core.domain.model.Address;
 import pl.lodz.p.edu.core.domain.model.users.Admin;
 import pl.lodz.p.edu.core.domain.model.users.Client;
@@ -18,8 +18,8 @@ public class UserFromDomainToDTOMapper {
         );
     }
 
-    public ClientDTO convertClientToClientDTO(Client client) {
-        return new ClientDTO(
+    public ClientInputDTO convertClientToClientDTO(Client client) {
+        return new ClientInputDTO(
                 client.getLogin(),
                 client.getPassword(),
                 client.getFirstName(),
@@ -28,16 +28,16 @@ public class UserFromDomainToDTOMapper {
         );
     }
 
-    public AdminDTO convertAdminToAdminDTO(Admin admin) {
-        return new AdminDTO(
+    public AdminInputDTO convertAdminToAdminDTO(Admin admin) {
+        return new AdminInputDTO(
                 admin.getLogin(),
                 admin.getPassword(),
                 admin.getFavouriteIceCream()
         );
     }
 
-    public EmployeeDTO convertEmployeeToEmployeeDTO(Employee employee) {
-        return new EmployeeDTO(
+    public EmployeeInputDTO convertEmployeeToEmployeeDTO(Employee employee) {
+        return new EmployeeInputDTO(
                 employee.getLogin(),
                 employee.getPassword(),
                 employee.getDesk()

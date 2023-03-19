@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.UUID;
 
 
-@Transactional
 @ApplicationScoped
 public class RentServiceImpl implements RentServicePort {
 

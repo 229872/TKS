@@ -7,9 +7,9 @@ import pl.lodz.p.edu.adapter.rest.adapter.mapper.user.UserFromDTOToDomainMapper;
 import pl.lodz.p.edu.adapter.rest.adapter.mapper.rent.RentFromDTOToDomainMapper;
 import pl.lodz.p.edu.adapter.rest.adapter.mapper.rent.RentFromDomainToDTOMapper;
 import pl.lodz.p.edu.adapter.rest.api.RentService;
-import pl.lodz.p.edu.adapter.rest.dto.EquipmentDTO;
-import pl.lodz.p.edu.adapter.rest.dto.RentDTO;
-import pl.lodz.p.edu.adapter.rest.dto.users.ClientDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.EquipmentInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.RentInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.users.ClientInputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestBusinessLogicInterruptException;
 import pl.lodz.p.edu.adapter.rest.exception.RestObjectNotValidException;
@@ -53,11 +53,11 @@ public class RentRestControllerAdapter implements RentService {
     private UserFromDTOToDomainMapper userToDomainMapper;
 
     @Override
-    public RentDTO add(RentDTO rentDTO) throws RestObjectNotValidException, ObjectNotFoundRestException {
+    public RentInputDTO add(RentInputDTO rentInputDTO) throws RestObjectNotValidException, ObjectNotFoundRestException {
         try {
-            Client client = (Client) userServicePort.get(rentDTO.getClientUUIDFromString());
-            Equipment equipment = equipmentServicePort.get(rentDTO.getEquipmentUUIDFromString());
-            Rent rent = convertToDomainModel(rentDTO, equipment, client);
+            Client client = (Client) userServicePort.get(rentInputDTO.getClientUUIDFromString());
+            Equipment equipment = equipmentServicePort.get(rentInputDTO.getEquipmentUUIDFromString());
+            Rent rent = convertToDomainModel(rentInputDTO, equipment, client);
             return convertToDTO(rentServicePort.add(rent));
 
         } catch (ObjectNotValidException | BusinessLogicInterruptException e) {
@@ -69,7 +69,7 @@ public class RentRestControllerAdapter implements RentService {
     }
 
     @Override
-    public List<RentDTO> getRentsByClient(ClientDTO clientDTO) {
+    public List<RentInputDTO> getRentsByClient(ClientInputDTO clientDTO) {
         Client client = userToDomainMapper.convertClientToDomainModel(clientDTO);
         return rentServicePort.getRentsByClient(client).stream()
                 .map(this::convertToDTO)
@@ -77,20 +77,20 @@ public class RentRestControllerAdapter implements RentService {
     }
 
     @Override
-    public List<RentDTO> getRentsByEquipment(EquipmentDTO equipmentDTO) {
-        Equipment equipment = equipmentToDomainMapper.convertToDomainModel(equipmentDTO);
+    public List<RentInputDTO> getRentsByEquipment(EquipmentInputDTO equipmentInputDTO) {
+        Equipment equipment = equipmentToDomainMapper.convertToDomainModel(equipmentInputDTO);
         List<Rent> rentList = rentServicePort.getRentsByEquipment(equipment);
         return rentList.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
-    public List<RentDTO> getAll() {
+    public List<RentInputDTO> getAll() {
         List<Rent> rentList = rentServicePort.getAll();
         return rentList.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
-    public RentDTO get(UUID uuid) throws ObjectNotFoundRestException {
+    public RentInputDTO get(UUID uuid) throws ObjectNotFoundRestException {
         try {
             Rent rent = rentServicePort.get(uuid);
             return convertToDTO(rent);
@@ -101,12 +101,12 @@ public class RentRestControllerAdapter implements RentService {
     }
 
     @Override
-    public RentDTO update(UUID entityId, RentDTO rentDTO) throws RestObjectNotValidException,
+    public RentInputDTO update(UUID entityId, RentInputDTO rentInputDTO) throws RestObjectNotValidException,
             RestBusinessLogicInterruptException, ObjectNotFoundRestException {
         try {
-            Equipment equipment = equipmentServicePort.get(rentDTO.getEquipmentUUIDFromString());
-            Client client = (Client) userServicePort.get(rentDTO.getClientUUIDFromString());
-            Rent rent = convertToDomainModel(rentDTO, equipment, client);
+            Equipment equipment = equipmentServicePort.get(rentInputDTO.getEquipmentUUIDFromString());
+            Client client = (Client) userServicePort.get(rentInputDTO.getClientUUIDFromString());
+            Rent rent = convertToDomainModel(rentInputDTO, equipment, client);
             Rent rentReturn = rentServicePort.update(entityId, rent);
             return convertToDTO(rentReturn);
 
@@ -133,17 +133,17 @@ public class RentRestControllerAdapter implements RentService {
     }
 
     @Override
-    public boolean checkEquipmentAvailable(EquipmentDTO equipmentDTO, LocalDateTime dateTime) {
-        Equipment equipment = equipmentToDomainMapper.convertToDomainModel(equipmentDTO);
+    public boolean checkEquipmentAvailable(EquipmentInputDTO equipmentInputDTO, LocalDateTime dateTime) {
+        Equipment equipment = equipmentToDomainMapper.convertToDomainModel(equipmentInputDTO);
         return rentServicePort.checkEquipmentAvailable(equipment, dateTime);
     }
 
-    private RentDTO convertToDTO(Rent rent) {
+    private RentInputDTO convertToDTO(Rent rent) {
         return toDTOMapper.convertToDTO(rent);
     }
 
-    private Rent convertToDomainModel(RentDTO rentDTO, Equipment equipment, Client client)
+    private Rent convertToDomainModel(RentInputDTO rentInputDTO, Equipment equipment, Client client)
             throws RestObjectNotValidException {
-        return toDomainModel.convertToDomainModel(rentDTO, equipment, client);
+        return toDomainModel.convertToDomainModel(rentInputDTO, equipment, client);
     }
 }

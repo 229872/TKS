@@ -14,7 +14,6 @@ import pl.lodz.p.edu.core.domain.model.Equipment;
 import java.util.List;
 import java.util.UUID;
 
-@Transactional
 @ApplicationScoped
 public class EquipmentServiceImpl implements EquipmentServicePort {
 

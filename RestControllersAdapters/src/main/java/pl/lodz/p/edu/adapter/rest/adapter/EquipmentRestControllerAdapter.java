@@ -5,7 +5,7 @@ import jakarta.inject.Inject;
 import pl.lodz.p.edu.adapter.rest.adapter.mapper.equipment.EquipmentFromDTOToDomainMapper;
 import pl.lodz.p.edu.adapter.rest.adapter.mapper.equipment.EquipmentFromDomainToDTOMapper;
 import pl.lodz.p.edu.adapter.rest.api.EquipmentService;
-import pl.lodz.p.edu.adapter.rest.dto.EquipmentDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.EquipmentInputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalModificationException;
@@ -33,18 +33,18 @@ public class EquipmentRestControllerAdapter implements EquipmentService {
 
 
     @Override
-    public EquipmentDTO add(EquipmentDTO equipmentDTO) {
-        Equipment equipment = convertToDomainModel(equipmentDTO);
+    public EquipmentInputDTO add(EquipmentInputDTO equipmentInputDTO) {
+        Equipment equipment = convertToDomainModel(equipmentInputDTO);
         return convertToDTO(servicePort.add(equipment));
     }
     @Override
-    public List<EquipmentDTO> getAll() {
+    public List<EquipmentInputDTO> getAll() {
         List<Equipment> equipmentList = servicePort.getAll();
         return equipmentList.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
-    public EquipmentDTO get(UUID uuid) throws ObjectNotFoundRestException {
+    public EquipmentInputDTO get(UUID uuid) throws ObjectNotFoundRestException {
         try {
             Equipment equipment = servicePort.get(uuid);
             return convertToDTO(equipment);
@@ -54,9 +54,9 @@ public class EquipmentRestControllerAdapter implements EquipmentService {
     }
 
     @Override
-    public EquipmentDTO update(UUID entityId, EquipmentDTO equipmentDTO) throws RestIllegalModificationException,
+    public EquipmentInputDTO update(UUID entityId, EquipmentInputDTO equipmentInputDTO) throws RestIllegalModificationException,
             ObjectNotFoundRestException {
-        Equipment equipment = convertToDomainModel(equipmentDTO);
+        Equipment equipment = convertToDomainModel(equipmentInputDTO);
         try {
             Equipment updated = servicePort.update(entityId, equipment);
             return convertToDTO(updated);
@@ -80,11 +80,11 @@ public class EquipmentRestControllerAdapter implements EquipmentService {
         }
     }
 
-    private EquipmentDTO convertToDTO(Equipment equipment) {
+    private EquipmentInputDTO convertToDTO(Equipment equipment) {
         return toDTOMapper.convertToDTO(equipment);
     }
 
-    private Equipment convertToDomainModel(EquipmentDTO equipmentDTO) {
-        return toDomainMapper.convertToDomainModel(equipmentDTO);
+    private Equipment convertToDomainModel(EquipmentInputDTO equipmentInputDTO) {
+        return toDomainMapper.convertToDomainModel(equipmentInputDTO);
     }
 }

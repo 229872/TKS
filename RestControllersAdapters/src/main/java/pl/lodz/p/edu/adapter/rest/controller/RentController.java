@@ -1,8 +1,6 @@
 package pl.lodz.p.edu.adapter.rest.controller;
 
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.NoResultException;
 import jakarta.transaction.TransactionalException;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -11,9 +9,9 @@ import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.adapter.rest.api.UserService;
 import pl.lodz.p.edu.adapter.rest.api.RentService;
 import pl.lodz.p.edu.adapter.rest.api.EquipmentService;
-import pl.lodz.p.edu.adapter.rest.dto.RentDTO;
-import pl.lodz.p.edu.adapter.rest.dto.EquipmentDTO;
-import pl.lodz.p.edu.adapter.rest.dto.users.*;
+import pl.lodz.p.edu.adapter.rest.dto.input.RentInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.EquipmentInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.users.*;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestBusinessLogicInterruptException;
 import pl.lodz.p.edu.adapter.rest.exception.RestObjectNotValidException;
@@ -42,10 +40,10 @@ public class RentController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/")
-    public Response makeReservation(@Valid RentDTO rentDTO) {
+    public Response makeReservation(@Valid RentInputDTO rentInputDTO) {
         try {
-            rentService.add(rentDTO);
-            return Response.status(CREATED).entity(rentDTO).build();
+            rentService.add(rentInputDTO);
+            return Response.status(CREATED).entity(rentInputDTO).build();
         } catch (RestObjectNotValidException e) {
             return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         } catch (RestBusinessLogicInterruptException e) {
@@ -60,8 +58,8 @@ public class RentController {
     @Path("/client/{uuid}")
     public Response getClientRents(@PathParam("uuid") UUID clientUuid) {
         try {
-            ClientDTO clientDTO = (ClientDTO) userService.get(clientUuid);
-            List<RentDTO> rentsDTO = rentService.getRentsByClient(clientDTO);
+            ClientInputDTO clientDTO = (ClientInputDTO) userService.get(clientUuid);
+            List<RentInputDTO> rentsDTO = rentService.getRentsByClient(clientDTO);
             return Response.ok(rentsDTO).build();
         } catch (ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).entity(e.getMessage()).build();
@@ -73,8 +71,8 @@ public class RentController {
     @Path("/equipment/{uuid}")
     public Response getEquipmentRents(@PathParam("uuid") UUID equipmentUuid) {
         try {
-            EquipmentDTO equipmentDTO = equipmentService.get(equipmentUuid);
-            List<RentDTO> rentsDTO = rentService.getRentsByEquipment(equipmentDTO);
+            EquipmentInputDTO equipmentInputDTO = equipmentService.get(equipmentUuid);
+            List<RentInputDTO> rentsDTO = rentService.getRentsByEquipment(equipmentInputDTO);
             return Response.ok(rentsDTO).build();
         } catch (ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).entity(e.getMessage()).build();
@@ -85,7 +83,7 @@ public class RentController {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/")
     public Response getAllRents() {
-        List<RentDTO> rentsDTO = rentService.getAll();
+        List<RentInputDTO> rentsDTO = rentService.getAll();
         return Response.ok(rentsDTO).build();
     }
 
@@ -94,8 +92,8 @@ public class RentController {
     @Path("/{uuid}")
     public Response getRent(@PathParam("uuid") UUID uuid) {
         try {
-            RentDTO rentDTO = rentService.get(uuid);
-            return Response.ok(rentDTO).build();
+            RentInputDTO rentInputDTO = rentService.get(uuid);
+            return Response.ok(rentInputDTO).build();
         } catch (ObjectNotFoundRestException e) {
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
@@ -105,9 +103,9 @@ public class RentController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{uuid}")
-    public Response modifyRent(@PathParam("uuid") UUID entityId, @Valid RentDTO rentDTO) {
+    public Response modifyRent(@PathParam("uuid") UUID entityId, @Valid RentInputDTO rentInputDTO) {
         try {
-            RentDTO updatedRent = rentService.update(entityId, rentDTO);
+            RentInputDTO updatedRent = rentService.update(entityId, rentInputDTO);
             return Response.ok(updatedRent).build();
         } catch (RestObjectNotValidException | TransactionalException e) {
             return Response.status(BAD_REQUEST).build();

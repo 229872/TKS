@@ -1,8 +1,8 @@
 package pl.lodz.p.edu.adapter.rest.api;
 
-import pl.lodz.p.edu.adapter.rest.dto.EquipmentDTO;
-import pl.lodz.p.edu.adapter.rest.dto.RentDTO;
-import pl.lodz.p.edu.adapter.rest.dto.users.ClientDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.EquipmentInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.RentInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.users.ClientInputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestObjectNotValidException;
 import pl.lodz.p.edu.adapter.rest.exception.RestBusinessLogicInterruptException;
@@ -12,20 +12,20 @@ import java.util.List;
 import java.util.UUID;
 
 public interface RentService {
-    RentDTO add(RentDTO rentDTO) throws RestObjectNotValidException, RestBusinessLogicInterruptException, ObjectNotFoundRestException;
+    RentInputDTO add(RentInputDTO rentInputDTO) throws RestObjectNotValidException, RestBusinessLogicInterruptException, ObjectNotFoundRestException;
 
-    List<RentDTO> getRentsByClient(ClientDTO client);
+    List<RentInputDTO> getRentsByClient(ClientInputDTO client);
 
-    List<RentDTO> getRentsByEquipment(EquipmentDTO equipment);
+    List<RentInputDTO> getRentsByEquipment(EquipmentInputDTO equipment);
 
-    List<RentDTO> getAll();
+    List<RentInputDTO> getAll();
 
-    RentDTO get(UUID uuid) throws ObjectNotFoundRestException;
+    RentInputDTO get(UUID uuid) throws ObjectNotFoundRestException;
 
-    RentDTO update(UUID entityId, RentDTO rentDTO) throws RestObjectNotValidException,
+    RentInputDTO update(UUID entityId, RentInputDTO rentInputDTO) throws RestObjectNotValidException,
             RestBusinessLogicInterruptException, ObjectNotFoundRestException;
 
     void remove(UUID rentUuid) throws RestBusinessLogicInterruptException, ObjectNotFoundRestException;
 
-    boolean checkEquipmentAvailable(EquipmentDTO equipment, LocalDateTime now);
+    boolean checkEquipmentAvailable(EquipmentInputDTO equipment, LocalDateTime now);
 }

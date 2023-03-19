@@ -9,7 +9,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.adapter.rest.api.UserService;
-import pl.lodz.p.edu.adapter.rest.dto.users.EmployeeDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.users.EmployeeInputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestAuthenticationFailureException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
@@ -38,9 +38,9 @@ public class EmployeeController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN"})
-    public Response addEmployee(@Valid EmployeeDTO employeeDTO) {
+    public Response addEmployee(@Valid EmployeeInputDTO employeeDTO) {
         try {
-            EmployeeDTO registeredEmployee = (EmployeeDTO) userService.registerUser(employeeDTO);
+            EmployeeInputDTO registeredEmployee = (EmployeeInputDTO) userService.registerUser(employeeDTO);
             return Response.status(CREATED).entity(registeredEmployee).build();
         } catch(RestConflictException | TransactionalException e) {
             return Response.status(CONFLICT).entity(e.getMessage()).build();
@@ -52,7 +52,7 @@ public class EmployeeController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Response getAll() {
-        List<EmployeeDTO> employees = userServiceFacade.getEmployees();
+        List<EmployeeInputDTO> employees = userServiceFacade.getEmployees();
         return Response.ok(employees).build();
     }
 
@@ -77,7 +77,7 @@ public class EmployeeController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Response updateEmployee(@PathParam("entityId") UUID entityId, @HeaderParam("IF-MATCH") String ifMatch,
-                                   @Valid EmployeeDTO employeeDTO) {
+                                   @Valid EmployeeInputDTO employeeDTO) {
         JsonObject jsonDTO = new JsonObject();
         jsonDTO.addProperty("login", employeeDTO.getLogin());
         try {

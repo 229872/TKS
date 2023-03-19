@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.adapter.rest.dto.users;
+package pl.lodz.p.edu.adapter.rest.dto;
 
 public enum UserTypeDTO {
     ADMIN, CLIENT, EMPLOYEE

@@ -1,14 +1,13 @@
 package pl.lodz.p.edu.adapter.rest.controller;
 
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.adapter.rest.api.EquipmentService;
 import pl.lodz.p.edu.adapter.rest.api.RentService;
-import pl.lodz.p.edu.adapter.rest.dto.EquipmentDTO;
+import pl.lodz.p.edu.adapter.rest.dto.input.EquipmentInputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalModificationException;
@@ -31,10 +30,10 @@ public class EquipmentController {
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createEquipment(@Valid EquipmentDTO equipmentDTO) {
+    public Response createEquipment(@Valid EquipmentInputDTO equipmentInputDTO) {
         try {
-            equipmentService.add(equipmentDTO);
-            return Response.status(CREATED).entity(equipmentDTO).build();
+            equipmentService.add(equipmentInputDTO);
+            return Response.status(CREATED).entity(equipmentInputDTO).build();
         } catch(NullPointerException e) {
             return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         }
@@ -44,7 +43,7 @@ public class EquipmentController {
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllEquipment() {
-        List<EquipmentDTO> equipment = equipmentService.getAll();
+        List<EquipmentInputDTO> equipment = equipmentService.getAll();
         return Response.ok(equipment).build();
     }
 
@@ -52,8 +51,8 @@ public class EquipmentController {
     @Path("/available")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllAvailable() {
-        List<EquipmentDTO> allEquipment = equipmentService.getAll();
-        List<EquipmentDTO> availableEquipment = allEquipment.stream()
+        List<EquipmentInputDTO> allEquipment = equipmentService.getAll();
+        List<EquipmentInputDTO> availableEquipment = allEquipment.stream()
                 .filter(equipment -> rentService.checkEquipmentAvailable(equipment, LocalDateTime.now()))
                 .toList();
 
@@ -65,7 +64,7 @@ public class EquipmentController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEquipment(@PathParam("uuid") UUID uuid) {
         try {
-            EquipmentDTO equipment = equipmentService.get(uuid);
+            EquipmentInputDTO equipment = equipmentService.get(uuid);
             return Response.ok(equipment).build();
         } catch(ObjectNotFoundRestException e) {
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
@@ -75,9 +74,9 @@ public class EquipmentController {
     @PUT
     @Path("/{entityId}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateEquipment(@PathParam("entityId") UUID entityId, @Valid EquipmentDTO equipmentDTO) {
+    public Response updateEquipment(@PathParam("entityId") UUID entityId, @Valid EquipmentInputDTO equipmentInputDTO) {
         try {
-            EquipmentDTO updated = equipmentService.update(entityId, equipmentDTO);
+            EquipmentInputDTO updated = equipmentService.update(entityId, equipmentInputDTO);
             return Response.ok(updated).build();
         } catch (RestIllegalModificationException e) {
             return Response.status(BAD_REQUEST).entity(e.getMessage()).build();

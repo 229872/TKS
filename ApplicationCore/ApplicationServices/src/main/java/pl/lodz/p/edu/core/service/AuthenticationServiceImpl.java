@@ -16,7 +16,6 @@ import pl.lodz.p.edu.ports.outcoming.UserRepositoryPort;
 import java.text.ParseException;
 
 
-@Transactional
 @RequestScoped
 public class AuthenticationServiceImpl implements AuthenticationServicePort {
 

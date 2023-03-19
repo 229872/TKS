@@ -1,22 +1,27 @@
-package pl.lodz.p.edu.adapter.rest.dto;
+package pl.lodz.p.edu.adapter.rest.dto.input.users;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import pl.lodz.p.edu.adapter.rest.dto.UserTypeDTO;
 
-@NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class CredentialsNewPasswordDTO {
+public abstract class UserInputDTO {
+
     @NotBlank(message = "{login.empty}")
     private String login;
+
     @NotBlank(message = "{password.empty}")
     @Size(min = 8, message = "{password.size}")
     private String password;
 
-    @NotBlank(message = "{password.empty}")
-    @Size(min = 8, message = "{password.size}")
-    private String newPassword;
+    @Getter
+    private UserTypeDTO userType;
+
+    public UserInputDTO(UserTypeDTO userType) {
+        this.userType = userType;
+    }
 }

@@ -1,8 +1,7 @@
-INSERT INTO public.tuser (user_type, entityid, version, active, login, password, favourite_ice_cream, city, street, streetnr, first_name, last_name, desk) VALUES ('client', null, 0, true, 'client', 'password', null, null, 'city', 'street', '112', 'client', 'client');
-INSERT INTO public.tuser (user_type, entityid, version, active, login, password, favourite_ice_cream, city, street, streetnr, first_name, last_name, desk) VALUES ('admin', null, 0, true, 'admin', 'password', null, 'Vanilla', null, null, null, null, null);
-INSERT INTO public.tuser (user_type, entityid, version, active, login, password, favourite_ice_cream, city, street, streetnr, first_name, last_name, desk) VALUES ('employee', null, 0, true, 'employee', 'password', '123', null, null, null, null, null, null);
+INSERT INTO public.tuser (user_type, entityid, version, active, login, password, favourite_ice_cream, city, street, streetnr, first_name, last_name, desk) VALUES ('client', 'e290c180-ca2c-11ed-afa1-0242ac120002', 0, true, 'client', 'password', null, null, 'city', 'street', '112', 'client', 'client');
+INSERT INTO public.tuser (user_type, entityid, version, active, login, password, favourite_ice_cream, city, street, streetnr, first_name, last_name, desk) VALUES ('admin', 'e290c4d2-ca2c-11ed-afa1-0242ac120002', 0, true, 'admin', 'password', null, 'Vanilla', null, null, null, null, null);
+INSERT INTO public.tuser (user_type, entityid, version, active, login, password, favourite_ice_cream, city, street, streetnr, first_name, last_name, desk) VALUES ('employee', 'e290c64e-ca2c-11ed-afa1-0242ac120002', 0, true, 'employee', 'password', '123', null, null, null, null, null, null);
 
-INSERT INTO public.equipment (entityid, version, bail, description, first_day_cost, name, next_day_cost) VALUES (null, 0, 1, 'n', 1, 'n', 1);
 INSERT INTO public.equipment (entityid, version, bail, description, first_day_cost, name, next_day_cost) VALUES ('b3204333-2bb0-47ef-85c6-f97bc2a48c1c', 0, 2, 'm', 2, 'm', 2);
 INSERT INTO public.equipment (entityid, version, bail, description, first_day_cost, name, next_day_cost) VALUES ('b131b1b4-6aa1-4e12-a763-f48d582de3b7', 0, 3, 'o', 3, 'o', 3);
 INSERT INTO public.equipment (entityid, version, bail, description, first_day_cost, name, next_day_cost) VALUES ('9ec7daef-9d88-45a5-afaa-c045ecc9d579', 0, 4, 'p', 4, 'p', 4);

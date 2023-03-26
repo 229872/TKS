@@ -24,6 +24,9 @@
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.source>17</maven.compiler.source>
         <junit.version>5.8.2</junit.version>
+        <jakarta.jakartaee-api.version>9.1.0</jakarta.jakartaee-api.version>
+        <testcontainers.version>1.17.6</testcontainers.version>
+        <slf4j.version>2.0.7</slf4j.version>
     </properties>
 
     <dependencyManagement>
@@ -31,14 +34,14 @@
             <dependency>
                 <groupId>jakarta.platform</groupId>
                 <artifactId>jakarta.jakartaee-api</artifactId>
-                <version>9.1.0</version>
+                <version>${jakarta.jakartaee-api.version}</version>
                 <scope>provided</scope>
             </dependency>
 
             <dependency>
                 <groupId>jakarta.platform</groupId>
                 <artifactId>jakarta.jakartaee-web-api</artifactId>
-                <version>9.1.0</version>
+                <version>${jakarta.jakartaee-api.version}</version>
             </dependency>
 
             <dependency>
@@ -87,7 +90,7 @@
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>42.5.0</version>
+                <version>42.5.4</version>
             </dependency>
 
             <dependency>
@@ -157,6 +160,25 @@
                 <version>2.14.0</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>2.20.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
+
+
             <!-- rest assured -->
             <dependency>
                 <groupId>io.rest-assured</groupId>
@@ -165,6 +187,35 @@
                 <scope>test</scope>
             </dependency>
 
+            <dependency>
+                <groupId>org.microshed</groupId>
+                <artifactId>microshed-testing-testcontainers</artifactId>
+                <version>0.9</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.microshed</groupId>
+                <artifactId>microshed-testing-liberty</artifactId>
+                <version>${microshed-testing.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers</artifactId>
+                <version>1.17.6</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>1.17.6</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!--Subprojects-->
             <dependency>
                 <groupId>pl.lodz.p.edu</groupId>
                 <artifactId>ApplicationCore</artifactId>
@@ -203,23 +254,52 @@
         </dependencies>
     </dependencyManagement>
 
-
-
     <build>
-
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.3.2</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M7</version>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.3.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0-M7</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>io.openliberty.tools</groupId>
+                    <artifactId>liberty-maven-plugin</artifactId>
+                    <version>3.7.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>3.0.0-M9</version>
+                    <executions>
+                        <execution>
+                            <id>integration-test</id>
+                            <goals>
+                                <goal>integration-test</goal>
+                            </goals>
+                            <configuration>
+                                <trimStackTrace>false</trimStackTrace>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>verify</id>
+                            <goals>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
 </project>

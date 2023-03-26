@@ -1,0 +1,17 @@
+<server description="integrationServer">
+    <featureManager>
+        <feature>cdi-2.0</feature>
+        <feature>jaxrs-2.1</feature>
+        <feature>jsonb-1.0</feature>
+        <feature>mpHealth-3.1</feature>
+        <feature>mpConfig-2.0</feature>
+        <feature>mpRestClient-2.0</feature>
+        <feature>beanValidation-2.0</feature>
+    </featureManager>
+
+    <variable name="default.http.port" defaultValue="9082"/>
+    <variable name="default.https.port" defaultValue="9445"/>
+    <variable name="app.context.root" defaultValue="/api"/>
+
+    <httpEndpoint host="*" httpPort="${default.http.port}" httpsPort="${default.https.port}" id="defaultHttpEndpoint"/>
+</server>

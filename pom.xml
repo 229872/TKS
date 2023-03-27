@@ -298,6 +298,21 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>fish.payara.maven.plugins</groupId>
+                    <artifactId>payara-micro-maven-plugin</artifactId>
+                    <version>1.4.0</version>
+                    <configuration>
+                        <payaraVersion>5.2022.1</payaraVersion>
+                        <deployWar>true</deployWar>
+                        <commandLineOptions>
+                            <option>
+                                <key>--noCluster</key>
+                            </option>
+                        </commandLineOptions>
+                        <contextRoot>/</contextRoot>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>

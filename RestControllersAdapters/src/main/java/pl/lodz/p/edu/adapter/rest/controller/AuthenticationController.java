@@ -34,7 +34,7 @@ public class AuthenticationController {
     @Path("/changePassword")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
+//    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response changePassword(@Valid CredentialsNewPasswordDTO credentials) {
         try {
             authManager.changePassword(credentials);

@@ -33,7 +33,7 @@ class AppDeploymentTestConfig {
             .withReuse(true);
 
     @Container
-    static GenericContainer payara = new GenericContainer("payara/server-full:6.2023.2-jdk17")
+    public static GenericContainer payara = new GenericContainer("payara/server-full:6.2023.2-jdk17")
             .withExposedPorts(8080)
             .dependsOn(database)
             .withNetwork(network)
@@ -47,8 +47,4 @@ class AppDeploymentTestConfig {
     public static void init() {
         baseUrl = String.format("http://%s:%d/rest/api/", payara.getHost(), payara.getMappedPort(8080));
     }
-
-
-
-
 }

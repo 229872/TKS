@@ -9,7 +9,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import static io.restassured.RestAssured.given;
 
 @Testcontainers
-public class ClientControllerIt extends AppDeploymentTestConfig {
+public class ClientControllerIT extends AppDeploymentTestConfig {
 
 
     @BeforeAll
@@ -32,7 +32,8 @@ public class ClientControllerIt extends AppDeploymentTestConfig {
         given()
                 .contentType(ContentType.JSON)
                 .when()
-                .get(baseUrl + "clients")
-                .then();
+                .get(baseUrl + "admins")
+                .then()
+                .statusCode(200);
     }
 }

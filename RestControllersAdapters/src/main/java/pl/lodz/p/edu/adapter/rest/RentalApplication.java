@@ -5,6 +5,6 @@ import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 
 @ApplicationPath("/api")
-@DeclareRoles({"ADMIN", "EMPLOYEE", "CLIENT", "GUEST"})
+//@DeclareRoles({"ADMIN", "EMPLOYEE", "CLIENT", "GUEST"})
 public class RentalApplication extends Application {
 }

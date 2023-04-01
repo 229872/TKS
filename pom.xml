@@ -27,6 +27,10 @@
         <jakarta.jakartaee-api.version>9.1.0</jakarta.jakartaee-api.version>
         <testcontainers.version>1.17.6</testcontainers.version>
         <slf4j.version>2.0.7</slf4j.version>
+        <arquillian-payara.version>3.0.alpha6</arquillian-payara.version>
+        <payara.version>6.2023.1</payara.version>
+        <maven-dependency-plugin.version>3.5.0</maven-dependency-plugin.version>
+        <maven-failsafe-plugin.version>3.0.0-M9</maven-failsafe-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -215,6 +219,25 @@
                 <scope>test</scope>
             </dependency>
 
+            <dependency>
+                <groupId>fish.payara.arquillian</groupId>
+                <artifactId>arquillian-payara-server-managed</artifactId>
+                <version>${arquillian-payara.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.junit5</groupId>
+                <artifactId>arquillian-junit5-container</artifactId>
+                <version>1.7.0.Alpha14</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest</artifactId>
+                <version>2.2</version>
+                <scope>test</scope>
+            </dependency>
+
             <!--Subprojects-->
             <dependency>
                 <groupId>pl.lodz.p.edu</groupId>
@@ -298,20 +321,86 @@
                         </execution>
                     </executions>
                 </plugin>
+
                 <plugin>
-                    <groupId>fish.payara.maven.plugins</groupId>
-                    <artifactId>payara-micro-maven-plugin</artifactId>
-                    <version>1.4.0</version>
+                    <groupId>com.dkanejs.maven.plugins</groupId>
+                    <artifactId>docker-compose-maven-plugin</artifactId>
+                    <version>4.0.0</version>
+                    <executions>
+                        <execution>
+                            <id>pull</id>
+                            <phase>pre-integration-test</phase>
+                            <goals>
+                                <goal>pull</goal>
+                            </goals>
+                            <configuration>
+                                <composeFile>${project.basedir}/../docker-compose.yml</composeFile>
+                                <ignorePullFailures>true</ignorePullFailures>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>up</id>
+                            <phase>pre-integration-test</phase>
+                            <goals>
+                                <goal>up</goal>
+                            </goals>
+                            <configuration>
+                                <composeFile>${project.basedir}/../docker-compose.yml</composeFile>
+                                <detachedMode>true</detachedMode>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${maven-dependency-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>unpack</id>
+                            <phase>pre-integration-test</phase>
+                            <goals>
+                                <goal>unpack</goal>
+                            </goals>
+                            <configuration>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>fish.payara.distributions</groupId>
+                                        <artifactId>payara</artifactId>
+                                        <version>${payara.version}</version>
+                                        <type>zip</type>
+                                        <overWrite>false</overWrite>
+                                        <outputDirectory>${project.build.directory}</outputDirectory>
+                                    </artifactItem>
+                                </artifactItems>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>3.0.0-M9</version>
                     <configuration>
-                        <payaraVersion>5.2022.1</payaraVersion>
-                        <deployWar>true</deployWar>
-                        <commandLineOptions>
-                            <option>
-                                <key>--noCluster</key>
-                            </option>
-                        </commandLineOptions>
-                        <contextRoot>/</contextRoot>
+                        <systemPropertyVariables>
+                            <payara.home>${project.build.directory}/payara6</payara.home>
+                            <arquillian.launch>payara-managed</arquillian.launch>
+                        </systemPropertyVariables>
+                        <skipTests>false</skipTests>
+                        <includes>
+                            <include>**/*IT.java</include>
+                            <include>**/*IntegrationTest.java</include>
+                        </includes>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>

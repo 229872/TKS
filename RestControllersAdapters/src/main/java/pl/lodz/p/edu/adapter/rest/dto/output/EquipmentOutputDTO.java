@@ -10,7 +10,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Data
 public class EquipmentOutputDTO {
-    private UUID equipmentId;
+    private UUID entityId;
     private String name;
     private double bail;
     private double firstDayCost;

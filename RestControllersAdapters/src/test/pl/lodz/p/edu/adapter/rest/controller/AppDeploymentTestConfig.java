@@ -1,11 +1,11 @@
 package pl.lodz.p.edu.adapter.rest.controller;
 
-import io.restassured.http.ContentType;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.Network;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -13,15 +13,16 @@ import org.testcontainers.utility.MountableFile;
 
 import java.nio.file.Paths;
 
-import static io.restassured.RestAssured.*;
 
-@Testcontainers
-class AppDeploymentTestConfig {
+public class AppDeploymentTestConfig {
 
     public static final MountableFile WAR = MountableFile
             .forHostPath(Paths.get("target/RestControllersAdapters-1.0-SNAPSHOT.war").toAbsolutePath());
 
     public static Network network = Network.newNetwork();
+
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger("Docker-Container");
 
     @Container
     public static GenericContainer database = new PostgreSQLContainer("postgres:14")
@@ -38,6 +39,7 @@ class AppDeploymentTestConfig {
             .dependsOn(database)
             .withNetwork(network)
             .withNetworkAliases("payara")
+//            .withLogConsumer(new Slf4jLogConsumer(LOGGER).withPrefix("Service"))
             .withCopyFileToContainer(WAR, "/opt/payara/deployments/RestControllersAdapters-1.0-SNAPSHOT.war")
             .waitingFor(Wait.forHttp("/rest/api/clients"))
             .withReuse(true);

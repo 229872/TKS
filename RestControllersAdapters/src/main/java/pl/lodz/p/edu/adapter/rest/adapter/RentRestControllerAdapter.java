@@ -10,6 +10,7 @@ import pl.lodz.p.edu.adapter.rest.api.RentService;
 import pl.lodz.p.edu.adapter.rest.dto.input.EquipmentInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.RentInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.ClientInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.EquipmentOutputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestBusinessLogicInterruptException;
 import pl.lodz.p.edu.adapter.rest.exception.RestObjectNotValidException;
@@ -77,8 +78,8 @@ public class RentRestControllerAdapter implements RentService {
     }
 
     @Override
-    public List<RentInputDTO> getRentsByEquipment(EquipmentInputDTO equipmentInputDTO) {
-        Equipment equipment = equipmentToDomainMapper.convertToDomainModel(equipmentInputDTO);
+    public List<RentInputDTO> getRentsByEquipment(EquipmentOutputDTO equipmentOutputDTO) {
+        Equipment equipment = equipmentToDomainMapper.convertToDomainModelFromOutputDTO(equipmentOutputDTO);
         List<Rent> rentList = rentServicePort.getRentsByEquipment(equipment);
         return rentList.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
@@ -133,8 +134,8 @@ public class RentRestControllerAdapter implements RentService {
     }
 
     @Override
-    public boolean checkEquipmentAvailable(EquipmentInputDTO equipmentInputDTO, LocalDateTime dateTime) {
-        Equipment equipment = equipmentToDomainMapper.convertToDomainModel(equipmentInputDTO);
+    public boolean checkEquipmentAvailable(EquipmentOutputDTO equipmentOutputDTO, LocalDateTime dateTime) {
+        Equipment equipment = equipmentToDomainMapper.convertToDomainModelFromOutputDTO(equipmentOutputDTO);
         return rentServicePort.checkEquipmentAvailable(equipment, dateTime);
     }
 

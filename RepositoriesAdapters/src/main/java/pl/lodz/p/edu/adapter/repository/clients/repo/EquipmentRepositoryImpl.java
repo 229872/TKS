@@ -34,7 +34,6 @@ public class EquipmentRepositoryImpl implements EquipmentRepository {
     @Override
     public List<EquipmentEnt> getAll() {
         return em.createNamedQuery(EquipmentEnt.FIND_ALL, EquipmentEnt.class)
-                .setLockMode(LockModeType.OPTIMISTIC)
                 .getResultList();
     }
 

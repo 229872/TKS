@@ -1,6 +1,6 @@
 package pl.lodz.p.edu.adapter.rest.api;
 
-import pl.lodz.p.edu.adapter.rest.dto.input.EquipmentInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.EquipmentOutputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.RentInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.ClientInputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
@@ -16,7 +16,7 @@ public interface RentService {
 
     List<RentInputDTO> getRentsByClient(ClientInputDTO client);
 
-    List<RentInputDTO> getRentsByEquipment(EquipmentInputDTO equipment);
+    List<RentInputDTO> getRentsByEquipment(EquipmentOutputDTO equipment);
 
     List<RentInputDTO> getAll();
 
@@ -27,5 +27,5 @@ public interface RentService {
 
     void remove(UUID rentUuid) throws RestBusinessLogicInterruptException, ObjectNotFoundRestException;
 
-    boolean checkEquipmentAvailable(EquipmentInputDTO equipment, LocalDateTime now);
+    boolean checkEquipmentAvailable(EquipmentOutputDTO equipment, LocalDateTime now);
 }

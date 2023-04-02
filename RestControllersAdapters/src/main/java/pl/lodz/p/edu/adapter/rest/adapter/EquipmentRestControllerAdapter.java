@@ -2,10 +2,12 @@ package pl.lodz.p.edu.adapter.rest.adapter;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.slf4j.LoggerFactory;
 import pl.lodz.p.edu.adapter.rest.adapter.mapper.equipment.EquipmentFromDTOToDomainMapper;
 import pl.lodz.p.edu.adapter.rest.adapter.mapper.equipment.EquipmentFromDomainToDTOMapper;
 import pl.lodz.p.edu.adapter.rest.api.EquipmentService;
 import pl.lodz.p.edu.adapter.rest.dto.input.EquipmentInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.EquipmentOutputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalModificationException;
@@ -31,35 +33,34 @@ public class EquipmentRestControllerAdapter implements EquipmentService {
     @Inject
     private EquipmentFromDTOToDomainMapper toDomainMapper;
 
-
     @Override
-    public EquipmentInputDTO add(EquipmentInputDTO equipmentInputDTO) {
+    public EquipmentOutputDTO add(EquipmentInputDTO equipmentInputDTO) {
         Equipment equipment = convertToDomainModel(equipmentInputDTO);
-        return convertToDTO(servicePort.add(equipment));
+        return convertToOutputDTO(servicePort.add(equipment));
     }
     @Override
-    public List<EquipmentInputDTO> getAll() {
+    public List<EquipmentOutputDTO> getAll() {
         List<Equipment> equipmentList = servicePort.getAll();
-        return equipmentList.stream().map(this::convertToDTO).collect(Collectors.toList());
+        return equipmentList.stream().map(this::convertToOutputDTO).collect(Collectors.toList());
     }
 
     @Override
-    public EquipmentInputDTO get(UUID uuid) throws ObjectNotFoundRestException {
+    public EquipmentOutputDTO get(UUID uuid) throws ObjectNotFoundRestException {
         try {
             Equipment equipment = servicePort.get(uuid);
-            return convertToDTO(equipment);
+            return convertToOutputDTO(equipment);
         } catch (ObjectNotFoundServiceException e) {
             throw new ObjectNotFoundRestException(e.getMessage(), e.getCause());
         }
     }
 
     @Override
-    public EquipmentInputDTO update(UUID entityId, EquipmentInputDTO equipmentInputDTO) throws RestIllegalModificationException,
+    public EquipmentOutputDTO update(UUID entityId, EquipmentInputDTO equipmentInputDTO) throws RestIllegalModificationException,
             ObjectNotFoundRestException {
         Equipment equipment = convertToDomainModel(equipmentInputDTO);
         try {
             Equipment updated = servicePort.update(entityId, equipment);
-            return convertToDTO(updated);
+            return convertToOutputDTO(updated);
 
         } catch (IllegalModificationException e) {
             throw new RestIllegalModificationException(e.getMessage(), e.getCause());
@@ -80,11 +81,15 @@ public class EquipmentRestControllerAdapter implements EquipmentService {
         }
     }
 
-    private EquipmentInputDTO convertToDTO(Equipment equipment) {
-        return toDTOMapper.convertToDTO(equipment);
+    private EquipmentInputDTO convertToInputDTO(Equipment equipment) {
+        return toDTOMapper.convertToInputDTO(equipment);
+    }
+
+    private EquipmentOutputDTO convertToOutputDTO(Equipment equipment) {
+        return toDTOMapper.convertToOutputDTO(equipment);
     }
 
     private Equipment convertToDomainModel(EquipmentInputDTO equipmentInputDTO) {
-        return toDomainMapper.convertToDomainModel(equipmentInputDTO);
+        return toDomainMapper.convertToDomainModelFromInputDTO(equipmentInputDTO);
     }
 }

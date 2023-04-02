@@ -32,10 +32,10 @@ public class DataFaker {
     }
 
 
-    public static EquipmentEnt getEquipment() {
-        return new EquipmentEnt(Math.random() * 100, Math.random() * 200,
-                Math.random() * 1000, randStr(10));
-    }
+//    public static EquipmentEnt getEquipment() {
+//        return new EquipmentEnt(Math.random() * 100, Math.random() * 200,
+//                Math.random() * 1000, randStr(10));
+//    }
 
 
     // source: https://www.geeksforgeeks.org/generate-random-string-of-given-size-in-java/

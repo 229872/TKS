@@ -12,6 +12,7 @@ import pl.lodz.p.edu.adapter.rest.api.EquipmentService;
 import pl.lodz.p.edu.adapter.rest.dto.input.RentInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.EquipmentInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.*;
+import pl.lodz.p.edu.adapter.rest.dto.output.EquipmentOutputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestBusinessLogicInterruptException;
 import pl.lodz.p.edu.adapter.rest.exception.RestObjectNotValidException;
@@ -71,8 +72,8 @@ public class RentController {
     @Path("/equipment/{uuid}")
     public Response getEquipmentRents(@PathParam("uuid") UUID equipmentUuid) {
         try {
-            EquipmentInputDTO equipmentInputDTO = equipmentService.get(equipmentUuid);
-            List<RentInputDTO> rentsDTO = rentService.getRentsByEquipment(equipmentInputDTO);
+            EquipmentOutputDTO equipmentOutputDTO = equipmentService.get(equipmentUuid);
+            List<RentInputDTO> rentsDTO = rentService.getRentsByEquipment(equipmentOutputDTO);
             return Response.ok(rentsDTO).build();
         } catch (ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).entity(e.getMessage()).build();

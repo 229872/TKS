@@ -12,7 +12,7 @@ public abstract class AbstractEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID entityId;
+    protected UUID entityId;
 
     @Version
     private long version;

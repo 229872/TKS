@@ -18,7 +18,6 @@ public class Equipment extends AbstractModelData {
     private double nextDaysCost;
     private String description;
 
-
     public Equipment(double firstDayCost, double nextDaysCost, double bail, String name) {
         super(null);
         this.firstDayCost = firstDayCost;

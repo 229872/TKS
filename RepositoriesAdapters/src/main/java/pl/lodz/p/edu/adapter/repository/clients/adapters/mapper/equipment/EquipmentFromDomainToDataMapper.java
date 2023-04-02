@@ -7,6 +7,7 @@ public class EquipmentFromDomainToDataMapper {
 
     public EquipmentEnt convertToDataModel(Equipment equipment) {
         return new EquipmentEnt(
+                equipment.getEntityId(),
                 equipment.getFirstDayCost(),
                 equipment.getNextDaysCost(),
                 equipment.getBail(),

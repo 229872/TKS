@@ -27,6 +27,7 @@ public class EquipmentServiceImpl implements EquipmentServicePort {
     @Override
     public Equipment add(Equipment equipment) {
         equipmentRepository.add(equipment);
+
         return equipment;
     }
 

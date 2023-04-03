@@ -53,8 +53,9 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public UserEnt update(UserEnt elem) {
-        em.lock(elem, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
-        return em.merge(elem);
+        UserEnt temp = em.merge(elem);
+        em.lock(temp, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+        return temp;
     }
 
     @Override

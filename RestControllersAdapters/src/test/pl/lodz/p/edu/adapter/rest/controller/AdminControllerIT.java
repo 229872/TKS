@@ -106,25 +106,7 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
 
     @Test
     void getOneAdmin_byUUID_correct()  {
-        System.out.println(validAdminStr);
-        given()
-                .header("Content-Type", "application/json")
-                .body(validAdminStr)
-                .when()
-                .post(baseUrl + "admins")
-                .then()
-                .statusCode(201);
-
-        List<AdminOutputDTO> outputDTOList = given()
-                .header("Content-Type", "application/json")
-                .when()
-                .get(baseUrl + "admins")
-                .then()
-                .statusCode(200)
-                .log().all()
-                .extract().body().jsonPath().getList("", AdminOutputDTO.class);
-
-        String uuid = outputDTOList.get(0).getUserId().toString();
+        String uuid = getUUIDOfNewObject();
 
         given()
                 .header("Content-Type", "application/json")
@@ -189,6 +171,15 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
         String uniqueLogin = DataFakerRestControllerInputDTO.randStr(30);
         validAdmin.setLogin(uniqueLogin);
         String str1 = obj.writeValueAsString(validAdmin);
+        List<AdminOutputDTO> initialOutputDTOList = given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get(baseUrl + "admins?login=" + uniqueLogin)
+                .then()
+                .statusCode(200)
+                .extract().body().jsonPath().getList("", AdminOutputDTO.class);
+        int initialSize = initialOutputDTOList.size();
+
         given()
                 .header("Content-Type", "application/json")
                 .body(str1)
@@ -214,20 +205,13 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
                 .get(baseUrl + "admins?login=" + uniqueLogin)
                 .then()
                 .statusCode(200)
-                .body("size()", is(2));
+                .body("size()", is(initialSize + 2));
     }
 
     // update
     @Test
     void updateOneAdmin_correct() throws JsonProcessingException {
-        String uuid = given()
-                .header("Content-Type", "application/json")
-                .body(validAdminStr)
-                .when()
-                .post(baseUrl + "admins")
-                .then()
-                .statusCode(201)
-                .extract().path("entityId");
+        String uuid = getUUIDOfNewObject();
 
         String newFavouriteIceCream = "___other_favourite_ice_cream___";
         validAdmin.setFavouriteIceCream(newFavouriteIceCream);
@@ -263,14 +247,8 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
 
     @Test
     void updateOneAdmin_updateLogin() throws JsonProcessingException {
-        String uuid = given()
-                .header("Content-Type", "application/json")
-                .body(validAdminStr)
-                .when()
-                .post(baseUrl + "admins")
-                .then()
-                .statusCode(201)
-                .extract().path("entityId");
+        String uuid = getUUIDOfNewObject();
+
         validAdmin.setLogin("__other_login__");
         String updatedLogin = obj.writeValueAsString(validAdmin);
         given()
@@ -284,14 +262,8 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
 
     @Test
     void updateOneAdmin_illegalValues() throws JsonProcessingException {
-        String uuid = given()
-                .header("Content-Type", "application/json")
-                .body(validAdminStr)
-                .when()
-                .post(baseUrl + "admins")
-                .then()
-                .statusCode(201)
-                .extract().path("entityId");
+        String uuid = getUUIDOfNewObject();
+
         validAdmin.setFavouriteIceCream("");
         String updatedLogin = obj.writeValueAsString(validAdmin);
         given()
@@ -305,14 +277,7 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
 
     @Test
     void activateDeactivateTest() throws JsonProcessingException {
-        String uuid = given()
-                .header("Content-Type", "application/json")
-                .body(validAdminStr)
-                .when()
-                .post(baseUrl + "admins")
-                .then()
-                .statusCode(201)
-                .extract().path("entityId");
+        String uuid = getUUIDOfNewObject();
 
         // deactivate
         given()
@@ -343,4 +308,24 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
                 .body("active", equalTo(true));
     }
 
+    private String getUUIDOfNewObject() {
+        given()
+                .header("Content-Type", "application/json")
+                .body(validAdminStr)
+                .when()
+                .post(baseUrl + "admins")
+                .then()
+                .statusCode(201);
+
+        List<AdminOutputDTO> outputDTOList = given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get(baseUrl + "admins")
+                .then()
+                .statusCode(200)
+                .log().all()
+                .extract().body().jsonPath().getList("", AdminOutputDTO.class);
+
+        return outputDTOList.get(0).getUserId().toString();
+    }
 }

@@ -78,16 +78,7 @@ public class ClientController {
     @Path("/{entityId}")
     @Produces(MediaType.APPLICATION_JSON)
 //    @Allowed({"CLIENT", "EMPLOYEE", "ADMIN"})
-    public Response updateClient(@PathParam("entityId") UUID entityId, @HeaderParam("IF-MATCH") String ifMatch,
-                                 @Valid ClientInputDTO clientDTO) {
-        JsonObject jsonDTO = new JsonObject();
-        jsonDTO.addProperty("login", clientDTO.getLogin());
-        try {
-
-            userServiceFacade.verifySingedLogin(ifMatch, jsonDTO);
-        } catch (ParseException | RestAuthenticationFailureException | JOSEException e) {
-            return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
-        }
+    public Response updateClient(@PathParam("entityId") UUID entityId, @Valid ClientInputDTO clientDTO) {
         try {
             userService.updateClient(entityId, clientDTO);
             return Response.status(OK).entity(clientDTO).build();

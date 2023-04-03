@@ -3,6 +3,7 @@ package pl.lodz.p.edu.adapter.rest.controller;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import jakarta.inject.Inject;
+import jakarta.transaction.TransactionalException;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -80,20 +81,13 @@ public class AdminController {
     @Path("/{entityId}")
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN"})
-    public Response updateAdmin(@PathParam("entityId") UUID entityId, @HeaderParam("IF-MATCH") String ifMatch,
-                                @Valid AdminInputDTO adminDTO) {
-        JsonObject jsonDTO = new JsonObject();
-        jsonDTO.addProperty("login", adminDTO.getLogin());
-        try {
-            userServiceFacade.verifySingedLogin(ifMatch, jsonDTO);
-        } catch (ParseException | RestAuthenticationFailureException | JOSEException e) {
-            return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
-        }
-
+    public Response updateAdmin(@PathParam("entityId") UUID entityId, @Valid AdminInputDTO adminDTO) {
         try {
             userService.updateAdmin(entityId, adminDTO);
             return Response.status(OK).entity(adminDTO).build();
         } catch (RestIllegalModificationException e) {
+            return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
+        } catch(TransactionalException e) { // login modification
             return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         } catch(ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).entity(e.getMessage()).build();

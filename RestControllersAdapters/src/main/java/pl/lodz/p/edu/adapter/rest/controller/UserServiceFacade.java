@@ -7,7 +7,11 @@ import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.adapter.rest.api.AuthenticationService;
 import pl.lodz.p.edu.adapter.rest.api.UserService;
 import pl.lodz.p.edu.adapter.rest.dto.UserTypeDTO;
-import pl.lodz.p.edu.adapter.rest.dto.input.users.*;
+import pl.lodz.p.edu.adapter.rest.dto.input.users.UserInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.users.AdminOutputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.users.ClientOutputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.users.EmployeeOutputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.users.UserOutputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestAuthenticationFailureException;
 
@@ -31,14 +35,14 @@ public class UserServiceFacade {
     //FIXME what does id do ?
     public Response getSingleUser(UUID entityId) {
         try {
-            UserInputDTO user = userService.get(entityId);
+            UserOutputDTO user = userService.get(entityId);
 
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("login", user.getLogin());
             String ifMatchTag = authenticationService.signLogin(jsonObject.toString());
 
             return Response.status(OK).entity(user).tag(ifMatchTag).build();
-        } catch(ObjectNotFoundRestException e) {
+        } catch (ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).entity(e.getMessage()).build();
         } catch (JOSEException e) {
             return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
@@ -47,9 +51,9 @@ public class UserServiceFacade {
 
     public Response getSingleUser(String login) {
         try {
-            UserInputDTO user = userService.getByLogin(login);
+            UserOutputDTO user = userService.getByLogin(login);
             return Response.status(OK).entity(user).build();
-        } catch(ObjectNotFoundRestException e) {
+        } catch (ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).entity(e.getMessage()).build();
         }
     }
@@ -58,7 +62,7 @@ public class UserServiceFacade {
         try {
             userService.activateUser(entityId);
             return Response.status(NO_CONTENT).build();
-        } catch(ObjectNotFoundRestException e) {
+        } catch (ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).entity(e.getMessage()).build();
         }
     }
@@ -67,7 +71,7 @@ public class UserServiceFacade {
         try {
             userService.deactivateUser(entityId);
             return Response.status(NO_CONTENT).build();
-        } catch(ObjectNotFoundRestException e) {
+        } catch (ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).entity(e.getMessage()).build();
         }
     }
@@ -80,28 +84,28 @@ public class UserServiceFacade {
     }
 
 
-    public List<UserInputDTO> getAll() {
-       return userService.getAll();
+    public List<UserOutputDTO> getAll() {
+        return userService.getAll();
     }
 
-    public List<ClientInputDTO> getClients() {
+    public List<ClientOutputDTO> getClients() {
         return userService.getAll().stream()
                 .filter(user -> user.getUserType().equals(UserTypeDTO.CLIENT))
-                .map(user -> (ClientInputDTO) user)
+                .map(user -> (ClientOutputDTO) user)
                 .collect(Collectors.toList());
     }
 
-    public List<AdminInputDTO> getAdmins() {
-      return userService.getAll().stream()
+    public List<AdminOutputDTO> getAdmins() {
+        return userService.getAll().stream()
                 .filter(user -> user.getUserType().equals(UserTypeDTO.ADMIN))
-                .map(user -> (AdminInputDTO) user)
+                .map(user -> (AdminOutputDTO) user)
                 .collect(Collectors.toList());
     }
 
-    public List<EmployeeInputDTO> getEmployees() {
+    public List<EmployeeOutputDTO> getEmployees() {
         return userService.getAll().stream()
                 .filter(user -> user.getUserType().equals(UserTypeDTO.EMPLOYEE))
-                .map(user -> (EmployeeInputDTO) user)
+                .map(user -> (EmployeeOutputDTO) user)
                 .collect(Collectors.toList());
     }
 }

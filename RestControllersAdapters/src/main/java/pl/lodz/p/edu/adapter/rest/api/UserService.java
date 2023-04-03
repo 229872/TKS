@@ -4,6 +4,10 @@ import pl.lodz.p.edu.adapter.rest.dto.input.users.AdminInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.ClientInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.EmployeeInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.UserInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.users.AdminOutputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.users.ClientOutputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.users.EmployeeOutputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.users.UserOutputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalModificationException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
@@ -13,21 +17,21 @@ import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
-    List<UserInputDTO> getAllUsersOfType(UserType type);
-    List<UserInputDTO> getAll();
-    UserInputDTO get(UUID uuid) throws ObjectNotFoundRestException;
+    List<UserOutputDTO> getAllUsersOfType(UserType type);
+    List<UserOutputDTO> getAll();
+    UserOutputDTO get(UUID uuid) throws ObjectNotFoundRestException;
 
-    UserInputDTO getByLogin(String login) throws ObjectNotFoundRestException;
+    UserOutputDTO getByLogin(String login) throws ObjectNotFoundRestException;
 
     void activateUser(UUID entityId) throws ObjectNotFoundRestException;
 
     void deactivateUser(UUID entityId) throws ObjectNotFoundRestException;
 
-    UserInputDTO registerUser(UserInputDTO userInputDTO) throws RestConflictException;
+    UserOutputDTO registerUser(UserInputDTO userInputDTO) throws RestConflictException;
 
-    EmployeeInputDTO updateEmployee(UUID entityId, EmployeeInputDTO employeeDTO) throws RestIllegalModificationException, ObjectNotFoundRestException;
+    EmployeeOutputDTO updateEmployee(UUID entityId, EmployeeInputDTO employeeDTO) throws RestIllegalModificationException, ObjectNotFoundRestException;
 
-    ClientInputDTO updateClient(UUID entityId, ClientInputDTO clientDTO) throws RestIllegalModificationException, ObjectNotFoundRestException;
+    ClientOutputDTO updateClient(UUID entityId, ClientInputDTO clientDTO) throws RestIllegalModificationException, ObjectNotFoundRestException;
 
-    AdminInputDTO updateAdmin(UUID entityId, AdminInputDTO adminDTO) throws RestIllegalModificationException, ObjectNotFoundRestException;
+    AdminOutputDTO updateAdmin(UUID entityId, AdminInputDTO adminDTO) throws RestIllegalModificationException, ObjectNotFoundRestException;
 }

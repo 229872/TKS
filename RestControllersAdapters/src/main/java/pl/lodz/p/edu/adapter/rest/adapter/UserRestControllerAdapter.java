@@ -9,6 +9,10 @@ import pl.lodz.p.edu.adapter.rest.dto.input.users.AdminInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.ClientInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.EmployeeInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.UserInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.users.AdminOutputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.users.ClientOutputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.users.EmployeeOutputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.users.UserOutputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalModificationException;
@@ -35,24 +39,24 @@ public class UserRestControllerAdapter implements UserService {
     private UserFromDomainToDTOMapper toDTOMapper;
 
     @Override
-    public List<UserInputDTO> getAllUsersOfType(UserType type) {
+    public List<UserOutputDTO> getAllUsersOfType(UserType type) {
         return servicePort.getAllUsersOfType(type).stream()
-                .map(this::convertToDTOFactory)
+                .map(this::convertToOutputDTOFactory)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<UserInputDTO> getAll() {
+    public List<UserOutputDTO> getAll() {
         return servicePort.getAll().stream()
-                .map(this::convertToDTOFactory)
+                .map(this::convertToOutputDTOFactory)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public UserInputDTO get(UUID uuid) throws ObjectNotFoundRestException {
+    public UserOutputDTO get(UUID uuid) throws ObjectNotFoundRestException {
         try {
             User user = servicePort.get(uuid);
-            return convertToDTOFactory(user);
+            return convertToOutputDTOFactory(user);
 
         } catch (ObjectNotFoundServiceException e) {
             throw new ObjectNotFoundRestException(e.getMessage(), e.getCause());
@@ -60,10 +64,10 @@ public class UserRestControllerAdapter implements UserService {
     }
 
     @Override
-    public UserInputDTO getByLogin(String login) throws ObjectNotFoundRestException {
+    public UserOutputDTO getByLogin(String login) throws ObjectNotFoundRestException {
         try {
             User user = servicePort.get(login);
-            return convertToDTOFactory(user);
+            return convertToOutputDTOFactory(user);
         } catch (ObjectNotFoundServiceException e) {
             throw new ObjectNotFoundRestException(e.getMessage(), e.getCause());
         }
@@ -87,22 +91,22 @@ public class UserRestControllerAdapter implements UserService {
         }
     }
     @Override
-    public UserInputDTO registerUser(UserInputDTO userInputDTO) throws RestConflictException {
+    public UserOutputDTO registerUser(UserInputDTO userInputDTO) throws RestConflictException {
         User user = convertToDomainModelFactory(userInputDTO);
         try {
             User registeredUser = servicePort.registerUser(user);
-            return convertToDTOFactory(registeredUser);
+            return convertToOutputDTOFactory(registeredUser);
         } catch (ConflictException e) {
             throw new RestConflictException(e.getMessage(), e.getCause());
         }
     }
     @Override
-    public EmployeeInputDTO updateEmployee(UUID entityId, EmployeeInputDTO employeeDTO) throws RestIllegalModificationException,
+    public EmployeeOutputDTO updateEmployee(UUID entityId, EmployeeInputDTO employeeDTO) throws RestIllegalModificationException,
             ObjectNotFoundRestException {
         User user = convertToDomainModelFactory(employeeDTO);
         try {
             Employee employee = servicePort.updateEmployee(entityId, (Employee) user);
-            return (EmployeeInputDTO) convertToDTOFactory(employee);
+            return (EmployeeOutputDTO) convertToOutputDTOFactory(employee);
 
         } catch (IllegalModificationException e) {
             throw new RestIllegalModificationException(e.getMessage(), e.getCause());
@@ -111,12 +115,12 @@ public class UserRestControllerAdapter implements UserService {
         }
     }
     @Override
-    public ClientInputDTO updateClient(UUID entityId, ClientInputDTO clientDTO) throws RestIllegalModificationException,
+    public ClientOutputDTO updateClient(UUID entityId, ClientInputDTO clientDTO) throws RestIllegalModificationException,
             ObjectNotFoundRestException {
         User user = convertToDomainModelFactory(clientDTO);
         try {
             Client client = servicePort.updateClient(entityId, (Client) user);
-            return (ClientInputDTO) convertToDTOFactory(client);
+            return (ClientOutputDTO) convertToOutputDTOFactory(client);
 
         } catch (IllegalModificationException e) {
             throw new RestIllegalModificationException(e.getMessage(), e.getCause());
@@ -125,12 +129,12 @@ public class UserRestControllerAdapter implements UserService {
         }
     }
     @Override
-    public AdminInputDTO updateAdmin(UUID entityId, AdminInputDTO adminDTO) throws RestIllegalModificationException,
+    public AdminOutputDTO updateAdmin(UUID entityId, AdminInputDTO adminDTO) throws RestIllegalModificationException,
             ObjectNotFoundRestException {
         User user = convertToDomainModelFactory(adminDTO);
         try {
             Admin admin = servicePort.updateAdmin(entityId, (Admin) user);
-            return (AdminInputDTO) convertToDTOFactory(admin);
+            return (AdminOutputDTO) convertToOutputDTOFactory(admin);
 
         } catch (IllegalModificationException e) {
             throw new RestIllegalModificationException(e.getMessage(), e.getCause());
@@ -146,11 +150,11 @@ public class UserRestControllerAdapter implements UserService {
         };
     }
 
-    private UserInputDTO convertToDTOFactory(User user) {
+    private UserOutputDTO convertToOutputDTOFactory(User user) {
         return switch (user.getUserType()) {
-            case ADMIN -> toDTOMapper.convertAdminToAdminDTO((Admin) user);
-            case EMPLOYEE -> toDTOMapper.convertEmployeeToEmployeeDTO((Employee) user);
-            case CLIENT -> toDTOMapper.convertClientToClientDTO((Client) user);
+            case ADMIN -> toDTOMapper.convertAdminToAdminOutputDTO((Admin) user);
+            case EMPLOYEE -> toDTOMapper.convertEmployeeToEmployeeOutputDTO((Employee) user);
+            case CLIENT -> toDTOMapper.convertClientToClientOutputDTO((Client) user);
         };
     }
 }

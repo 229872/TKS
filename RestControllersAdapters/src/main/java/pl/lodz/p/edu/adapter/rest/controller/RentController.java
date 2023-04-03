@@ -13,6 +13,7 @@ import pl.lodz.p.edu.adapter.rest.dto.input.RentInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.EquipmentInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.*;
 import pl.lodz.p.edu.adapter.rest.dto.output.EquipmentOutputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.users.ClientOutputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestBusinessLogicInterruptException;
 import pl.lodz.p.edu.adapter.rest.exception.RestObjectNotValidException;
@@ -54,18 +55,19 @@ public class RentController {
         }
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/client/{uuid}")
-    public Response getClientRents(@PathParam("uuid") UUID clientUuid) {
-        try {
-            ClientInputDTO clientDTO = (ClientInputDTO) userService.get(clientUuid);
-            List<RentInputDTO> rentsDTO = rentService.getRentsByClient(clientDTO);
-            return Response.ok(rentsDTO).build();
-        } catch (ObjectNotFoundRestException e) {
-            return Response.status(NOT_FOUND).entity(e.getMessage()).build();
-        }
-    }
+// FIXME
+//    @GET
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Path("/client/{uuid}")
+//    public Response getClientRents(@PathParam("uuid") UUID clientUuid) {
+//        try {
+//            ClientOutputDTO clientDTO = (ClientOutputDTO) userService.get(clientUuid);
+//            List<RentInputDTO> rentsDTO = rentService.getRentsByClient(clientDTO);
+//            return Response.ok(rentsDTO).build();
+//        } catch (ObjectNotFoundRestException e) {
+//            return Response.status(NOT_FOUND).entity(e.getMessage()).build();
+//        }
+//    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

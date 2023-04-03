@@ -10,6 +10,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.adapter.rest.api.UserService;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.EmployeeInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.users.EmployeeOutputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestAuthenticationFailureException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
@@ -20,7 +21,6 @@ import java.util.List;
 import java.util.UUID;
 
 import static jakarta.ws.rs.core.Response.Status.*;
-import static jakarta.ws.rs.core.Response.Status.OK;
 
 @Path("/employees")
 public class EmployeeController {
@@ -31,7 +31,8 @@ public class EmployeeController {
     @Inject
     private UserServiceFacade userServiceFacade;
 
-    protected EmployeeController() {}
+    protected EmployeeController() {
+    }
 
     @POST
     @Path("/")
@@ -40,9 +41,9 @@ public class EmployeeController {
 //    @RolesAllowed({"ADMIN"})
     public Response addEmployee(@Valid EmployeeInputDTO employeeDTO) {
         try {
-            EmployeeInputDTO registeredEmployee = (EmployeeInputDTO) userService.registerUser(employeeDTO);
+            EmployeeOutputDTO registeredEmployee = (EmployeeOutputDTO) userService.registerUser(employeeDTO);
             return Response.status(CREATED).entity(registeredEmployee).build();
-        } catch(RestConflictException | TransactionalException e) {
+        } catch (RestConflictException | TransactionalException e) {
             return Response.status(CONFLICT).entity(e.getMessage()).build();
         }
     }
@@ -52,7 +53,7 @@ public class EmployeeController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Response getAll() {
-        List<EmployeeInputDTO> employees = userServiceFacade.getEmployees();
+        List<EmployeeOutputDTO> employees = userServiceFacade.getEmployees();
         return Response.ok(employees).build();
     }
 
@@ -90,9 +91,9 @@ public class EmployeeController {
             return Response.status(OK).entity(employeeDTO).build();
         } catch (RestIllegalModificationException e) {
             return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
-        } catch(TransactionalException e) { // login modification
+        } catch (TransactionalException e) { // login modification
             return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
-        } catch(ObjectNotFoundRestException e) {
+        } catch (ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).entity(e.getMessage()).build();
         }
     }

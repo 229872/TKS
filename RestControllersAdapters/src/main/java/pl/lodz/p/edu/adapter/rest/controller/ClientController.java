@@ -11,6 +11,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.adapter.rest.api.UserService;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.ClientInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.users.ClientOutputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestAuthenticationFailureException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
@@ -41,7 +42,7 @@ public class ClientController {
 //    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response addClient(@Valid ClientInputDTO clientDTO) {
         try {
-            ClientInputDTO registeredClient = (ClientInputDTO) userService.registerUser(clientDTO);
+            ClientOutputDTO registeredClient = (ClientOutputDTO) userService.registerUser(clientDTO);
             return Response.status(CREATED).entity(registeredClient).build();
         } catch(RestConflictException | TransactionalException e ) {
             return Response.status(CONFLICT).entity(e.getMessage()).build();
@@ -53,7 +54,7 @@ public class ClientController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"CLIENT", "EMPLOYEE", "ADMIN"})
     public Response getAll() {
-        List<ClientInputDTO> clients = userServiceFacade.getClients();
+        List<ClientOutputDTO> clients = userServiceFacade.getClients();
         return Response.ok(clients).build();
     }
 

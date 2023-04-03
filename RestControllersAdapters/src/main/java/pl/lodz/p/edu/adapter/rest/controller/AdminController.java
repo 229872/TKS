@@ -9,6 +9,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.adapter.rest.api.UserService;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.AdminInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.users.AdminOutputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestAuthenticationFailureException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
@@ -54,7 +55,7 @@ public class AdminController {
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed({"ADMIN"})
     public Response getAll() {
-        List<AdminInputDTO> admins = userServiceFacade.getAdmins();
+        List<AdminOutputDTO> admins = userServiceFacade.getAdmins();
         return Response.ok(admins).build();
     }
 

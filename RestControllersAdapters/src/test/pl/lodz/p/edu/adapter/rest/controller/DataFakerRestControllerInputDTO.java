@@ -14,18 +14,18 @@ public class DataFakerRestControllerInputDTO {
     }
 
     public static ClientInputDTO getClient(AddressDTO a) {
-        return new ClientInputDTO(randStr(7), "CLIENT",// idType.values()[(int)(Math.random() * 2) % 2],
+        return new ClientInputDTO(randStr(7), "CLIENT123",// idType.values()[(int)(Math.random() * 2) % 2],
                 randStr(10), randStr(10), a);
     }
 
     public static ClientInputDTO getClient() {
         AddressDTO a = getAddress();
-        return new ClientInputDTO(randStr(7), "CLIENT",
+        return new ClientInputDTO(randStr(7), "CLIENT123",
                 randStr(10), randStr(10), a);
     }
 
     public static AdminInputDTO getAdmin() {
-        return new AdminInputDTO(randStr(10), "ADMIN", randStr(20));
+        return new AdminInputDTO(randStr(10), "ADMIN123", randStr(20));
     }
 
     public static EmployeeInputDTO getEmployee() {

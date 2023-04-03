@@ -66,8 +66,8 @@ public class EquipmentRepositoryAdapter implements EquipmentRepositoryPort {
     }
 
     @Override
-    public Equipment update(Equipment object) throws IllegalModificationException {
-        EquipmentEnt equipmentEnt = repository.update(toDataMapper.convertToDataModel(object));
+    public Equipment update(Equipment equipment) throws IllegalModificationException {
+        EquipmentEnt equipmentEnt = repository.update(toDataMapper.convertToDataModel(equipment));
         return toDomainMapper.convertToDomainModel(equipmentEnt);
     }
 

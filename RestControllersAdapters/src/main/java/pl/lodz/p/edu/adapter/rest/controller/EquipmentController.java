@@ -75,14 +75,16 @@ public class EquipmentController {
     @PUT
     @Path("/{entityId}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateEquipment(@PathParam("entityId") UUID entityId, @Valid EquipmentInputDTO equipmentInputDTO) {
+    public Response updateEquipment(@PathParam("entityId") UUID entityId, EquipmentInputDTO equipmentInputDTO) {
         try {
             EquipmentOutputDTO updated = equipmentService.update(entityId, equipmentInputDTO);
             return Response.ok(updated).build();
         } catch (RestIllegalModificationException e) {
             return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
-        } catch(ObjectNotFoundRestException e) {
+        } catch (ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).entity(e.getMessage()).build();
+        } catch (Exception e) {
+            return Response.status(444).entity(e.getMessage()).build();
         }
     }
 

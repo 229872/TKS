@@ -53,8 +53,9 @@ public class EquipmentRepositoryImpl implements EquipmentRepository {
 
     @Override
     public EquipmentEnt update(EquipmentEnt elem) {
-        em.lock(elem, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
-        return em.merge(elem);
+        EquipmentEnt temp = em.merge(elem);
+        em.lock(temp, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+        return temp;
     }
 
     @Override

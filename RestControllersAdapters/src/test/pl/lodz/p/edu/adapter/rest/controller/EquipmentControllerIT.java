@@ -69,7 +69,7 @@ public class EquipmentControllerIT extends AppDeploymentTestConfig {
                 .when()
                 .post(baseUrl + "equipment")
                 .then()
-                .statusCode(400);
+                .statusCode(417); //EXPECTATION FAILED @VALID
     }
 
     // read
@@ -123,15 +123,24 @@ public class EquipmentControllerIT extends AppDeploymentTestConfig {
     // update
     @Test
     void updateOneEquipment_correct() throws JsonProcessingException {
-        String uuid = given()
+        given()
                 .header("Content-Type", "application/json")
                 .body(validEquipmentStr)
                 .when()
                 .post(baseUrl + "equipment")
                 .then()
-                .statusCode(201)
-                .extract().path("entityId");
-        System.out.println(uuid);
+                .statusCode(201);
+
+        List<EquipmentOutputDTO> outputDTOList = given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get(baseUrl + "equipment")
+                .then()
+                .statusCode(200)
+                .extract().body().jsonPath().getList("", EquipmentOutputDTO.class);
+
+        String uuid = outputDTOList.get(0).getEntityId().toString();
+
         given()
                 .header("Content-Type", "application/json")
                 .when()
@@ -141,14 +150,16 @@ public class EquipmentControllerIT extends AppDeploymentTestConfig {
 
         String newName = "___other_name___";
         validEquipment.setName(newName);
-        String updatedEquipmentStr = obj.writeValueAsString(validEquipment);
+        String updatedEq = obj.writeValueAsString(validEquipment);
+
         given()
                 .header("Content-Type", "application/json")
-                .body(updatedEquipmentStr)
+                .body(updatedEq)
                 .when()
                 .put(baseUrl + "equipment/" + uuid)
                 .then()
                 .statusCode(200);
+
         String name = given()
                 .header("Content-Type", "application/json")
                 .when()
@@ -173,36 +184,58 @@ public class EquipmentControllerIT extends AppDeploymentTestConfig {
 
     @Test
     void updateOneEquipment_illegalValues() throws JsonProcessingException {
-        String uuid = given()
+        given()
                 .header("Content-Type", "application/json")
                 .body(validEquipmentStr)
                 .when()
                 .post(baseUrl + "equipment")
                 .then()
-                .statusCode(201)
-                .extract().path("entityId");
+                .statusCode(201);
+
+        List<EquipmentOutputDTO> outputDTOList = given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get(baseUrl + "equipment")
+                .then()
+                .statusCode(200)
+                .log().all()
+                .extract().body().jsonPath().getList("", EquipmentOutputDTO.class);
+
+        String uuid = outputDTOList.get(0).getEntityId().toString();
+
         validEquipment.setName(null);
         String updatedLogin = obj.writeValueAsString(validEquipment);
+
         given()
                 .header("Content-Type", "application/json")
                 .body(updatedLogin)
                 .when()
                 .put(baseUrl + "equipment/" + uuid)
                 .then()
-                .statusCode(400);
+                .statusCode(417); //EXPECTATION FAILED (@VALID)
     }
 
     @Test
     void deleteOneEquipment_correct() {
-        String uuid = given()
+
+        given()
                 .header("Content-Type", "application/json")
                 .body(validEquipmentStr)
                 .when()
                 .post(baseUrl + "equipment")
                 .then()
-                .statusCode(201)
-                .extract().path("entityId");
-        System.out.println(uuid);
+                .statusCode(201);
+
+        List<EquipmentOutputDTO> outputDTOList = given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get(baseUrl + "equipment")
+                .then()
+                .statusCode(200)
+                .extract().body().jsonPath().getList("", EquipmentOutputDTO.class);
+
+        String uuid = outputDTOList.get(0).getEntityId().toString();
+
         given()
                 .header("Content-Type", "application/json")
                 .when()
@@ -225,6 +258,7 @@ public class EquipmentControllerIT extends AppDeploymentTestConfig {
                 .statusCode(404);
     }
 
+//TODO
 //    @Test
 //    void deleteOneEquipment_withExistingRent() throws JsonProcessingException {
 //        String equipmentId = given()

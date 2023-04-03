@@ -45,7 +45,7 @@ public class EquipmentServiceImpl implements EquipmentServicePort {
     public Equipment update(UUID uuid, Equipment newEquipmentData) throws IllegalModificationException, ObjectNotFoundServiceException {
         synchronized (equipmentRepository) {
             Equipment equipment = equipmentRepository.get(uuid);
-            equipment.update(equipment);
+            equipment.update(newEquipmentData);
             return equipmentRepository.update(equipment);
         }
     }

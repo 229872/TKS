@@ -24,8 +24,9 @@ public class ClientOutputDTO extends UserOutputDTO {
         address = new AddressDTO("", "", "");
     }
 
-    public ClientOutputDTO(UUID userId, String login, String firstName, String lastName, AddressDTO address) {
-        super(userId, login, UserTypeDTO.CLIENT);
+    public ClientOutputDTO(UUID userId, String login, String firstName, String lastName, boolean active, AddressDTO address) {
+        super(userId, login, UserTypeDTO.CLIENT, active);
+        this.setActive(active);
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;

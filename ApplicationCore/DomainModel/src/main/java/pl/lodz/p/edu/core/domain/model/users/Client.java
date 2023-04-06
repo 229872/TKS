@@ -24,10 +24,11 @@ public class Client extends User {
         this.userType = UserType.CLIENT;
     }
 
-    public Client(UUID id, String login, String password, String firstName, String lastName, Address address) {
+    public Client(UUID id, String login, String password, String firstName, String lastName, boolean active, Address address) {
         super(id, login, password);
         this.firstName = firstName;
         this.lastName = lastName;
+        this.setActive(active);
         this.address = address;
         this.userType = UserType.CLIENT;
     }

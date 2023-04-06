@@ -17,6 +17,7 @@ public class UserFromDataToDomainMapper {
                 clientEnt.getPassword(),
                 clientEnt.getFirstName(),
                 clientEnt.getLastName(),
+                clientEnt.isActive(),
                 convertAddressToDomainModel(clientEnt.getAddress())
         );
     }
@@ -26,6 +27,7 @@ public class UserFromDataToDomainMapper {
                 adminEnt.getEntityId(),
                 adminEnt.getLogin(),
                 adminEnt.getPassword(),
+                adminEnt.isActive(),
                 adminEnt.getFavouriteIceCream()
         );
     }
@@ -35,6 +37,7 @@ public class UserFromDataToDomainMapper {
                 employeeEnt.getEntityId(),
                 employeeEnt.getLogin(),
                 employeeEnt.getPassword(),
+                employeeEnt.isActive(),
                 employeeEnt.getDesk());
     }
 

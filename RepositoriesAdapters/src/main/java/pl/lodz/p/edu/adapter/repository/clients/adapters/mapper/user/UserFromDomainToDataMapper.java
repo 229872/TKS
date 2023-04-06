@@ -43,4 +43,36 @@ public class UserFromDomainToDataMapper {
                 employee.getDesk()
         );
     }
+
+    public ClientEnt convertPUTClientToDataModel(Client client) {
+        return new ClientEnt(
+                client.getEntityId(),
+                client.getLogin(),
+                client.getPassword(),
+                client.getFirstName(),
+                client.getLastName(),
+                client.isActive(),
+                convertAddressToDataModel(client.getAddress())
+        );
+    }
+
+    public AdminEnt convertPUTAdminToDataModel(Admin admin) {
+        return new AdminEnt(
+                admin.getEntityId(),
+                admin.getLogin(),
+                admin.getPassword(),
+                admin.isActive(),
+                admin.getFavouriteIceCream()
+        );
+    }
+
+    public EmployeeEnt convertPUTEmployeeToDataModel(Employee employee) {
+        return new EmployeeEnt(
+                employee.getEntityId(),
+                employee.getLogin(),
+                employee.getPassword(),
+                employee.isActive(),
+                employee.getDesk()
+        );
+    }
 }

@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.util.UUID;
+
 @Entity
 @DiscriminatorValue("admin")
 @Data
@@ -22,6 +24,11 @@ public class AdminEnt extends UserEnt {
 
     public AdminEnt(String login, String password, String favouriteIceCream) {
         super(login, password);
+        this.favouriteIceCream = favouriteIceCream;
+    }
+
+    public AdminEnt(UUID uuid, String login, String password, boolean active, String favouriteIceCream) {
+        super(uuid, login, password, active);
         this.favouriteIceCream = favouriteIceCream;
     }
 

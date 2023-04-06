@@ -9,6 +9,8 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 
+import java.util.UUID;
+
 
 @Entity
 @DiscriminatorValue("client")
@@ -29,6 +31,13 @@ public class ClientEnt extends UserEnt {
         super(login, password);
         this.firstName = firstName;
         this.lastName = lastName;
+        this.address = address;
+    }
+
+    public ClientEnt(UUID uuid, String login, String password, String firstName, String lastName, boolean active, AddressEnt address) {
+        super(uuid, login, password, active);
+        this.firstName = firstName;
+        this.lastName = lastName;;
         this.address = address;
     }
 

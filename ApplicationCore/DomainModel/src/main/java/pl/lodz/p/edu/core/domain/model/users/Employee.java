@@ -20,8 +20,9 @@ public class Employee extends User {
         this.userType = UserType.EMPLOYEE;
     }
 
-    public Employee(UUID id, String login, String password, String desk) {
+    public Employee(UUID id, String login, String password, boolean active, String desk) {
         super(id, login, password);
+        this.setActive(active);
         this.desk = desk;
         this.userType = UserType.EMPLOYEE;
     }

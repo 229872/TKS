@@ -13,8 +13,9 @@ import java.util.UUID;
 public class AdminOutputDTO extends UserOutputDTO {
     private String favouriteIceCream;
 
-    public AdminOutputDTO(UUID userId, String login, String favouriteIceCream) {
-        super(userId, login, UserTypeDTO.ADMIN);
+    public AdminOutputDTO(UUID userId, String login, String favouriteIceCream, boolean active) {
+        super(userId, login, UserTypeDTO.ADMIN, active);
+        this.setActive(active);
         this.favouriteIceCream = favouriteIceCream;
     }
 

@@ -81,7 +81,7 @@ public class UserServicePortImpl implements UserServicePort {
         } catch (ClassCastException e) {
             throw new ObjectNotFoundServiceException("User not found");
         } catch(PersistenceException e) {
-            throw new IllegalModificationException("Cannot modify clients login");
+            throw new IllegalModificationException(e.getMessage());
         }
     }
 

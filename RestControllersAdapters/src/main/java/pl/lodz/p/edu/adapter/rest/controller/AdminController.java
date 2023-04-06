@@ -87,9 +87,9 @@ public class AdminController {
             return Response.status(OK).entity(adminDTO).build();
         } catch (RestIllegalModificationException e) {
             return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
-        } catch(TransactionalException e) { // login modification
+        } catch (TransactionalException e) { // login modification
             return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
-        } catch(ObjectNotFoundRestException e) {
+        } catch (ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).entity(e.getMessage()).build();
         }
     }

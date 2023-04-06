@@ -1,6 +1,7 @@
 package pl.lodz.p.edu.adapter.repository.clients.adapters;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.PersistenceException;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.user.UserFromDataToDomainMapper;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.user.UserFromDomainToDataMapper;
 import pl.lodz.p.edu.adapter.repository.clients.api.UserRepository;
@@ -64,8 +65,8 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     }
 
     @Override
-    public User update(User user) {
-        UserEnt userEnt = repository.update(convertToDataModelFactory(user));
+    public User update(User user) throws PersistenceException {
+        UserEnt userEnt = repository.update(convertToPUTDataModelFactory(user));
         return convertToDomainModelFactory(userEnt);
     }
 
@@ -82,6 +83,14 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
             case ADMIN -> toDataMapper.convertAdminToDataModel((Admin) user);
             case EMPLOYEE -> toDataMapper.convertEmployeeToDataModel((Employee) user);
             case CLIENT -> toDataMapper.convertClientToDataModel((Client) user);
+        };
+    }
+
+    private UserEnt convertToPUTDataModelFactory(User user) {
+        return switch (user.getUserType()) {
+            case ADMIN -> toDataMapper.convertPUTAdminToDataModel((Admin) user);
+            case EMPLOYEE -> toDataMapper.convertPUTEmployeeToDataModel((Employee) user);
+            case CLIENT -> toDataMapper.convertPUTClientToDataModel((Client) user);
         };
     }
 }

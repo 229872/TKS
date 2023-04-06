@@ -22,8 +22,9 @@ public class Admin extends User {
         this.userType = UserType.ADMIN;
     }
 
-    public Admin(UUID id, String login, String password, String favouriteIceCream) {
+    public Admin(UUID id, String login, String password, boolean active, String favouriteIceCream) {
         super(id, login, password);
+        this.setActive(active);
         this.favouriteIceCream = favouriteIceCream;
         this.userType = UserType.ADMIN;
     }

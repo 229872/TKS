@@ -13,8 +13,9 @@ import java.util.UUID;
 public class EmployeeOutputDTO extends UserOutputDTO {
 
     private String desk;
-    public EmployeeOutputDTO(UUID userId, String login, String desk) {
-        super(userId, login, UserTypeDTO.EMPLOYEE);
+    public EmployeeOutputDTO(UUID userId, String login, String desk, boolean active) {
+        super(userId, login, UserTypeDTO.EMPLOYEE, active);
+        this.setActive(active);
         this.desk = desk;
     }
 

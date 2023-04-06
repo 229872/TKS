@@ -4,6 +4,8 @@ import lombok.*;
 import pl.lodz.p.edu.adapter.repository.clients.data.AbstractEntity;
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "tuser")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -32,4 +34,12 @@ public abstract class UserEnt extends AbstractEntity {
         this.active = true;
         this.password = password;
     }
+
+    public UserEnt(UUID uuid, String login, String password, boolean active) {
+        this.setEntityId(uuid);
+        this.login = login;
+        this.password = password;
+        this.setActive(active);
+    }
+
 }

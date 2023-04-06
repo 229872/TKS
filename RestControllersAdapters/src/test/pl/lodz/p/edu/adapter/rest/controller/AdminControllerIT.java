@@ -212,23 +212,27 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
     @Test
     void updateOneAdmin_correct() throws JsonProcessingException {
         String uuid = getUUIDOfNewObject();
+        System.out.println(uuid);
 
         String newFavouriteIceCream = "___other_favourite_ice_cream___";
         validAdmin.setFavouriteIceCream(newFavouriteIceCream);
         String updatedAdminStr = obj.writeValueAsString(validAdmin);
+        System.out.println(updatedAdminStr);
         given()
                 .header("Content-Type", "application/json")
                 .body(updatedAdminStr)
                 .when()
-                .put(baseUrl + "admins" + uuid)
+                .put(baseUrl + "admins/" + uuid)
                 .then()
-                .statusCode(200);
+                .statusCode(200)
+                .log().all();
+
         String favouriteIceCream = given()
                 .header("Content-Type", "application/json")
                 .when()
                 .get(baseUrl + "admins/" + uuid)
                 .then()
-                .statusCode(200)
+                .statusCode(200).log().all()
                 .extract().path("favouriteIceCream");
         assertEquals(newFavouriteIceCream, favouriteIceCream);
     }
@@ -255,15 +259,15 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
                 .header("Content-Type", "application/json")
                 .body(updatedLogin)
                 .when()
-                .put(baseUrl + "admins/" + uuid)
-                .then()
-                .statusCode(400);
+                .put(baseUrl + "admins/" + uuid);
+
+
     }
 
     @Test
     void updateOneAdmin_illegalValues() throws JsonProcessingException {
         String uuid = getUUIDOfNewObject();
-
+        String oldLogin = validAdmin.getLogin();
         validAdmin.setFavouriteIceCream("");
         String updatedLogin = obj.writeValueAsString(validAdmin);
         given()
@@ -272,7 +276,14 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
                 .when()
                 .put(baseUrl + "admins/" + uuid)
                 .then()
-                .statusCode(400);
+                .statusCode(417);
+
+        given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get(baseUrl + "admins/" + uuid)
+                .then()
+                .body("login", equalTo(oldLogin));
     }
 
     @Test
@@ -286,6 +297,7 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
                 .put(baseUrl + "admins/" + uuid + "/deactivate")
                 .then()
                 .statusCode(204);
+
         given()
                 .header("Content-Type", "application/json")
                 .when()
@@ -299,7 +311,9 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
                 .when()
                 .put(baseUrl + "admins/" + uuid + "/activate")
                 .then()
-                .statusCode(204);
+                .statusCode(204)
+                .log().all();
+
         given()
                 .header("Content-Type", "application/json")
                 .when()

@@ -12,6 +12,7 @@ public abstract class UserOutputDTO {
     private UUID userId;
     private String login;
     private UserTypeDTO userType;
+    private boolean active;
 
     public UserOutputDTO(UserTypeDTO userType) {
         this.userType = userType;

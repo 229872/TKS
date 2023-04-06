@@ -259,8 +259,11 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
                 .header("Content-Type", "application/json")
                 .body(updatedLogin)
                 .when()
-                .put(baseUrl + "admins/" + uuid);
+                .put(baseUrl + "admins/" + uuid)
+                .then()
+                .statusCode(400);
 
+        //TODO compare logins
 
     }
 

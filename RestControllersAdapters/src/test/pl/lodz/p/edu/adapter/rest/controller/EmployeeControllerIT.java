@@ -1,35 +1,28 @@
 package pl.lodz.p.edu.adapter.rest.controller;
 
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import io.restassured.http.ContentType;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonProcessingException;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
-import pl.lodz.p.edu.adapter.rest.dto.input.users.AdminInputDTO;
-import pl.lodz.p.edu.adapter.rest.dto.input.users.ClientInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.EmployeeInputDTO;
-import pl.lodz.p.edu.adapter.rest.dto.output.users.AdminOutputDTO;
-import pl.lodz.p.edu.adapter.rest.dto.output.users.ClientOutputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.users.EmployeeOutputDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 @Testcontainers
-public class ClientControllerIT extends AppDeploymentTestConfig {
-
+public class EmployeeControllerIT extends AppDeploymentTestConfig {
     ObjectMapper obj = new ObjectMapper();
-    ClientInputDTO validClient;
-    String validClientStr;
+    EmployeeInputDTO validEmployee;
+    String validEmployeeStr;
 
     @BeforeAll
     public static void beforeAll() {
@@ -38,176 +31,170 @@ public class ClientControllerIT extends AppDeploymentTestConfig {
 
     @BeforeEach
     void beforeEach() throws JsonProcessingException {
-        validClient = DataFakerRestControllerInputDTO.getClient();
-        validClientStr = obj.writeValueAsString(validClient);
+        validEmployee = DataFakerRestControllerInputDTO.getEmployee();
+        validEmployeeStr = obj.writeValueAsString(validEmployee);
     }
-
-//    @Test
-//    void loop() {
-//        System.out.println("8080: " + payara.getMappedPort(8080));
-//        getUUIDOfNewObject();
-//
-//        while(true);
-//    }
 
     // create
+
     @Test
-    void createClient_correct() {
+    void createEmployee_correct() {
         given()
                 .header("Content-Type", "application/json")
-                .body(validClientStr)
+                .body(validEmployeeStr)
                 .when()
-                .post(baseUrl + "clients")
+                .post(baseUrl + "employees")
                 .then()
                 .statusCode(201)
-                .body("login", equalTo(validClient.getLogin()));
+                .body("login", equalTo(validEmployee.getLogin()));
     }
 
     @Test
-    void createClient_noBody() {
+    void createEmployee_noBody() {
         given()
                 .header("Content-Type", "application/json")
                 .body("")
                 .when()
-                .post(baseUrl + "clients")
+                .post(baseUrl + "employees")
                 .then()
                 .statusCode(400);
     }
 
     @Test
-    void createClient_illegalValue() throws JsonProcessingException {
-        ClientInputDTO newValidClient = DataFakerRestControllerInputDTO.getClient();
-        newValidClient.setAddress(null);
-        String notValidClientStr = obj.writeValueAsString(newValidClient);
+    void createEmployee_illegalValue() throws JsonProcessingException {
+        EmployeeInputDTO newValidClient = DataFakerRestControllerInputDTO.getEmployee();
+        newValidClient.setDesk("");
+        String notValidEmployeeStr = obj.writeValueAsString(newValidClient);
+
         given()
                 .header("Content-Type", "application/json")
-                .body(notValidClientStr)
+                .body(notValidEmployeeStr)
                 .when()
-                .post(baseUrl + "clients")
+                .post(baseUrl + "employees")
                 .then()
                 .statusCode(417);
     }
 
     @Test
-    void createClient_conflict() {
+    void createEmployee_conflict() {
         given()
                 .header("Content-Type", "application/json")
-                .body(validClientStr)
+                .body(validEmployeeStr)
                 .when()
-                .post(baseUrl + "clients")
+                .post(baseUrl + "employees")
                 .then()
                 .statusCode(201);
         given()
                 .header("Content-Type", "application/json")
-                .body(validClientStr)
+                .body(validEmployeeStr)
                 .when()
-                .post(baseUrl + "clients")
+                .post(baseUrl + "employees")
                 .then()
                 .statusCode(409);
     }
 
     // read
     @Test
-    void getAllClients_correct()  {
+    void getAllEmployees_correct() {
         given()
                 .header("Content-Type", "application/json")
                 .when()
-                .get(baseUrl + "clients")
+                .get(baseUrl + "employees")
                 .then()
                 .statusCode(200);
     }
 
     @Test
-    void getOneClient_byUUID_correct()  {
+    void getOneEmployee_byUUID_correct() {
         String uuid = getUUIDOfNewObject();
 
         given()
                 .header("Content-Type", "application/json")
                 .when()
-                .get(baseUrl + "clients/" + uuid)
+                .get(baseUrl + "employees/" + uuid)
                 .then()
                 .statusCode(200);
-
 
         given()
                 .header("Content-Type", "application/json")
                 .when()
-                .get(baseUrl + "clients/" + uuid)
+                .get(baseUrl + "employees/" + uuid)
                 .then()
                 .statusCode(200)
-                .body("userId", equalTo(uuid));
+                .body("userId", IsEqual.equalTo(uuid));
     }
 
+
     @Test
-    void getOneClient_byUUID_noSuchUUID()  {
+    void getOneEmployee_byUUID_noSuchUUID() {
         String uuid = UUID.randomUUID().toString();
         given()
                 .header("Content-Type", "application/json")
                 .when()
-                .get(baseUrl + "clients/" + uuid)
+                .get(baseUrl + "employees/" + uuid)
                 .then()
                 .statusCode(404);
     }
 
     @Test
-    void getOneClient_byLogin_correct()  {
+    void getOneEmployee_byLogin_correct() {
         String login = given()
                 .header("Content-Type", "application/json")
-                .body(validClientStr)
+                .body(validEmployeeStr)
                 .when()
-                .post(baseUrl + "clients")
+                .post(baseUrl + "employees")
                 .then()
                 .extract().path("login");
 
         given()
                 .header("Content-Type", "application/json")
                 .when()
-                .get(baseUrl + "clients/login/" + login)
+                .get(baseUrl + "employees/login/" + login)
                 .then()
                 .statusCode(200)
                 .body("login", equalTo(login));
     }
 
     @Test
-    void getOneClient_byLogin_noSuchLogin()  {
+    void getOneEmployee_byLogin_noSuchLogin() {
         String login = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
         given()
                 .header("Content-Type", "application/json")
                 .when()
-                .get(baseUrl + "clients/login/" + login)
+                .get(baseUrl + "employees/login/" + login)
                 .then()
                 .statusCode(404);
     }
 
     @Test
-    void getManyClientsByLogin_correct() throws JsonProcessingException {
+    void getManyEmployeesByLogin_correct() throws JsonProcessingException {
         String uniqueLogin = DataFakerRestControllerInputDTO.randStr(30);
-        validClient.setLogin(uniqueLogin);
-        String str1 = obj.writeValueAsString(validClient);
-        List<ClientOutputDTO> initialOutputDTOList = given()
+        validEmployee.setLogin(uniqueLogin);
+        String str1 = obj.writeValueAsString(validEmployee);
+        List<EmployeeOutputDTO> initialOutputDTOList = given()
                 .header("Content-Type", "application/json")
                 .when()
-                .get(baseUrl + "clients?login=" + uniqueLogin)
+                .get(baseUrl + "employees?login=" + uniqueLogin)
                 .then()
                 .statusCode(200)
-                .extract().body().jsonPath().getList("", ClientOutputDTO.class);
+                .extract().body().jsonPath().getList("", EmployeeOutputDTO.class);
         int initialSize = initialOutputDTOList.size();
 
         given()
                 .header("Content-Type", "application/json")
                 .body(str1)
                 .when()
-                .post(baseUrl + "clients")
+                .post(baseUrl + "employees")
                 .then()
                 .statusCode(201);
 
-        validClient.setLogin(uniqueLogin + "1");
-        String str2 = obj.writeValueAsString(validClient);
+        validEmployee.setLogin(uniqueLogin + "1");
+        String str2 = obj.writeValueAsString(validEmployee);
         given()
                 .header("Content-Type", "application/json")
                 .body(str2)
                 .when()
-                .post(baseUrl + "clients")
+                .post(baseUrl + "employees")
                 .then()
                 .statusCode(201);
 
@@ -215,7 +202,7 @@ public class ClientControllerIT extends AppDeploymentTestConfig {
         given()
                 .header("Content-Type", "application/json")
                 .when()
-                .get(baseUrl + "clients?login=" + uniqueLogin)
+                .get(baseUrl + "employees?login=" + uniqueLogin)
                 .then()
                 .statusCode(200)
                 .body("size()", is(initialSize + 2));
@@ -223,72 +210,69 @@ public class ClientControllerIT extends AppDeploymentTestConfig {
 
     // update
     @Test
-    void updateOneClient_correct() throws JsonProcessingException {
+    void updateOneEmployee_correct() throws JsonProcessingException {
         String uuid = getUUIDOfNewObject();
 
-        String newFirstName = "___other_first_name___";
-        validClient.setFirstName(newFirstName);
-        String updatedClientStr = obj.writeValueAsString(validClient);
-        System.out.println(updatedClientStr);
-
+        String newDesk = "___other_desk___";
+        validEmployee.setDesk(newDesk);
+        String updatedEmployeeStr = obj.writeValueAsString(validEmployee);
         given()
                 .header("Content-Type", "application/json")
-                .body(updatedClientStr)
+                .body(updatedEmployeeStr)
                 .when()
-                .put(baseUrl + "clients/" + uuid)
+                .put(baseUrl + "employees/" + uuid)
                 .then()
                 .statusCode(200);
 
-        String firstName = given()
+        String desk = given()
                 .header("Content-Type", "application/json")
                 .when()
-                .get(baseUrl + "clients/" + uuid)
+                .get(baseUrl + "employees/" + uuid)
                 .then()
                 .statusCode(200)
-                .extract().path("firstName");
-        assertEquals(newFirstName, firstName);
+                .extract().path("desk");
+        assertEquals(newDesk, desk);
     }
 
     @Test
-    void updateOneClient_noClient() throws JsonProcessingException {
+    void updateOneEmployee_noEmployee() throws JsonProcessingException {
         String uuid = UUID.randomUUID().toString();
         given()
                 .header("Content-Type", "application/json")
-                .body(validClientStr)
+                .body(validEmployeeStr)
                 .when()
-                .put(baseUrl + "clients/" + uuid)
+                .put(baseUrl + "employees/" + uuid)
                 .then()
                 .statusCode(404);
     }
 
     @Test
-    void updateOneClient_updateLogin() throws JsonProcessingException {
+    void updateOneEmployee_updateLogin() throws JsonProcessingException {
         String uuid = getUUIDOfNewObject();
-        // FIXME TUTAJ JEST COS BARDZO NIE TAK
-        validClient.setLogin("__other_login__");
-        String updatedLogin = obj.writeValueAsString(validClient);
+
+        validEmployee.setLogin("__other_login__");
+        String updatedLogin = obj.writeValueAsString(validEmployee);
         given()
                 .header("Content-Type", "application/json")
                 .body(updatedLogin)
                 .when()
-                .put(baseUrl + "clients/" + uuid)
+                .put(baseUrl + "employees/" + uuid)
                 .then()
                 .statusCode(400);
-
         //todo compare logins
     }
 
     @Test
-    void updateOneClient_illegalValues() throws JsonProcessingException {
+    void updateOneEmployee_illegalValues() throws JsonProcessingException {
         String uuid = UUID.randomUUID().toString();
 
-        validClient.setAddress(null);
-        String updatedLogin = obj.writeValueAsString(validClient);
+        validEmployee.setDesk("");
+        String updatedLogin = obj.writeValueAsString(validEmployee);
         given()
                 .header("Content-Type", "application/json")
                 .body(updatedLogin)
                 .when()
-                .put(baseUrl + "clients/" + uuid)
+                .put(baseUrl + "employees/" + uuid)
                 .then()
                 .statusCode(417);
     }
@@ -301,13 +285,13 @@ public class ClientControllerIT extends AppDeploymentTestConfig {
         given()
                 .header("Content-Type", "application/json")
                 .when()
-                .put(baseUrl + "clients/" + uuid + "/deactivate")
+                .put(baseUrl + "employees/" + uuid + "/deactivate")
                 .then()
                 .statusCode(204);
         given()
                 .header("Content-Type", "application/json")
                 .when()
-                .get(baseUrl + "clients/" + uuid)
+                .get(baseUrl + "employees/" + uuid)
                 .then()
                 .body("active", equalTo(false));
 
@@ -315,36 +299,36 @@ public class ClientControllerIT extends AppDeploymentTestConfig {
         given()
                 .header("Content-Type", "application/json")
                 .when()
-                .put(baseUrl + "clients/" + uuid + "/activate")
+                .put(baseUrl + "employees/" + uuid + "/activate")
                 .then()
                 .statusCode(204);
         given()
                 .header("Content-Type", "application/json")
                 .when()
-                .get(baseUrl + "clients/" + uuid)
+                .get(baseUrl + "employees/" + uuid)
                 .then()
                 .body("active", equalTo(true));
     }
 
 
-        private String getUUIDOfNewObject() {
-            given()
-                    .header("Content-Type", "application/json")
-                    .body(validClientStr)
-                    .when()
-                    .post(baseUrl + "clients")
-                    .then()
-                    .statusCode(201);
+    private String getUUIDOfNewObject() {
+        given()
+                .header("Content-Type", "application/json")
+                .body(validEmployeeStr)
+                .when()
+                .post(baseUrl + "employees")
+                .then()
+                .statusCode(201);
 
-            List<ClientOutputDTO> outputDTOList = given()
-                    .header("Content-Type", "application/json")
-                    .when()
-                    .get(baseUrl + "clients")
-                    .then()
-                    .statusCode(200)
-                    .log().all()
-                    .extract().body().jsonPath().getList("", ClientOutputDTO.class);
+        List<EmployeeOutputDTO> outputDTOList = given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get(baseUrl + "employees")
+                .then()
+                .statusCode(200)
+                .log().all()
+                .extract().body().jsonPath().getList("", EmployeeOutputDTO.class);
 
-            return outputDTOList.get(0).getUserId().toString();
-        }
+        return outputDTOList.get(0).getUserId().toString();
+    }
 }

@@ -79,13 +79,13 @@ public class EmployeeController {
 //    @RolesAllowed({"ADMIN", "EMPLOYEE"})
     public Response updateEmployee(@PathParam("entityId") UUID entityId, @HeaderParam("IF-MATCH") String ifMatch,
                                    @Valid EmployeeInputDTO employeeDTO) {
-        JsonObject jsonDTO = new JsonObject();
-        jsonDTO.addProperty("login", employeeDTO.getLogin());
-        try {
-            userServiceFacade.verifySingedLogin(ifMatch, jsonDTO);
-        } catch (ParseException | RestAuthenticationFailureException | JOSEException e) {
-            return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
-        }
+//        JsonObject jsonDTO = new JsonObject();
+//        jsonDTO.addProperty("login", employeeDTO.getLogin());
+//        try {
+//            userServiceFacade.verifySingedLogin(ifMatch, jsonDTO);
+//        } catch (ParseException | RestAuthenticationFailureException | JOSEException e) {
+//            return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
+//        }
         try {
             userService.updateEmployee(entityId, employeeDTO);
             return Response.status(OK).entity(employeeDTO).build();

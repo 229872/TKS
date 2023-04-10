@@ -73,7 +73,6 @@ public class EquipmentRestControllerAdapter implements EquipmentService {
     public void remove(UUID uuid) throws RestConflictException, ObjectNotFoundRestException {
         try {
             servicePort.remove(uuid);
-
         } catch (ConflictException e) {
             throw new RestConflictException(e.getMessage(), e.getCause());
         } catch (ObjectNotFoundServiceException e) {

@@ -47,7 +47,6 @@ public class EquipmentRepositoryImpl implements EquipmentRepository {
         if (!em.contains(entity)) {
             entity = em.merge(entity);
         }
-        em.lock(entity, LockModeType.OPTIMISTIC);
         em.remove(entity);
     }
 

@@ -9,6 +9,7 @@ import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonProcessingExcept
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 import pl.lodz.p.edu.adapter.rest.dto.input.EquipmentInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.output.EquipmentOutputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.users.AdminOutputDTO;
 
 import java.util.List;
 import java.util.UUID;
@@ -85,21 +86,8 @@ public class EquipmentControllerIT extends AppDeploymentTestConfig {
 
     @Test
     void getOneEquipment_byUUID_correct() {
-        given()
-                .header("Content-Type", "application/json")
-                .body(validEquipmentStr)
-                .when()
-                .post(baseUrl + "equipment");
+        String uuid = getUUIDOfNewObject();
 
-        List<EquipmentOutputDTO> outputDTOList = given()
-                .header("Content-Type", "application/json")
-                .when()
-                .get(baseUrl + "equipment")
-                .then()
-                .statusCode(200)
-                .extract().body().jsonPath().getList("", EquipmentOutputDTO.class);
-
-        String uuid = outputDTOList.get(0).getEntityId().toString();
         given()
                 .header("Content-Type", "application/json")
                 .when()
@@ -123,23 +111,7 @@ public class EquipmentControllerIT extends AppDeploymentTestConfig {
     // update
     @Test
     void updateOneEquipment_correct() throws JsonProcessingException {
-        given()
-                .header("Content-Type", "application/json")
-                .body(validEquipmentStr)
-                .when()
-                .post(baseUrl + "equipment")
-                .then()
-                .statusCode(201);
-
-        List<EquipmentOutputDTO> outputDTOList = given()
-                .header("Content-Type", "application/json")
-                .when()
-                .get(baseUrl + "equipment")
-                .then()
-                .statusCode(200)
-                .extract().body().jsonPath().getList("", EquipmentOutputDTO.class);
-
-        String uuid = outputDTOList.get(0).getEntityId().toString();
+        String uuid = getUUIDOfNewObject();
 
         given()
                 .header("Content-Type", "application/json")
@@ -184,24 +156,8 @@ public class EquipmentControllerIT extends AppDeploymentTestConfig {
 
     @Test
     void updateOneEquipment_illegalValues() throws JsonProcessingException {
-        given()
-                .header("Content-Type", "application/json")
-                .body(validEquipmentStr)
-                .when()
-                .post(baseUrl + "equipment")
-                .then()
-                .statusCode(201);
+        String uuid = getUUIDOfNewObject();
 
-        List<EquipmentOutputDTO> outputDTOList = given()
-                .header("Content-Type", "application/json")
-                .when()
-                .get(baseUrl + "equipment")
-                .then()
-                .statusCode(200)
-                .log().all()
-                .extract().body().jsonPath().getList("", EquipmentOutputDTO.class);
-
-        String uuid = outputDTOList.get(0).getEntityId().toString();
 
         validEquipment.setName(null);
         String updatedLogin = obj.writeValueAsString(validEquipment);
@@ -212,29 +168,13 @@ public class EquipmentControllerIT extends AppDeploymentTestConfig {
                 .when()
                 .put(baseUrl + "equipment/" + uuid)
                 .then()
-                .statusCode(417); //EXPECTATION FAILED (@VALID)
+                .statusCode(417);
     }
 
     @Test
     void deleteOneEquipment_correct() {
 
-        given()
-                .header("Content-Type", "application/json")
-                .body(validEquipmentStr)
-                .when()
-                .post(baseUrl + "equipment")
-                .then()
-                .statusCode(201);
-
-        List<EquipmentOutputDTO> outputDTOList = given()
-                .header("Content-Type", "application/json")
-                .when()
-                .get(baseUrl + "equipment")
-                .then()
-                .statusCode(200)
-                .extract().body().jsonPath().getList("", EquipmentOutputDTO.class);
-
-        String uuid = outputDTOList.get(0).getEntityId().toString();
+        String uuid = getUUIDOfNewObject();
 
         given()
                 .header("Content-Type", "application/json")
@@ -312,5 +252,27 @@ public class EquipmentControllerIT extends AppDeploymentTestConfig {
                 .delete(baseUrl + "equipment/" + uuid)
                 .then()
                 .statusCode(204);
+    }
+
+    private String getUUIDOfNewObject() {
+        given()
+                .header("Content-Type", "application/json")
+                .body(validEquipmentStr)
+                .when()
+                .post(baseUrl + "equipment")
+                .then()
+                .log().all()
+                .statusCode(201);
+
+        List<EquipmentOutputDTO> outputDTOList = given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get(baseUrl + "equipment")
+                .then()
+                .statusCode(200)
+                .log().all()
+                .extract().body().jsonPath().getList("", EquipmentOutputDTO.class);
+
+        return outputDTOList.get(outputDTOList.size() - 1).getEntityId().toString();
     }
 }

@@ -1,5 +1,11 @@
 package pl.lodz.p.edu.adapter.rest.controller;
 
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,11 +17,6 @@ import pl.lodz.p.edu.adapter.rest.dto.output.users.AdminOutputDTO;
 
 import java.util.List;
 import java.util.UUID;
-
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Testcontainers
 public class AdminControllerIT extends AppDeploymentTestConfig {
@@ -95,7 +96,7 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
 
     // read
     @Test
-    void getAllAdmins_correct()  {
+    void getAllAdmins_correct() {
         given()
                 .header("Content-Type", "application/json")
                 .when()
@@ -105,7 +106,7 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
     }
 
     @Test
-    void getOneAdmin_byUUID_correct()  {
+    void getOneAdmin_byUUID_correct() {
         String uuid = getUUIDOfNewObject();
 
         given()
@@ -126,7 +127,7 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
     }
 
     @Test
-    void getOneAdmin_byUUID_noSuchUUID()  {
+    void getOneAdmin_byUUID_noSuchUUID() {
         String uuid = UUID.randomUUID().toString();
         given()
                 .header("Content-Type", "application/json")
@@ -137,7 +138,7 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
     }
 
     @Test
-    void getOneAdmin_byLogin_correct()  {
+    void getOneAdmin_byLogin_correct() {
         String login = given()
                 .header("Content-Type", "application/json")
                 .body(validAdminStr)
@@ -149,14 +150,14 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
         given()
                 .header("Content-Type", "application/json")
                 .when()
-                .get(baseUrl + "admins/login/" +  login)
+                .get(baseUrl + "admins/login/" + login)
                 .then()
                 .statusCode(200)
                 .body("login", equalTo(login));
     }
 
     @Test
-    void getOneAdmin_byLogin_noSuchLogin()  {
+    void getOneAdmin_byLogin_noSuchLogin() {
         String login = "noSuchLogin";
         given()
                 .header("Content-Type", "application/json")
@@ -224,15 +225,14 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
                 .when()
                 .put(baseUrl + "admins/" + uuid)
                 .then()
-                .statusCode(200)
-                .log().all();
+                .statusCode(200);
 
         String favouriteIceCream = given()
                 .header("Content-Type", "application/json")
                 .when()
                 .get(baseUrl + "admins/" + uuid)
                 .then()
-                .statusCode(200).log().all()
+                .statusCode(200)
                 .extract().path("favouriteIceCream");
         assertEquals(newFavouriteIceCream, favouriteIceCream);
     }
@@ -253,7 +253,10 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
     void updateOneAdmin_updateLogin() throws JsonProcessingException {
         String uuid = getUUIDOfNewObject();
 
-        validAdmin.setLogin("__other_login__");
+        String oldLogin = validAdmin.getLogin();
+
+        String newLogin = "__other_login__";
+        validAdmin.setLogin(newLogin);
         String updatedLogin = obj.writeValueAsString(validAdmin);
         given()
                 .header("Content-Type", "application/json")
@@ -261,17 +264,23 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
                 .when()
                 .put(baseUrl + "admins/" + uuid)
                 .then()
-                .statusCode(400);
+                .statusCode(200);
 
-        //TODO compare logins
-
+        Assertions.assertNotEquals(oldLogin, given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get(baseUrl + "admins/" + uuid)
+                .then()
+                .extract().path("login"));
     }
 
+
     @Test
-    void updateOneAdmin_illegalValues() throws JsonProcessingException {
+    void updateOneAdmin_illegalValues() throws JsonProcessingException { // Works correctly, but not in batch
+        System.out.println(validAdminStr);
         String uuid = getUUIDOfNewObject();
         String oldLogin = validAdmin.getLogin();
-        validAdmin.setFavouriteIceCream("");
+        validAdmin.setLogin("");
         String updatedLogin = obj.writeValueAsString(validAdmin);
         given()
                 .header("Content-Type", "application/json")
@@ -280,6 +289,7 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
                 .put(baseUrl + "admins/" + uuid)
                 .then()
                 .statusCode(417);
+
 
         given()
                 .header("Content-Type", "application/json")
@@ -314,8 +324,7 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
                 .when()
                 .put(baseUrl + "admins/" + uuid + "/activate")
                 .then()
-                .statusCode(204)
-                .log().all();
+                .statusCode(204);
 
         given()
                 .header("Content-Type", "application/json")
@@ -340,9 +349,8 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
                 .get(baseUrl + "admins")
                 .then()
                 .statusCode(200)
-                .log().all()
                 .extract().body().jsonPath().getList("", AdminOutputDTO.class);
 
-        return outputDTOList.get(0).getUserId().toString();
+        return outputDTOList.get(outputDTOList.size() - 1).getUserId().toString();
     }
 }

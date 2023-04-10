@@ -9,8 +9,8 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = true)
 public abstract class User extends AbstractModelData {
 
-    @Getter
-    private final String login;
+    @Getter @Setter
+    private String login;
     @Getter @Setter
     private String password;
     @Getter @Setter
@@ -34,6 +34,7 @@ public abstract class User extends AbstractModelData {
     }
 
     public void update(User user) {
+        this.login = user.login;
         this.password = user.password;
         this.active = user.active;
     }

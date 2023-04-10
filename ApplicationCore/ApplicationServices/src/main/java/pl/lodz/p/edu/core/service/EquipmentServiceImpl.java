@@ -56,7 +56,7 @@ public class EquipmentServiceImpl implements EquipmentServicePort {
         if (!equipmentRepository.isEquipmentRented(uuid)) {
             equipmentRepository.remove(equipment);
         } else {
-            throw new ConflictException("There exists ufinished rent for this equipment");
+            throw new ConflictException("There exists unfinished rent for this equipment");
         }
     }
 }

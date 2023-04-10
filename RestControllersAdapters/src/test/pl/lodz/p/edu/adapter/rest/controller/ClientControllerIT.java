@@ -2,6 +2,7 @@ package pl.lodz.p.edu.adapter.rest.controller;
 
 
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -264,8 +265,10 @@ public class ClientControllerIT extends AppDeploymentTestConfig {
     @Test
     void updateOneClient_updateLogin() throws JsonProcessingException {
         String uuid = getUUIDOfNewObject();
-        // FIXME TUTAJ JEST COS BARDZO NIE TAK
-        validClient.setLogin("__other_login__");
+        String oldLogin = validClient.getLogin();
+
+        String newLogin = "__other_login__";
+        validClient.setLogin(newLogin);
         String updatedLogin = obj.writeValueAsString(validClient);
         given()
                 .header("Content-Type", "application/json")
@@ -273,9 +276,14 @@ public class ClientControllerIT extends AppDeploymentTestConfig {
                 .when()
                 .put(baseUrl + "clients/" + uuid)
                 .then()
-                .statusCode(400);
+                .statusCode(200);
 
-        //todo compare logins
+        Assertions.assertNotEquals(oldLogin, given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get(baseUrl + "clients/" + uuid)
+                .then()
+                .extract().path("login"));
     }
 
     @Test
@@ -345,6 +353,6 @@ public class ClientControllerIT extends AppDeploymentTestConfig {
                     .log().all()
                     .extract().body().jsonPath().getList("", ClientOutputDTO.class);
 
-            return outputDTOList.get(0).getUserId().toString();
+            return outputDTOList.get(outputDTOList.size() - 1).getUserId().toString();
         }
 }

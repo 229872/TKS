@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.hamcrest.core.IsEqual;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -249,8 +250,11 @@ public class EmployeeControllerIT extends AppDeploymentTestConfig {
     @Test
     void updateOneEmployee_updateLogin() throws JsonProcessingException {
         String uuid = getUUIDOfNewObject();
+        String oldLogin = validEmployee.getLogin();
 
-        validEmployee.setLogin("__other_login__");
+        String newLogin = "__other_login__";
+        validEmployee.setLogin(newLogin);
+
         String updatedLogin = obj.writeValueAsString(validEmployee);
         given()
                 .header("Content-Type", "application/json")
@@ -258,8 +262,24 @@ public class EmployeeControllerIT extends AppDeploymentTestConfig {
                 .when()
                 .put(baseUrl + "employees/" + uuid)
                 .then()
-                .statusCode(400);
-        //todo compare logins
+                .log().all()
+                .statusCode(200);
+
+        Assertions.assertNotEquals(oldLogin, given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get(baseUrl + "employees/" + uuid)
+                .then()
+                .log().all()
+                .extract().path("login"));
+
+        Assertions.assertEquals(newLogin, given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get(baseUrl + "employees/" + uuid)
+                .then()
+                .log().all()
+                .extract().path("login"));
     }
 
     @Test
@@ -329,6 +349,6 @@ public class EmployeeControllerIT extends AppDeploymentTestConfig {
                 .log().all()
                 .extract().body().jsonPath().getList("", EmployeeOutputDTO.class);
 
-        return outputDTOList.get(0).getUserId().toString();
+        return outputDTOList.get(outputDTOList.size() - 1).getUserId().toString();
     }
 }

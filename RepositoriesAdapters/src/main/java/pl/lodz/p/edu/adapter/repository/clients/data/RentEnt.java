@@ -14,13 +14,13 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @NamedQuery(name = RentEnt.FIND_ALL, query = "SELECT rent FROM RentEnt rent")
 @NamedQuery(name = RentEnt.FIND_BY_ID, query = "SELECT rent FROM RentEnt rent WHERE rent.id = :id")
-@NamedQuery(name = RentEnt.FIND_BY_EQUIPMENT, query = "SELECT rent FROM RentEnt rent WHERE rent.equipmentEnt = :equipment")
-@NamedQuery(name = RentEnt.FIND_BY_CLIENT, query = "SELECT rent FROM RentEnt rent WHERE rent.clientEnt = :client")
+@NamedQuery(name = RentEnt.FIND_BY_EQUIPMENT_ID, query = "SELECT rent FROM RentEnt rent WHERE rent.equipmentEnt.entityId = :equipmentId")
+@NamedQuery(name = RentEnt.FIND_BY_CLIENT_ID, query = "SELECT rent FROM RentEnt rent WHERE rent.clientEnt.entityId = :clientId")
 public class RentEnt extends AbstractEntity {
     public static final String FIND_ALL = "RentEnt.findAll";
     public static final String FIND_BY_ID = "RentEnt.findById";
-    public static final String FIND_BY_EQUIPMENT = "RentEnt.findByEquipment";
-    public static final String FIND_BY_CLIENT = "RentEnt.findByClient";
+    public static final String FIND_BY_EQUIPMENT_ID = "RentEnt.findByEquipmentId";
+    public static final String FIND_BY_CLIENT_ID = "RentEnt.findByClientId";
 
     @JoinColumn(name = "equipment_id")
     @ManyToOne(fetch = FetchType.EAGER,

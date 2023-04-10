@@ -4,7 +4,7 @@ import pl.lodz.p.edu.adapter.rest.dto.input.RentInputDTO;
 import pl.lodz.p.edu.core.domain.model.Rent;
 
 public class RentFromDomainToDTOMapper {
-    public RentInputDTO convertToDTO(Rent rent) {
+    public RentInputDTO convertToInputDTO(Rent rent) {
         return new RentInputDTO(
                 rent.getClient().getEntityId().toString(),
                 rent.getEquipment().getEntityId().toString(),

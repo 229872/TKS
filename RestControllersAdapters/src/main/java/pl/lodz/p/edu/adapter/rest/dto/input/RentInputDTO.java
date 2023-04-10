@@ -2,6 +2,7 @@ package pl.lodz.p.edu.adapter.rest.dto.input;
 
 import jakarta.json.bind.annotation.JsonbDateFormat;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,8 @@ public class RentInputDTO {
 
     @NotBlank(message = "{rent.beginTime.empty}")
 //    @JsonbDateFormat(value = "yyyy-MM-dd")
+//    @Pattern(regexp = "^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$")
+    //fixme too much work with these kinds of regex
     private String beginTime;
 
     private String endTime;

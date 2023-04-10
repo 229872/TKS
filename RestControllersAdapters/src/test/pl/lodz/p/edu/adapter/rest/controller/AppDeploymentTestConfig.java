@@ -39,7 +39,7 @@ public class AppDeploymentTestConfig {
             .dependsOn(database)
             .withNetwork(network)
             .withNetworkAliases("payara")
-            .withLogConsumer(new Slf4jLogConsumer(LOGGER).withPrefix("Service"))
+//            .withLogConsumer(new Slf4jLogConsumer(LOGGER).withPrefix("Service"))
             .withCopyFileToContainer(WAR, "/opt/payara/deployments/RestControllersAdapters-1.0-SNAPSHOT.war")
             .waitingFor(Wait.forHttp("/rest/api/clients"))
             .withReuse(true);

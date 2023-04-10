@@ -14,7 +14,6 @@ import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import pl.lodz.p.edu.adapter.repository.clients.data.users.UserEnt;
 import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundRepositoryException;
-import pl.lodz.p.edu.core.domain.model.Equipment;
 
 
 import java.util.ArrayList;
@@ -77,8 +76,8 @@ public class RentRepositoryImpl implements RentRepository {
 
     @Override
     public List<RentEnt> getRentsByClient(ClientEnt client) {
-        return em.createNamedQuery(RentEnt.FIND_BY_CLIENT, RentEnt.class)
-                .setParameter("client", client)
+        return em.createNamedQuery(RentEnt.FIND_BY_CLIENT_ID, RentEnt.class)
+                .setParameter("clientId", client.getEntityId())
                 .getResultList();
     }
 
@@ -99,8 +98,8 @@ public class RentRepositoryImpl implements RentRepository {
 
     @Override
     public List<RentEnt> getRentsByEquipment(EquipmentEnt equipment) {
-        return em.createNamedQuery(RentEnt.FIND_BY_EQUIPMENT, RentEnt.class)
-                .setParameter("equipment", equipment)
+        return em.createNamedQuery(RentEnt.FIND_BY_EQUIPMENT_ID, RentEnt.class)
+                .setParameter("equipmentId", equipment.getEntityId())
                 .getResultList();
     }
 

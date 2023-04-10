@@ -16,6 +16,7 @@ import pl.lodz.p.edu.adapter.rest.dto.output.EquipmentOutputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.output.users.ClientOutputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestBusinessLogicInterruptException;
+import pl.lodz.p.edu.adapter.rest.exception.RestIllegalDateException;
 import pl.lodz.p.edu.adapter.rest.exception.RestObjectNotValidException;
 
 
@@ -46,7 +47,7 @@ public class RentController {
         try {
             rentService.add(rentInputDTO);
             return Response.status(CREATED).build();
-        } catch (RestObjectNotValidException e) {
+        } catch (RestObjectNotValidException | RestIllegalDateException e) {
             return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         } catch (RestBusinessLogicInterruptException e) {
             return Response.status(CONFLICT).entity(e.getMessage()).build();

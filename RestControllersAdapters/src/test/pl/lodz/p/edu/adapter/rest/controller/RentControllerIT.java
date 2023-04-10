@@ -1,6 +1,7 @@
 package pl.lodz.p.edu.adapter.rest.controller;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -103,6 +104,126 @@ public class RentControllerIT extends AppDeploymentTestConfig {
     }
 
 
+
+
+
+
+    @Test
+    void createRent_invalidDate() throws JsonProcessingException {
+        validRent.setBeginTime("invalid date");
+        String body = obj.writeValueAsString(validRent);
+        given()
+                .header("Content-Type", "application/json")
+                .body(body)
+                .when()
+                .post(baseUrl + "rents")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    void createRent_dateBeforeToday() throws JsonProcessingException {
+        validRent.setBeginTime("1999-04-05T12:38:35.585");
+        String body = obj.writeValueAsString(validRent);
+        given()
+                .header("Content-Type", "application/json")
+                .body(body)
+                .when()
+                .post(baseUrl + "rents")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    void createRent_createSecondAfterFirstEnded() throws JsonProcessingException {
+        RentInputDTO first = new RentInputDTO(equipmentId, clientId, "2024-01-01T12:00:00.000", "2024-01-02T12:00:00.000");
+        String firstStr = obj.writeValueAsString(first);
+        given()
+                .header("Content-Type", "application/json")
+                .body(firstStr)
+                .when()
+                .post(baseUrl + "rents")
+                .then()
+                .statusCode(201);
+
+        RentInputDTO second = new RentInputDTO(equipmentId, clientId, "2024-01-02T12:00:01.000", null);
+        String secondStr = obj.writeValueAsString(second);
+        given()
+                .header("Content-Type", "application/json")
+                .body(secondStr)
+                .when()
+                .post(baseUrl + "rents")
+                .then()
+                .statusCode(201);
+    }
+
+    @Test
+    void createRent_createSecondBeforeFirstEnded() throws JsonProcessingException {
+        RentInputDTO first = new RentInputDTO(equipmentId, clientId, "2024-01-01T12:00:00.000", null);
+        String firstStr = obj.writeValueAsString(first);
+        given()
+                .header("Content-Type", "application/json")
+                .body(firstStr)
+                .when()
+                .post(baseUrl + "rents")
+                .then()
+                .statusCode(201);
+
+        RentInputDTO second = new RentInputDTO(equipmentId, clientId, "2024-01-02T12:00:01.000", "2024-01-04T12:00:00.000");
+        String secondStr = obj.writeValueAsString(second);
+        given()
+                .header("Content-Type", "application/json")
+                .body(secondStr)
+                .when()
+                .post(baseUrl + "rents")
+                .then()
+                .statusCode(409);
+    }
+
+    // =============================================== read
+
+    // get all
+    @Test
+    void getAllRents() {
+        given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get(baseUrl + "rents")
+                .then()
+                .log().all()
+                .statusCode(200);
+    }
+
+//    @Test
+//    void getAllClientRents_someClientRents() {
+//        given()
+//                .header("Content-Type", "application/json")
+//                .body(validRent)
+//                .when()
+//                .post(baseUrl + "rents")
+//                .then()
+//                .statusCode(201);
+//
+//        given()
+//                .header("Content-Type", "application/json")
+//                .when()
+//                .get(baseUrl + "rents" + "/client/" + clientId)
+//                .then()
+//                .statusCode(200)
+//                .body("size()", equalTo(1));
+//    }
+//
+//    @Test
+//    void getAllClientRents_noClientRents() {
+//        given()
+//                .header("Content-Type", "application/json")
+//                .when()
+//                .get(baseUrl + "rents" + "/client/" + clientId)
+//                .then()
+//                .statusCode(200)
+//                .body("size()", equalTo(0));
+//    }
+
     private String getUUIDOfNewClient() throws JsonProcessingException {
         given()
                 .header("Content-Type", "application/json")
@@ -118,12 +239,12 @@ public class RentControllerIT extends AppDeploymentTestConfig {
                 .get(baseUrl + "clients")
                 .then()
                 .statusCode(200)
-                .log().all()
                 .extract().body().jsonPath().getList("", ClientOutputDTO.class);
 
         return outputDTOList.get(outputDTOList.size() - 1).getUserId().toString();
     }
 
+    /////////////////////////////////
     private String getUUIDOfNewEquipment() throws JsonProcessingException {
         given()
                 .header("Content-Type", "application/json")
@@ -166,4 +287,5 @@ public class RentControllerIT extends AppDeploymentTestConfig {
 
         return outputDTOList.get(outputDTOList.size() - 1).getRentId().toString();
     }
+    /////////////////////////////////
 }

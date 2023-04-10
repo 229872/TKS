@@ -2,9 +2,7 @@ package pl.lodz.p.edu.core.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-
 import jakarta.persistence.NoResultException;
-import jakarta.transaction.Transactional;
 import pl.lodz.p.edu.core.domain.exception.BusinessLogicInterruptException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotValidException;
@@ -15,7 +13,6 @@ import pl.lodz.p.edu.ports.incoming.RentServicePort;
 import pl.lodz.p.edu.ports.outcoming.EquipmentRepositoryPort;
 import pl.lodz.p.edu.ports.outcoming.RentRepositoryPort;
 import pl.lodz.p.edu.ports.outcoming.UserRepositoryPort;
-
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -64,12 +61,13 @@ public class RentServiceImpl implements RentServicePort {
         LocalDateTime now = LocalDateTime.now();
         rent.validateTime(now);
 
-        synchronized (userRepository) { //FIXME ?????????????? WHY IS IT LIKE THIS
+
+        synchronized (userRepository) {
             Client client = (Client) userRepository.get(rent.getClient().getEntityId());
             synchronized (equipmentRepository) {
                 Equipment equipment = equipmentRepository.get(rent.getEquipment().getEntityId());
 
-                if(checkEquipmentAvailable(equipment, rent.getBeginTime())) {
+                if (checkEquipmentAvailable(equipment, rent.getBeginTime())) {
                     //Must not be detached entity
                     Rent rentDB = new Rent(rent.getBeginTime(), rent.getEndTime(), equipment, client);
                     rentRepository.add(rentDB);
@@ -95,7 +93,7 @@ public class RentServiceImpl implements RentServicePort {
                 Equipment equipmentDB = equipmentRepository.get(rent.getEquipment().getEntityId());
                 boolean available = this.checkEquipmentAvailable(equipmentDB, rent.getBeginTime());
 
-                if(available) {
+                if (available) {
                     rentDB.update(rent, equipmentDB, clientDB);
                     return rentRepository.update(rent);
                 } else {
@@ -106,11 +104,10 @@ public class RentServiceImpl implements RentServicePort {
     }
 
 
-
     @Override
     public void remove(UUID uuid) throws BusinessLogicInterruptException, ObjectNotFoundServiceException {
         Rent rent = rentRepository.get(uuid);
-        if(rent.getEndTime() == null) {
+        if (rent.getEndTime()==null) {
             rentRepository.remove(rent);
         } else {
             throw new BusinessLogicInterruptException("Cannot delete ended rent");
@@ -136,13 +133,13 @@ public class RentServiceImpl implements RentServicePort {
         try {
             rentEquipmentList = rentRepository.getEquipmentRents(equipment);
 
-        } catch(NoResultException e) {
+        } catch (NoResultException e) {
             return true;
         }
         for (int i = 0; i < rentEquipmentList.size(); i++) {
             Rent curRent = rentEquipmentList.get(i);
-            if(curRent.getEndTime() == null) {
-                if(!curRent.getBeginTime().isEqual(beginTime)) {
+            if (curRent.getEndTime()==null) {
+                if (!curRent.getBeginTime().isEqual(beginTime)) {
                     return false;
                 } else {
                     continue;

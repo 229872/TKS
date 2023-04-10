@@ -7,12 +7,12 @@ import pl.lodz.p.edu.adapter.rest.adapter.mapper.user.UserFromDTOToDomainMapper;
 import pl.lodz.p.edu.adapter.rest.adapter.mapper.rent.RentFromDTOToDomainMapper;
 import pl.lodz.p.edu.adapter.rest.adapter.mapper.rent.RentFromDomainToDTOMapper;
 import pl.lodz.p.edu.adapter.rest.api.RentService;
-import pl.lodz.p.edu.adapter.rest.dto.input.EquipmentInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.RentInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.ClientInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.output.EquipmentOutputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestBusinessLogicInterruptException;
+import pl.lodz.p.edu.adapter.rest.exception.RestIllegalDateException;
 import pl.lodz.p.edu.adapter.rest.exception.RestObjectNotValidException;
 import pl.lodz.p.edu.core.domain.exception.BusinessLogicInterruptException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
@@ -26,7 +26,6 @@ import pl.lodz.p.edu.ports.incoming.UserServicePort;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -55,7 +54,7 @@ public class RentRestControllerAdapter implements RentService {
     private UserFromDTOToDomainMapper userToDomainMapper;
 
     @Override
-    public void add(RentInputDTO rentInputDTO) throws RestObjectNotValidException, ObjectNotFoundRestException {
+    public void add(RentInputDTO rentInputDTO) throws RestObjectNotValidException, ObjectNotFoundRestException, RestIllegalDateException, RestBusinessLogicInterruptException {
         try {
             Client client = (Client) userServicePort.get(rentInputDTO.getClientUUIDFromString());
             Equipment equipment = equipmentServicePort.get(rentInputDTO.getEquipmentUUIDFromString());
@@ -64,11 +63,15 @@ public class RentRestControllerAdapter implements RentService {
             rentServicePort.add(rent);
 //            return convertToDTO(rentServicePort.add(rent));
 
-        } catch (ObjectNotValidException | BusinessLogicInterruptException e) {
+            //ObjectNotFound throws RestObjectNotValid because those not found entities are parts of Rent that will be created
+        } catch (ObjectNotValidException | ObjectNotFoundServiceException e) {
             throw new RestObjectNotValidException(e.getMessage(), e.getCause());
-
-        } catch (ObjectNotFoundServiceException | ClassCastException e) {
+        } catch (BusinessLogicInterruptException e) {
+            throw new RestBusinessLogicInterruptException(e.getMessage(), e.getCause());
+        } catch (ClassCastException e) {
             throw new ObjectNotFoundRestException(e.getMessage(), e.getCause());
+        } catch (RestIllegalDateException e) {
+            throw new RestIllegalDateException(e.getMessage(), e.getCause());
         }
     }
 
@@ -114,7 +117,7 @@ public class RentRestControllerAdapter implements RentService {
             Rent rentReturn = rentServicePort.update(entityId, rent);
             return convertToDTO(rentReturn);
 
-        } catch (ObjectNotValidException e) {
+        } catch (ObjectNotValidException | RestIllegalDateException e) {
             throw new RestObjectNotValidException(e.getMessage(), e.getCause());
 
         } catch (BusinessLogicInterruptException e) {
@@ -143,11 +146,11 @@ public class RentRestControllerAdapter implements RentService {
     }
 
     private RentInputDTO convertToDTO(Rent rent) {
-        return toDTOMapper.convertToDTO(rent);
+        return toDTOMapper.convertToInputDTO(rent);
     }
 
     private Rent convertToDomainModel(RentInputDTO rentInputDTO, Equipment equipment, Client client)
-            throws RestObjectNotValidException {
+            throws RestObjectNotValidException, RestIllegalDateException {
         return toDomainModel.convertToDomainModel(rentInputDTO, equipment, client);
     }
 }

@@ -26,6 +26,7 @@ import pl.lodz.p.edu.ports.incoming.UserServicePort;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -54,12 +55,14 @@ public class RentRestControllerAdapter implements RentService {
     private UserFromDTOToDomainMapper userToDomainMapper;
 
     @Override
-    public RentInputDTO add(RentInputDTO rentInputDTO) throws RestObjectNotValidException, ObjectNotFoundRestException {
+    public void add(RentInputDTO rentInputDTO) throws RestObjectNotValidException, ObjectNotFoundRestException {
         try {
             Client client = (Client) userServicePort.get(rentInputDTO.getClientUUIDFromString());
             Equipment equipment = equipmentServicePort.get(rentInputDTO.getEquipmentUUIDFromString());
+
             Rent rent = convertToDomainModel(rentInputDTO, equipment, client);
-            return convertToDTO(rentServicePort.add(rent));
+            rentServicePort.add(rent);
+//            return convertToDTO(rentServicePort.add(rent));
 
         } catch (ObjectNotValidException | BusinessLogicInterruptException e) {
             throw new RestObjectNotValidException(e.getMessage(), e.getCause());

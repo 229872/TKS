@@ -28,6 +28,18 @@ public class UserFromDomainToDataMapper {
         );
     }
 
+    public ClientEnt convertClientToDataModelALL(Client client) {
+        return new ClientEnt(
+                client.getEntityId(),
+                client.getLogin(),
+                client.getPassword(),
+                client.getFirstName(),
+                client.getLastName(),
+                client.isActive(),
+                convertAddressToDataModel(client.getAddress())
+        );
+    }
+
     public AdminEnt convertAdminToDataModel(Admin admin) {
         return new AdminEnt(
                 admin.getLogin(),

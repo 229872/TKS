@@ -12,7 +12,9 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
+import pl.lodz.p.edu.adapter.repository.clients.data.users.UserEnt;
 import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundRepositoryException;
+import pl.lodz.p.edu.core.domain.model.Equipment;
 
 
 import java.util.ArrayList;
@@ -46,7 +48,18 @@ public class RentRepositoryImpl implements RentRepository {
 
     @Override
     public void add(RentEnt elem) {
-        em.persist(elem);
+
+        //FIXME Worst piece of code in an existence
+        ClientEnt clientEn = (ClientEnt) em.createNamedQuery(UserEnt.FIND_BY_ID, UserEnt.class)
+                .setParameter("id", elem.getClientEnt().getEntityId())
+                .getSingleResult();
+
+        EquipmentEnt equipmentEnt = em.createNamedQuery(EquipmentEnt.FIND_BY_ID, EquipmentEnt.class)
+                .setParameter("id", elem.getEquipmentEnt().getEntityId())
+                .getSingleResult();
+
+        em.persist(new RentEnt(equipmentEnt, clientEn, elem.getBeginTime(), elem.getEndTime()));
+
     }
 
     @Override

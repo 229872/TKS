@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface RentServicePort {
-    Rent add(Rent rent) throws ObjectNotValidException, BusinessLogicInterruptException, ObjectNotFoundServiceException;
+    void add(Rent rent) throws ObjectNotValidException, BusinessLogicInterruptException, ObjectNotFoundServiceException;
 
     List<Rent> getRentsByClient(Client client);
 

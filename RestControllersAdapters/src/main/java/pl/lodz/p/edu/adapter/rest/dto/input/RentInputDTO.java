@@ -20,7 +20,7 @@ public class RentInputDTO {
     private String clientUUID;
 
     @NotBlank(message = "{rent.beginTime.empty}")
-    @JsonbDateFormat(value = "yyyy-MM-dd")
+//    @JsonbDateFormat(value = "yyyy-MM-dd")
     private String beginTime;
 
     private String endTime;

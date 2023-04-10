@@ -16,7 +16,11 @@ public class RentFromDTOToDomainMapper {
         LocalDateTime endTime;
         try {
             beginTime = LocalDateTime.parse(rentInputDTO.getBeginTime());
-            endTime = LocalDateTime.parse(rentInputDTO.getEndTime());
+            if (rentInputDTO.getEndTime() != null) {
+                endTime = LocalDateTime.parse(rentInputDTO.getEndTime());
+            } else {
+                endTime = null;
+            }
         } catch (Exception e) {
             throw new RestObjectNotValidException(e.getMessage(), e.getCause());
         }

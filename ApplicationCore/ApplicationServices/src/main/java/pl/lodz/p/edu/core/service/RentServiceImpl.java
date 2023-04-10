@@ -58,20 +58,22 @@ public class RentServiceImpl implements RentServicePort {
     }
 
     @Override
-    public Rent add(Rent rent) throws BusinessLogicInterruptException,
+    public void add(Rent rent) throws BusinessLogicInterruptException,
             ObjectNotFoundServiceException, ObjectNotValidException {
 
         LocalDateTime now = LocalDateTime.now();
         rent.validateTime(now);
 
-        synchronized (userRepository) {
-            userRepository.get(rent.getClient().getEntityId());
+        synchronized (userRepository) { //FIXME ?????????????? WHY IS IT LIKE THIS
+            Client client = (Client) userRepository.get(rent.getClient().getEntityId());
             synchronized (equipmentRepository) {
                 Equipment equipment = equipmentRepository.get(rent.getEquipment().getEntityId());
 
                 if(checkEquipmentAvailable(equipment, rent.getBeginTime())) {
-                    rentRepository.add(rent);
-                    return rent;
+                    //Must not be detached entity
+                    Rent rentDB = new Rent(rent.getBeginTime(), rent.getEndTime(), equipment, client);
+                    rentRepository.add(rentDB);
+//                    return rent;
                 } else {
                     throw new BusinessLogicInterruptException("Equipment not available");
                 }

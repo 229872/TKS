@@ -45,7 +45,7 @@ public class RentController {
     public Response makeReservation(@Valid RentInputDTO rentInputDTO) {
         try {
             rentService.add(rentInputDTO);
-            return Response.status(CREATED).entity(rentInputDTO).build();
+            return Response.status(CREATED).build();
         } catch (RestObjectNotValidException e) {
             return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         } catch (RestBusinessLogicInterruptException e) {
@@ -55,7 +55,7 @@ public class RentController {
         }
     }
 
-// FIXME
+// fixme
 //    @GET
 //    @Produces(MediaType.APPLICATION_JSON)
 //    @Path("/client/{uuid}")

@@ -36,6 +36,7 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
         validAdminStr = obj.writeValueAsString(validAdmin);
     }
 
+
     // create
 
     @Test

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface RentService {
-    RentInputDTO add(RentInputDTO rentInputDTO) throws RestObjectNotValidException, RestBusinessLogicInterruptException, ObjectNotFoundRestException;
+    void add(RentInputDTO rentInputDTO) throws RestObjectNotValidException, RestBusinessLogicInterruptException, ObjectNotFoundRestException;
 
     List<RentInputDTO> getRentsByClient(ClientInputDTO client);
 

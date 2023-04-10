@@ -110,7 +110,7 @@ public class RentController {
         try {
             RentInputDTO updatedRent = rentService.update(entityId, rentInputDTO);
             return Response.ok(updatedRent).build();
-        } catch (RestObjectNotValidException | TransactionalException e) {
+        } catch (RestIllegalDateException | RestObjectNotValidException | TransactionalException e) {
             return Response.status(BAD_REQUEST).build();
         } catch (ObjectNotFoundRestException e) {
             return Response.status(NOT_FOUND).entity(e.getMessage()).build();

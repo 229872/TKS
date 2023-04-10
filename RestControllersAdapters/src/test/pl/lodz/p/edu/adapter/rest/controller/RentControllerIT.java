@@ -3,6 +3,7 @@ package pl.lodz.p.edu.adapter.rest.controller;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -273,9 +274,134 @@ public class RentControllerIT extends AppDeploymentTestConfig {
                 .statusCode(404);
     }
 
+    // =============================================== update
+
+    @Test
+    void updateRentDate_correct() throws JsonProcessingException {
+        validRent.setBeginTime("2024-04-05T12:38:35.585");
+        validRent.setEndTime(null);
+        validRentStr = obj.writeValueAsString(validRent);
+        String rentUuid = getUUIDOfCreatedRent(validRentStr);
+        System.out.println("\n" + validRentStr);
+
+        validRent.setEndTime("2024-05-05T12:38:35.585");
+        validRentStr = obj.writeValueAsString(validRent);
+
+        System.out.println("\n" + validRentStr);
+
+        given()
+                .header("Content-Type", "application/json")
+                .body(validRentStr)
+                .when()
+                .put(baseUrl + "rents/" + rentUuid)
+                .then()
+                .statusCode(200);
+
+        List<RentOutputDTO> outputDTOList = given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get(baseUrl + "rents")
+                .then()
+                .statusCode(200)
+                .log().all()
+                .extract().body().jsonPath().getList("", RentOutputDTO.class);
+
+        Assertions.assertEquals(validRent.getBeginTime(), outputDTOList.get(outputDTOList.size() - 1).getBeginTime());
+        Assertions.assertEquals(validRent.getEndTime(), outputDTOList.get(outputDTOList.size() - 1).getEndTime());
+    }
 
 
+    @Test
+    void updateRent_updateBeforeBeginTime() throws JsonProcessingException {
+        validRent.setBeginTime("2024-05-05T12:38:35.585");
+        validRent.setEndTime(null);
+        validRentStr = obj.writeValueAsString(validRent);
+        String uuid = getUUIDOfCreatedRent(validRentStr);
 
+        validRent.setEndTime("2024-05-04T12:38:35.585");
+        validRentStr = obj.writeValueAsString(validRent);
+        given()
+                .header("Content-Type", "application/json")
+                .body(validRentStr)
+                .when()
+                .put(baseUrl + "rents/" + uuid)
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    void updateRent_clientNotExist() throws JsonProcessingException {
+        validRent.setBeginTime("2023-05-05T12:38:35.585");
+        validRent.setEndTime(null);
+        validRentStr = obj.writeValueAsString(validRent);
+        String uuid = getUUIDOfCreatedRent(validRentStr);
+
+        validRent.setClientUUID(UUID.randomUUID().toString());
+        validRentStr = obj.writeValueAsString(validRent);
+        given()
+                .header("Content-Type", "application/json")
+                .body(validRentStr)
+                .when()
+                .put(baseUrl + "rents/" + uuid)
+                .then()
+                .statusCode(400);
+    }
+
+
+    @Test
+    void updateRent_incorrect_BadRequest() throws JsonProcessingException {
+        String uuid = getUUIDOfCreatedRent(validRentStr);
+
+        given()
+                .header("Content-Type", "application/json")
+                .body(invalidRentData)
+                .when()
+                .put(baseUrl + "rents/" + uuid)
+                .then()
+                .statusCode(400);
+    }
+
+    // ================================== DELETE
+
+    @Test
+    void deleteRent_correct() throws JsonProcessingException {
+        validRent.setEndTime(null);
+        validRentStr = obj.writeValueAsString(validRent);
+        String uuid = getUUIDOfCreatedRent(validRentStr);
+
+        given()
+                .header("Content-Type", "application/json")
+                .when()
+                .delete(baseUrl + "rents/" + uuid )
+                .then()
+                .statusCode(204);
+
+    }
+
+    @Test
+    void deleteRent_incorrect() throws JsonProcessingException {
+        String uuid = getUUIDOfCreatedRent(validRentStr);
+
+        given()
+                .header("Content-Type", "application/json")
+                .when()
+                .delete(baseUrl + "rents/" + uuid )
+                .then()
+                .statusCode(409); //FIXME CONFLICT?
+    }
+
+    @Test
+    void deleteRent_RentNotExists() {
+        given()
+                .header("Content-Type", "application/json")
+                .when()
+                .delete(baseUrl + "rents/" + UUID.randomUUID())
+                .then()
+                .statusCode(204);
+    }
+
+
+    /////////////////////////////////
     private String getUUIDOfNewClient() throws JsonProcessingException {
         given()
                 .header("Content-Type", "application/json")
@@ -296,7 +422,7 @@ public class RentControllerIT extends AppDeploymentTestConfig {
         return outputDTOList.get(outputDTOList.size() - 1).getUserId().toString();
     }
 
-    /////////////////////////////////
+
     private String getUUIDOfNewEquipment() throws JsonProcessingException {
         given()
                 .header("Content-Type", "application/json")

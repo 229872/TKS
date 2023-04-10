@@ -71,7 +71,8 @@ public class RentRepositoryImpl implements RentRepository {
 
     @Override
     public RentEnt update(RentEnt elem) {
-        return em.merge(elem);
+        em.lock(em.merge(elem), LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+        return elem; //fixme i don't like it
     }
 
     @Override

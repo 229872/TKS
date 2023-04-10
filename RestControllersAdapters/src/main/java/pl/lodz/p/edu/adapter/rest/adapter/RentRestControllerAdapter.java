@@ -54,7 +54,8 @@ public class RentRestControllerAdapter implements RentService {
     private UserFromDTOToDomainMapper userToDomainMapper;
 
     @Override
-    public void add(RentInputDTO rentInputDTO) throws RestObjectNotValidException, ObjectNotFoundRestException, RestIllegalDateException, RestBusinessLogicInterruptException {
+    public void add(RentInputDTO rentInputDTO) throws RestObjectNotValidException,
+            ObjectNotFoundRestException, RestIllegalDateException, RestBusinessLogicInterruptException {
         try {
             Client client = (Client) userServicePort.get(rentInputDTO.getClientUUIDFromString());
             Equipment equipment = equipmentServicePort.get(rentInputDTO.getEquipmentUUIDFromString());
@@ -108,22 +109,25 @@ public class RentRestControllerAdapter implements RentService {
 
     @Override
     public RentInputDTO update(UUID entityId, RentInputDTO rentInputDTO) throws RestObjectNotValidException,
-            RestBusinessLogicInterruptException, ObjectNotFoundRestException {
+            RestBusinessLogicInterruptException, ObjectNotFoundRestException, RestIllegalDateException {
         try {
             Equipment equipment = equipmentServicePort.get(rentInputDTO.getEquipmentUUIDFromString());
             Client client = (Client) userServicePort.get(rentInputDTO.getClientUUIDFromString());
             Rent rent = convertToDomainModel(rentInputDTO, equipment, client);
             Rent rentReturn = rentServicePort.update(entityId, rent);
+
             return convertToInputDTO(rentReturn);
 
-        } catch (ObjectNotValidException | RestIllegalDateException e) {
+        } catch (ObjectNotValidException | ObjectNotFoundServiceException e) {
             throw new RestObjectNotValidException(e.getMessage(), e.getCause());
 
         } catch (BusinessLogicInterruptException e) {
             throw new RestBusinessLogicInterruptException(e.getMessage(), e.getCause());
 
-        } catch (ObjectNotFoundServiceException | ClassCastException e) {
+        } catch (ClassCastException e) {
             throw new ObjectNotFoundRestException(e.getMessage(), e.getCause());
+        } catch (RestIllegalDateException e) {
+            throw new RestIllegalDateException(e.getMessage(), e.getCause());
         }
     }
 

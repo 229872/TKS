@@ -104,7 +104,7 @@ public class RentRepositoryAdapter implements RentRepositoryPort {
 
     @Override
     public Rent update(Rent object) {
-        RentEnt rentEnt = rentRepository.update(convertToDataModel(object)); //FIXME rozbić jak w add
+        RentEnt rentEnt = rentRepository.update(convertToDataModel(object));
         return convertToDomainModel(rentEnt);
     }
 

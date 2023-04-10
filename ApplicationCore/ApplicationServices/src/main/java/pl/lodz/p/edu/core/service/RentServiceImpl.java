@@ -63,13 +63,13 @@ public class RentServiceImpl implements RentServicePort {
 
 
         synchronized (userRepository) {
-            Client client = (Client) userRepository.get(rent.getClient().getEntityId());
+            Client clientDB = (Client) userRepository.get(rent.getClient().getEntityId());
             synchronized (equipmentRepository) {
-                Equipment equipment = equipmentRepository.get(rent.getEquipment().getEntityId());
+                Equipment equipmentDB = equipmentRepository.get(rent.getEquipment().getEntityId());
 
-                if (checkEquipmentAvailable(equipment, rent.getBeginTime())) {
+                if (checkEquipmentAvailable(equipmentDB, rent.getBeginTime())) {
                     //Must not be detached entity
-                    Rent rentDB = new Rent(rent.getBeginTime(), rent.getEndTime(), equipment, client);
+                    Rent rentDB = new Rent(rent.getBeginTime(), rent.getEndTime(), equipmentDB, clientDB);
                     rentRepository.add(rentDB);
 //                    return rent;
                 } else {
@@ -83,19 +83,20 @@ public class RentServiceImpl implements RentServicePort {
     public Rent update(UUID uuid, Rent rent) throws ObjectNotValidException,
             BusinessLogicInterruptException, ObjectNotFoundServiceException {
 
-        Rent rentDB = rentRepository.get(uuid);
         LocalDateTime now = LocalDateTime.now();
         rent.validateTime(now);
 
+        Rent rentDB = rentRepository.get(uuid);
+
         synchronized (userRepository) {
-            Client clientDB = (Client) userRepository.get(rent.getEntityId());
+            Client clientDB = (Client) userRepository.get(rent.getClient().getEntityId());
             synchronized (equipmentRepository) {
                 Equipment equipmentDB = equipmentRepository.get(rent.getEquipment().getEntityId());
                 boolean available = this.checkEquipmentAvailable(equipmentDB, rent.getBeginTime());
 
                 if (available) {
                     rentDB.update(rent, equipmentDB, clientDB);
-                    return rentRepository.update(rent);
+                    return rentRepository.update(rentDB);
                 } else {
                     throw new BusinessLogicInterruptException("Equipment not available");
                 }
@@ -107,7 +108,7 @@ public class RentServiceImpl implements RentServicePort {
     @Override
     public void remove(UUID uuid) throws BusinessLogicInterruptException, ObjectNotFoundServiceException {
         Rent rent = rentRepository.get(uuid);
-        if (rent.getEndTime()==null) {
+        if (rent.getEndTime() == null) {
             rentRepository.remove(rent);
         } else {
             throw new BusinessLogicInterruptException("Cannot delete ended rent");

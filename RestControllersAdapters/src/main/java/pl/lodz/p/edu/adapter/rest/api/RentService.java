@@ -25,7 +25,7 @@ public interface RentService {
     RentOutputDTO get(UUID uuid) throws ObjectNotFoundRestException;
 
     RentInputDTO update(UUID entityId, RentInputDTO rentInputDTO) throws RestObjectNotValidException,
-            RestBusinessLogicInterruptException, ObjectNotFoundRestException;
+            RestBusinessLogicInterruptException, ObjectNotFoundRestException, RestIllegalDateException;
 
     void remove(UUID rentUuid) throws RestBusinessLogicInterruptException, ObjectNotFoundRestException;
 

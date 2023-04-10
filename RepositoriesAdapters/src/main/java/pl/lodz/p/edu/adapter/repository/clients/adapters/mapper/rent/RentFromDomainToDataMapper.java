@@ -17,12 +17,16 @@ public class RentFromDomainToDataMapper {
     private EquipmentFromDomainToDataMapper equipmentToDataMapper;
 
     public RentEnt convertToDataModel(Rent rent) {
-        return new RentEnt(
+        RentEnt rentEntR = new RentEnt(
                 equipmentToDataMapper.convertToDataModel(rent.getEquipment()),
                 userToDataMapper.convertClientToDataModelALL(rent.getClient()),
                 rent.getBeginTime(),
                 rent.getEndTime()
         );
+        if (rent.getEntityId() != null) {
+        rentEntR.setEntityId(rent.getEntityId());
+        }
+        return rentEntR;
     }
 
     public RentEnt connectEntitiesToDataModel(Rent rent, ClientEnt clientEnt, EquipmentEnt equipmentEnt) {

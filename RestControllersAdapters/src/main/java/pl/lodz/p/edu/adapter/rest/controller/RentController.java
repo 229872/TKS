@@ -10,9 +10,8 @@ import pl.lodz.p.edu.adapter.rest.api.UserService;
 import pl.lodz.p.edu.adapter.rest.api.RentService;
 import pl.lodz.p.edu.adapter.rest.api.EquipmentService;
 import pl.lodz.p.edu.adapter.rest.dto.input.RentInputDTO;
-import pl.lodz.p.edu.adapter.rest.dto.input.EquipmentInputDTO;
-import pl.lodz.p.edu.adapter.rest.dto.input.users.*;
 import pl.lodz.p.edu.adapter.rest.dto.output.EquipmentOutputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.RentOutputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.output.users.ClientOutputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestBusinessLogicInterruptException;
@@ -57,18 +56,18 @@ public class RentController {
     }
 
 // fixme
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Path("/client/{uuid}")
-//    public Response getClientRents(@PathParam("uuid") UUID clientUuid) {
-//        try {
-//            ClientOutputDTO clientDTO = (ClientOutputDTO) userService.get(clientUuid);
-//            List<RentInputDTO> rentsDTO = rentService.getRentsByClient(clientDTO);
-//            return Response.ok(rentsDTO).build();
-//        } catch (ObjectNotFoundRestException e) {
-//            return Response.status(NOT_FOUND).entity(e.getMessage()).build();
-//        }
-//    }
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/client/{uuid}")
+    public Response getClientRents(@PathParam("uuid") UUID clientUuid) {
+        try {
+            ClientOutputDTO clientDTO = (ClientOutputDTO) userService.get(clientUuid);
+            List<RentOutputDTO> rentsDTO = rentService.getRentsByClientId(clientUuid);
+            return Response.ok(rentsDTO).build();
+        } catch (ObjectNotFoundRestException e) {
+            return Response.status(NOT_FOUND).entity(e.getMessage()).build();
+        }
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -87,7 +86,7 @@ public class RentController {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/")
     public Response getAllRents() {
-        List<RentInputDTO> rentsDTO = rentService.getAll();
+        List<RentOutputDTO> rentsDTO = rentService.getAll();
         return Response.ok(rentsDTO).build();
     }
 
@@ -96,8 +95,8 @@ public class RentController {
     @Path("/{uuid}")
     public Response getRent(@PathParam("uuid") UUID uuid) {
         try {
-            RentInputDTO rentInputDTO = rentService.get(uuid);
-            return Response.ok(rentInputDTO).build();
+            RentOutputDTO rentOutputDTO = rentService.get(uuid);
+            return Response.ok(rentOutputDTO).build();
         } catch (ObjectNotFoundRestException e) {
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }

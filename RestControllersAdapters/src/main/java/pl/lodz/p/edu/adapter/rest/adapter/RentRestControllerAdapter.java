@@ -8,8 +8,8 @@ import pl.lodz.p.edu.adapter.rest.adapter.mapper.rent.RentFromDTOToDomainMapper;
 import pl.lodz.p.edu.adapter.rest.adapter.mapper.rent.RentFromDomainToDTOMapper;
 import pl.lodz.p.edu.adapter.rest.api.RentService;
 import pl.lodz.p.edu.adapter.rest.dto.input.RentInputDTO;
-import pl.lodz.p.edu.adapter.rest.dto.input.users.ClientInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.output.EquipmentOutputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.RentOutputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestBusinessLogicInterruptException;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalDateException;
@@ -76,10 +76,9 @@ public class RentRestControllerAdapter implements RentService {
     }
 
     @Override
-    public List<RentInputDTO> getRentsByClient(ClientInputDTO clientDTO) {
-        Client client = userToDomainMapper.convertClientToDomainModel(clientDTO);
-        return rentServicePort.getRentsByClient(client).stream()
-                .map(this::convertToDTO)
+    public List<RentOutputDTO> getRentsByClientId(UUID clientUuid) {
+        return rentServicePort.getRentsByClientId(clientUuid).stream()
+                .map(this::convertToOutputDTO)
                 .toList();
     }
 
@@ -87,20 +86,20 @@ public class RentRestControllerAdapter implements RentService {
     public List<RentInputDTO> getRentsByEquipment(EquipmentOutputDTO equipmentOutputDTO) {
         Equipment equipment = equipmentToDomainMapper.convertToDomainModelFromOutputDTO(equipmentOutputDTO);
         List<Rent> rentList = rentServicePort.getRentsByEquipment(equipment);
-        return rentList.stream().map(this::convertToDTO).collect(Collectors.toList());
+        return rentList.stream().map(this::convertToInputDTO).collect(Collectors.toList());
     }
 
     @Override
-    public List<RentInputDTO> getAll() {
+    public List<RentOutputDTO> getAll() {
         List<Rent> rentList = rentServicePort.getAll();
-        return rentList.stream().map(this::convertToDTO).collect(Collectors.toList());
+        return rentList.stream().map(this::convertToOutputDTO).collect(Collectors.toList());
     }
 
     @Override
-    public RentInputDTO get(UUID uuid) throws ObjectNotFoundRestException {
+    public RentOutputDTO get(UUID uuid) throws ObjectNotFoundRestException {
         try {
             Rent rent = rentServicePort.get(uuid);
-            return convertToDTO(rent);
+            return convertToOutputDTO(rent);
 
         } catch (ObjectNotFoundServiceException e) {
             throw new ObjectNotFoundRestException(e.getMessage(), e.getCause());
@@ -115,7 +114,7 @@ public class RentRestControllerAdapter implements RentService {
             Client client = (Client) userServicePort.get(rentInputDTO.getClientUUIDFromString());
             Rent rent = convertToDomainModel(rentInputDTO, equipment, client);
             Rent rentReturn = rentServicePort.update(entityId, rent);
-            return convertToDTO(rentReturn);
+            return convertToInputDTO(rentReturn);
 
         } catch (ObjectNotValidException | RestIllegalDateException e) {
             throw new RestObjectNotValidException(e.getMessage(), e.getCause());
@@ -145,8 +144,12 @@ public class RentRestControllerAdapter implements RentService {
         return rentServicePort.checkEquipmentAvailable(equipment, dateTime);
     }
 
-    private RentInputDTO convertToDTO(Rent rent) {
+    private RentInputDTO convertToInputDTO(Rent rent) {
         return toDTOMapper.convertToInputDTO(rent);
+    }
+
+    private RentOutputDTO convertToOutputDTO(Rent rent) {
+        return toDTOMapper.convertToOutputDTO(rent);
     }
 
     private Rent convertToDomainModel(RentInputDTO rentInputDTO, Equipment equipment, Client client)

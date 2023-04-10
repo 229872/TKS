@@ -184,7 +184,9 @@ public class RentControllerIT extends AppDeploymentTestConfig {
 
     // get all
     @Test
-    void getAllRents() {
+    void getAllRents() throws JsonProcessingException {
+        getUUIDOfCreatedRent(validRentStr);
+
         given()
                 .header("Content-Type", "application/json")
                 .when()
@@ -194,35 +196,85 @@ public class RentControllerIT extends AppDeploymentTestConfig {
                 .statusCode(200);
     }
 
-//    @Test
-//    void getAllClientRents_someClientRents() {
-//        given()
-//                .header("Content-Type", "application/json")
-//                .body(validRent)
-//                .when()
-//                .post(baseUrl + "rents")
-//                .then()
-//                .statusCode(201);
-//
-//        given()
-//                .header("Content-Type", "application/json")
-//                .when()
-//                .get(baseUrl + "rents" + "/client/" + clientId)
-//                .then()
-//                .statusCode(200)
-//                .body("size()", equalTo(1));
-//    }
-//
-//    @Test
-//    void getAllClientRents_noClientRents() {
-//        given()
-//                .header("Content-Type", "application/json")
-//                .when()
-//                .get(baseUrl + "rents" + "/client/" + clientId)
-//                .then()
-//                .statusCode(200)
-//                .body("size()", equalTo(0));
-//    }
+    @Test
+    void getAllClientRents_someClientRents() throws JsonProcessingException {
+        String body = obj.writeValueAsString(validRent);
+
+        given()
+                .header("Content-Type", "application/json")
+                .body(body)
+                .when()
+                .post(baseUrl + "rents")
+                .then()
+                .statusCode(201);
+
+        validRent.setEquipmentUUID(getUUIDOfNewEquipment());
+        body = obj.writeValueAsString(validRent);
+
+        given()
+                .header("Content-Type", "application/json")
+                .body(body)
+                .when()
+                .post(baseUrl + "rents")
+                .then()
+                .statusCode(201);
+
+        given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get(baseUrl + "rents/" + "client/" + clientId)
+                .then()
+                .statusCode(200)
+                .body("size()", equalTo(2));
+    }
+
+    @Test
+    void getAllClientRents_noClientRents() {
+        given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get(baseUrl + "rents/" + "client/" + clientId)
+                .then()
+                .statusCode(200)
+                .body("size()", equalTo(0));
+    }
+
+    @Test
+    void getAllClientRents_clientNotExists() {
+        given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get(baseUrl + "rents/" + "client/" + UUID.randomUUID())
+                .then()
+                .statusCode(404);
+    }
+
+    @Test
+    void getOneRent_byUUID_correct() throws JsonProcessingException {
+        String uuid = getUUIDOfCreatedRent(validRentStr);
+
+        given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get(baseUrl + "rents/" + uuid)
+                .then()
+                .statusCode(200)
+                .body("rentId", equalTo(uuid));
+    }
+
+    @Test
+    void getOneRent_byUUID_notExist()  {
+        String uuid = UUID.randomUUID().toString();
+        given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get(baseUrl + "rents/" + uuid)
+                .then()
+                .statusCode(404);
+    }
+
+
+
 
     private String getUUIDOfNewClient() throws JsonProcessingException {
         given()

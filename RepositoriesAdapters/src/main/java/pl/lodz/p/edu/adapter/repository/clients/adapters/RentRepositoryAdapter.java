@@ -64,8 +64,8 @@ public class RentRepositoryAdapter implements RentRepositoryPort {
     }
 
     @Override
-    public List<Rent> getRentsByClient(Client client) {
-        return rentRepository.getRentsByClient(userToDataMapper.convertClientToDataModel(client))
+    public List<Rent> getRentsByClient(UUID clientUuid) {
+        return rentRepository.getRentsByClient(clientUuid)
                 .stream()
                 .map(this::convertToDomainModel)
                 .collect(Collectors.toList());

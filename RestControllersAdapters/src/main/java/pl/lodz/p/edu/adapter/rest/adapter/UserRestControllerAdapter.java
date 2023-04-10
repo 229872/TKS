@@ -144,9 +144,9 @@ public class UserRestControllerAdapter implements UserService {
     }
     private User convertToDomainModelFactory(UserInputDTO userInputDTO) {
         return switch (userInputDTO.getUserType()) {
-            case ADMIN -> toDomainMapper.convertAdminToDomainModel((AdminInputDTO) userInputDTO);
-            case EMPLOYEE -> toDomainMapper.convertEmployeeToDomainModel((EmployeeInputDTO) userInputDTO);
-            case CLIENT -> toDomainMapper.convertClientToDomainModel((ClientInputDTO) userInputDTO);
+            case ADMIN -> toDomainMapper.convertInputAdminToDomainModel((AdminInputDTO) userInputDTO);
+            case EMPLOYEE -> toDomainMapper.convertInputEmployeeToDomainModel((EmployeeInputDTO) userInputDTO);
+            case CLIENT -> toDomainMapper.convertInputClientToDomainModel((ClientInputDTO) userInputDTO);
         };
     }
 

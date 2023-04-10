@@ -41,6 +41,11 @@ public class Client extends User {
         this.userType = UserType.CLIENT;
     }
 
+    public Client(UUID id, String login) {
+        super(id, login, null);
+        this.userType = UserType.CLIENT;
+    }
+
     @Override
     public void update(User user) {
         super.update(user);

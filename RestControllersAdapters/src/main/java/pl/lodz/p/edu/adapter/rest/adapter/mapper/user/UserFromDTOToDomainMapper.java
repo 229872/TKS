@@ -4,6 +4,7 @@ import pl.lodz.p.edu.adapter.rest.dto.AddressDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.AdminInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.ClientInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.EmployeeInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.users.ClientOutputDTO;
 import pl.lodz.p.edu.core.domain.model.Address;
 import pl.lodz.p.edu.core.domain.model.users.Admin;
 import pl.lodz.p.edu.core.domain.model.users.Client;
@@ -18,7 +19,7 @@ public class UserFromDTOToDomainMapper {
         );
     }
 
-    public Client convertClientToDomainModel(ClientInputDTO clientDTO) {
+    public Client convertInputClientToDomainModel(ClientInputDTO clientDTO) {
         return new Client (
                 clientDTO.getLogin(),
                 clientDTO.getPassword(),
@@ -28,7 +29,7 @@ public class UserFromDTOToDomainMapper {
         );
     }
 
-    public Admin convertAdminToDomainModel(AdminInputDTO adminDTO) {
+    public Admin convertInputAdminToDomainModel(AdminInputDTO adminDTO) {
         return new Admin (
                 adminDTO.getLogin(),
                 adminDTO.getPassword(),
@@ -36,11 +37,18 @@ public class UserFromDTOToDomainMapper {
         );
     }
 
-    public Employee convertEmployeeToDomainModel(EmployeeInputDTO employeeDTO) {
+    public Employee convertInputEmployeeToDomainModel(EmployeeInputDTO employeeDTO) {
         return new Employee (
                 employeeDTO.getLogin(),
                 employeeDTO.getPassword(),
                 employeeDTO.getDesk()
+        );
+    }
+
+    public Client convertOutputClientToDomainModel(ClientOutputDTO clientDTO) {
+        return new Client(
+                clientDTO.getUserId(),
+                clientDTO.getLogin()
         );
     }
 }

@@ -75,9 +75,9 @@ public class RentRepositoryImpl implements RentRepository {
     }
 
     @Override
-    public List<RentEnt> getRentsByClient(ClientEnt client) {
+    public List<RentEnt> getRentsByClient(UUID clientUuid) {
         return em.createNamedQuery(RentEnt.FIND_BY_CLIENT_ID, RentEnt.class)
-                .setParameter("clientId", client.getEntityId())
+                .setParameter("clientId", clientUuid)
                 .getResultList();
     }
 

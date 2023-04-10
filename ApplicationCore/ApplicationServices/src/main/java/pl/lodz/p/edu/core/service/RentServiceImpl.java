@@ -40,8 +40,8 @@ public class RentServiceImpl implements RentServicePort {
     }
 
     @Override
-    public List<Rent> getRentsByClient(Client client) {
-        return rentRepository.getRentsByClient(client);
+    public List<Rent> getRentsByClientId(UUID clientUuid) {
+        return rentRepository.getRentsByClient(clientUuid);
     }
 
     @Override

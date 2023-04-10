@@ -1,6 +1,7 @@
 package pl.lodz.p.edu.adapter.rest.adapter.mapper.rent;
 
 import pl.lodz.p.edu.adapter.rest.dto.input.RentInputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.RentOutputDTO;
 import pl.lodz.p.edu.core.domain.model.Rent;
 
 public class RentFromDomainToDTOMapper {
@@ -9,7 +10,18 @@ public class RentFromDomainToDTOMapper {
                 rent.getClient().getEntityId().toString(),
                 rent.getEquipment().getEntityId().toString(),
                 rent.getBeginTime().toString(),
-                rent.getEndTime().toString()
+                rent.getEndTime() == null ? null : rent.getEndTime().toString()
         );
     }
+
+    public RentOutputDTO convertToOutputDTO(Rent rent) {
+        return new RentOutputDTO(
+                rent.getEntityId(),
+                rent.getClient().getEntityId().toString(),
+                rent.getEquipment().getEntityId().toString(),
+                rent.getBeginTime().toString(),
+                rent.getEndTime() == null ? null : rent.getEndTime().toString()
+        );
+    }
+
 }

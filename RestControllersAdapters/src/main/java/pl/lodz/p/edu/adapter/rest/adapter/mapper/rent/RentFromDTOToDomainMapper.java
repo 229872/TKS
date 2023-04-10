@@ -18,11 +18,8 @@ public class RentFromDTOToDomainMapper {
         LocalDateTime endTime;
         try {
             beginTime = LocalDateTime.parse(rentInputDTO.getBeginTime());
-            if (rentInputDTO.getEndTime()!=null) {
-                endTime = LocalDateTime.parse(rentInputDTO.getEndTime());
-            } else {
-                endTime = null;
-            }
+            endTime = rentInputDTO.getEndTime() == null ? null : LocalDateTime.parse(rentInputDTO.getEndTime());
+
         } catch (DateTimeParseException e) {
             throw new RestIllegalDateException(e.getMessage(), e.getCause());
         } catch (Exception e) {

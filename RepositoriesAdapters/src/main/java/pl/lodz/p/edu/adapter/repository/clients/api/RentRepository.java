@@ -5,10 +5,11 @@ import pl.lodz.p.edu.adapter.repository.clients.data.RentEnt;
 import pl.lodz.p.edu.adapter.repository.clients.data.users.ClientEnt;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface RentRepository extends Repository<RentEnt> {
     List<RentEnt> getRentsByEquipment(EquipmentEnt equipment);
-    List<RentEnt> getRentsByClient(ClientEnt client);
+    List<RentEnt> getRentsByClient(UUID clientUuid);
 
     List<RentEnt> getEquipmentRents(EquipmentEnt equipment);
     @Override

@@ -45,10 +45,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void remove(UserEnt entity) {
-        if (!em.contains(entity)) {
-            entity = em.merge(entity);
-        }
-        em.remove(entity);
+       em.remove(em.merge(entity));
     }
 
     @Override

@@ -8,7 +8,6 @@ import pl.lodz.p.edu.adapter.repository.clients.api.EquipmentRepository;
 import pl.lodz.p.edu.adapter.repository.clients.data.EquipmentEnt;
 import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundRepositoryException;
 
-import javax.swing.*;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,9 +39,33 @@ class EquipmentRepositoryImplTest {
     void shouldFindEquipment() throws EntityNotFoundRepositoryException {
         List<EquipmentEnt> all = equipmentRepository.getAll();
         EquipmentEnt found = all.get(0);
-        JOptionPane.showMessageDialog(null, found);
         assertNotNull(found.getEntityId());
         assertEquals(1, equipmentRepository.getAll().size());
         assertDoesNotThrow(() -> equipmentRepository.get(found.getEntityId()));
+    }
+
+    @Test
+    @Order(3)
+    void shouldNotFindEquipmentAndThrowException() {
+        assertThrows(EntityNotFoundRepositoryException.class,
+                () -> equipmentRepository.get(null));
+    }
+
+    @Test
+    @Order(4)
+    void shouldUpdateEquipment() throws EntityNotFoundRepositoryException {
+        String newName = "old chair";
+        equipment.setName(newName);
+        assertDoesNotThrow(() -> equipmentRepository.update(equipment));
+        EquipmentEnt updatedEntity = equipmentRepository.get(equipment.getEntityId());
+        assertEquals(newName, updatedEntity.getName());
+    }
+
+    @Test
+    @Order(5)
+    void shouldDeleteEquipment() throws EntityNotFoundRepositoryException {
+        EquipmentEnt equipmentFromDb = equipmentRepository.get(equipment.getEntityId());
+        equipmentRepository.remove(equipmentFromDb);
+        assertEquals(0, equipmentRepository.getAll().size());
     }
 }

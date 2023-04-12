@@ -220,21 +220,30 @@
             </dependency>
 
             <dependency>
-                <groupId>fish.payara.arquillian</groupId>
-                <artifactId>arquillian-payara-server-managed</artifactId>
-                <version>${arquillian-payara.version}</version>
+                <groupId>de.hilling.junit.cdi</groupId>
+                <artifactId>cdi-test-api</artifactId>
+                <version>4.3.0</version>
                 <scope>test</scope>
             </dependency>
+
             <dependency>
-                <groupId>org.jboss.arquillian.junit5</groupId>
-                <artifactId>arquillian-junit5-container</artifactId>
-                <version>1.7.0.Alpha14</version>
+                <groupId>de.hilling.junit.cdi</groupId>
+                <artifactId>cdi-test-core</artifactId>
+                <version>4.3.0</version>
                 <scope>test</scope>
             </dependency>
+
             <dependency>
-                <groupId>org.hamcrest</groupId>
-                <artifactId>hamcrest</artifactId>
-                <version>2.2</version>
+                <groupId>de.hilling.junit.cdi</groupId>
+                <artifactId>cdi-test-jee</artifactId>
+                <version>4.3.0</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>2.1.214</version>
                 <scope>test</scope>
             </dependency>
 

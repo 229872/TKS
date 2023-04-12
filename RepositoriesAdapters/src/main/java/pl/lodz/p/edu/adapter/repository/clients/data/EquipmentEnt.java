@@ -12,7 +12,7 @@ import java.util.UUID;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @NamedQuery(name = EquipmentEnt.FIND_ALL, query = "SELECT equipment FROM EquipmentEnt equipment")
-@NamedQuery(name = EquipmentEnt.FIND_BY_ID, query = "SELECT equipment FROM EquipmentEnt equipment WHERE equipment.id = :id")
+@NamedQuery(name = EquipmentEnt.FIND_BY_ID, query = "SELECT equipment FROM EquipmentEnt equipment WHERE equipment.entityId = :id")
 public class EquipmentEnt extends AbstractEntity {
     public static final String FIND_ALL = "Equipment.findAll";
     public static final String FIND_BY_ID = "Equipment.findById";

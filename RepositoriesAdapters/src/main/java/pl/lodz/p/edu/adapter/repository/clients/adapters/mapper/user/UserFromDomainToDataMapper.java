@@ -1,5 +1,6 @@
 package pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.user;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import pl.lodz.p.edu.adapter.repository.clients.data.AddressEnt;
 import pl.lodz.p.edu.adapter.repository.clients.data.users.AdminEnt;
 import pl.lodz.p.edu.adapter.repository.clients.data.users.ClientEnt;
@@ -9,6 +10,7 @@ import pl.lodz.p.edu.core.domain.model.users.Admin;
 import pl.lodz.p.edu.core.domain.model.users.Client;
 import pl.lodz.p.edu.core.domain.model.users.Employee;
 
+@ApplicationScoped
 public class UserFromDomainToDataMapper {
     private AddressEnt convertAddressToDataModel(Address address) {
         return new AddressEnt(

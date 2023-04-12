@@ -1,5 +1,6 @@
 package pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.rent;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.equipment.EquipmentFromDomainToDataMapper;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.user.UserFromDomainToDataMapper;
 import pl.lodz.p.edu.adapter.repository.clients.data.EquipmentEnt;
@@ -8,6 +9,7 @@ import jakarta.inject.Inject;
 import pl.lodz.p.edu.adapter.repository.clients.data.users.ClientEnt;
 import pl.lodz.p.edu.core.domain.model.Rent;
 
+@ApplicationScoped
 public class RentFromDomainToDataMapper {
 
     @Inject

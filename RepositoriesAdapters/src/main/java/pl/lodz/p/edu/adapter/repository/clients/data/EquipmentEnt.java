@@ -8,6 +8,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "equipment")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)

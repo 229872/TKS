@@ -6,6 +6,7 @@
     <file type="web" url="file://$PROJECT_DIR$/mvc" />
     <file type="web" url="file://$PROJECT_DIR$/RepositoriesAdapters" />
     <file type="web" url="file://$PROJECT_DIR$/RestControllersAdapters" />
+    <file type="web" url="file://$PROJECT_DIR$/SoapControllersAdapters" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
@@ -18,6 +19,7 @@
         <option value="$PROJECT_DIR$/ApplicationCore/DomainModel/pom.xml" />
         <option value="$PROJECT_DIR$/ApplicationCore/ApplicationServices/pom.xml" />
         <option value="$PROJECT_DIR$/RestControllersAdapters/pom.xml" />
+        <option value="$PROJECT_DIR$/SoapControllersAdapters/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

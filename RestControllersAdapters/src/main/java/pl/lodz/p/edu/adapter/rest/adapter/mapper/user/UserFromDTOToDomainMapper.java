@@ -1,5 +1,6 @@
 package pl.lodz.p.edu.adapter.rest.adapter.mapper.user;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import pl.lodz.p.edu.adapter.rest.dto.AddressDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.AdminInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.ClientInputDTO;
@@ -10,6 +11,7 @@ import pl.lodz.p.edu.core.domain.model.users.Admin;
 import pl.lodz.p.edu.core.domain.model.users.Client;
 import pl.lodz.p.edu.core.domain.model.users.Employee;
 
+@ApplicationScoped
 public class UserFromDTOToDomainMapper {
     private Address convertAddressToDomainModel(AddressDTO addressDTO) {
         return new Address (

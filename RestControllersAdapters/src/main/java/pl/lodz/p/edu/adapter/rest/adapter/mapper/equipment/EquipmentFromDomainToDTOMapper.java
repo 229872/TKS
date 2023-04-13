@@ -1,9 +1,11 @@
 package pl.lodz.p.edu.adapter.rest.adapter.mapper.equipment;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import pl.lodz.p.edu.adapter.rest.dto.input.EquipmentInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.output.EquipmentOutputDTO;
 import pl.lodz.p.edu.core.domain.model.Equipment;
 
+@ApplicationScoped
 public class EquipmentFromDomainToDTOMapper {
 
     public EquipmentInputDTO convertToInputDTO(Equipment equipment) {

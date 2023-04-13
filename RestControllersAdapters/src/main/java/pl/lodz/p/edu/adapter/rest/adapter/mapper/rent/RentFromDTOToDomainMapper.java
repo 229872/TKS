@@ -1,5 +1,6 @@
 package pl.lodz.p.edu.adapter.rest.adapter.mapper.rent;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import pl.lodz.p.edu.adapter.rest.dto.input.RentInputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalDateException;
 import pl.lodz.p.edu.adapter.rest.exception.RestObjectNotValidException;
@@ -10,6 +11,7 @@ import pl.lodz.p.edu.core.domain.model.users.Client;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
+@ApplicationScoped
 public class RentFromDTOToDomainMapper {
 
     public Rent convertToDomainModel(RentInputDTO rentInputDTO, Equipment equipment, Client client)

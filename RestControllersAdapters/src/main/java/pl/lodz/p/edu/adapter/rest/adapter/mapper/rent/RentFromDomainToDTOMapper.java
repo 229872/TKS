@@ -1,9 +1,11 @@
 package pl.lodz.p.edu.adapter.rest.adapter.mapper.rent;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import pl.lodz.p.edu.adapter.rest.dto.input.RentInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.output.RentOutputDTO;
 import pl.lodz.p.edu.core.domain.model.Rent;
 
+@ApplicationScoped
 public class RentFromDomainToDTOMapper {
     public RentInputDTO convertToInputDTO(Rent rent) {
         return new RentInputDTO(

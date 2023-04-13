@@ -403,67 +403,37 @@ public class RentControllerIT extends AppDeploymentTestConfig {
 
     /////////////////////////////////
     private String getUUIDOfNewClient() throws JsonProcessingException {
-        given()
+        return String.valueOf(given()
                 .header("Content-Type", "application/json")
                 .body(obj.writeValueAsString(validClient))
                 .when()
                 .post(baseUrl + "clients")
                 .then()
-                .statusCode(201);
-
-        List<ClientOutputDTO> outputDTOList = given()
-                .header("Content-Type", "application/json")
-                .when()
-                .get(baseUrl + "clients")
-                .then()
-                .statusCode(200)
-                .extract().body().jsonPath().getList("", ClientOutputDTO.class);
-
-        return outputDTOList.get(outputDTOList.size() - 1).getUserId().toString();
+                .statusCode(201)
+                .extract().body().jsonPath().getUUID("userId"));
     }
 
 
     private String getUUIDOfNewEquipment() throws JsonProcessingException {
-        given()
+        return String.valueOf(given()
                 .header("Content-Type", "application/json")
                 .body(obj.writeValueAsString(validEquipment))
                 .when()
                 .post(baseUrl + "equipment")
                 .then()
-                .statusCode(201);
-
-        List<EquipmentOutputDTO> outputDTOList = given()
-                .header("Content-Type", "application/json")
-                .when()
-                .get(baseUrl + "equipment")
-                .then()
-                .statusCode(200)
-                .log().all()
-                .extract().body().jsonPath().getList("", EquipmentOutputDTO.class);
-
-        return outputDTOList.get(outputDTOList.size() - 1).getEntityId().toString();
+                .statusCode(201)
+                .extract().body().jsonPath().getUUID("entityId"));
     }
 
     private String getUUIDOfCreatedRent(String rentString) throws JsonProcessingException {
-        given()
+        return String.valueOf(given()
                 .header("Content-Type", "application/json")
-                .body(rentString)
+                .body(validRentStr)
                 .when()
                 .post(baseUrl + "rents")
                 .then()
-                .log().all()
-                .statusCode(201);
-
-        List<RentOutputDTO> outputDTOList = given()
-                .header("Content-Type", "application/json")
-                .when()
-                .get(baseUrl + "rents")
-                .then()
-                .statusCode(200)
-                .log().all()
-                .extract().body().jsonPath().getList("", RentOutputDTO.class);
-
-        return outputDTOList.get(outputDTOList.size() - 1).getRentId().toString();
+                .statusCode(201)
+                .extract().body().jsonPath().getUUID("rentId"));
     }
     /////////////////////////////////
 }

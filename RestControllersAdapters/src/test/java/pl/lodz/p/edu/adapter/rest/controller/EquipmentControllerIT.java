@@ -87,6 +87,7 @@ public class EquipmentControllerIT extends AppDeploymentTestConfig {
     @Test
     void getOneEquipment_byUUID_correct() {
         String uuid = getUUIDOfNewObject();
+        System.out.println(uuid);
 
         given()
                 .header("Content-Type", "application/json")
@@ -157,7 +158,6 @@ public class EquipmentControllerIT extends AppDeploymentTestConfig {
     @Test
     void updateOneEquipment_illegalValues() throws JsonProcessingException {
         String uuid = getUUIDOfNewObject();
-
 
         validEquipment.setName(null);
         String updatedLogin = obj.writeValueAsString(validEquipment);
@@ -255,24 +255,13 @@ public class EquipmentControllerIT extends AppDeploymentTestConfig {
     }
 
     private String getUUIDOfNewObject() {
-        given()
+        return String.valueOf(given()
                 .header("Content-Type", "application/json")
                 .body(validEquipmentStr)
                 .when()
                 .post(baseUrl + "equipment")
                 .then()
-                .log().all()
-                .statusCode(201);
-
-        List<EquipmentOutputDTO> outputDTOList = given()
-                .header("Content-Type", "application/json")
-                .when()
-                .get(baseUrl + "equipment")
-                .then()
-                .statusCode(200)
-                .log().all()
-                .extract().body().jsonPath().getList("", EquipmentOutputDTO.class);
-
-        return outputDTOList.get(outputDTOList.size() - 1).getEntityId().toString();
+                .statusCode(201)
+                .extract().body().jsonPath().getUUID("entityId"));
     }
 }

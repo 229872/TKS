@@ -1,10 +1,5 @@
 package pl.lodz.p.edu.adapter.rest.controller;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +12,11 @@ import pl.lodz.p.edu.adapter.rest.dto.output.users.AdminOutputDTO;
 
 import java.util.List;
 import java.util.UUID;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Testcontainers
 public class AdminControllerIT extends AppDeploymentTestConfig {
@@ -35,7 +35,6 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
         validAdmin = DataFakerRestControllerInputDTO.getAdmin();
         validAdminStr = obj.writeValueAsString(validAdmin);
     }
-
 
     // create
 
@@ -336,22 +335,15 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
     }
 
     private String getUUIDOfNewObject() {
-        given()
+        return String.valueOf(given()
                 .header("Content-Type", "application/json")
                 .body(validAdminStr)
                 .when()
                 .post(baseUrl + "admins")
                 .then()
-                .statusCode(201);
+                .statusCode(201)
+                .extract().body().jsonPath().getUUID("userId"));
 
-        List<AdminOutputDTO> outputDTOList = given()
-                .header("Content-Type", "application/json")
-                .when()
-                .get(baseUrl + "admins")
-                .then()
-                .statusCode(200)
-                .extract().body().jsonPath().getList("", AdminOutputDTO.class);
 
-        return outputDTOList.get(outputDTOList.size() - 1).getUserId().toString();
     }
 }

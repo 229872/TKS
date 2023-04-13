@@ -7,14 +7,13 @@ import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotValidException;
 import pl.lodz.p.edu.core.domain.model.Equipment;
 import pl.lodz.p.edu.core.domain.model.Rent;
-import pl.lodz.p.edu.core.domain.model.users.Client;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 public interface RentServicePort {
-    void add(Rent rent) throws ObjectNotValidException, BusinessLogicInterruptException, ObjectNotFoundServiceException;
+    Rent add(Rent rent) throws ObjectNotValidException, BusinessLogicInterruptException, ObjectNotFoundServiceException;
 
     List<Rent> getRentsByClientId(UUID clientUuid);
 

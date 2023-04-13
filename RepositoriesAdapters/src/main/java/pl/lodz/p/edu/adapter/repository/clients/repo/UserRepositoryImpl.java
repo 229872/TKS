@@ -39,8 +39,9 @@ public class UserRepositoryImpl implements UserRepository {
 
 
     @Override
-    public void add(UserEnt elem) {
+    public UserEnt add(UserEnt elem) {
         em.persist(elem);
+        return elem;
     }
 
     @Override

@@ -44,8 +44,8 @@ public class RentController {
     @Path("/")
     public Response makeReservation(@Valid RentInputDTO rentInputDTO) {
         try {
-            rentService.add(rentInputDTO);
-            return Response.status(CREATED).build();
+            RentOutputDTO rentOutputDTO = rentService.add(rentInputDTO);
+            return Response.status(CREATED).entity(rentOutputDTO).build();
         } catch (RestObjectNotValidException | RestIllegalDateException e) {
             return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         } catch (RestBusinessLogicInterruptException e) {
@@ -61,7 +61,7 @@ public class RentController {
     @Path("/client/{uuid}")
     public Response getClientRents(@PathParam("uuid") UUID clientUuid) {
         try {
-            ClientOutputDTO clientDTO = (ClientOutputDTO) userService.get(clientUuid);
+            userService.get(clientUuid);
             List<RentOutputDTO> rentsDTO = rentService.getRentsByClientId(clientUuid);
             return Response.ok(rentsDTO).build();
         } catch (ObjectNotFoundRestException e) {

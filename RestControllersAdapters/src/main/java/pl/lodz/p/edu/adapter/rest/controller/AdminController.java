@@ -11,6 +11,7 @@ import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.adapter.rest.api.UserService;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.AdminInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.output.users.AdminOutputDTO;
+import pl.lodz.p.edu.adapter.rest.dto.output.users.UserOutputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestAuthenticationFailureException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
@@ -43,8 +44,8 @@ public class AdminController {
 //    @RolesAllowed({"ADMIN"})
     public Response addAdmin(@Valid AdminInputDTO adminDTO) {
         try {
-            userService.registerUser(adminDTO);
-            return Response.status(CREATED).entity(adminDTO).build();
+            AdminOutputDTO adminOutputDTO = (AdminOutputDTO) userService.registerUser(adminDTO);
+            return Response.status(CREATED).entity(adminOutputDTO).build();
         } catch(RestConflictException e) {
             return Response.status(CONFLICT).entity(e.getMessage()).build();
         }

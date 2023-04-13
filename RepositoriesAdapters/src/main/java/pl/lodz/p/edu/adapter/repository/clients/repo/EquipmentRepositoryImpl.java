@@ -38,16 +38,14 @@ public class EquipmentRepositoryImpl implements EquipmentRepository {
     }
 
     @Override
-    public void add(EquipmentEnt elem) {
+    public EquipmentEnt add(EquipmentEnt elem) {
         em.persist(elem);
+        return elem;
     }
 
     @Override
     public void remove(EquipmentEnt entity) {
-        if (!em.contains(entity)) {
-            entity = em.merge(entity);
-        }
-        em.remove(entity);
+        em.remove(em.merge(entity));
     }
 
     @Override

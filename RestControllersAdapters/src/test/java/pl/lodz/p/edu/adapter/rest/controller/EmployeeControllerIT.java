@@ -332,23 +332,13 @@ public class EmployeeControllerIT extends AppDeploymentTestConfig {
 
 
     private String getUUIDOfNewObject() {
-        given()
+        return String.valueOf(given()
                 .header("Content-Type", "application/json")
                 .body(validEmployeeStr)
                 .when()
                 .post(baseUrl + "employees")
                 .then()
-                .statusCode(201);
-
-        List<EmployeeOutputDTO> outputDTOList = given()
-                .header("Content-Type", "application/json")
-                .when()
-                .get(baseUrl + "employees")
-                .then()
-                .statusCode(200)
-                .log().all()
-                .extract().body().jsonPath().getList("", EmployeeOutputDTO.class);
-
-        return outputDTOList.get(outputDTOList.size() - 1).getUserId().toString();
+                .statusCode(201)
+                .extract().body().jsonPath().getUUID("userId"));
     }
 }

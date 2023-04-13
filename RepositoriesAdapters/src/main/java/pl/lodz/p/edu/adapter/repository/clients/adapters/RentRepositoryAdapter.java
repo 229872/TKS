@@ -89,11 +89,8 @@ public class RentRepositoryAdapter implements RentRepositoryPort {
     }
 
     @Override
-    public void add(Rent object) {
-        RentEnt rentEnt = convertToDataModel(object);
-//        ClientEnt clientEnt = (ClientEnt) userRepository.get(object.getClient().getEntityId());
-//        EquipmentEnt equipmentEnt  = (ClientEnt) userRepository.get(object.getClient().getEntityId());
-        rentRepository.add(rentEnt);
+    public Rent add(Rent object) {
+        return convertToDomainModel(rentRepository.add(convertToDataModel(object)));
     }
 
 

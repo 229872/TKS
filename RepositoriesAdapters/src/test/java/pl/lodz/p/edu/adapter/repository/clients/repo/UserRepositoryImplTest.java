@@ -2,19 +2,13 @@ package pl.lodz.p.edu.adapter.repository.clients.repo;
 
 import de.hilling.junit.cdi.CdiTestJunitExtension;
 import jakarta.inject.Inject;
-import jakarta.transaction.RollbackException;
-import jakarta.transaction.TransactionalException;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import pl.lodz.p.edu.adapter.repository.clients.api.UserRepository;
 import pl.lodz.p.edu.adapter.repository.clients.data.AddressEnt;
-import pl.lodz.p.edu.adapter.repository.clients.data.users.AdminEnt;
 import pl.lodz.p.edu.adapter.repository.clients.data.users.ClientEnt;
 import pl.lodz.p.edu.adapter.repository.clients.data.users.UserEnt;
 import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundRepositoryException;
-import pl.lodz.p.edu.core.domain.model.Address;
-import pl.lodz.p.edu.core.domain.model.users.Client;
-import pl.lodz.p.edu.core.domain.model.users.User;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,11 +16,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UserRepositoryImplTest {
 
-    @Inject
-    private UserRepository repository;
-
     private static AddressEnt address;
     private static UserEnt user;
+    @Inject
+    private UserRepository repository;
 
     @BeforeAll
     public static void init() {

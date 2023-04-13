@@ -28,8 +28,7 @@ public class UserServicePortImpl implements UserServicePort {
     @Override
     public User registerUser(User user) throws ConflictException {
         try {
-            userRepository.add(user);
-            return user;
+            return userRepository.add(user);
         } catch(PersistenceException | TransactionalException e) {
             throw new ConflictException("Already exists user with given login"); //FIXME throw no login if rly no login
         }

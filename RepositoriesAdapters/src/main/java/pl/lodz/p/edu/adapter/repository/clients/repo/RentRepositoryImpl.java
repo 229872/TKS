@@ -46,10 +46,10 @@ public class RentRepositoryImpl implements RentRepository {
     }
 
     @Override
-    public void add(RentEnt elem) {
+    public RentEnt add(RentEnt elem) {
 
         //FIXME Worst piece of code in an existence
-        ClientEnt clientEn = (ClientEnt) em.createNamedQuery(UserEnt.FIND_BY_ID, UserEnt.class)
+        ClientEnt clientEnt = (ClientEnt) em.createNamedQuery(UserEnt.FIND_BY_ID, UserEnt.class)
                 .setParameter("id", elem.getClientEnt().getEntityId())
                 .getSingleResult();
 
@@ -57,16 +57,14 @@ public class RentRepositoryImpl implements RentRepository {
                 .setParameter("id", elem.getEquipmentEnt().getEntityId())
                 .getSingleResult();
 
-        em.persist(new RentEnt(equipmentEnt, clientEn, elem.getBeginTime(), elem.getEndTime()));
-
+        RentEnt returnRentEnt = new RentEnt(equipmentEnt, clientEnt, elem.getBeginTime(), elem.getEndTime());
+        em.persist(returnRentEnt);
+        return returnRentEnt;
     }
 
     @Override
     public void remove(RentEnt entity) {
-        if (!em.contains(entity)) {
-            entity = em.merge(entity);
-        }
-        em.remove(entity);
+        em.remove(em.merge(entity));
     }
 
     @Override

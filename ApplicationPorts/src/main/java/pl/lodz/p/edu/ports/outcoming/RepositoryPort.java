@@ -11,7 +11,7 @@ public interface RepositoryPort <T extends AbstractModelData> {
 
     T get(UUID objectId) throws ObjectNotFoundServiceException;
     List<T> getAll();
-    void add(T object);
+    T add(T object);
     void remove(T object);
     T update(T object) throws IllegalModificationException;
 }

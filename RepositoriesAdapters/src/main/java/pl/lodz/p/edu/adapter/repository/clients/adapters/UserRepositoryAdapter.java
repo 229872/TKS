@@ -45,8 +45,9 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     }
 
     @Override
-    public void add(User user) {
-        repository.add(convertToDataModelFactory(user));
+    public User add(User user) {
+        return convertToDomainModelFactory(
+                repository.add(convertToDataModelFactory(user)));
     }
 
     @Override

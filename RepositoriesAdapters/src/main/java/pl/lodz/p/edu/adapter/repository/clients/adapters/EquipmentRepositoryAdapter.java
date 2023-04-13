@@ -56,8 +56,8 @@ public class EquipmentRepositoryAdapter implements EquipmentRepositoryPort {
     }
 
     @Override
-    public void add(Equipment object) {
-        repository.add(convertToDataModel(object));
+    public Equipment add(Equipment object) {
+        return convertToDomainModel(repository.add(convertToDataModel(object)));
     }
 
     @Override

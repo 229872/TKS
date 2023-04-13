@@ -54,15 +54,14 @@ public class RentRestControllerAdapter implements RentService {
     private UserFromDTOToDomainMapper userToDomainMapper;
 
     @Override
-    public void add(RentInputDTO rentInputDTO) throws RestObjectNotValidException,
+    public RentOutputDTO add(RentInputDTO rentInputDTO) throws RestObjectNotValidException,
             ObjectNotFoundRestException, RestIllegalDateException, RestBusinessLogicInterruptException {
         try {
             Client client = (Client) userServicePort.get(rentInputDTO.getClientUUIDFromString());
             Equipment equipment = equipmentServicePort.get(rentInputDTO.getEquipmentUUIDFromString());
 
             Rent rent = convertToDomainModel(rentInputDTO, equipment, client);
-            rentServicePort.add(rent);
-//            return convertToDTO(rentServicePort.add(rent));
+            return convertToOutputDTO(rentServicePort.add(rent));
 
             //ObjectNotFound throws RestObjectNotValid because those not found entities are parts of Rent that will be created
         } catch (ObjectNotValidException | ObjectNotFoundServiceException e) {

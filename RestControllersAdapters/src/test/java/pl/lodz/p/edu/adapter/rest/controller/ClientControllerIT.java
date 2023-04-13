@@ -1,7 +1,6 @@
 package pl.lodz.p.edu.adapter.rest.controller;
 
 
-import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,17 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonProcessingException;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
-import pl.lodz.p.edu.adapter.rest.dto.input.users.AdminInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.input.users.ClientInputDTO;
-import pl.lodz.p.edu.adapter.rest.dto.input.users.EmployeeInputDTO;
-import pl.lodz.p.edu.adapter.rest.dto.output.users.AdminOutputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.output.users.ClientOutputDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -43,13 +37,6 @@ public class ClientControllerIT extends AppDeploymentTestConfig {
         validClientStr = obj.writeValueAsString(validClient);
     }
 
-//    @Test
-//    void loop() {
-//        System.out.println("8080: " + payara.getMappedPort(8080));
-//        getUUIDOfNewObject();
-//
-//        while(true);
-//    }
 
     // create
     @Test
@@ -109,7 +96,7 @@ public class ClientControllerIT extends AppDeploymentTestConfig {
 
     // read
     @Test
-    void getAllClients_correct()  {
+    void getAllClients_correct() {
         given()
                 .header("Content-Type", "application/json")
                 .when()
@@ -119,7 +106,7 @@ public class ClientControllerIT extends AppDeploymentTestConfig {
     }
 
     @Test
-    void getOneClient_byUUID_correct()  {
+    void getOneClient_byUUID_correct() {
         String uuid = getUUIDOfNewObject();
 
         given()
@@ -140,7 +127,7 @@ public class ClientControllerIT extends AppDeploymentTestConfig {
     }
 
     @Test
-    void getOneClient_byUUID_noSuchUUID()  {
+    void getOneClient_byUUID_noSuchUUID() {
         String uuid = UUID.randomUUID().toString();
         given()
                 .header("Content-Type", "application/json")
@@ -151,7 +138,7 @@ public class ClientControllerIT extends AppDeploymentTestConfig {
     }
 
     @Test
-    void getOneClient_byLogin_correct()  {
+    void getOneClient_byLogin_correct() {
         String login = given()
                 .header("Content-Type", "application/json")
                 .body(validClientStr)
@@ -170,7 +157,7 @@ public class ClientControllerIT extends AppDeploymentTestConfig {
     }
 
     @Test
-    void getOneClient_byLogin_noSuchLogin()  {
+    void getOneClient_byLogin_noSuchLogin() {
         String login = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
         given()
                 .header("Content-Type", "application/json")
@@ -335,24 +322,14 @@ public class ClientControllerIT extends AppDeploymentTestConfig {
     }
 
 
-        private String getUUIDOfNewObject() {
-            given()
-                    .header("Content-Type", "application/json")
-                    .body(validClientStr)
-                    .when()
-                    .post(baseUrl + "clients")
-                    .then()
-                    .statusCode(201);
-
-            List<ClientOutputDTO> outputDTOList = given()
-                    .header("Content-Type", "application/json")
-                    .when()
-                    .get(baseUrl + "clients")
-                    .then()
-                    .statusCode(200)
-                    .log().all()
-                    .extract().body().jsonPath().getList("", ClientOutputDTO.class);
-
-            return outputDTOList.get(outputDTOList.size() - 1).getUserId().toString();
-        }
+    private String getUUIDOfNewObject() {
+        return String.valueOf(given()
+                .header("Content-Type", "application/json")
+                .body(validClientStr)
+                .when()
+                .post(baseUrl + "clients")
+                .then()
+                .statusCode(201)
+                .extract().body().jsonPath().getUUID("userId"));
+    }
 }

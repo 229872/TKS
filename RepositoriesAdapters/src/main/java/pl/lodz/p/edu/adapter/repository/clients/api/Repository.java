@@ -11,7 +11,7 @@ public interface Repository <T extends AbstractEntity> {
 
     T get(UUID entityId) throws EntityNotFoundRepositoryException;
     List<T> getAll();
-    void add(T entity);
+    T add(T entity);
     void remove(T entity);
     T update(T entity) throws IllegalModificationException;
 }

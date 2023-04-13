@@ -2,7 +2,6 @@ package pl.lodz.p.edu.core.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 
 import pl.lodz.p.edu.core.domain.exception.ConflictException;
 import pl.lodz.p.edu.core.domain.exception.IllegalModificationException;
@@ -26,9 +25,7 @@ public class EquipmentServiceImpl implements EquipmentServicePort {
 
     @Override
     public Equipment add(Equipment equipment) {
-        equipmentRepository.add(equipment);
-
-        return equipment;
+        return equipmentRepository.add(equipment);
     }
 
     @Override

@@ -8,16 +8,10 @@
         <jta-data-source>java:global/PgDataSource</jta-data-source>
 
         <properties>
-            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/nbddb"/>
-            <property name="jakarta.persistence.jdbc.user" value="nbd"/>
-            <property name="jakarta.persistence.jdbc.password" value="nbdpassword"/>
-<!--            <property name="javax.persistence.sql-load-script-source"-->
-<!--                      value="initDB.sql"/>-->
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.connection.TRANSACTION_READ_COMMITTED" value="true"/>
             <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
-            <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.transaction.jta.platform"
+                      value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform"/>
         </properties>
     </persistence-unit>
 </persistence>

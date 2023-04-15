@@ -11,5 +11,16 @@ services:
       - 5432:5432
     volumes:
       - pg:/var/lib/postgresql/data
+  test:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: nbddb
+      POSTGRES_USER: nbd
+      POSTGRES_PASSWORD: nbdpassword
+    ports:
+      - 5554:5432
+    volumes:
+      - pgTest:/var/lib/postgresql/data
 volumes:
   pg:
+  pgTest:

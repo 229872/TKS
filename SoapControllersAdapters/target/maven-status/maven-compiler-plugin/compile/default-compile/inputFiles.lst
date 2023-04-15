@@ -1,0 +1,10 @@
+/home/bartek/Learning/School/Semestr6/tks/TKS/SoapControllersAdapters/src/main/java/pl/lodz/p/edu/soap/adapter/mapper/EquipmentFromDTOToDomainMapper.java
+/home/bartek/Learning/School/Semestr6/tks/TKS/SoapControllersAdapters/src/main/java/pl/lodz/p/edu/soap/dto/EquipmentOutputSoapDTO.java
+/home/bartek/Learning/School/Semestr6/tks/TKS/SoapControllersAdapters/src/main/java/pl/lodz/p/edu/soap/exception/ObjectNotFoundSoapException.java
+/home/bartek/Learning/School/Semestr6/tks/TKS/SoapControllersAdapters/src/main/java/pl/lodz/p/edu/soap/exception/SoapConflictException.java
+/home/bartek/Learning/School/Semestr6/tks/TKS/SoapControllersAdapters/src/main/java/pl/lodz/p/edu/soap/dto/EquipmentInputSoapDTO.java
+/home/bartek/Learning/School/Semestr6/tks/TKS/SoapControllersAdapters/src/main/java/pl/lodz/p/edu/soap/adapter/mapper/EquipmentFromDomainToDTOMapper.java
+/home/bartek/Learning/School/Semestr6/tks/TKS/SoapControllersAdapters/src/main/java/pl/lodz/p/edu/soap/api/EquipmentSoapService.java
+/home/bartek/Learning/School/Semestr6/tks/TKS/SoapControllersAdapters/src/main/java/pl/lodz/p/edu/soap/exception/SoapIllegalModificationException.java
+/home/bartek/Learning/School/Semestr6/tks/TKS/SoapControllersAdapters/src/main/java/pl/lodz/p/edu/soap/controller/EquipmentSoapController.java
+/home/bartek/Learning/School/Semestr6/tks/TKS/SoapControllersAdapters/src/main/java/pl/lodz/p/edu/soap/adapter/EquipmentSoapControllerAdapter.java

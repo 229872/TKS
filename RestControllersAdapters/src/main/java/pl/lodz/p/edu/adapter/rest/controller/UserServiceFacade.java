@@ -2,6 +2,7 @@ package pl.lodz.p.edu.adapter.rest.controller;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.shaded.gson.JsonObject;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 import pl.lodz.p.edu.adapter.rest.api.AuthenticationService;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 
 import static jakarta.ws.rs.core.Response.Status.*;
 
-
+@ApplicationScoped
 public class UserServiceFacade {
 
     @Inject

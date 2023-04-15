@@ -262,7 +262,6 @@ public class EmployeeControllerIT extends AppDeploymentTestConfig {
                 .when()
                 .put(baseUrl + "employees/" + uuid)
                 .then()
-                .log().all()
                 .statusCode(200);
 
         Assertions.assertNotEquals(oldLogin, given()
@@ -270,7 +269,6 @@ public class EmployeeControllerIT extends AppDeploymentTestConfig {
                 .when()
                 .get(baseUrl + "employees/" + uuid)
                 .then()
-                .log().all()
                 .extract().path("login"));
 
         Assertions.assertEquals(newLogin, given()
@@ -278,7 +276,6 @@ public class EmployeeControllerIT extends AppDeploymentTestConfig {
                 .when()
                 .get(baseUrl + "employees/" + uuid)
                 .then()
-                .log().all()
                 .extract().path("login"));
     }
 

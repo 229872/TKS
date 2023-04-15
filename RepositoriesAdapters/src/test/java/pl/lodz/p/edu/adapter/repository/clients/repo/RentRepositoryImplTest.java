@@ -44,9 +44,9 @@ public class RentRepositoryImplTest {
     @BeforeAll
     public static void init() {
         address = new AddressEnt("London", "Firststreet", "30");
-        user = new ClientEnt("lubieplacki123", "plackilubie321",
+        user = new ClientEnt("nielubie", "plackilubie321",
                 "Tommy", "Wiseau", address);
-        equipment = new EquipmentEnt("chair", 30.0, 10.0, 15.0, "red chair");
+        equipment = new EquipmentEnt("chair11", 30.0, 10.0, 15.0, "red chair");
     }
 
     @Test

@@ -71,10 +71,8 @@ public class RentControllerIT extends AppDeploymentTestConfig {
                 .header("Content-Type", "application/json")
                 .body(unfinishedRent)
                 .when()
-                .log().all()
                 .post(baseUrl + "rents")
                 .then()
-                .log().all()
                 .statusCode(201);
     }
 
@@ -303,7 +301,6 @@ public class RentControllerIT extends AppDeploymentTestConfig {
                 .get(baseUrl + "rents")
                 .then()
                 .statusCode(200)
-                .log().all()
                 .extract().body().jsonPath().getList("", RentOutputDTO.class);
 
         Assertions.assertEquals(validRent.getBeginTime(), outputDTOList.get(outputDTOList.size() - 1).getBeginTime());

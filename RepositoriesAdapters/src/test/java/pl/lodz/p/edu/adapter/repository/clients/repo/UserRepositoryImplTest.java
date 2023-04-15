@@ -31,9 +31,9 @@ class UserRepositoryImplTest {
     @Test
     @Order(1)
     void shouldAddToRepository() {
-        assertEquals(0, repository.getAll().size());
+        int size = repository.getAll().size();
         repository.add(user);
-        assertEquals(1, repository.getAll().size());
+        assertEquals(size + 1, repository.getAll().size());
     }
 // Whaaaat ??????
 //    @Test
@@ -72,9 +72,11 @@ class UserRepositoryImplTest {
     @Test
     @Order(5)
     void shouldDeleteUser() throws EntityNotFoundRepositoryException {
+        int size = repository.getAll().size();
+
         UserEnt userEnt = repository.get(user.getEntityId());
         repository.remove(userEnt);
-        assertEquals(0, repository.getAll().size());
+        assertEquals(size - 1, repository.getAll().size());
     }
 
 

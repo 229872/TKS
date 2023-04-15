@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by XML-WS Runtime (https://github.com/eclipse-ee4j/metro-jax-ws). Runtime's version is Eclipse Metro/4.0.1 (RELEASE-4.0.1-18da659; 2022-07-02T08:47:18+0000) XMLWS-Impl/4.0.0 XMLWS-API/${jaxws-api.version} XMLB-Impl/4.0.0 XMLB-API/4.0.0 git-revision#18da659. --><xs:schema xmlns:tns="http://controller.soap.edu.p.lodz.pl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://controller.soap.edu.p.lodz.pl/">
+
+<xs:element name="ObjectNotFoundSoapException" type="tns:ObjectNotFoundSoapException"/>
+
+<xs:element name="SoapConflictException" type="tns:SoapConflictException"/>
+
+<xs:element name="SoapIllegalModificationException" type="tns:SoapIllegalModificationException"/>
+
+<xs:element name="add" type="tns:add"/>
+
+<xs:element name="addResponse" type="tns:addResponse"/>
+
+<xs:element name="get" type="tns:get"/>
+
+<xs:element name="getAll" type="tns:getAll"/>
+
+<xs:element name="getAllResponse" type="tns:getAllResponse"/>
+
+<xs:element name="getResponse" type="tns:getResponse"/>
+
+<xs:element name="remove" type="tns:remove"/>
+
+<xs:element name="removeResponse" type="tns:removeResponse"/>
+
+<xs:element name="update" type="tns:update"/>
+
+<xs:element name="updateResponse" type="tns:updateResponse"/>
+
+<xs:complexType name="get">
+<xs:sequence>
+<xs:element name="arg0" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:equipmentOutputSoapDTO" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="equipmentOutputSoapDTO">
+<xs:sequence>
+<xs:element name="bail" type="xs:double"/>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
+<xs:element name="entityId" type="xs:string" minOccurs="0"/>
+<xs:element name="firstDayCost" type="xs:double"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+<xs:element name="nextDaysCost" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ObjectNotFoundSoapException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getAll">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getAllResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:equipmentOutputSoapDTO" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="add">
+<xs:sequence>
+<xs:element name="arg0" type="tns:equipmentInputSoapDTO" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="equipmentInputSoapDTO">
+<xs:sequence>
+<xs:element name="bail" type="xs:double"/>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
+<xs:element name="firstDayCost" type="xs:double"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+<xs:element name="nextDaysCost" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:equipmentOutputSoapDTO" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="remove">
+<xs:sequence>
+<xs:element name="arg0" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="removeResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="SoapConflictException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="update">
+<xs:sequence>
+<xs:element name="arg0" type="xs:string" minOccurs="0"/>
+<xs:element name="arg1" type="tns:equipmentInputSoapDTO" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updateResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:equipmentOutputSoapDTO" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="SoapIllegalModificationException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

@@ -267,6 +267,26 @@
                 <scope>provided</scope>
             </dependency>
 
+            <dependency>
+                <groupId>jakarta.xml.bind</groupId>
+                <artifactId>jakarta.xml.bind-api</artifactId>
+                <version>4.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-impl</artifactId>
+                <version>4.0.0</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-core -->
+            <dependency>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-core</artifactId>
+                <version>4.0.2</version>
+            </dependency>
+
+
             <!--Subprojects-->
             <dependency>
                 <groupId>pl.lodz.p.edu</groupId>
@@ -434,6 +454,28 @@
                                 <goal>integration-test</goal>
                                 <goal>verify</goal>
                             </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.sun.xml.ws</groupId>
+                    <artifactId>jaxws-maven-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <executions>
+                        <execution>
+                            <id>wsimport-generate-Client</id>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>wsimport</goal>
+                            </goals>
+                            <configuration>
+                                <wsdlDirectory>${project.basedir}/src/main/resources/</wsdlDirectory>
+                                <wsdlFiles>
+                                    <wsdlFile>file.wsdl</wsdlFile>
+                                </wsdlFiles>
+                                <packageName>pl.soap</packageName>
+                            </configuration>
                         </execution>
                     </executions>
                 </plugin>

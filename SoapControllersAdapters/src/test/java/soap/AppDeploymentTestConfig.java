@@ -1,7 +1,9 @@
 package soap;
 
+import org.junit.ClassRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testcontainers.containers.DockerComposeContainer;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.Network;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -10,7 +12,9 @@ import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.utility.MountableFile;
 
+import java.io.File;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 
 public class AppDeploymentTestConfig {
@@ -43,9 +47,11 @@ public class AppDeploymentTestConfig {
             .waitingFor(Wait.forHttp("/soap/EquipmentSoapControllerService"))
             .withReuse(true);
 
-//    protected static String baseUrl = "";
 
-//    public static void init() {
-//        baseUrl = String.format("http://%s:%d/soap/EquipmentSoapControllerService", payara.getHost(), payara.getMappedPort(8080));
-//    }
+
+    protected static String baseUrl = "";
+
+    public static void init() {
+        baseUrl = String.format("http://%s:%d/soap/EquipmentSoapControllerService", payara.getHost(), payara.getMappedPort(8080));
+    }
 }

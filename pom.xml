@@ -420,37 +420,16 @@
                                 <wsdlFiles>
                                     <wsdlFile>testService.wsdl</wsdlFile>
                                 </wsdlFiles>
+<!--                                <wsdlDirectory>${project.basedir}/src/main/resources</wsdlDirectory>-->
+<!--                                <wsdlFiles>-->
+<!--                                    <wsdlFile>file.wsdl</wsdlFile>-->
+<!--                                </wsdlFiles>-->
                                 <packageName>pl.soap</packageName>
                             </configuration>
                         </execution>
                     </executions>
                 </plugin>
-
-<!--                <plugin>-->
-<!--                    <groupId>org.codehaus.mojo</groupId>-->
-<!--                    <artifactId>build-helper-maven-plugin</artifactId>-->
-<!--                    <version>3.3.0</version>-->
-<!--                    <executions>-->
-<!--                        <execution>-->
-<!--                            <id>add-source</id>-->
-<!--                            <phase>generate-test-sources</phase>-->
-<!--                            <goals>-->
-<!--                                <goal>add-test-source</goal>-->
-<!--                            </goals>-->
-<!--                            <configuration>-->
-<!--                                <sources>-->
-<!--                                    <source>target/generated-sources/wsimport</source>-->
-<!--                                </sources>-->
-<!--                            </configuration>-->
-<!--                        </execution>-->
-<!--                    </executions>-->
-<!--                </plugin>-->
             </plugins>
         </pluginManagement>
     </build>
-    <!--                                <wsdlDirectory>${project.basedir}/src/main/resources/</wsdlDirectory>-->
-    <!--                                <wsdlFiles>-->
-    <!--                                    <wsdlFile>file.wsdl</wsdlFile>-->
-    <!--                                </wsdlFiles>-->
-    <!--                                <wsdlLocation></wsdlLocation> not works -->
 </project>

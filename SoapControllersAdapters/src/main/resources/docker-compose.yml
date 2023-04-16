@@ -1,0 +1,6 @@
+version: '3.8'
+services:
+  payara:
+    image: payara/server-full:6.2023.2-jdk17
+    ports:
+      - "8080:8080"

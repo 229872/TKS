@@ -38,6 +38,8 @@ public class SoapExampleIT extends AppDeploymentTestConfig {
         assertEquals(initSize + 1, soap.getEquipmentSoapControllerPort().getAll().size());
     }
 
+
+
     @Test
     void removeEmployee_correct() {
         EquipmentSoapControllerService soap = new EquipmentSoapControllerService();

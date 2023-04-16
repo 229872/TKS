@@ -11,7 +11,7 @@ import pl.lodz.p.edu.soap.exception.SoapIllegalModificationException;
 
 import java.util.List;
 import java.util.UUID;
-
+// (serviceName = "EquipmentAPI")
 @WebService
 public class EquipmentSoapController {
     @Inject

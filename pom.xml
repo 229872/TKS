@@ -230,11 +230,20 @@
                 <version>4.0.0</version>
             </dependency>
 
+
             <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-core -->
             <dependency>
                 <groupId>org.glassfish.jaxb</groupId>
                 <artifactId>jaxb-core</artifactId>
                 <version>4.0.2</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.sun.xml.ws</groupId>
+                <artifactId>jaxws-rt</artifactId>
+                <version>4.0.0</version>
+                <scope>test</scope>
             </dependency>
 
 
@@ -421,10 +430,14 @@
                                 <goal>wsimport</goal>
                             </goals>
                             <configuration>
-                                <wsdlDirectory>${project.basedir}/src/main/resources/</wsdlDirectory>
-                                <wsdlFiles>
-                                    <wsdlFile>file.wsdl</wsdlFile>
-                                </wsdlFiles>
+<!--                                <wsdlDirectory>${project.basedir}/src/main/resources/</wsdlDirectory>-->
+<!--                                <wsdlFiles>-->
+<!--                                    <wsdlFile>file.wsdl</wsdlFile>-->
+<!--                                </wsdlFiles>-->
+<!--                                <wsdlLocation></wsdlLocation> not works -->
+                                <wsdlUrls>
+                                    <wsdlUrl>http://localhost:8080/soap/EquipmentSoapControllerService?wsdl</wsdlUrl>
+                                </wsdlUrls>
                                 <packageName>pl.soap</packageName>
                             </configuration>
                         </execution>

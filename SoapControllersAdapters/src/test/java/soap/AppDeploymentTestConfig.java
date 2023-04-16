@@ -1,10 +1,11 @@
-package pl.lodz.p.edu.adapter.rest.controller;
+package soap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.Network;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.utility.MountableFile;
@@ -15,7 +16,7 @@ import java.nio.file.Paths;
 public class AppDeploymentTestConfig {
 
     public static final MountableFile WAR = MountableFile
-            .forHostPath(Paths.get("target/RestControllersAdapters-1.0-SNAPSHOT.war").toAbsolutePath());
+            .forHostPath(Paths.get("target/SoapControllersAdapters-1.0-SNAPSHOT.war").toAbsolutePath());
 
     public static Network network = Network.newNetwork();
 
@@ -38,13 +39,13 @@ public class AppDeploymentTestConfig {
             .withNetwork(network)
             .withNetworkAliases("payara")
 //            .withLogConsumer(new Slf4jLogConsumer(LOGGER).withPrefix("Service"))
-            .withCopyFileToContainer(WAR, "/opt/payara/deployments/RestControllersAdapters-1.0-SNAPSHOT.war")
-            .waitingFor(Wait.forHttp("/rest/api/clients"))
+            .withCopyFileToContainer(WAR, "/opt/payara/deployments/SoapControllersAdapters-1.0-SNAPSHOT.war")
+            .waitingFor(Wait.forHttp("/soap/EquipmentSoapControllerService"))
             .withReuse(true);
 
-    protected static String baseUrl = "";
+//    protected static String baseUrl = "";
 
-    public static void init() {
-        baseUrl = String.format("http://%s:%d/rest/api/", payara.getHost(), payara.getMappedPort(8080));
-    }
+//    public static void init() {
+//        baseUrl = String.format("http://%s:%d/soap/EquipmentSoapControllerService", payara.getHost(), payara.getMappedPort(8080));
+//    }
 }

@@ -114,9 +114,18 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>com.sun.xml.ws</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-java2ws-plugin</artifactId>
+            </plugin>
 <!--            <plugin>-->
-<!--                <groupId>com.sun.xml.ws</groupId>-->
-<!--                <artifactId>jaxws-maven-plugin</artifactId>-->
+<!--                <groupId>org.codehaus.mojo</groupId>-->
+<!--                <artifactId>build-helper-maven-plugin</artifactId>-->
+<!--                <version>3.3.0</version>-->
 <!--            </plugin>-->
         </plugins>
     </build>

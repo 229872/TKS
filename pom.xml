@@ -288,8 +288,15 @@
                 <artifactId>SoapControllerAdapters</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-frontend-jaxws</artifactId>
+                <version>4.0.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
 
     <build>
         <pluginManagement>
@@ -313,6 +320,7 @@
                     <artifactId>liberty-maven-plugin</artifactId>
                     <version>3.7.1</version>
                 </plugin>
+
 
                 <plugin>
                     <groupId>com.dkanejs.maven.plugins</groupId>
@@ -364,7 +372,35 @@
                             </goals>
                         </execution>
                     </executions>
+                </plugin>
 
+
+                <plugin>
+                    <groupId>org.apache.cxf</groupId>
+                    <artifactId>cxf-java2ws-plugin</artifactId>
+                    <version>4.0.0</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.cxf</groupId>
+                            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+                            <version>4.0.0</version>
+                        </dependency>
+                    </dependencies>
+                    <executions>
+                        <execution>
+                            <id>generate-wsdl</id>
+                            <phase>process-classes</phase>
+                            <goals>
+                                <goal>java2ws</goal>
+                            </goals>
+                            <configuration>
+                                <outputFile>${project.build.directory}/testService.wsdl</outputFile>
+                                <className>pl.lodz.p.edu.soap.controller.EquipmentSoapController</className>
+                                <verbose>true</verbose>
+                                <genWsdl>true</genWsdl>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
 
                 <plugin>
@@ -374,26 +410,46 @@
                     <executions>
                         <execution>
                             <id>wsimport-generate-Client</id>
-                            <phase>generate-sources</phase>
+                            <phase>generate-test-sources</phase>
                             <goals>
                                 <goal>wsimport</goal>
                             </goals>
                             <configuration>
-<!--                                <wsdlDirectory>${project.basedir}/src/main/resources/</wsdlDirectory>-->
-<!--                                <wsdlFiles>-->
-<!--                                    <wsdlFile>file.wsdl</wsdlFile>-->
-<!--                                </wsdlFiles>-->
-<!--                                <wsdlLocation></wsdlLocation> not works -->
-                                <wsdlUrls>
-                                    <wsdlUrl>http://localhost:8080/soap/EquipmentSoapControllerService?wsdl</wsdlUrl>
-                                </wsdlUrls>
+                                <wsdlDirectory>${project.build.directory}/</wsdlDirectory>
+                                <wsdlFiles>
+                                    <wsdlFile>testService.wsdl</wsdlFile>
+                                </wsdlFiles>
                                 <packageName>pl.soap</packageName>
                             </configuration>
                         </execution>
                     </executions>
                 </plugin>
+
+<!--                <plugin>-->
+<!--                    <groupId>org.codehaus.mojo</groupId>-->
+<!--                    <artifactId>build-helper-maven-plugin</artifactId>-->
+<!--                    <version>3.3.0</version>-->
+<!--                    <executions>-->
+<!--                        <execution>-->
+<!--                            <id>add-source</id>-->
+<!--                            <phase>generate-test-sources</phase>-->
+<!--                            <goals>-->
+<!--                                <goal>add-test-source</goal>-->
+<!--                            </goals>-->
+<!--                            <configuration>-->
+<!--                                <sources>-->
+<!--                                    <source>target/generated-sources/wsimport</source>-->
+<!--                                </sources>-->
+<!--                            </configuration>-->
+<!--                        </execution>-->
+<!--                    </executions>-->
+<!--                </plugin>-->
             </plugins>
         </pluginManagement>
     </build>
-
+    <!--                                <wsdlDirectory>${project.basedir}/src/main/resources/</wsdlDirectory>-->
+    <!--                                <wsdlFiles>-->
+    <!--                                    <wsdlFile>file.wsdl</wsdlFile>-->
+    <!--                                </wsdlFiles>-->
+    <!--                                <wsdlLocation></wsdlLocation> not works -->
 </project>

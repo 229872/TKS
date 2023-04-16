@@ -1,17 +1,22 @@
 package soap;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import pl.soap.*;
+import pl.soap.EquipmentInputSoapDTO;
+import pl.soap.EquipmentSoapControllerService;
+import pl.soap.ObjectNotFoundSoapException_Exception;
+import pl.soap.SoapConflictException_Exception;
+import pl.soap.SoapIllegalModificationException_Exception;
+
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 
 @Testcontainers
 public class SoapExampleIT extends AppDeploymentTestConfig {
 
-    @Test
-    void xd() {
-        System.out.println("test ok");
-    }
 
     EquipmentInputSoapDTO eq = new EquipmentInputSoapDTO();
 

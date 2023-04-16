@@ -101,15 +101,47 @@
             <groupId>pl.lodz.p.edu</groupId>
             <artifactId>ApplicationServices</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>
+<!--        <testResources>-->
+<!--            <testResource>-->
+<!--                <directory>${project.build.directory}/generated-sources/wsimport</directory>-->
+<!--            </testResource>-->
+<!--        </testResources>-->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.2</version>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                        <configuration>
+                            <generatedTestSourcesDirectory>${project.build.directory}/generated-sources/wsimport</generatedTestSourcesDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <compileSourceRoots>-->
+<!--                        <compileSourceRoot>${project.build.directory}/classes</compileSourceRoot>-->
+<!--                        <compileSourceRoot>${project.build.directory}/generated-sources/wsimport</compileSourceRoot>-->
+<!--                    </compileSourceRoots>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>

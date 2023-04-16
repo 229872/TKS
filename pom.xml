@@ -28,7 +28,6 @@
         <jakarta.jakartaee-api.version>9.1.0</jakarta.jakartaee-api.version>
         <testcontainers.version>1.17.6</testcontainers.version>
         <slf4j.version>2.0.7</slf4j.version>
-        <arquillian-payara.version>3.0.alpha6</arquillian-payara.version>
         <payara.version>6.2023.1</payara.version>
         <maven-dependency-plugin.version>3.5.0</maven-dependency-plugin.version>
         <maven-failsafe-plugin.version>3.0.0-M9</maven-failsafe-plugin.version>
@@ -314,28 +313,6 @@
                     <artifactId>liberty-maven-plugin</artifactId>
                     <version>3.7.1</version>
                 </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>3.0.0-M9</version>
-                    <executions>
-                        <execution>
-                            <id>integration-test</id>
-                            <goals>
-                                <goal>integration-test</goal>
-                            </goals>
-                            <configuration>
-                                <trimStackTrace>false</trimStackTrace>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>verify</id>
-                            <goals>
-                                <goal>verify</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
 
                 <plugin>
                     <groupId>com.dkanejs.maven.plugins</groupId>
@@ -369,39 +346,10 @@
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <version>${maven-dependency-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>unpack</id>
-                            <phase>pre-integration-test</phase>
-                            <goals>
-                                <goal>unpack</goal>
-                            </goals>
-                            <configuration>
-                                <artifactItems>
-                                    <artifactItem>
-                                        <groupId>fish.payara.distributions</groupId>
-                                        <artifactId>payara</artifactId>
-                                        <version>${payara.version}</version>
-                                        <type>zip</type>
-                                        <overWrite>false</overWrite>
-                                        <outputDirectory>${project.build.directory}</outputDirectory>
-                                    </artifactItem>
-                                </artifactItems>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>3.0.0-M9</version>
+
                     <configuration>
-                        <systemPropertyVariables>
-                            <payara.home>${project.build.directory}/payara6</payara.home>
-                            <arquillian.launch>payara-managed</arquillian.launch>
-                        </systemPropertyVariables>
                         <skipTests>false</skipTests>
                         <includes>
                             <include>**/*IT.java</include>
@@ -416,6 +364,7 @@
                             </goals>
                         </execution>
                     </executions>
+
                 </plugin>
 
                 <plugin>

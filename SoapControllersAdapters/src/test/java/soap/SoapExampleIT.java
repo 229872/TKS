@@ -1,19 +1,16 @@
 package soap;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Testcontainers;
 //import pl.soap.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 
 @Testcontainers
-public class SoapExampleTest extends AppDeploymentTestConfig {
+public class SoapExampleIT extends AppDeploymentTestConfig {
 
     @Test
     void xd() {
-        while (true);
+        System.out.println("test ok");
     }
 
 //    EquipmentInputSoapDTO eq = new EquipmentInputSoapDTO();

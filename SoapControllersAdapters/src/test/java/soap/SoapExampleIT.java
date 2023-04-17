@@ -10,6 +10,9 @@ import pl.soap.SoapConflictException_Exception;
 import pl.soap.SoapIllegalModificationException_Exception;
 
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -19,6 +22,13 @@ public class SoapExampleIT extends AppDeploymentTestConfig {
 
 
     EquipmentInputSoapDTO eq = new EquipmentInputSoapDTO();
+    URL url;
+
+    SoapExampleIT() throws MalformedURLException {
+        String serviceUrl = String.format("http://localhost:%d/soap/EquipmentSoapControllerService",
+                payara.getMappedPort(8080));
+        url = new URL(serviceUrl);
+    }
 
     @BeforeEach
     void beforeEach() {
@@ -30,19 +40,17 @@ public class SoapExampleIT extends AppDeploymentTestConfig {
     }
 
     @Test
-    void createEmployee_correct() {
-        EquipmentSoapControllerService soap = new EquipmentSoapControllerService();
+    void createEmployee_correct()  {
+        EquipmentSoapControllerService soap = new EquipmentSoapControllerService(url);
 
         int initSize = soap.getEquipmentSoapControllerPort().getAll().size();
         soap.getEquipmentSoapControllerPort().add(eq);
         assertEquals(initSize + 1, soap.getEquipmentSoapControllerPort().getAll().size());
     }
 
-
-
     @Test
     void removeEmployee_correct() {
-        EquipmentSoapControllerService soap = new EquipmentSoapControllerService();
+        EquipmentSoapControllerService soap = new EquipmentSoapControllerService(url);
 
         int initSize = soap.getEquipmentSoapControllerPort().getAll().size();
         var eq1 = soap.getEquipmentSoapControllerPort().add(eq);
@@ -57,7 +65,7 @@ public class SoapExampleIT extends AppDeploymentTestConfig {
 
     @Test
     void updateEmployee_correct() throws ObjectNotFoundSoapException_Exception {
-        EquipmentSoapControllerService soap = new EquipmentSoapControllerService();
+        EquipmentSoapControllerService soap = new EquipmentSoapControllerService(url);
 
         int initSize = soap.getEquipmentSoapControllerPort().getAll().size();
         var eq1 = soap.getEquipmentSoapControllerPort().add(eq);

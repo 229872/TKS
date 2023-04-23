@@ -1,11 +1,11 @@
-package pl.lodz.p.edu.adapter.rest.dto.input.users;
+package pl.lodz.p.edu.usersoap.dto.input;
 
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import pl.lodz.p.edu.adapter.rest.dto.UserTypeDTO;
+import pl.lodz.p.edu.user.core.domain.usermodel.users.UserType;
 
 @Getter
 @Setter
@@ -16,11 +16,11 @@ public class AdminInputDTO extends UserInputDTO {
     private String favouriteIceCream;
 
     public AdminInputDTO() {
-        super(UserTypeDTO.ADMIN);
+        super(UserType.ADMIN);
     }
 
     public AdminInputDTO(String login, String password, String favouriteIceCream) {
-        super(login, password, UserTypeDTO.ADMIN);
+        super(login, password, UserType.ADMIN);
         this.favouriteIceCream = favouriteIceCream;
     }
 }

@@ -1,10 +1,10 @@
-package pl.lodz.p.edu.adapter.rest.dto.output.users;
+package pl.lodz.p.edu.usersoap.dto.output;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import pl.lodz.p.edu.adapter.rest.dto.AddressDTO;
-import pl.lodz.p.edu.adapter.rest.dto.UserTypeDTO;
+import pl.lodz.p.edu.user.core.domain.usermodel.users.UserType;
+import pl.lodz.p.edu.usersoap.dto.AddressDTO;
 
 import java.util.UUID;
 
@@ -17,12 +17,12 @@ public class ClientOutputDTO extends UserOutputDTO {
     private AddressDTO address;
 
     public ClientOutputDTO() {
-        super(UserTypeDTO.CLIENT);
+        super(UserType.CLIENT);
         address = new AddressDTO("", "", "");
     }
 
     public ClientOutputDTO(UUID userId, String login, String firstName, String lastName, boolean active, AddressDTO address) {
-        super(userId, login, UserTypeDTO.CLIENT, active);
+        super(userId, login, UserType.CLIENT, active);
         this.setActive(active);
         this.firstName = firstName;
         this.lastName = lastName;

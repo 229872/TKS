@@ -11,6 +11,7 @@
     <file type="web" url="file://$PROJECT_DIR$/RentService/src/main/resources" />
     <file type="web" url="file://$PROJECT_DIR$/RentService/src/test/java" />
     <file type="web" url="file://$PROJECT_DIR$/RentService/src/test/resources" />
+    <file type="web" url="file://$PROJECT_DIR$/UserService/UserSoapControllersAdapters" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
@@ -25,6 +26,12 @@
         <option value="$PROJECT_DIR$/RestControllersAdapters/pom.xml" />
         <option value="$PROJECT_DIR$/RentService/pom.xml" />
         <option value="$PROJECT_DIR$/UserService/pom.xml" />
+        <option value="$PROJECT_DIR$/UserService/UserApplicationCore/pom.xml" />
+        <option value="$PROJECT_DIR$/UserService/UserApplicationPorts/pom.xml" />
+        <option value="$PROJECT_DIR$/UserService/UserRepositoriesAdapters/pom.xml" />
+        <option value="$PROJECT_DIR$/UserService/UserSoapControllersAdapters/pom.xml" />
+        <option value="$PROJECT_DIR$/UserService/UserApplicationCore/UserDomainModel/pom.xml" />
+        <option value="$PROJECT_DIR$/UserService/UserApplicationCore/UserApplicationServices/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

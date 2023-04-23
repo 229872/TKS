@@ -19,6 +19,8 @@
     <modules>
         <module>UserApplicationCore</module>
         <module>UserApplicationPorts</module>
+        <module>UserRepositoriesAdapters</module>
+        <module>UserSoapControllersAdapters</module>
     </modules>
 
 </project>

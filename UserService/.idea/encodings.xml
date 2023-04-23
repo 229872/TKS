@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/UserApplicationCore/UserApplicationServices/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UserApplicationCore/UserApplicationServices/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UserApplicationCore/UserDomainModel/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UserApplicationCore/UserDomainModel/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UserApplicationCore/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UserApplicationCore/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UserApplicationPorts/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UserApplicationPorts/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UserRepositoriesAdapters/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UserRepositoriesAdapters/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UserSoapControllersAdapters/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UserSoapControllersAdapters/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

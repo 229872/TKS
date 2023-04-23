@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.adapter.rest.dto.input.users;
+package pl.lodz.p.edu.usersoap.dto.input;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -6,8 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import pl.lodz.p.edu.adapter.rest.dto.AddressDTO;
-import pl.lodz.p.edu.adapter.rest.dto.UserTypeDTO;
+import pl.lodz.p.edu.user.core.domain.usermodel.users.UserType;
+import pl.lodz.p.edu.usersoap.dto.AddressDTO;
 
 @Getter
 @Setter
@@ -25,13 +25,13 @@ public class ClientInputDTO extends UserInputDTO {
     private AddressDTO address;
 
     public ClientInputDTO() {
-        super(UserTypeDTO.CLIENT);
+        super(UserType.CLIENT);
         address = new AddressDTO("", "", "");
     }
 
 
     public ClientInputDTO(String login, String password, String firstName, String lastName, AddressDTO address) {
-        super(login, password, UserTypeDTO.CLIENT);
+        super(login, password, UserType.CLIENT);
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;

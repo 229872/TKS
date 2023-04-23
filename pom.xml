@@ -13,11 +13,8 @@
 
     <!-- sub modules -->
     <modules>
-        <module>ApplicationCore</module>
-        <module>ApplicationPorts</module>
-        <module>RepositoriesAdapters</module>
-        <module>RestControllersAdapters</module>
-        <module>SoapControllersAdapters</module>
+        <module>RentService</module>
+        <module>UserService</module>
     </modules>
 
     <properties>

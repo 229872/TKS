@@ -10,19 +10,18 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>ApplicationPorts</artifactId>
+    <artifactId>RentService</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>ApplicationPorts</name>
-    <dependencies>
-        <dependency>
-            <groupId>pl.lodz.p.edu</groupId>
-            <artifactId>DomainModel</artifactId>
-        </dependency>
+    <name>RentService</name>
 
-        <dependency>
-            <groupId>com.nimbusds</groupId>
-            <artifactId>nimbus-jose-jwt</artifactId>
-        </dependency>
-    </dependencies>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>ApplicationCore</module>
+        <module>ApplicationPorts</module>
+        <module>RepositoriesAdapters</module>
+        <module>RestControllersAdapters</module>
+        <module>SoapControllersAdapters</module>
+    </modules>
 
 </project>

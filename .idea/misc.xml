@@ -2,11 +2,15 @@
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
-    <file type="web" url="file://$PROJECT_DIR$/ApplicationCore" />
     <file type="web" url="file://$PROJECT_DIR$/mvc" />
-    <file type="web" url="file://$PROJECT_DIR$/RepositoriesAdapters" />
-    <file type="web" url="file://$PROJECT_DIR$/RestControllersAdapters" />
-    <file type="web" url="file://$PROJECT_DIR$/SoapControllersAdapters" />
+    <file type="web" url="file://$PROJECT_DIR$/RentService/ApplicationCore" />
+    <file type="web" url="file://$PROJECT_DIR$/RentService/RepositoriesAdapters" />
+    <file type="web" url="file://$PROJECT_DIR$/RentService/RestControllersAdapters" />
+    <file type="web" url="file://$PROJECT_DIR$/RentService/SoapControllersAdapters" />
+    <file type="web" url="file://$PROJECT_DIR$/RentService/src/main/java" />
+    <file type="web" url="file://$PROJECT_DIR$/RentService/src/main/resources" />
+    <file type="web" url="file://$PROJECT_DIR$/RentService/src/test/java" />
+    <file type="web" url="file://$PROJECT_DIR$/RentService/src/test/resources" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
@@ -19,6 +23,8 @@
         <option value="$PROJECT_DIR$/ApplicationCore/DomainModel/pom.xml" />
         <option value="$PROJECT_DIR$/ApplicationCore/ApplicationServices/pom.xml" />
         <option value="$PROJECT_DIR$/RestControllersAdapters/pom.xml" />
+        <option value="$PROJECT_DIR$/RentService/pom.xml" />
+        <option value="$PROJECT_DIR$/UserService/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

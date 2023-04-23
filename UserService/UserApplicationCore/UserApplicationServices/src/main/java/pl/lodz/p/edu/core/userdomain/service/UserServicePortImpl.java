@@ -1,15 +1,16 @@
-package pl.lodz.p.edu.core.service;
+package pl.lodz.p.edu.core.userdomain.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceException;
 import jakarta.transaction.TransactionalException;
-import pl.lodz.p.edu.core.domain.exception.ConflictException;
-import pl.lodz.p.edu.core.domain.exception.IllegalModificationException;
-import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
-import pl.lodz.p.edu.core.domain.model.users.*;
-import pl.lodz.p.edu.ports.incoming.UserServicePort;
-import pl.lodz.p.edu.ports.outgoing.UserRepositoryPort;
+import pl.lodz.p.edu.user.core.domain.usermodel.exception.ConflictException;
+import pl.lodz.p.edu.user.core.domain.usermodel.exception.IllegalModificationException;
+import pl.lodz.p.edu.user.core.domain.usermodel.exception.ObjectNotFoundServiceException;
+import pl.lodz.p.edu.user.core.domain.usermodel.users.*;
+import pl.lodz.p.edu.userports.incoming.UserServicePort;
+import pl.lodz.p.edu.userports.outgoing.UserRepositoryPort;
+
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;

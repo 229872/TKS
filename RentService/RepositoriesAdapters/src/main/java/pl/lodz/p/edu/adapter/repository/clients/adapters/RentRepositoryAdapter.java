@@ -11,13 +11,11 @@ import pl.lodz.p.edu.adapter.repository.clients.api.UserRepository;
 import pl.lodz.p.edu.adapter.repository.clients.data.EquipmentEnt;
 import pl.lodz.p.edu.adapter.repository.clients.data.RentEnt;
 import jakarta.inject.Inject;
-import pl.lodz.p.edu.adapter.repository.clients.data.users.ClientEnt;
 import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundRepositoryException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.core.domain.model.Equipment;
 import pl.lodz.p.edu.core.domain.model.Rent;
-import pl.lodz.p.edu.core.domain.model.users.Client;
-import pl.lodz.p.edu.ports.outcoming.RentRepositoryPort;
+import pl.lodz.p.edu.ports.outgoing.RentRepositoryPort;
 
 import java.util.List;
 import java.util.UUID;

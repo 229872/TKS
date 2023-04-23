@@ -10,7 +10,7 @@ import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundReposito
 import pl.lodz.p.edu.core.domain.exception.IllegalModificationException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.core.domain.model.Equipment;
-import pl.lodz.p.edu.ports.outcoming.EquipmentRepositoryPort;
+import pl.lodz.p.edu.ports.outgoing.EquipmentRepositoryPort;
 
 import java.util.List;
 import java.util.UUID;

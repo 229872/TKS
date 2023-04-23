@@ -7,7 +7,7 @@ import pl.lodz.p.edu.core.domain.exception.ConflictException;
 import pl.lodz.p.edu.core.domain.exception.IllegalModificationException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.ports.incoming.EquipmentServicePort;
-import pl.lodz.p.edu.ports.outcoming.EquipmentRepositoryPort;
+import pl.lodz.p.edu.ports.outgoing.EquipmentRepositoryPort;
 import pl.lodz.p.edu.core.domain.model.Equipment;
 
 import java.util.List;

@@ -10,7 +10,7 @@ import jakarta.inject.Inject;
 import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundRepositoryException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.core.domain.model.users.*;
-import pl.lodz.p.edu.ports.outcoming.UserRepositoryPort;
+import pl.lodz.p.edu.ports.outgoing.UserRepositoryPort;
 
 import java.util.List;
 import java.util.UUID;

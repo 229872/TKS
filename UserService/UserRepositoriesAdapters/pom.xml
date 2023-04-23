@@ -6,19 +6,13 @@
 
     <parent>
         <groupId>pl.lodz.p.edu</groupId>
-        <artifactId>web-app</artifactId>
-        <version>1.0</version>
+        <artifactId>UserService</artifactId>
+        <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>UserService</artifactId>
+    <artifactId>UserRepositoriesAdapters</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>UserService</name>
+    <name>UserRepositoriesAdapters</name>
 
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>UserApplicationCore</module>
-        <module>UserApplicationPorts</module>
-    </modules>
-
+    <packaging>jar</packaging>
 </project>

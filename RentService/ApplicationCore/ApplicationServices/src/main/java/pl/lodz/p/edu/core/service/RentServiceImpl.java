@@ -10,9 +10,9 @@ import pl.lodz.p.edu.core.domain.model.Equipment;
 import pl.lodz.p.edu.core.domain.model.Rent;
 import pl.lodz.p.edu.core.domain.model.users.Client;
 import pl.lodz.p.edu.ports.incoming.RentServicePort;
-import pl.lodz.p.edu.ports.outcoming.EquipmentRepositoryPort;
-import pl.lodz.p.edu.ports.outcoming.RentRepositoryPort;
-import pl.lodz.p.edu.ports.outcoming.UserRepositoryPort;
+import pl.lodz.p.edu.ports.outgoing.EquipmentRepositoryPort;
+import pl.lodz.p.edu.ports.outgoing.RentRepositoryPort;
+import pl.lodz.p.edu.ports.outgoing.UserRepositoryPort;
 
 import java.time.LocalDateTime;
 import java.util.List;

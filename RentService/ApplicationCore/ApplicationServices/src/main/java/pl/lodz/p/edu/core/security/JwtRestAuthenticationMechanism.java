@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.core.domain.model.users.User;
-import pl.lodz.p.edu.ports.outcoming.UserRepositoryPort;
+import pl.lodz.p.edu.ports.outgoing.UserRepositoryPort;
 
 import java.util.Collections;
 import java.util.HashSet;

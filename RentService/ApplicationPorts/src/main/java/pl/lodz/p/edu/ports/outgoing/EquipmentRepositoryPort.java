@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.ports.outcoming;
+package pl.lodz.p.edu.ports.outgoing;
 
 import java.util.UUID;
 import pl.lodz.p.edu.core.domain.model.Equipment;

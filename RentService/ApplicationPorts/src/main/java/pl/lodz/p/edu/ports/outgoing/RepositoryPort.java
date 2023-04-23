@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.ports.outcoming;
+package pl.lodz.p.edu.ports.outgoing;
 
 import pl.lodz.p.edu.core.domain.exception.IllegalModificationException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;

@@ -1,8 +1,7 @@
-package pl.lodz.p.edu.ports.outcoming;
+package pl.lodz.p.edu.ports.outgoing;
 
 import pl.lodz.p.edu.core.domain.model.Equipment;
 import pl.lodz.p.edu.core.domain.model.Rent;
-import pl.lodz.p.edu.core.domain.model.users.Client;
 
 import java.util.List;
 import java.util.UUID;

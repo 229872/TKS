@@ -3,7 +3,6 @@ package pl.lodz.p.edu.core.service;
 import com.nimbusds.jose.JOSEException;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import pl.lodz.p.edu.core.domain.exception.AuthenticationFailureException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.core.domain.model.security.CredentialsNewPassword;
@@ -11,7 +10,7 @@ import pl.lodz.p.edu.core.domain.model.security.Token;
 import pl.lodz.p.edu.core.domain.model.users.User;
 import pl.lodz.p.edu.core.security.JwtUtilities;
 import pl.lodz.p.edu.ports.incoming.AuthenticationServicePort;
-import pl.lodz.p.edu.ports.outcoming.UserRepositoryPort;
+import pl.lodz.p.edu.ports.outgoing.UserRepositoryPort;
 
 import java.text.ParseException;
 

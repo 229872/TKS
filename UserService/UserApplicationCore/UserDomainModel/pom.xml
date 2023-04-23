@@ -6,19 +6,20 @@
 
     <parent>
         <groupId>pl.lodz.p.edu</groupId>
-        <artifactId>web-app</artifactId>
-        <version>1.0</version>
+        <artifactId>UserApplicationCore</artifactId>
+        <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>UserService</artifactId>
+    <artifactId>UserDomainModel</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>UserService</name>
+    <name>UserDomainModel</name>
 
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
-    <modules>
-        <module>UserApplicationCore</module>
-        <module>UserApplicationPorts</module>
-    </modules>
-
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
 </project>

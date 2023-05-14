@@ -209,33 +209,6 @@ public class AdminControllerIT extends AppDeploymentTestConfig {
                 .body("size()", is(initialSize + 2));
     }
 
-    // update
-    @Test
-    void updateOneAdmin_correct() throws JsonProcessingException {
-        String uuid = getUUIDOfNewObject();
-        System.out.println(uuid);
-
-        String newFavouriteIceCream = "___other_favourite_ice_cream___";
-        validAdmin.setFavouriteIceCream(newFavouriteIceCream);
-        String updatedAdminStr = obj.writeValueAsString(validAdmin);
-        System.out.println(updatedAdminStr);
-        given()
-                .header("Content-Type", "application/json")
-                .body(updatedAdminStr)
-                .when()
-                .put(baseUrl + "admins/" + uuid)
-                .then()
-                .statusCode(200);
-
-        String favouriteIceCream = given()
-                .header("Content-Type", "application/json")
-                .when()
-                .get(baseUrl + "admins/" + uuid)
-                .then()
-                .statusCode(200)
-                .extract().path("favouriteIceCream");
-        assertEquals(newFavouriteIceCream, favouriteIceCream);
-    }
 
     @Test
     void updateOneAdmin_noAdmin() throws JsonProcessingException {

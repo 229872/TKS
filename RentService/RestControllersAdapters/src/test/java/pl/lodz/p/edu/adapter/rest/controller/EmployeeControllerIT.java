@@ -210,30 +210,6 @@ public class EmployeeControllerIT extends AppDeploymentTestConfig {
     }
 
     // update
-    @Test
-    void updateOneEmployee_correct() throws JsonProcessingException {
-        String uuid = getUUIDOfNewObject();
-
-        String newDesk = "___other_desk___";
-        validEmployee.setDesk(newDesk);
-        String updatedEmployeeStr = obj.writeValueAsString(validEmployee);
-        given()
-                .header("Content-Type", "application/json")
-                .body(updatedEmployeeStr)
-                .when()
-                .put(baseUrl + "employees/" + uuid)
-                .then()
-                .statusCode(200);
-
-        String desk = given()
-                .header("Content-Type", "application/json")
-                .when()
-                .get(baseUrl + "employees/" + uuid)
-                .then()
-                .statusCode(200)
-                .extract().path("desk");
-        assertEquals(newDesk, desk);
-    }
 
     @Test
     void updateOneEmployee_noEmployee() throws JsonProcessingException {

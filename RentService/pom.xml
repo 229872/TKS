@@ -22,6 +22,16 @@
         <module>RepositoriesAdapters</module>
         <module>RestControllersAdapters</module>
         <module>SoapControllersAdapters</module>
+        <module>Merge</module>
     </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -9,6 +9,8 @@
     <file url="file://$PROJECT_DIR$/RentService/ApplicationCore/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/RentService/ApplicationPorts/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/RentService/ApplicationPorts/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/RentService/Merge/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/RentService/Merge/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/RentService/RepositoriesAdapters/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/RentService/RepositoriesAdapters/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/RentService/RestControllersAdapters/src/main/java" charset="UTF-8" />

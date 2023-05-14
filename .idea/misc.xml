@@ -3,10 +3,7 @@
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/mvc" />
-    <file type="web" url="file://$PROJECT_DIR$/RentService/ApplicationCore" />
-    <file type="web" url="file://$PROJECT_DIR$/RentService/RepositoriesAdapters" />
-    <file type="web" url="file://$PROJECT_DIR$/RentService/RestControllersAdapters" />
-    <file type="web" url="file://$PROJECT_DIR$/RentService/SoapControllersAdapters" />
+    <file type="web" url="file://$PROJECT_DIR$/RentService" />
     <file type="web" url="file://$PROJECT_DIR$/RentService/src/main/java" />
     <file type="web" url="file://$PROJECT_DIR$/RentService/src/main/resources" />
     <file type="web" url="file://$PROJECT_DIR$/RentService/src/test/java" />

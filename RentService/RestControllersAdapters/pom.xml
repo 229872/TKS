@@ -112,6 +112,12 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>pl.lodz.p.edu</groupId>-->
+<!--            <artifactId>SoapControllersAdapters</artifactId>-->
+<!--            <classifier>classes</classifier>-->
+<!--            <version>1.0-SNAPSHOT</version>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>

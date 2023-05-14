@@ -39,7 +39,7 @@ public class AppDeploymentTestConfig {
           .withNetworkAliases("payara")
 //            .withLogConsumer(new Slf4jLogConsumer(LOGGER).withPrefix("Service"))
           .withCopyFileToContainer(WAR, "/opt/payara/deployments/UserRestControllersAdapters-1.0-SNAPSHOT.war")
-          .waitingFor(Wait.forHttp("/rest/api/user_service/admins"))
+//          .waitingFor(Wait.forHttp("/rest/api/user_service/admins"))
           .withReuse(true);
 
   protected static String baseUrl = "";

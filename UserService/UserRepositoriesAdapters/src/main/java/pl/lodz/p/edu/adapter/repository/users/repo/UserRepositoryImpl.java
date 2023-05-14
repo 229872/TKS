@@ -19,7 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
 
-    @PersistenceContext(name = "app")
+    @PersistenceContext(name = "app2")
     private EntityManager em;
 
     @Override

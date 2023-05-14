@@ -25,8 +25,7 @@ public class UserFromDomainToDataMapper {
                 client.getLogin(),
                 client.getPassword(),
                 client.getFirstName(),
-                client.getLastName(),
-                convertAddressToDataModel(client.getAddress())
+                client.getLastName()
         );
     }
 
@@ -37,24 +36,21 @@ public class UserFromDomainToDataMapper {
                 client.getPassword(),
                 client.getFirstName(),
                 client.getLastName(),
-                client.isActive(),
-                convertAddressToDataModel(client.getAddress())
+                client.isActive()
         );
     }
 
     public AdminEnt convertAdminToDataModel(Admin admin) {
         return new AdminEnt(
                 admin.getLogin(),
-                admin.getPassword(),
-                admin.getFavouriteIceCream()
+                admin.getPassword()
         );
     }
 
     public EmployeeEnt convertEmployeeToDataModel(Employee employee) {
         return new EmployeeEnt(
                 employee.getLogin(),
-                employee.getPassword(),
-                employee.getDesk()
+                employee.getPassword()
         );
     }
 
@@ -65,8 +61,7 @@ public class UserFromDomainToDataMapper {
                 client.getPassword(),
                 client.getFirstName(),
                 client.getLastName(),
-                client.isActive(),
-                convertAddressToDataModel(client.getAddress())
+                client.isActive()
         );
     }
 
@@ -75,8 +70,7 @@ public class UserFromDomainToDataMapper {
                 admin.getEntityId(),
                 admin.getLogin(),
                 admin.getPassword(),
-                admin.isActive(),
-                admin.getFavouriteIceCream()
+                admin.isActive()
         );
     }
 
@@ -85,8 +79,7 @@ public class UserFromDomainToDataMapper {
                 employee.getEntityId(),
                 employee.getLogin(),
                 employee.getPassword(),
-                employee.isActive(),
-                employee.getDesk()
+                employee.isActive()
         );
     }
 }

@@ -23,26 +23,20 @@ public class ClientEnt extends UserEnt {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    @Embedded
-    private AddressEnt address;
 
-
-    public ClientEnt(String login, String password, String firstName, String lastName, AddressEnt address) {
+    public ClientEnt(String login, String password, String firstName, String lastName) {
         super(login, password);
         this.firstName = firstName;
         this.lastName = lastName;
-        this.address = address;
     }
 
-    public ClientEnt(UUID uuid, String login, String password, String firstName, String lastName, boolean active, AddressEnt address) {
+    public ClientEnt(UUID uuid, String login, String password, String firstName, String lastName, boolean active) {
         super(uuid, login, password, active);
         this.firstName = firstName;
-        this.lastName = lastName;;
-        this.address = address;
+        this.lastName = lastName;
     }
 
     protected ClientEnt() {
-        address = new AddressEnt();
     }
 
     @Override

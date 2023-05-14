@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class RentRepositoryImplTest {
 
-    private static AddressEnt address;
     private static UserEnt user;
     private static EquipmentEnt equipment;
 
@@ -43,9 +42,8 @@ public class RentRepositoryImplTest {
 
     @BeforeAll
     public static void init() {
-        address = new AddressEnt("London", "Firststreet", "30");
         user = new ClientEnt("nielubie", "plackilubie321",
-                "Tommy", "Wiseau", address);
+                "Tommy", "Wiseau");
         equipment = new EquipmentEnt("chair11", 30.0, 10.0, 15.0, "red chair");
     }
 

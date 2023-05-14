@@ -7,7 +7,7 @@ import java.sql.Connection;
 
 @ApplicationScoped
 @DataSourceDefinition(
-        name = "java:global/PgDataSource",
+        name = "java:global/PgDataSource2",
         className = "org.postgresql.ds.PGSimpleDataSource",
         url = "jdbc:postgresql://db:5433/nbddb",
         user = "nbd",

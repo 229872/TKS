@@ -28,6 +28,8 @@
     <file url="file://$PROJECT_DIR$/UserService/UserApplicationPorts/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/UserService/UserRepositoriesAdapters/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/UserService/UserRepositoriesAdapters/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UserService/UserRestControllersAdapters/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UserService/UserRestControllersAdapters/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/UserService/UserSoapControllersAdapters/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/UserService/UserSoapControllersAdapters/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/UserService/src/main/java" charset="UTF-8" />

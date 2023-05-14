@@ -3,9 +3,9 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
-    <persistence-unit name="app" transaction-type="JTA">
+    <persistence-unit name="app2" transaction-type="JTA">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <jta-data-source>java:global/PgDataSource</jta-data-source>
+        <jta-data-source>java:global/PgDataSource2</jta-data-source>
 
         <properties>
             <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>

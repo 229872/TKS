@@ -5,7 +5,6 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import pl.lodz.p.edu.adapter.repository.clients.api.UserRepository;
-import pl.lodz.p.edu.adapter.repository.clients.data.AddressEnt;
 import pl.lodz.p.edu.adapter.repository.clients.data.users.ClientEnt;
 import pl.lodz.p.edu.adapter.repository.clients.data.users.UserEnt;
 import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundRepositoryException;
@@ -16,16 +15,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UserRepositoryImplTest {
 
-    private static AddressEnt address;
     private static UserEnt user;
     @Inject
     private UserRepository repository;
 
     @BeforeAll
     public static void init() {
-        address = new AddressEnt("London", "Firststreet", "30");
         user = new ClientEnt("lubieplacki123", "plackilubie321",
-                "Tommy", "Wiseau", address);
+                "Tommy", "Wiseau");
     }
 
     @Test

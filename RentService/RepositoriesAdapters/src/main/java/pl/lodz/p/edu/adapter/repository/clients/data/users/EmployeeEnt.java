@@ -16,21 +16,16 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = true)
 public class EmployeeEnt extends UserEnt {
 
-    @Column(name = "desk")
-    private String desk;
-
     public EmployeeEnt() {}
 
-    public EmployeeEnt(String login, String password, String desk) {
+    public EmployeeEnt(String login, String password) {
         super(login, password);
-        this.desk = desk;
     }
 
-    public EmployeeEnt(UUID uuid, String login, String password, boolean active, String desk) {
+    public EmployeeEnt(UUID uuid, String login, String password, boolean active) {
         super(login, password);
         this.setEntityId(uuid);
         this.setActive(active);
-        this.desk = desk;
     }
 
     @Override

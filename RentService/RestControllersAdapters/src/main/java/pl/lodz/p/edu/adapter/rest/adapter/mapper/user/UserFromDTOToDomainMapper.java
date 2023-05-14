@@ -26,24 +26,21 @@ public class UserFromDTOToDomainMapper {
                 clientDTO.getLogin(),
                 clientDTO.getPassword(),
                 clientDTO.getFirstName(),
-                clientDTO.getLastName(),
-                convertAddressToDomainModel(clientDTO.getAddress())
+                clientDTO.getLastName()
         );
     }
 
     public Admin convertInputAdminToDomainModel(AdminInputDTO adminDTO) {
         return new Admin (
                 adminDTO.getLogin(),
-                adminDTO.getPassword(),
-                adminDTO.getFavouriteIceCream()
+                adminDTO.getPassword()
         );
     }
 
     public Employee convertInputEmployeeToDomainModel(EmployeeInputDTO employeeDTO) {
         return new Employee (
                 employeeDTO.getLogin(),
-                employeeDTO.getPassword(),
-                employeeDTO.getDesk()
+                employeeDTO.getPassword()
         );
     }
 

@@ -20,7 +20,7 @@
         <module>UserApplicationCore</module>
         <module>UserApplicationPorts</module>
         <module>UserRepositoriesAdapters</module>
-        <module>UserSoapControllersAdapters</module>
+        <module>UserRestControllersAdapters</module>
     </modules>
 
 </project>

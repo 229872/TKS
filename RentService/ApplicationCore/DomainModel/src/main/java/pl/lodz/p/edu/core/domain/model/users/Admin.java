@@ -13,25 +13,19 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = true)
 public class Admin extends User {
 
-    private String favouriteIceCream;
-
-
-    public Admin(String login, String password, String favouriteIceCream) {
+    public Admin(String login, String password) {
         super(login, password);
-        this.favouriteIceCream = favouriteIceCream;
         this.userType = UserType.ADMIN;
     }
 
-    public Admin(UUID id, String login, String password, boolean active, String favouriteIceCream) {
+    public Admin(UUID id, String login, String password, boolean active) {
         super(id, login, password);
         this.setActive(active);
-        this.favouriteIceCream = favouriteIceCream;
         this.userType = UserType.ADMIN;
     }
 
     @Override
     public void update(User user) {
         super.update(user);
-        this.favouriteIceCream = ((Admin) user).favouriteIceCream;
     }
 }

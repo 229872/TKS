@@ -35,6 +35,11 @@
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>pl.lodz.p.edu</groupId>
+            <artifactId>UserRepositoriesAdapters</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <packaging>jar</packaging>

@@ -27,8 +27,7 @@ public class UserFromDomainToDTOMapper {
                 client.getLogin(),
                 client.getFirstName(),
                 client.getLastName(),
-                client.isActive(),
-                convertAddressToDTO(client.getAddress())
+                client.isActive()
         );
     }
 
@@ -36,7 +35,6 @@ public class UserFromDomainToDTOMapper {
         return new AdminOutputDTO(
                 admin.getEntityId(),
                 admin.getLogin(),
-                admin.getFavouriteIceCream(),
                 admin.isActive()
         );
     }
@@ -45,7 +43,6 @@ public class UserFromDomainToDTOMapper {
         return new EmployeeOutputDTO(
                 employee.getEntityId(),
                 employee.getLogin(),
-                employee.getDesk(),
                 employee.isActive()
         );
     }

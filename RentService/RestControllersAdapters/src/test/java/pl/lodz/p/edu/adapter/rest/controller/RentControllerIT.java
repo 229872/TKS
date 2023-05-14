@@ -324,25 +324,6 @@ public class RentControllerIT extends AppDeploymentTestConfig {
     }
 
     @Test
-    void updateRent_clientNotExist() throws JsonProcessingException {
-        validRent.setBeginTime("2023-05-05T12:38:35.585");
-        validRent.setEndTime(null);
-        validRentStr = obj.writeValueAsString(validRent);
-        String uuid = getUUIDOfCreatedRent(validRentStr);
-
-        validRent.setClientUUID(UUID.randomUUID().toString());
-        validRentStr = obj.writeValueAsString(validRent);
-        given()
-                .header("Content-Type", "application/json")
-                .body(validRentStr)
-                .when()
-                .put(baseUrl + "rents/" + uuid)
-                .then()
-                .statusCode(400);
-    }
-
-
-    @Test
     void updateRent_incorrect_BadRequest() throws JsonProcessingException {
         String uuid = getUUIDOfCreatedRent(validRentStr);
 

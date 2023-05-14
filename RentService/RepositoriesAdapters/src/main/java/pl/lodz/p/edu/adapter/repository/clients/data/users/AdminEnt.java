@@ -15,21 +15,18 @@ import java.util.UUID;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class AdminEnt extends UserEnt {
-    @Column(name = "favourite_ice_cream")
-    private String favouriteIceCream;
+
 
     public AdminEnt() {
 
     }
 
-    public AdminEnt(String login, String password, String favouriteIceCream) {
+    public AdminEnt(String login, String password) {
         super(login, password);
-        this.favouriteIceCream = favouriteIceCream;
     }
 
-    public AdminEnt(UUID uuid, String login, String password, boolean active, String favouriteIceCream) {
+    public AdminEnt(UUID uuid, String login, String password, boolean active) {
         super(uuid, login, password, active);
-        this.favouriteIceCream = favouriteIceCream;
     }
 
     @Override

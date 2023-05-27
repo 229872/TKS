@@ -6,12 +6,10 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import pl.lodz.p.edu.adapter.repository.clients.api.EquipmentRepository;
 import pl.lodz.p.edu.adapter.repository.clients.api.RentRepository;
-import pl.lodz.p.edu.adapter.repository.clients.api.UserRepository;
-import pl.lodz.p.edu.adapter.repository.clients.data.AddressEnt;
+import pl.lodz.p.edu.adapter.repository.clients.api.ClientRepository;
 import pl.lodz.p.edu.adapter.repository.clients.data.EquipmentEnt;
 import pl.lodz.p.edu.adapter.repository.clients.data.RentEnt;
-import pl.lodz.p.edu.adapter.repository.clients.data.users.ClientEnt;
-import pl.lodz.p.edu.adapter.repository.clients.data.users.UserEnt;
+import pl.lodz.p.edu.adapter.repository.clients.data.ClientEnt;
 import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundRepositoryException;
 
 import java.time.LocalDateTime;
@@ -31,7 +29,7 @@ public class RentRepositoryImplTest {
     private RentRepository rentRepository;
 
     @Inject
-    private UserRepository userRepository;
+    private ClientRepository userRepository;
 
     @Inject
     private EquipmentRepository equipmentRepository;

@@ -7,7 +7,7 @@ import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.rent.RentFromDom
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.user.UserFromDomainToDataMapper;
 import pl.lodz.p.edu.adapter.repository.clients.api.EquipmentRepository;
 import pl.lodz.p.edu.adapter.repository.clients.api.RentRepository;
-import pl.lodz.p.edu.adapter.repository.clients.api.UserRepository;
+import pl.lodz.p.edu.adapter.repository.clients.api.ClientRepository;
 import pl.lodz.p.edu.adapter.repository.clients.data.EquipmentEnt;
 import pl.lodz.p.edu.adapter.repository.clients.data.RentEnt;
 import jakarta.inject.Inject;
@@ -27,7 +27,7 @@ public class RentRepositoryAdapter implements RentRepositoryPort {
     private RentRepository rentRepository;
 
     @Inject
-    private UserRepository userRepository;
+    private ClientRepository userRepository;
 
     @Inject
     private EquipmentRepository equipmentRepository;

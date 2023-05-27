@@ -4,8 +4,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.PersistenceException;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.user.UserFromDataToDomainMapper;
 import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.user.UserFromDomainToDataMapper;
-import pl.lodz.p.edu.adapter.repository.clients.api.UserRepository;
-import pl.lodz.p.edu.adapter.repository.clients.data.users.*;
+import pl.lodz.p.edu.adapter.repository.clients.api.ClientRepository;
+import pl.lodz.p.edu.adapter.repository.clients.data.ClientEnt;
 import jakarta.inject.Inject;
 import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundRepositoryException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
@@ -20,7 +20,7 @@ import java.util.UUID;
 public class UserRepositoryAdapter implements UserRepositoryPort {
 
     @Inject
-    private UserRepository repository;
+    private ClientRepository repository;
 
     @Inject
     private UserFromDataToDomainMapper toDomainMapper;

@@ -2,9 +2,8 @@ package pl.lodz.p.edu.adapter.repository.clients.repo;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import lombok.NoArgsConstructor;
-import pl.lodz.p.edu.adapter.repository.clients.api.UserRepository;
-import pl.lodz.p.edu.adapter.repository.clients.data.users.ClientEnt;
-import pl.lodz.p.edu.adapter.repository.clients.data.users.UserEnt;
+import pl.lodz.p.edu.adapter.repository.clients.api.ClientRepository;
+import pl.lodz.p.edu.adapter.repository.clients.data.ClientEnt;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundRepositoryException;
@@ -15,7 +14,7 @@ import java.util.UUID;
 @Transactional
 @ApplicationScoped
 @NoArgsConstructor
-public class UserRepositoryImpl implements UserRepository {
+public class ClientRepositoryImpl implements ClientRepository {
 
     @PersistenceContext(name = "app")
     private EntityManager em;

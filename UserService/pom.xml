@@ -21,6 +21,7 @@
         <module>UserApplicationPorts</module>
         <module>UserRepositoriesAdapters</module>
         <module>UserRestControllersAdapters</module>
+        <module>UserRabbitMqAdapters</module>
     </modules>
 
 </project>

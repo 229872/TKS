@@ -9,11 +9,7 @@
         <class>pl.lodz.p.edu.adapter.repository.clients.data.AddressEnt</class>
         <class>pl.lodz.p.edu.adapter.repository.clients.data.EquipmentEnt</class>
         <class>pl.lodz.p.edu.adapter.repository.clients.data.RentEnt</class>
-        <class>pl.lodz.p.edu.adapter.repository.clients.data.users.AdminEnt</class>
-        <class>pl.lodz.p.edu.adapter.repository.clients.data.users.ClientEnt</class>
-        <class>pl.lodz.p.edu.adapter.repository.clients.data.users.EmployeeEnt</class>
-        <class>pl.lodz.p.edu.adapter.repository.clients.data.users.UserEnt</class>
-        <class>pl.lodz.p.edu.adapter.repository.clients.data.users.UserTypeEnt</class>
+        <class>pl.lodz.p.edu.adapter.repository.clients.data.ClientEnt</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL10Dialect"/>
             <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>

@@ -26,6 +26,5 @@ public class Client extends AbstractModelData {
     public void update(Client client) {
         this.name = client.getName();
         this.lastName = client.getLastName();
-        this.entityId = client.getEntityId();
     }
 }

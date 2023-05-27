@@ -2,14 +2,15 @@
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/ApplicationCore" />
     <file type="web" url="file://$PROJECT_DIR$/mvc" />
-    <file type="web" url="file://$PROJECT_DIR$/RentService" />
-    <file type="web" url="file://$PROJECT_DIR$/RentService/src/main/java" />
-    <file type="web" url="file://$PROJECT_DIR$/RentService/src/main/resources" />
-    <file type="web" url="file://$PROJECT_DIR$/RentService/src/test/java" />
-    <file type="web" url="file://$PROJECT_DIR$/RentService/src/test/resources" />
+    <file type="web" url="file://$PROJECT_DIR$/RentService/Merge" />
+    <file type="web" url="file://$PROJECT_DIR$/RentService/RestControllersAdapters" />
+    <file type="web" url="file://$PROJECT_DIR$/RentService/SoapControllersAdapters" />
+    <file type="web" url="file://$PROJECT_DIR$/RepositoriesAdapters" />
+    <file type="web" url="file://$PROJECT_DIR$/RestControllersAdapters" />
+    <file type="web" url="file://$PROJECT_DIR$/SoapControllersAdapters" />
     <file type="web" url="file://$PROJECT_DIR$/UserService/UserRestControllersAdapters" />
-    <file type="web" url="file://$PROJECT_DIR$/UserService/UserSoapControllersAdapters" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
@@ -22,20 +23,19 @@
         <option value="$PROJECT_DIR$/ApplicationCore/DomainModel/pom.xml" />
         <option value="$PROJECT_DIR$/ApplicationCore/ApplicationServices/pom.xml" />
         <option value="$PROJECT_DIR$/RestControllersAdapters/pom.xml" />
-        <option value="$PROJECT_DIR$/RentService/pom.xml" />
-        <option value="$PROJECT_DIR$/UserService/pom.xml" />
-        <option value="$PROJECT_DIR$/UserService/UserApplicationCore/pom.xml" />
-        <option value="$PROJECT_DIR$/UserService/UserApplicationPorts/pom.xml" />
-        <option value="$PROJECT_DIR$/UserService/UserRepositoriesAdapters/pom.xml" />
-        <option value="$PROJECT_DIR$/UserService/UserApplicationCore/UserDomainModel/pom.xml" />
-        <option value="$PROJECT_DIR$/UserService/UserApplicationCore/UserApplicationServices/pom.xml" />
+        <option value="$PROJECT_DIR$/UserService/UserRabbitMqAdapters/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/RentService/RabbitMqAdapter/pom.xml" />
         <option value="$PROJECT_DIR$/module/pom.xml" />
       </set>
     </option>
+  </component>
+  <component name="PWA">
+    <option name="enabled" value="true" />
+    <option name="wasEnabledAtLeastOnce" value="true" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK" />
   <component name="ProjectType">

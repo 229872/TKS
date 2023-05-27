@@ -6,13 +6,12 @@ import pl.lodz.p.edu.adapter.repository.clients.api.RentRepository;
 import pl.lodz.p.edu.adapter.repository.clients.data.EquipmentEnt;
 import pl.lodz.p.edu.adapter.repository.clients.data.RentEnt;
 import pl.lodz.p.edu.adapter.repository.clients.data.RentEnt_;
-import pl.lodz.p.edu.adapter.repository.clients.data.users.ClientEnt;
+import pl.lodz.p.edu.adapter.repository.clients.data.ClientEnt;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
-import pl.lodz.p.edu.adapter.repository.clients.data.users.UserEnt;
 import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundRepositoryException;
 
 

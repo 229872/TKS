@@ -1,8 +1,7 @@
 package pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.user;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import pl.lodz.p.edu.adapter.repository.clients.data.AddressEnt;
-import pl.lodz.p.edu.adapter.repository.clients.data.users.ClientEnt;
+import pl.lodz.p.edu.adapter.repository.clients.data.ClientEnt;
 import pl.lodz.p.edu.core.domain.model.Client;
 
 @ApplicationScoped

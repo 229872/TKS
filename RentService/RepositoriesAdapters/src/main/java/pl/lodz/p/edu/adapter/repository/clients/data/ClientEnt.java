@@ -1,17 +1,14 @@
-package pl.lodz.p.edu.adapter.repository.clients.data.users;
+package pl.lodz.p.edu.adapter.repository.clients.data;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import pl.lodz.p.edu.adapter.repository.clients.data.AbstractEntity;
-import pl.lodz.p.edu.adapter.repository.clients.data.AddressEnt;
 
 import java.util.UUID;
 
 
 @Entity
-@DiscriminatorValue("client")
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)

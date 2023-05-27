@@ -4,9 +4,8 @@ import de.hilling.junit.cdi.CdiTestJunitExtension;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import pl.lodz.p.edu.adapter.repository.clients.api.UserRepository;
-import pl.lodz.p.edu.adapter.repository.clients.data.users.ClientEnt;
-import pl.lodz.p.edu.adapter.repository.clients.data.users.UserEnt;
+import pl.lodz.p.edu.adapter.repository.clients.api.ClientRepository;
+import pl.lodz.p.edu.adapter.repository.clients.data.ClientEnt;
 import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundRepositoryException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,7 +16,7 @@ class UserRepositoryImplTest {
 
     private static ClientEnt user;
     @Inject
-    private UserRepository repository;
+    private ClientRepository repository;
 
     @BeforeAll
     public static void init() {

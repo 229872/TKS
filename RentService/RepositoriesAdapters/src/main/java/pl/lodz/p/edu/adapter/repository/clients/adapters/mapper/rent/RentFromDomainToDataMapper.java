@@ -6,7 +6,7 @@ import pl.lodz.p.edu.adapter.repository.clients.adapters.mapper.user.UserFromDom
 import pl.lodz.p.edu.adapter.repository.clients.data.EquipmentEnt;
 import pl.lodz.p.edu.adapter.repository.clients.data.RentEnt;
 import jakarta.inject.Inject;
-import pl.lodz.p.edu.adapter.repository.clients.data.users.ClientEnt;
+import pl.lodz.p.edu.adapter.repository.clients.data.ClientEnt;
 import pl.lodz.p.edu.core.domain.model.Rent;
 
 @ApplicationScoped

@@ -1,7 +1,6 @@
 package pl.lodz.p.edu.adapter.repository.clients.data;
 
 import lombok.*;
-import pl.lodz.p.edu.adapter.repository.clients.data.users.ClientEnt;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 

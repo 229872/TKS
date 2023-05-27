@@ -7,8 +7,10 @@ import jakarta.transaction.TransactionalException;
 import pl.lodz.p.edu.user.core.domain.usermodel.exception.ConflictException;
 import pl.lodz.p.edu.user.core.domain.usermodel.exception.IllegalModificationException;
 import pl.lodz.p.edu.user.core.domain.usermodel.exception.ObjectNotFoundServiceException;
+import pl.lodz.p.edu.user.core.domain.usermodel.other.ClientEvent;
 import pl.lodz.p.edu.user.core.domain.usermodel.users.*;
 import pl.lodz.p.edu.userports.incoming.UserServicePort;
+import pl.lodz.p.edu.userports.outgoing.RabbitPort;
 import pl.lodz.p.edu.userports.outgoing.UserRepositoryPort;
 
 import java.util.List;
@@ -20,15 +22,24 @@ public class UserServicePortImpl implements UserServicePort {
 
     private final UserRepositoryPort userRepository;
 
+    private final RabbitPort<ClientEvent> rabbitPort;
+
     @Inject
-    public UserServicePortImpl(UserRepositoryPort userRepository) {
+    public UserServicePortImpl(UserRepositoryPort userRepository, RabbitPort<ClientEvent> rabbitPort) {
         this.userRepository = userRepository;
+        this.rabbitPort = rabbitPort;
     }
 
     @Override
     public User registerUser(User user) throws ConflictException {
         try {
-            return userRepository.add(user);
+            User newUser = userRepository.add(user);
+
+            if (newUser instanceof Client client) {
+                rabbitPort.produce(new ClientEvent(client.getFirstName(), client.getLastName()));
+            }
+            return newUser;
+
         } catch(PersistenceException | TransactionalException e) {
             throw new ConflictException("Already exists user with given login"); //FIXME throw no login if rly no login
         }
@@ -114,5 +125,11 @@ public class UserServicePortImpl implements UserServicePort {
             user.setActive(false);
             userRepository.update(user);
         }
+    }
+
+    @Override
+    public void deleteUser(UUID entityId) throws ObjectNotFoundServiceException {
+        User user = userRepository.get(entityId);
+        userRepository.remove(user);
     }
 }

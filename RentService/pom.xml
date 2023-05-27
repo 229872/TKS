@@ -23,6 +23,7 @@
         <module>RestControllersAdapters</module>
         <module>SoapControllersAdapters</module>
         <module>Merge</module>
+        <module>RentRabbitMqAdapters</module>
     </modules>
 
     <build>

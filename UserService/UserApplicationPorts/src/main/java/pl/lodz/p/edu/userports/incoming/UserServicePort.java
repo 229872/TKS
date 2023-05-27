@@ -17,6 +17,8 @@ public interface UserServicePort {
 
     void deactivateUser(UUID entityId) throws ObjectNotFoundServiceException;
 
+    void deleteUser(UUID entityId) throws ObjectNotFoundServiceException;
+
     User registerUser(User user) throws ConflictException;
 
     Employee updateEmployee(UUID entityId, Employee employee) throws IllegalModificationException, ObjectNotFoundServiceException;

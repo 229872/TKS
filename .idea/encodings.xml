@@ -13,6 +13,8 @@
     <file url="file://$PROJECT_DIR$/RentService/Merge/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/RentService/RabbitMqAdapter/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/RentService/RabbitMqAdapter/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/RentService/RentRabbitMqAdapters/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/RentService/RentRabbitMqAdapters/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/RentService/RepositoriesAdapters/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/RentService/RepositoriesAdapters/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/RentService/RestControllersAdapters/src/main/java" charset="UTF-8" />

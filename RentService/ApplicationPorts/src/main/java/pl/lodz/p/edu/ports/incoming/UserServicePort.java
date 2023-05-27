@@ -1,6 +1,7 @@
 package pl.lodz.p.edu.ports.incoming;
 
 import pl.lodz.p.edu.core.domain.exception.ConflictException;
+import pl.lodz.p.edu.core.domain.exception.IllegalDateException;
 import pl.lodz.p.edu.core.domain.exception.IllegalModificationException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.core.domain.model.Client;
@@ -15,7 +16,7 @@ public interface UserServicePort {
 
     Client get(UUID uuid) throws ObjectNotFoundServiceException;
 
-    Client registerUser(Client user) throws ConflictException;
+    Client registerUser(Client user) throws IllegalDateException;
 
     Client updateClient(UUID entityId, Client client) throws IllegalModificationException, ObjectNotFoundServiceException;
 }

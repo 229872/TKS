@@ -38,7 +38,7 @@ services:
       - RABBITMQ_DEFAULT_USER=nbd
       - RABBITMQ_DEFAULT_PASS=nbdpassword
     ports:
-      # communication
+      # comm
       - '5672:5672'
       # browser UI
       - '15672:15672'

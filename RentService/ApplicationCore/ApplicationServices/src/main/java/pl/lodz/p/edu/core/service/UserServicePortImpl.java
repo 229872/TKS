@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceException;
 import jakarta.transaction.TransactionalException;
 import pl.lodz.p.edu.core.domain.exception.ConflictException;
+import pl.lodz.p.edu.core.domain.exception.IllegalDateException;
 import pl.lodz.p.edu.core.domain.exception.IllegalModificationException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.core.domain.model.Client;
@@ -24,11 +25,11 @@ public class UserServicePortImpl implements UserServicePort {
     }
 
     @Override
-    public Client registerUser(Client user) throws ConflictException {
+    public Client registerUser(Client user) throws IllegalDateException {
         try {
             return clientRepository.add(user);
         } catch(PersistenceException | TransactionalException e) {
-            throw new ConflictException("Already exists user with given login"); //FIXME throw no login if rly no login
+            throw new IllegalDateException(e.getMessage());
         }
     }
 

@@ -1,12 +1,10 @@
 package pl.lodz.p.edu.adapter.repository.clients.api;
 
-import pl.lodz.p.edu.adapter.repository.clients.data.users.UserEnt;
-import pl.lodz.p.edu.adapter.repository.clients.exception.EntityNotFoundRepositoryException;
+import pl.lodz.p.edu.adapter.repository.clients.data.users.ClientEnt;
 
-
-public interface UserRepository extends Repository<UserEnt> {
+// fixme refactor to ClientRepository
+public interface UserRepository extends Repository<ClientEnt> {
 
     @Override
-    UserEnt update(UserEnt elem);
-    UserEnt getByLogin(String login) throws EntityNotFoundRepositoryException;
+    ClientEnt update(ClientEnt elem);
 }

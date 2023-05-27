@@ -6,9 +6,9 @@ import jakarta.persistence.NoResultException;
 import pl.lodz.p.edu.core.domain.exception.BusinessLogicInterruptException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotValidException;
+import pl.lodz.p.edu.core.domain.model.Client;
 import pl.lodz.p.edu.core.domain.model.Equipment;
 import pl.lodz.p.edu.core.domain.model.Rent;
-import pl.lodz.p.edu.core.domain.model.users.Client;
 import pl.lodz.p.edu.ports.incoming.RentServicePort;
 import pl.lodz.p.edu.ports.outgoing.EquipmentRepositoryPort;
 import pl.lodz.p.edu.ports.outgoing.RentRepositoryPort;
@@ -89,7 +89,7 @@ public class RentServiceImpl implements RentServicePort {
         Rent rentDB = rentRepository.get(uuid);
 
         synchronized (userRepository) {
-            Client clientDB = (Client) userRepository.get(rent.getClient().getEntityId());
+            Client clientDB = userRepository.get(rent.getClient().getEntityId());
             synchronized (equipmentRepository) {
                 Equipment equipmentDB = equipmentRepository.get(rent.getEquipment().getEntityId());
                 boolean available = this.checkEquipmentAvailable(equipmentDB, rent.getBeginTime());

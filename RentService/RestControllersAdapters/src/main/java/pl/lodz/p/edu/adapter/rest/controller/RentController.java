@@ -12,7 +12,6 @@ import pl.lodz.p.edu.adapter.rest.api.EquipmentService;
 import pl.lodz.p.edu.adapter.rest.dto.input.RentInputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.output.EquipmentOutputDTO;
 import pl.lodz.p.edu.adapter.rest.dto.output.RentOutputDTO;
-import pl.lodz.p.edu.adapter.rest.dto.output.users.ClientOutputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestBusinessLogicInterruptException;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalDateException;

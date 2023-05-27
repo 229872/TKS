@@ -3,7 +3,6 @@ package pl.lodz.p.edu.adapter.rest.adapter;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import pl.lodz.p.edu.adapter.rest.adapter.mapper.equipment.EquipmentFromDTOToDomainMapper;
-import pl.lodz.p.edu.adapter.rest.adapter.mapper.user.UserFromDTOToDomainMapper;
 import pl.lodz.p.edu.adapter.rest.adapter.mapper.rent.RentFromDTOToDomainMapper;
 import pl.lodz.p.edu.adapter.rest.adapter.mapper.rent.RentFromDomainToDTOMapper;
 import pl.lodz.p.edu.adapter.rest.api.RentService;
@@ -17,8 +16,8 @@ import pl.lodz.p.edu.adapter.rest.exception.RestObjectNotValidException;
 import pl.lodz.p.edu.core.domain.exception.BusinessLogicInterruptException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotValidException;
+import pl.lodz.p.edu.core.domain.model.Client;
 import pl.lodz.p.edu.core.domain.model.Equipment;
-import pl.lodz.p.edu.core.domain.model.users.*;
 import pl.lodz.p.edu.core.domain.model.Rent;
 import pl.lodz.p.edu.ports.incoming.EquipmentServicePort;
 import pl.lodz.p.edu.ports.incoming.RentServicePort;
@@ -50,14 +49,11 @@ public class RentRestControllerAdapter implements RentService {
     @Inject
     private EquipmentFromDTOToDomainMapper equipmentToDomainMapper;
 
-    @Inject
-    private UserFromDTOToDomainMapper userToDomainMapper;
-
     @Override
     public RentOutputDTO add(RentInputDTO rentInputDTO) throws RestObjectNotValidException,
             ObjectNotFoundRestException, RestIllegalDateException, RestBusinessLogicInterruptException {
         try {
-            Client client = (Client) userServicePort.get(rentInputDTO.getClientUUIDFromString());
+            Client client = userServicePort.get(rentInputDTO.getClientUUIDFromString());
             Equipment equipment = equipmentServicePort.get(rentInputDTO.getEquipmentUUIDFromString());
 
             Rent rent = convertToDomainModel(rentInputDTO, equipment, client);

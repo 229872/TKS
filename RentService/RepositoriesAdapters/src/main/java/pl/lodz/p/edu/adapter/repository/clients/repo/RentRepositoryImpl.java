@@ -47,9 +47,7 @@ public class RentRepositoryImpl implements RentRepository {
 
     @Override
     public RentEnt add(RentEnt elem) {
-
-        //FIXME Worst piece of code in an existence
-        ClientEnt clientEnt = (ClientEnt) em.createNamedQuery(UserEnt.FIND_BY_ID, UserEnt.class)
+        ClientEnt clientEnt = em.createNamedQuery(ClientEnt.FIND_BY_ID, ClientEnt.class)
                 .setParameter("id", elem.getClientEnt().getEntityId())
                 .getSingleResult();
 

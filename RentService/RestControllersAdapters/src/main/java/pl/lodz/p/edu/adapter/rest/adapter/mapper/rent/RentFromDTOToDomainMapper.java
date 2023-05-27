@@ -4,9 +4,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 import pl.lodz.p.edu.adapter.rest.dto.input.RentInputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalDateException;
 import pl.lodz.p.edu.adapter.rest.exception.RestObjectNotValidException;
+import pl.lodz.p.edu.core.domain.model.Client;
 import pl.lodz.p.edu.core.domain.model.Equipment;
 import pl.lodz.p.edu.core.domain.model.Rent;
-import pl.lodz.p.edu.core.domain.model.users.Client;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;

@@ -31,6 +31,17 @@ services:
       - 5554:5432
     volumes:
       - pgTest:/var/lib/postgresql/data
+
+#  rabbit:
+#    image: 'bitnami/rabbitmq:latest'
+#    environment:
+#      - RABBITMQ_DEFAULT_USER=nbd
+#      - RABBITMQ_DEFAULT_PASS=nbdpassword
+#    ports:
+#      # communication
+#      - '5672:5672'
+#      # browser UI
+#      - '15672:15672'
 volumes:
   pg:
   pg2:

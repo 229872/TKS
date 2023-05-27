@@ -15,14 +15,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UserRepositoryImplTest {
 
-    private static UserEnt user;
+    private static ClientEnt user;
     @Inject
     private UserRepository repository;
 
     @BeforeAll
     public static void init() {
-        user = new ClientEnt("lubieplacki123", "plackilubie321",
-                "Tommy", "Wiseau");
+        user = new ClientEnt("lubieplacki123", "plackilubie321");
     }
 
     @Test
@@ -60,10 +59,10 @@ class UserRepositoryImplTest {
     @Order(4)
     void shouldUpdateUser() throws EntityNotFoundRepositoryException {
         String newName = "Maciek";
-        ((ClientEnt) user).setFirstName(newName);
+        user.setFirstName(newName);
         assertDoesNotThrow(() -> repository.update(user));
-        UserEnt updatedUser = repository.get(user.getEntityId());
-        assertEquals(newName, ((ClientEnt) updatedUser).getFirstName());
+        ClientEnt updatedUser = repository.get(user.getEntityId());
+        assertEquals(newName, (updatedUser).getFirstName());
     }
 
     @Test
@@ -71,7 +70,7 @@ class UserRepositoryImplTest {
     void shouldDeleteUser() throws EntityNotFoundRepositoryException {
         int size = repository.getAll().size();
 
-        UserEnt userEnt = repository.get(user.getEntityId());
+        ClientEnt userEnt = repository.get(user.getEntityId());
         repository.remove(userEnt);
         assertEquals(size - 1, repository.getAll().size());
     }

@@ -1,6 +1,7 @@
 package pl.lodz.p.edu.adapter.repository.clients.data;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Setter;
 
@@ -19,6 +20,9 @@ public abstract class AbstractEntity implements Serializable {
     @Version
     private long version;
 
-    protected AbstractEntity(){};
+    protected AbstractEntity(){}
 
+    public AbstractEntity(UUID entityId) {
+        this.entityId = entityId;
+    }
 }

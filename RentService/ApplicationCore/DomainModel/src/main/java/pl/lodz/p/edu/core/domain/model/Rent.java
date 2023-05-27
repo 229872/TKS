@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotValidException;
-import pl.lodz.p.edu.core.domain.model.users.Client;
 
 @Getter
 @Setter

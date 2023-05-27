@@ -7,111 +7,52 @@ import jakarta.transaction.TransactionalException;
 import pl.lodz.p.edu.core.domain.exception.ConflictException;
 import pl.lodz.p.edu.core.domain.exception.IllegalModificationException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
-import pl.lodz.p.edu.core.domain.model.users.*;
+import pl.lodz.p.edu.core.domain.model.Client;
 import pl.lodz.p.edu.ports.incoming.UserServicePort;
 import pl.lodz.p.edu.ports.outgoing.UserRepositoryPort;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class UserServicePortImpl implements UserServicePort {
 
-    private final UserRepositoryPort userRepository;
+    private final UserRepositoryPort clientRepository;
 
     @Inject
-    public UserServicePortImpl(UserRepositoryPort userRepository) {
-        this.userRepository = userRepository;
+    public UserServicePortImpl(UserRepositoryPort clientRepository) {
+        this.clientRepository = clientRepository;
     }
 
     @Override
-    public User registerUser(User user) throws ConflictException {
+    public Client registerUser(Client user) throws ConflictException {
         try {
-            return userRepository.add(user);
+            return clientRepository.add(user);
         } catch(PersistenceException | TransactionalException e) {
             throw new ConflictException("Already exists user with given login"); //FIXME throw no login if rly no login
         }
     }
 
     @Override
-    public List<User> getAllUsersOfType(UserType type) {
-        return userRepository.getAll().stream()
-                .filter(user -> user.getUserType().equals(type))
-                .collect(Collectors.toList());
+    public List<Client> getAll() {
+        return clientRepository.getAll();
     }
 
     @Override
-    public List<User> getAll() {
-        return userRepository.getAll();
-    }
-
-    @Override
-    public User get(UUID uuid) throws ObjectNotFoundServiceException {
-        return userRepository.get(uuid);
-    }
-
-    @Override
-    public User get(String login) throws ObjectNotFoundServiceException {
-        return userRepository.getByLogin(login);
+    public Client get(UUID uuid) throws ObjectNotFoundServiceException {
+        return clientRepository.get(uuid);
     }
 
     @Override
     public Client updateClient(UUID entityId, Client client) throws IllegalModificationException,
             ObjectNotFoundServiceException {
         try {
-            Client clientDB = (Client) userRepository.get(entityId);
+            Client clientDB = clientRepository.get(entityId);
             clientDB.update(client);
-            return (Client) userRepository.update(clientDB);
+            return clientRepository.update(clientDB);
         } catch (ClassCastException e) {
             throw new ObjectNotFoundServiceException("User not found");
         } catch(PersistenceException e) {
             throw new IllegalModificationException("Cannot modify clients login");
-        }
-    }
-
-    @Override
-    public Admin updateAdmin(UUID entityId, Admin admin) throws IllegalModificationException, ObjectNotFoundServiceException {
-        try {
-            Admin adminDB = (Admin) userRepository.get(entityId);
-            adminDB.update(admin);
-            return (Admin) userRepository.update(adminDB);
-
-        } catch (ClassCastException e) {
-            throw new ObjectNotFoundServiceException("User not found");
-        } catch(PersistenceException e) {
-            throw new IllegalModificationException(e.getMessage());
-        }
-    }
-
-    @Override
-    public Employee updateEmployee(UUID entityId, Employee employee) throws IllegalModificationException,
-            ObjectNotFoundServiceException {
-        try {
-            Employee employeeDB = (Employee) userRepository.get(entityId);
-            employeeDB.update(employee);
-            return (Employee) userRepository.update(employeeDB);
-        } catch (ClassCastException e) {
-            throw new ObjectNotFoundServiceException("User not found");
-        } catch(PersistenceException e) {
-            throw new IllegalModificationException("Cannot modify clients login");
-        }
-    }
-
-    @Override
-    public void activateUser(UUID entityId) throws ObjectNotFoundServiceException {
-        synchronized (userRepository) {
-            User user = userRepository.get(entityId);
-            user.setActive(true);
-            userRepository.update(user);
-        }
-    }
-
-    @Override
-    public void deactivateUser(UUID entityId) throws ObjectNotFoundServiceException {
-        synchronized (userRepository) {
-            User user = userRepository.get(entityId);
-            user.setActive(false);
-            userRepository.update(user);
         }
     }
 }

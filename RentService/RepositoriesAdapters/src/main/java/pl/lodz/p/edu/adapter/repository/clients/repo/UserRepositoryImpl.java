@@ -3,6 +3,7 @@ package pl.lodz.p.edu.adapter.repository.clients.repo;
 import jakarta.enterprise.context.ApplicationScoped;
 import lombok.NoArgsConstructor;
 import pl.lodz.p.edu.adapter.repository.clients.api.UserRepository;
+import pl.lodz.p.edu.adapter.repository.clients.data.users.ClientEnt;
 import pl.lodz.p.edu.adapter.repository.clients.data.users.UserEnt;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
@@ -20,9 +21,9 @@ public class UserRepositoryImpl implements UserRepository {
     private EntityManager em;
 
     @Override
-    public UserEnt get(UUID entityId) throws EntityNotFoundRepositoryException {
+    public ClientEnt get(UUID entityId) throws EntityNotFoundRepositoryException {
         try {
-            return em.createNamedQuery(UserEnt.FIND_BY_ID, UserEnt.class)
+            return em.createNamedQuery(ClientEnt.FIND_BY_ID, ClientEnt.class)
                     .setParameter("id", entityId)
                     .getSingleResult();
 
@@ -32,38 +33,26 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<UserEnt> getAll()  {
-        return em.createNamedQuery(UserEnt.FIND_ALL, UserEnt.class)
+    public List<ClientEnt> getAll()  {
+        return em.createNamedQuery(ClientEnt.FIND_ALL, ClientEnt.class)
                 .getResultList();
     }
 
 
     @Override
-    public UserEnt add(UserEnt elem) {
+    public ClientEnt add(ClientEnt elem) {
         em.persist(elem);
         return elem;
     }
 
     @Override
-    public void remove(UserEnt entity) {
+    public void remove(ClientEnt entity) {
        em.remove(em.merge(entity));
     }
 
     @Override
-    public UserEnt update(UserEnt elem) {
+    public ClientEnt update(ClientEnt elem) {
         em.lock(em.merge(elem), LockModeType.OPTIMISTIC_FORCE_INCREMENT);
         return em.merge(elem);
-    }
-
-    @Override
-    public UserEnt getByLogin(String login) throws EntityNotFoundRepositoryException {
-        try {
-            return em.createNamedQuery(UserEnt.FIND_BY_LOGIN, UserEnt.class)
-                    .setParameter("login", login)
-                    .getSingleResult();
-
-        } catch (PersistenceException e) {
-            throw new EntityNotFoundRepositoryException(e.getMessage(), e.getCause());
-        }
     }
 }

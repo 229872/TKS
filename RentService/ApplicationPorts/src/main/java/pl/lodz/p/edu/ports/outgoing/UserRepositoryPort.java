@@ -1,10 +1,18 @@
 package pl.lodz.p.edu.ports.outgoing;
 
 import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
-import pl.lodz.p.edu.core.domain.model.users.User;
+import pl.lodz.p.edu.core.domain.model.Client;
 
-public interface UserRepositoryPort extends RepositoryPort<User> {
-    @Override
-    User update(User object);
-    User getByLogin(String userLogin) throws ObjectNotFoundServiceException;
+import java.util.List;
+import java.util.UUID;
+
+public interface UserRepositoryPort {
+
+    Client get(UUID objectId) throws ObjectNotFoundServiceException;
+
+    List<Client> getAll();
+
+    Client add(Client object);
+
+    Client update(Client object);
 }

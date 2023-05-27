@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class RentRepositoryImplTest {
 
-    private static UserEnt user;
+    private static ClientEnt user;
     private static EquipmentEnt equipment;
 
     private static RentEnt rent;
@@ -42,8 +42,7 @@ public class RentRepositoryImplTest {
 
     @BeforeAll
     public static void init() {
-        user = new ClientEnt("nielubie", "plackilubie321",
-                "Tommy", "Wiseau");
+        user = new ClientEnt("nielubie", "plackilubie321");
         equipment = new EquipmentEnt("chair11", 30.0, 10.0, 15.0, "red chair");
     }
 
@@ -52,7 +51,7 @@ public class RentRepositoryImplTest {
     void shouldAddToRepository() {
         equipmentRepository.add(equipment);
         userRepository.add(user);
-        rent = new RentEnt(equipment, (ClientEnt) user, nowPlusYear, nowPlusTwoYears);
+        rent = new RentEnt(equipment, user, nowPlusYear, nowPlusTwoYears);
 
         assertEquals(0, rentRepository.getAll().size());
         rentRepository.add(rent);

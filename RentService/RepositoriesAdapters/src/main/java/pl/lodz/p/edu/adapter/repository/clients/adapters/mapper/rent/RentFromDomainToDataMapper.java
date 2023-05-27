@@ -21,7 +21,7 @@ public class RentFromDomainToDataMapper {
     public RentEnt convertToDataModel(Rent rent) {
         RentEnt rentEntR = new RentEnt(
                 equipmentToDataMapper.convertToDataModel(rent.getEquipment()),
-                userToDataMapper.convertClientToDataModelALL(rent.getClient()),
+                userToDataMapper.convertClientToDataModelCreate(rent.getClient()),
                 rent.getBeginTime(),
                 rent.getEndTime()
         );

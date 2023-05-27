@@ -5,7 +5,6 @@ import pl.lodz.p.edu.adapter.rest.dto.output.EquipmentOutputDTO;
 import pl.lodz.p.edu.adapter.rest.exception.ObjectNotFoundRestException;
 import pl.lodz.p.edu.adapter.rest.exception.RestConflictException;
 import pl.lodz.p.edu.adapter.rest.exception.RestIllegalModificationException;
-
 import java.util.List;
 import java.util.UUID;
 

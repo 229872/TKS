@@ -23,13 +23,13 @@ import java.util.logging.Level;
 @ApplicationScoped
 @Log
 public class ClientCreatedConsumer {
-
     @Inject
+    @ProducerRent
     private Channel channel;
 
     @PostConstruct
     public void showState() {
-        log.log(Level.INFO, "ClientCreatedConsumer created");
+        log.log(Level.INFO, "ClientCreatedConsumer created ------------------------------------------");
     }
 
     @Inject
@@ -47,6 +47,7 @@ public class ClientCreatedConsumer {
             log.warning("Error during initializing consumer, connection is not established");
             return;
         }
+        log.info("Init consumer method");
 
         try {
             channel.queueDeclare(queueName, true, false, false, null);
@@ -57,7 +58,7 @@ public class ClientCreatedConsumer {
         }
     }
 
-    public void deliverCallback(String consumerTag, Delivery delivery) {
+    void deliverCallback(String consumerTag, Delivery delivery) {
         log.info("begin delivery");
         String message = new String(delivery.getBody(), StandardCharsets.UTF_8);
         log.info("rabbitmq message clientCreated got. Body: '" + message + "'");

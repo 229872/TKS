@@ -9,6 +9,7 @@ import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import lombok.extern.java.Log;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import pl.lodz.p.edu.ProducerUser;
 import pl.lodz.p.edu.api.MqProducer;
 import pl.lodz.p.edu.ClientCreatedEvent;
 
@@ -19,6 +20,7 @@ import java.io.IOException;
 public class ClientCreatedProducer implements MqProducer<ClientCreatedEvent> {
 
     @Inject
+    @ProducerUser
     private Channel channel;
 
     @Inject

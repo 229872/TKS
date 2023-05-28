@@ -19,6 +19,7 @@ import java.io.IOException;
 public class ClientRollbackProducer {
 
     @Inject
+    @ProducerRent
     private Channel channel;
 
     @Inject

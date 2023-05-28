@@ -26,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 public class ClientUpdatedConsumer {
 
     @Inject
+    @ProducerRent
     private Channel channel;
 
     @Inject

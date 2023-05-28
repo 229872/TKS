@@ -36,6 +36,7 @@ public class RabbitMqConfig {
     private String password;
 
     @Produces
+    @ProducerUser
     public Channel createChannel() throws IOException {
         if (connection == null) {
             throw new IOException("Cannot get channel. Connection with RabbitMQ is not established");

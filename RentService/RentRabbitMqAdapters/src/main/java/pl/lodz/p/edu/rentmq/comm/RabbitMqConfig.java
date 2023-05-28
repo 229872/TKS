@@ -1,4 +1,4 @@
-package pl.lodz.p.edu;
+package pl.lodz.p.edu.rentmq.comm;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -36,6 +36,7 @@ public class RabbitMqConfig {
     private String password;
 
     @Produces
+    @ProducerRent
     public Channel createChannel() throws IOException {
         if (connection == null) {
             throw new IOException("Cannot get channel. Connection with RabbitMQ is not established");

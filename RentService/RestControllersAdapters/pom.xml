@@ -112,6 +112,12 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>pl.lodz.p.edu</groupId>
+            <artifactId>RentRabbitMqAdapters</artifactId>
+        </dependency>
+
 <!--        <dependency>-->
 <!--            <groupId>pl.lodz.p.edu</groupId>-->
 <!--            <artifactId>SoapControllersAdapters</artifactId>-->
@@ -130,10 +136,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>fish.payara.maven.plugins</groupId>
-                <artifactId>payara-micro-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

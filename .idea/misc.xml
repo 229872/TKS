@@ -28,6 +28,7 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/HealthcheckService/pom.xml" />
         <option value="$PROJECT_DIR$/RentService/RabbitMqAdapter/pom.xml" />
         <option value="$PROJECT_DIR$/module/pom.xml" />
       </set>

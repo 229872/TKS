@@ -2,6 +2,7 @@ package pl.lodz.p.edu.adapter.rest.users.security;
 
 import io.jsonwebtoken.*;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import pl.lodz.p.edu.userports.outgoing.SecurityPort;
 
@@ -10,9 +11,11 @@ import java.util.Date;
 @ApplicationScoped
 public class JwtUtils implements SecurityPort {
 
+    @Inject
     @ConfigProperty(name = "token_expiration_time")
     private int exp_time;
 
+    @Inject
     @ConfigProperty(name = "token_secret")
     private String secret;
 

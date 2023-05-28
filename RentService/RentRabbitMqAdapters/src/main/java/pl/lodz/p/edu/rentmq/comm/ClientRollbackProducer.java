@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.comm;
+package pl.lodz.p.edu.rentmq.comm;
 
 import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
@@ -10,8 +10,7 @@ import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import lombok.extern.java.Log;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import pl.lodz.p.edu.event.ClientRollbackBaseEvent;
-import pl.lodz.p.edu.event.ClientRollbackEvent;
+import pl.lodz.p.edu.rentmq.event.ClientRollbackBaseEvent;
 
 import java.io.IOException;
 

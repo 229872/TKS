@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.comm;
+package pl.lodz.p.edu.rentmq.comm;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

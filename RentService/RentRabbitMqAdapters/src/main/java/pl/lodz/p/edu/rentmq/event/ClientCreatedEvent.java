@@ -1,17 +1,21 @@
-package pl.lodz.p.edu.event;
+package pl.lodz.p.edu.rentmq.event;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClientRollbackEvent extends ClientRollbackBaseEvent{
+public class ClientCreatedEvent {
 
     @NotBlank
     private String login;
+
+    @NotBlank
+    private String firstName;
+
+    @NotBlank
+    private String lastName;
 }

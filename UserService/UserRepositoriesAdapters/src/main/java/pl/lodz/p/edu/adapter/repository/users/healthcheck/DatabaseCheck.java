@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.adapter.repository.clients.healthcheck;
+package pl.lodz.p.edu.adapter.repository.users.healthcheck;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
@@ -8,18 +8,17 @@ import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.HealthCheckResponseBuilder;
 import org.eclipse.microprofile.health.Liveness;
 
-
 @Liveness
 @ApplicationScoped
 public class DatabaseCheck implements HealthCheck {
 
-    @PersistenceContext(name = "app")
+    @PersistenceContext(name = "app2")
     private EntityManager em;
 
 
     @Override
     public HealthCheckResponse call() {
-        HealthCheckResponseBuilder responseBuilder = HealthCheckResponse.named("database-rent");
+        HealthCheckResponseBuilder responseBuilder = HealthCheckResponse.named("database-user");
         try {
             if(em.isOpen()) {
                 responseBuilder.withData("connection-open", true).up();

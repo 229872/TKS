@@ -1,10 +1,14 @@
 package pl.lodz.p.edu.adapter.rest.controller;
 
+import jakarta.ejb.Stateless;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.metrics.MetricUnits;
+import org.eclipse.microprofile.metrics.annotation.Timed;
 import pl.lodz.p.edu.adapter.rest.api.EquipmentService;
 import pl.lodz.p.edu.adapter.rest.api.RentService;
 import pl.lodz.p.edu.adapter.rest.dto.input.EquipmentInputDTO;
@@ -20,6 +24,7 @@ import java.util.UUID;
 import static jakarta.ws.rs.core.Response.Status.*;
 
 @Path("/equipment")
+@Stateless
 public class EquipmentController {
 
     @Inject
@@ -51,6 +56,11 @@ public class EquipmentController {
     @GET
     @Path("/available")
     @Produces(MediaType.APPLICATION_JSON)
+    @Timed(
+            name = "getAvailableEquipment",
+            absolute = true,
+            unit = MetricUnits.MINUTES
+    )
     public Response getAllAvailable() {
         List<EquipmentOutputDTO> allEquipment = equipmentService.getAll();
         List<EquipmentOutputDTO> availableEquipment = allEquipment.stream()

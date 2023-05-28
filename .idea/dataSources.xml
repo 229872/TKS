@@ -8,11 +8,11 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/nbddb</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="nbddb@localhost [2]" uuid="04c1603a-8074-42fa-be6c-ce9ae397a107">
+    <data-source source="LOCAL" name="postgres@localhost" uuid="637c9f5b-4495-41d1-8acc-7905bc4dbb85">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5433/nbddb</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:5432/postgres</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

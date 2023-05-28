@@ -1,5 +1,6 @@
 package pl.lodz.p.edu.adapter.rest.controller;
 
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -14,6 +15,7 @@ import java.util.UUID;
 import static jakarta.ws.rs.core.Response.Status.*;
 
 @Path("/clients")
+@Stateless
 public class ClientController {
 
 

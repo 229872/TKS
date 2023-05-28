@@ -1,20 +1,20 @@
 package pl.lodz.p.edu.core.service;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceException;
 import jakarta.transaction.TransactionalException;
-import pl.lodz.p.edu.core.domain.exception.ConflictException;
 import pl.lodz.p.edu.core.domain.exception.IllegalDateException;
 import pl.lodz.p.edu.core.domain.exception.IllegalModificationException;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.core.domain.model.Client;
 import pl.lodz.p.edu.ports.incoming.UserServicePort;
 import pl.lodz.p.edu.ports.outgoing.UserRepositoryPort;
+
 import java.util.List;
 import java.util.UUID;
 
-@ApplicationScoped
+@Dependent
 public class UserServicePortImpl implements UserServicePort {
 
     private final UserRepositoryPort clientRepository;

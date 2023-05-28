@@ -2,7 +2,7 @@ package pl.lodz.p.edu.comm;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Delivery;
-import jakarta.ejb.Startup;
+import jakarta.enterprise.event.Startup;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
@@ -13,7 +13,6 @@ import lombok.extern.java.Log;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.core.domain.model.Client;
-import pl.lodz.p.edu.event.ClientRollbackEvent;
 import pl.lodz.p.edu.event.ClientRollbackUpdateEvent;
 import pl.lodz.p.edu.event.ClientUpdateEvent;
 import pl.lodz.p.edu.ports.incoming.UserServicePort;
@@ -36,7 +35,7 @@ public class ClientUpdatedConsumer {
     private ClientRollbackProducer producer;
 
     @Inject
-    @ConfigProperty(name = "mq.queue.client.update")
+    @ConfigProperty(name = "mq.queue.client.update", defaultValue = "CLIENT_UPDATE_QUEUE")
     private String queueName;
 
     private void initConsumer(@Observes Startup event) {

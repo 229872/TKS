@@ -2,7 +2,7 @@ package pl.lodz.p.edu.comm;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Delivery;
-import jakarta.ejb.Startup;
+import jakarta.enterprise.event.Startup;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
@@ -25,7 +25,7 @@ public class ClientRollbackConsumer  {
     private Channel channel;
 
     @Inject
-    @ConfigProperty(name = "mq.queue.client.rollback")
+    @ConfigProperty(name = "mq.queue.client.rollback", defaultValue = "CLIENT_ROLLBACK_QUEUE")
     private String queueName;
 
     @Inject

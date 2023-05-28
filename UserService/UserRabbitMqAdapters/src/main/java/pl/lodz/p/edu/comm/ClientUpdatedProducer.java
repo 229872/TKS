@@ -1,7 +1,7 @@
 package pl.lodz.p.edu.comm;
 import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
-import jakarta.ejb.Startup;
+import jakarta.enterprise.event.Startup;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
@@ -23,11 +23,11 @@ public class ClientUpdatedProducer {
     private Channel channel;
 
     @Inject
-    @ConfigProperty(name = "mq.queue.client.update")
+    @ConfigProperty(name = "mq.queue.client.update", defaultValue = "CLIENT_UPDATED_QUEUE")
     private String queueName;
 
     @Inject
-    @ConfigProperty(name = "mq.exchange.client")
+    @ConfigProperty(name = "mq.exchange.client", defaultValue = "CLIENT_EXCHANGE")
     private String exchangeName;
 
     public void produce(ClientUpdateEvent event) {

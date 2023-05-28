@@ -1,7 +1,7 @@
 package pl.lodz.p.edu.comm;
 import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
-import jakarta.ejb.Startup;
+import jakarta.enterprise.event.Startup;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
@@ -22,11 +22,11 @@ public class ClientCreatedProducer implements MqProducer<ClientCreatedEvent> {
     private Channel channel;
 
     @Inject
-    @ConfigProperty(name = "mq.queue.client.create")
+    @ConfigProperty(name = "mq.queue.client.create", defaultValue = "CLIENT_CREATED_QUEUE")
     private String queueName;
 
     @Inject
-    @ConfigProperty(name = "mq.exchange.client")
+    @ConfigProperty(name = "mq.exchange.client", defaultValue = "CLIENT_EXCHANGE")
     private String exchangeName;
 
     public void produce(ClientCreatedEvent event) {
@@ -34,7 +34,6 @@ public class ClientCreatedProducer implements MqProducer<ClientCreatedEvent> {
             log.warning("Error while initializing consumer, connection not established");
             return;
         }
-
         String message;
         try (Jsonb jsonb = JsonbBuilder.create()) {
             message = jsonb.toJson(event);
@@ -44,6 +43,9 @@ public class ClientCreatedProducer implements MqProducer<ClientCreatedEvent> {
         }
 
         try {
+            log.info("rabbitmq publishing message: '"
+                    + message + "' on channel "
+                    + queueName + " with exchange " + exchangeName);
             channel.basicPublish(exchangeName, queueName, null, message.getBytes());
         } catch (IOException e) {
             log.warning("Error while producing message, connection not established");

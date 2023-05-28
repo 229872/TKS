@@ -20,19 +20,19 @@ public class RabbitMqConfig {
     private Connection connection;
 
     @Inject
-    @ConfigProperty(name = "mq.port")
+    @ConfigProperty(name = "mq.user.port", defaultValue = "5672")
     private Integer port;
 
     @Inject
-    @ConfigProperty(name = "mq.host")
+    @ConfigProperty(name = "mq.user.host", defaultValue = "localhost")
     private String host;
 
     @Inject
-    @ConfigProperty(name = "mq.username")
+    @ConfigProperty(name = "mq.user.username", defaultValue = "nbd")
     private String userName;
 
     @Inject
-    @ConfigProperty(name = "mq.password")
+    @ConfigProperty(name = "mq.user.password", defaultValue = "nbdpassword")
     private String password;
 
     @Produces
@@ -40,12 +40,14 @@ public class RabbitMqConfig {
         if (connection == null) {
             throw new IOException("Cannot get channel. Connection with RabbitMQ is not established");
         }
+        log.info("rabbitmq creating channel");
         return connection.createChannel();
     }
 
 
     @PostConstruct
     void afterCreate() {
+        log.info("rabbitmq after create");
         ConnectionFactory connectionFactory = new ConnectionFactory();
         connectionFactory.setHost(host);
         connectionFactory.setPort(port);
@@ -54,6 +56,7 @@ public class RabbitMqConfig {
 
         try {
             connection = connectionFactory.newConnection();
+            log.info("rabbitmq after create success");
         } catch (IOException | TimeoutException e) {
             log.warning("Connection with RabbitMQ could not be established");
         }

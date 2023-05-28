@@ -1,6 +1,7 @@
 package pl.lodz.p.edu.core.userdomain.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceException;
 import jakarta.transaction.TransactionalException;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@ApplicationScoped
+@Dependent
 public class UserServicePortImpl implements UserServicePort {
 
     private final UserRepositoryPort userRepository;

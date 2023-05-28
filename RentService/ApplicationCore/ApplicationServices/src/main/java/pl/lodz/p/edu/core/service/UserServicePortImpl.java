@@ -11,6 +11,7 @@ import pl.lodz.p.edu.core.domain.model.Client;
 import pl.lodz.p.edu.ports.incoming.UserServicePort;
 import pl.lodz.p.edu.ports.outgoing.UserRepositoryPort;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 

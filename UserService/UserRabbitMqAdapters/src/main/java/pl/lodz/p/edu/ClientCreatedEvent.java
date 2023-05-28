@@ -5,7 +5,11 @@ import lombok.*;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ClientCreatedEvent {
+
+    @NotBlank
+    private String login;
 
     @NotBlank
     private String firstName;

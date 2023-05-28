@@ -32,7 +32,7 @@ public class ClientRollbackProducer {
 
     public void produce(ClientRollbackBaseEvent event) {
         if (channel == null) {
-            log.warning("Error while initializing consumer, connection not established");
+            log.warning("ClientRollbackProducer: Error while initializing consumer, connection not established");
             return;
         }
 
@@ -40,7 +40,7 @@ public class ClientRollbackProducer {
         try (Jsonb jsonb = JsonbBuilder.create()) {
             message = jsonb.toJson(event);
         } catch (Exception e) {
-            log.warning("Invalid message format");
+            log.warning("ClientRollbackProducer: Invalid message format");
             return;
         }
 

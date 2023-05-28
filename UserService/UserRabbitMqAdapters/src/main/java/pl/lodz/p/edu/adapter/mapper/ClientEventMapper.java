@@ -9,6 +9,7 @@ public class ClientEventMapper {
 
     public ClientEvent mapToClientEvent(ClientCreatedEvent clientCreatedEvent) {
         return new ClientEvent(
+                clientCreatedEvent.getLogin(),
                 clientCreatedEvent.getFirstName(),
                 clientCreatedEvent.getLastName()
         );
@@ -16,6 +17,7 @@ public class ClientEventMapper {
 
     public ClientCreatedEvent mapToCreatedEvent(ClientEvent clientEvent) {
         return new ClientCreatedEvent(
+                clientEvent.getLogin(),
                 clientEvent.getFirstName(),
                 clientEvent.getLastName()
         );

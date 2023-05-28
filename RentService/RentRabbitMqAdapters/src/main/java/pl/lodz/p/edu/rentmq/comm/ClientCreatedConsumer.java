@@ -74,7 +74,7 @@ public class ClientCreatedConsumer {
             log.warning("Error during creating an User");
             producer.produce(new ClientRollbackEvent(clientCreatedEvent.getLogin()));
         } catch (Exception e) {
-            log.warning("Invalid message format");
+            log.warning("ClientCreatedConsumer: Invalid message format");
             producer.produce(new ClientRollbackEvent(clientCreatedEvent.getLogin()));
         }
     }

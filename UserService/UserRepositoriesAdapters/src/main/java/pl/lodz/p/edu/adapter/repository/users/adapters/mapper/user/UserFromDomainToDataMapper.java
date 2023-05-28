@@ -22,10 +22,12 @@ public class UserFromDomainToDataMapper {
 
     public ClientEnt convertClientToDataModel(Client client) {
         return new ClientEnt(
+                client.getEntityId(),
                 client.getLogin(),
                 client.getPassword(),
                 client.getFirstName(),
                 client.getLastName(),
+                client.isActive(),
                 convertAddressToDataModel(client.getAddress())
         );
     }
@@ -44,16 +46,20 @@ public class UserFromDomainToDataMapper {
 
     public AdminEnt convertAdminToDataModel(Admin admin) {
         return new AdminEnt(
+                admin.getEntityId(),
                 admin.getLogin(),
                 admin.getPassword(),
+                admin.isActive(),
                 admin.getFavouriteIceCream()
         );
     }
 
     public EmployeeEnt convertEmployeeToDataModel(Employee employee) {
         return new EmployeeEnt(
+                employee.getEntityId(),
                 employee.getLogin(),
                 employee.getPassword(),
+                employee.isActive(),
                 employee.getDesk()
         );
     }

@@ -37,7 +37,7 @@ public class UserServicePortImpl implements UserServicePort {
             User newUser = userRepository.add(user);
 
             if (newUser instanceof Client client) {
-                rabbitPort.produce(new ClientEvent(client.getFirstName(), client.getLastName()));
+                rabbitPort.produce(new ClientEvent(client.getLogin(), client.getFirstName(), client.getLastName()));
             }
             return newUser;
 
@@ -132,5 +132,11 @@ public class UserServicePortImpl implements UserServicePort {
     public void deleteUser(UUID entityId) throws ObjectNotFoundServiceException {
         User user = userRepository.get(entityId);
         userRepository.remove(user);
+    }
+
+    @Override
+    public void deleteUser(String login) throws ObjectNotFoundServiceException {
+        User user = userRepository.getByLogin(login);
+         userRepository.remove(user);
     }
 }

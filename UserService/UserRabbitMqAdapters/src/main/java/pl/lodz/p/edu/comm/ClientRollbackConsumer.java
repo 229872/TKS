@@ -50,10 +50,9 @@ public class ClientRollbackConsumer  {
     private void deliverCallback(String consumerTag, Delivery delivery) {
         String message = new String(delivery.getBody(), StandardCharsets.UTF_8);
         ClientRollbackEvent clientRollbackEvent;
-
         try (Jsonb jsonb = JsonbBuilder.create()) {
             clientRollbackEvent = jsonb.fromJson(message, ClientRollbackEvent.class);
-            userServicePort.deleteUser(clientRollbackEvent.getId());
+            userServicePort.deleteUser(clientRollbackEvent.getLogin());
 
         } catch (ObjectNotFoundServiceException ignored) {
             log.warning("Error during deleting an User");

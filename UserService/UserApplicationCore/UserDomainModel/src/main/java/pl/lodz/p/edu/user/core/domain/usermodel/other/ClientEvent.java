@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class ClientEvent {
 
+    private String login;
     private String firstName;
     private String lastName;
 }

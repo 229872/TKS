@@ -1,5 +1,6 @@
 package pl.lodz.p.edu.adapter.rest.controller;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.Stateless;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -68,6 +69,7 @@ public class RentController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/client/{uuid}")
+    @RolesAllowed("ADMIN")
     public Response getClientRents(@PathParam("uuid") UUID clientUuid) {
         try {
             userService.get(clientUuid);

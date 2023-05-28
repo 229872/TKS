@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.adapter.rest.users.security;
+package pl.lodz.p.edu.adapter.rest.security;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -8,10 +8,7 @@ import jakarta.security.enterprise.authentication.mechanism.http.HttpAuthenticat
 import jakarta.security.enterprise.authentication.mechanism.http.HttpMessageContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import pl.lodz.p.edu.user.core.domain.usermodel.exception.ObjectNotFoundServiceException;
-import pl.lodz.p.edu.user.core.domain.usermodel.users.User;
-import pl.lodz.p.edu.userports.outgoing.SecurityPort;
-import pl.lodz.p.edu.userports.outgoing.UserRepositoryPort;
+import pl.lodz.p.edu.ports.outgoing.SecurityPort;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -22,8 +19,6 @@ public class AuthMechanism implements HttpAuthenticationMechanism {
     @Inject
     private SecurityPort securityPort;
 
-    @Inject
-    private UserRepositoryPort userRepositoryPort;
 
     @Override
     public AuthenticationStatus validateRequest(HttpServletRequest request,
@@ -41,10 +36,9 @@ public class AuthMechanism implements HttpAuthenticationMechanism {
                 throw new AuthenticationException();
             }
             String subject = securityPort.getSubject(token);
-            User user = userRepositoryPort.getByLogin(subject);
-            return context.notifyContainerAboutLogin(user.getLogin(),
+            return context.notifyContainerAboutLogin(subject,
                     new HashSet<>(Collections.singleton(securityPort.getRole(token))));
-        } catch (AuthenticationException | ObjectNotFoundServiceException e) {
+        } catch (AuthenticationException e) {
             return context.notifyContainerAboutLogin("anonymous", new HashSet<>(Collections.singleton("ANONYMOUS")));
         }
     }

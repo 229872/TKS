@@ -1,10 +1,10 @@
-package pl.lodz.p.edu.adapter.rest.users.security;
+package pl.lodz.p.edu.adapter.rest.security;
 
 import io.jsonwebtoken.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import pl.lodz.p.edu.userports.outgoing.SecurityPort;
+import pl.lodz.p.edu.ports.outgoing.SecurityPort;
 
 import java.util.Date;
 

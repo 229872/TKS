@@ -9,6 +9,7 @@ public class UserFromDataToDomainMapper {
     public Client convertClientToDomainModel(ClientEnt clientEnt) {
         return new Client(
                 clientEnt.getEntityId(),
+                clientEnt.getLogin(),
                 clientEnt.getFirstName(),
                 clientEnt.getLastName()
         );

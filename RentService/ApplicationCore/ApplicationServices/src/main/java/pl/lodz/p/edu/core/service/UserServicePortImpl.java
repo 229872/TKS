@@ -11,7 +11,6 @@ import pl.lodz.p.edu.core.domain.model.Client;
 import pl.lodz.p.edu.ports.incoming.UserServicePort;
 import pl.lodz.p.edu.ports.outgoing.UserRepositoryPort;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,6 +49,20 @@ public class UserServicePortImpl implements UserServicePort {
         try {
             Client clientDB = clientRepository.get(entityId);
             clientDB.update(client);
+            return clientRepository.update(clientDB);
+        } catch (ClassCastException e) {
+            throw new ObjectNotFoundServiceException("User not found");
+        } catch(PersistenceException e) {
+            throw new IllegalModificationException("Cannot modify clients login");
+        }
+    }
+
+    @Override
+    public Client updateClient(String login, String name, String lastName)
+            throws IllegalModificationException, ObjectNotFoundServiceException {
+        try {
+            Client clientDB = clientRepository.getByLogin(login);
+            clientDB.update(name, lastName);
             return clientRepository.update(clientDB);
         } catch (ClassCastException e) {
             throw new ObjectNotFoundServiceException("User not found");

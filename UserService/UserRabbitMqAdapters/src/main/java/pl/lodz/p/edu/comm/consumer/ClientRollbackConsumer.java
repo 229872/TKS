@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.comm;
+package pl.lodz.p.edu.comm.consumer;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Delivery;
@@ -10,7 +10,7 @@ import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import lombok.extern.java.Log;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import pl.lodz.p.edu.ClientRollbackEvent;
+import pl.lodz.p.edu.data.ClientRollbackEvent;
 import pl.lodz.p.edu.ProducerUser;
 import pl.lodz.p.edu.user.core.domain.usermodel.exception.ObjectNotFoundServiceException;
 import pl.lodz.p.edu.userports.incoming.UserServicePort;

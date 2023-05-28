@@ -19,4 +19,6 @@ public interface UserServicePort {
     Client registerUser(Client user) throws IllegalDateException;
 
     Client updateClient(UUID entityId, Client client) throws IllegalModificationException, ObjectNotFoundServiceException;
+
+    Client updateClient(String login, String name, String lastName) throws IllegalModificationException, ObjectNotFoundServiceException;
 }

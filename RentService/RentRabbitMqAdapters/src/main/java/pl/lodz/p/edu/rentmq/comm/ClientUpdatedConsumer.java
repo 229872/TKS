@@ -12,9 +12,9 @@ import lombok.Getter;
 import lombok.extern.java.Log;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import pl.lodz.p.edu.core.domain.exception.ObjectNotFoundServiceException;
-import pl.lodz.p.edu.core.domain.model.Client;
+import pl.lodz.p.edu.core.domain.other.Backup;
 import pl.lodz.p.edu.rentmq.event.ClientRollbackUpdateEvent;
-import pl.lodz.p.edu.rentmq.event.ClientUpdateEvent;
+import pl.lodz.p.edu.core.domain.other.ClientUpdateEvent;
 import pl.lodz.p.edu.ports.incoming.UserServicePort;
 
 import java.io.IOException;
@@ -61,16 +61,19 @@ public class ClientUpdatedConsumer {
         try (Jsonb jsonb = JsonbBuilder.create()) {
             clientUpdateEvent = jsonb.fromJson(message, ClientUpdateEvent.class);
 
-            port.updateClient(clientUpdateEvent.getId(),
-                    new Client(clientUpdateEvent.getId(),
-                            clientUpdateEvent.getFirstName(), clientUpdateEvent.getLastName()));
+            port.updateClient(clientUpdateEvent.getLogin(),
+                            clientUpdateEvent.getFirstName(), clientUpdateEvent.getLastName());
 
         } catch (ObjectNotFoundServiceException ignored) {
             log.warning("Error during updating an User");
-            producer.produce(new ClientRollbackUpdateEvent(clientUpdateEvent.getBackup()));
+            producer.produce(new ClientRollbackUpdateEvent(clientUpdateEvent.getLogin(),
+                    clientUpdateEvent.getFirstNameBackup(),
+                    clientUpdateEvent.getLastNameBackup()));
         } catch (Exception e) {
             log.warning("Invalid message format");
-            producer.produce(new ClientRollbackUpdateEvent(clientUpdateEvent.getBackup()));
+            producer.produce(new ClientRollbackUpdateEvent(clientUpdateEvent.getLogin(),
+                    clientUpdateEvent.getFirstNameBackup(),
+                    clientUpdateEvent.getLastNameBackup()));
         }
     }
 }

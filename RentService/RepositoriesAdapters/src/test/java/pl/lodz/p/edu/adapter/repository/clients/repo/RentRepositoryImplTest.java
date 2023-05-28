@@ -40,7 +40,7 @@ public class RentRepositoryImplTest {
 
     @BeforeAll
     public static void init() {
-        user = new ClientEnt("nielubie", "plackilubie321");
+        user = new ClientEnt("login1","nielubie", "plackilubie321");
         equipment = new EquipmentEnt("chair11", 30.0, 10.0, 15.0, "red chair");
     }
 

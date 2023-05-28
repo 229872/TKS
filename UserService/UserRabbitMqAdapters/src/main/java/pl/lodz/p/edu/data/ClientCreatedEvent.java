@@ -1,4 +1,4 @@
-package pl.lodz.p.edu;
+package pl.lodz.p.edu.data;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;

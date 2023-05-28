@@ -27,6 +27,8 @@ public interface UserServicePort {
 
     Client updateClient(UUID entityId, Client client) throws IllegalModificationException, ObjectNotFoundServiceException;
 
+    Client updateClient(String login, String name, String lastName) throws IllegalModificationException, ObjectNotFoundServiceException;
+
     Admin updateAdmin(UUID entityId, Admin admin) throws IllegalModificationException, ObjectNotFoundServiceException;
 
 }

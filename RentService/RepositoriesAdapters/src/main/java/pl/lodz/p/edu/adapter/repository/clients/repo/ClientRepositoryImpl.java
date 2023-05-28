@@ -32,6 +32,18 @@ public class ClientRepositoryImpl implements ClientRepository {
     }
 
     @Override
+    public ClientEnt getByLogin(String login) throws EntityNotFoundRepositoryException {
+        try {
+            return em.createNamedQuery(ClientEnt.FIND_BY_LOGIN, ClientEnt.class)
+                    .setParameter("login", login)
+                    .getSingleResult();
+
+        } catch (PersistenceException e) {
+            throw new EntityNotFoundRepositoryException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @Override
     public List<ClientEnt> getAll()  {
         return em.createNamedQuery(ClientEnt.FIND_ALL, ClientEnt.class)
                 .getResultList();

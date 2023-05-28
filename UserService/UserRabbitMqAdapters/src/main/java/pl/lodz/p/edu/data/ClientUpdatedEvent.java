@@ -1,21 +1,22 @@
-package pl.lodz.p.edu;
+package pl.lodz.p.edu.data;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.UUID;
-
 @Data
 @AllArgsConstructor
-public class ClientUpdateEvent {
-    @NotNull
-    private UUID id;
+public class ClientUpdatedEvent {
 
-    @NotBlank
+    private String login;
+
     private String firstName;
 
-    @NotBlank
     private String lastName;
+
+    private String firstNameBackup;
+
+    private String lastNameBackup;
+
 }

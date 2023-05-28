@@ -1,13 +1,13 @@
-package pl.lodz.p.edu.user.core.domain.usermodel.other;
+package pl.lodz.p.edu.core.domain.other;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
-public class ClientEvent {
-
-    private String login;
+public class Backup {
     private String firstName;
     private String lastName;
 }

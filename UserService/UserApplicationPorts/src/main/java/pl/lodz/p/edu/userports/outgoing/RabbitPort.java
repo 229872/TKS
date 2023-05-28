@@ -1,6 +1,10 @@
 package pl.lodz.p.edu.userports.outgoing;
 
 
-public interface RabbitPort<T> {
-    void produce(T event);
+import pl.lodz.p.edu.core.domain.other.ClientCreateEvent;
+import pl.lodz.p.edu.core.domain.other.ClientUpdateEvent;
+
+public interface RabbitPort {
+    void produce(ClientCreateEvent event);
+    void produce(ClientUpdateEvent event);
 }

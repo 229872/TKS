@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.comm;
+package pl.lodz.p.edu.comm.producer;
 import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
 import jakarta.enterprise.event.Startup;
@@ -10,14 +10,14 @@ import jakarta.json.bind.JsonbBuilder;
 import lombok.extern.java.Log;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import pl.lodz.p.edu.ProducerUser;
-import pl.lodz.p.edu.api.MqProducer;
-import pl.lodz.p.edu.ClientCreatedEvent;
+import pl.lodz.p.edu.api.MqCreateProducer;
+import pl.lodz.p.edu.data.ClientCreatedEvent;
 
 import java.io.IOException;
 
 @ApplicationScoped
 @Log
-public class ClientCreatedProducer implements MqProducer<ClientCreatedEvent> {
+public class ClientCreatedProducer implements MqCreateProducer {
 
     @Inject
     @ProducerUser

@@ -67,7 +67,7 @@ public class ClientCreatedConsumer {
         try (Jsonb jsonb = JsonbBuilder.create()) {
             clientCreatedEvent = jsonb.fromJson(message, ClientCreatedEvent.class);
 
-            port.registerUser(new Client(null,
+            port.registerUser(new Client(null, clientCreatedEvent.getLogin(),
                     clientCreatedEvent.getFirstName(), clientCreatedEvent.getLastName()));
 
         } catch (IllegalDateException e) {

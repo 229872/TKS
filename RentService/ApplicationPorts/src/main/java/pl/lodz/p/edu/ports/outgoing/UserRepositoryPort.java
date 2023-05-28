@@ -10,6 +10,8 @@ public interface UserRepositoryPort {
 
     Client get(UUID objectId) throws ObjectNotFoundServiceException;
 
+    Client getByLogin(String login) throws ObjectNotFoundServiceException;
+
     List<Client> getAll();
 
     Client add(Client object);

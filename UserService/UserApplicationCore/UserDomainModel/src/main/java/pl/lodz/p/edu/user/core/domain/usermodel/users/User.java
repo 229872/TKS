@@ -37,7 +37,6 @@ public abstract class User extends AbstractModelData {
     }
 
     public void update(User user) {
-        this.login = user.login;
         this.password = user.password;
         this.active = user.active;
     }

@@ -9,6 +9,7 @@ public class UserFromDomainToDataMapper {
 
     public ClientEnt convertClientToDataModelCreate(Client client) {
         return new ClientEnt(
+                client.getLogin(),
                 client.getName(),
                 client.getLastName()
         );
@@ -18,6 +19,7 @@ public class UserFromDomainToDataMapper {
     public ClientEnt convertPUTClientToDataModel(Client client) {
         return new ClientEnt(
                 client.getEntityId(),
+                client.getLogin(),
                 client.getName(),
                 client.getLastName()
         );

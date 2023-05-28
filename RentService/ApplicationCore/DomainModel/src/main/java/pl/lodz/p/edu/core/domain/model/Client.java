@@ -14,11 +14,13 @@ import java.util.UUID;
 @EqualsAndHashCode
 public class Client extends AbstractModelData {
 
+    private String login;
     private String name;
     private String lastName;
 
-    public Client(UUID entityId, String name, String lastName) {
+    public Client(UUID entityId, String login, String name, String lastName) {
         super(entityId);
+        this.login = login;
         this.name = name;
         this.lastName = lastName;
     }
@@ -26,5 +28,10 @@ public class Client extends AbstractModelData {
     public void update(Client client) {
         this.name = client.getName();
         this.lastName = client.getLastName();
+    }
+
+    public void update(String name, String lastName) {
+        this.name = name;
+        this.lastName = lastName;
     }
 }

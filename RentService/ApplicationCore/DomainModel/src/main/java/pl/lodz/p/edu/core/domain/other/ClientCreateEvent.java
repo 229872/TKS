@@ -1,13 +1,13 @@
-package pl.lodz.p.edu.rentmq.comm;
+package pl.lodz.p.edu.core.domain.other;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
-public class Backup {
+public class ClientCreateEvent {
+
+    private String login;
     private String firstName;
     private String lastName;
 }

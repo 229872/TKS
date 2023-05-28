@@ -8,6 +8,7 @@ import jakarta.persistence.PersistenceException;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 import pl.lodz.p.edu.adapter.repository.users.api.UserRepository;
+import pl.lodz.p.edu.adapter.repository.users.data.ClientEnt;
 import pl.lodz.p.edu.adapter.repository.users.data.UserEnt;
 import pl.lodz.p.edu.adapter.repository.users.exception.EntityNotFoundRepositoryException;
 
@@ -54,8 +55,17 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public UserEnt update(UserEnt elem) {
-        em.lock(em.merge(elem), LockModeType.OPTIMISTIC_FORCE_INCREMENT);
-        return em.merge(elem);
+//        em.lock(em.merge(elem), LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+        UserEnt withVersion = em.find(UserEnt.class, elem.getEntityId());
+        if (withVersion instanceof ClientEnt client) {
+            ClientEnt updated = (ClientEnt) elem;
+            client.setFirstName(updated.getFirstName());
+            client.setLastName(updated.getLastName());
+            return em.merge(client);
+        }
+
+        UserEnt here = em.merge(withVersion);
+        return here;
     }
 
     @Override

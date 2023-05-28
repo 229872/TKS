@@ -39,6 +39,17 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     }
 
     @Override
+    public Client getByLogin(String login) throws ObjectNotFoundServiceException {
+        try {
+            ClientEnt client = repository.getByLogin(login);
+            return toDomainMapper.convertClientToDomainModel(client);
+        } catch (EntityNotFoundRepositoryException e) {
+            throw new ObjectNotFoundServiceException(e.getMessage(), e.getCause());
+        }
+    }
+
+
+    @Override
     public List<Client> getAll() {
         return repository.getAll().stream()
                 .map(this::convertClientToDomainModelALL)

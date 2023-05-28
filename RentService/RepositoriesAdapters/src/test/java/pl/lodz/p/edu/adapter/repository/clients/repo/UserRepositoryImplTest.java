@@ -20,7 +20,7 @@ class UserRepositoryImplTest {
 
     @BeforeAll
     public static void init() {
-        user = new ClientEnt("lubieplacki123", "plackilubie321");
+        user = new ClientEnt("login","lubieplacki123", "plackilubie321");
     }
 
     @Test

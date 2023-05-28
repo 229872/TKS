@@ -20,6 +20,10 @@
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>pl.lodz.p.edu</groupId>
+            <artifactId>DomainModel</artifactId>
+        </dependency>
     </dependencies>
 
     <packaging>jar</packaging>

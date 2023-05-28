@@ -7,4 +7,5 @@ public interface UserRepositoryPort extends RepositoryPort<User> {
     @Override
     User update(User object);
     User getByLogin(String userLogin) throws ObjectNotFoundServiceException;
+
 }

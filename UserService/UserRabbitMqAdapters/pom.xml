@@ -50,5 +50,9 @@
             <groupId>pl.lodz.p.edu</groupId>
             <artifactId>UserApplicationPorts</artifactId>
         </dependency>
+        <dependency>
+            <groupId>pl.lodz.p.edu</groupId>
+            <artifactId>DomainModel</artifactId>
+        </dependency>
     </dependencies>
 </project>

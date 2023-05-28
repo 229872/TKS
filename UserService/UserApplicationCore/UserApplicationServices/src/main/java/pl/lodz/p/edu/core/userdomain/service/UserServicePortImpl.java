@@ -1,14 +1,15 @@
 package pl.lodz.p.edu.core.userdomain.service;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceException;
 import jakarta.transaction.TransactionalException;
+import pl.lodz.p.edu.core.domain.other.Backup;
+import pl.lodz.p.edu.core.domain.other.ClientUpdateEvent;
 import pl.lodz.p.edu.user.core.domain.usermodel.exception.ConflictException;
 import pl.lodz.p.edu.user.core.domain.usermodel.exception.IllegalModificationException;
 import pl.lodz.p.edu.user.core.domain.usermodel.exception.ObjectNotFoundServiceException;
-import pl.lodz.p.edu.user.core.domain.usermodel.other.ClientEvent;
+import pl.lodz.p.edu.core.domain.other.ClientCreateEvent;
 import pl.lodz.p.edu.user.core.domain.usermodel.users.*;
 import pl.lodz.p.edu.userports.incoming.UserServicePort;
 import pl.lodz.p.edu.userports.outgoing.RabbitPort;
@@ -21,15 +22,11 @@ import java.util.stream.Collectors;
 @Dependent
 public class UserServicePortImpl implements UserServicePort {
 
-    private final UserRepositoryPort userRepository;
-
-    private final RabbitPort<ClientEvent> rabbitPort;
-
     @Inject
-    public UserServicePortImpl(UserRepositoryPort userRepository, RabbitPort<ClientEvent> rabbitPort) {
-        this.userRepository = userRepository;
-        this.rabbitPort = rabbitPort;
-    }
+    private UserRepositoryPort userRepository;
+    @Inject
+    private RabbitPort rabbitPort;
+
 
     @Override
     public User registerUser(User user) throws ConflictException {
@@ -37,7 +34,7 @@ public class UserServicePortImpl implements UserServicePort {
             User newUser = userRepository.add(user);
 
             if (newUser instanceof Client client) {
-                rabbitPort.produce(new ClientEvent(client.getLogin(), client.getFirstName(), client.getLastName()));
+                rabbitPort.produce(new ClientCreateEvent(client.getLogin(), client.getFirstName(), client.getLastName()));
             }
             return newUser;
 
@@ -73,7 +70,35 @@ public class UserServicePortImpl implements UserServicePort {
             ObjectNotFoundServiceException {
         try {
             Client clientDB = (Client) userRepository.get(entityId);
+            String backupFirstName = clientDB.getFirstName();
+            String backupLastName = clientDB.getLastName();
             clientDB.update(client);
+
+            Client updatedClient = (Client) userRepository.update(clientDB);
+            rabbitPort.produce(new ClientUpdateEvent(
+                    clientDB.getLogin(),
+                    clientDB.getFirstName(),
+                    clientDB.getLastName(),
+                    backupFirstName,
+                    backupLastName
+            ));
+
+            return updatedClient;
+        } catch (ClassCastException e) {
+            throw new ObjectNotFoundServiceException("User not found");
+        } catch(PersistenceException e) {
+            throw new IllegalModificationException("Cannot modify clients login");
+        }
+    }
+
+    @Override
+    public Client updateClient(String login, String name, String lastName) throws IllegalModificationException, ObjectNotFoundServiceException {
+        try {
+            Client clientDB = (Client) userRepository.getByLogin(login);
+
+            clientDB.setFirstName(name);
+            clientDB.setLastName(lastName);
+
             return (Client) userRepository.update(clientDB);
         } catch (ClassCastException e) {
             throw new ObjectNotFoundServiceException("User not found");

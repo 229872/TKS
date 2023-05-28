@@ -69,7 +69,6 @@ public class RentController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/client/{uuid}")
-    @RolesAllowed("ADMIN")
     public Response getClientRents(@PathParam("uuid") UUID clientUuid) {
         try {
             userService.get(clientUuid);
@@ -96,6 +95,7 @@ public class RentController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/")
+    @RolesAllowed("ADMIN")
     public Response getAllRents() {
         List<RentOutputDTO> rentsDTO = rentService.getAll();
         return Response.ok(rentsDTO).build();

@@ -8,6 +8,7 @@ import jakarta.security.enterprise.authentication.mechanism.http.HttpAuthenticat
 import jakarta.security.enterprise.authentication.mechanism.http.HttpMessageContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import pl.lodz.p.edu.adapter.repository.clients.api.ClientRepository;
 import pl.lodz.p.edu.ports.outgoing.SecurityPort;
 
 import java.util.Collections;

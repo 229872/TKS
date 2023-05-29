@@ -71,9 +71,11 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public UserEnt getByLogin(String login) throws EntityNotFoundRepositoryException {
         try {
-            return em.createNamedQuery(UserEnt.FIND_BY_LOGIN, UserEnt.class)
+            UserEnt user = em.createNamedQuery(UserEnt.FIND_BY_LOGIN, UserEnt.class)
                     .setParameter("login", login)
                     .getSingleResult();
+            em.refresh(user);
+            return user;
 
         } catch (PersistenceException e) {
             throw new EntityNotFoundRepositoryException(e.getMessage(), e.getCause());

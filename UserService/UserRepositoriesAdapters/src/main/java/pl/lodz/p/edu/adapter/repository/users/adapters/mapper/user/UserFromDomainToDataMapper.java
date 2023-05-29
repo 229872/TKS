@@ -23,6 +23,7 @@ public class UserFromDomainToDataMapper {
     public ClientEnt convertClientToDataModel(Client client) {
         return new ClientEnt(
                 client.getEntityId(),
+                client.getVersion(),
                 client.getLogin(),
                 client.getPassword(),
                 client.getFirstName(),

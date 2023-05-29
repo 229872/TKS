@@ -29,7 +29,7 @@ public class ClientUpdateRollbackConsumer  {
   private Channel channel;
 
   @Inject
-  @ConfigProperty(name = "mq.queue.client.rollback", defaultValue = "CLIENT_ROLLBACK_QUEUE")
+  @ConfigProperty(name = "mq.queue.client.rollback.update", defaultValue = "CLIENT_ROLLBACK_QUEUE_UPDATE")
   private String queueName;
 
   @Inject

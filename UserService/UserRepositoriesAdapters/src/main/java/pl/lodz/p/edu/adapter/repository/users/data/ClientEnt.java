@@ -40,6 +40,13 @@ public class ClientEnt extends UserEnt {
         this.address = address;
     }
 
+    public ClientEnt(UUID uuid, Long version, String login, String password, String firstName, String lastName, boolean active, AddressEnt address) {
+        super(uuid, version, login, password, active);
+        this.firstName = firstName;
+        this.lastName = lastName;;
+        this.address = address;
+    }
+
     protected ClientEnt() {
         address = new AddressEnt();
     }

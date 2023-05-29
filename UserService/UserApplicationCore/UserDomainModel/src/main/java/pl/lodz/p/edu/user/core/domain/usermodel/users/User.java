@@ -36,6 +36,13 @@ public abstract class User extends AbstractModelData {
         this.password = password;
     }
 
+    public User(UUID id, Long version, String login, String password) {
+        super(id, version);
+        this.login = login;
+        this.active = true;
+        this.password = password;
+    }
+
     public void update(User user) {
         this.password = user.password;
         this.active = user.active;

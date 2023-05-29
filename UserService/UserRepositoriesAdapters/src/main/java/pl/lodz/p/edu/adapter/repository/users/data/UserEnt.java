@@ -3,6 +3,7 @@ package pl.lodz.p.edu.adapter.repository.users.data;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -36,6 +37,14 @@ public abstract class UserEnt extends AbstractEntity {
 
     public UserEnt(UUID uuid, String login, String password, boolean active) {
         this.setEntityId(uuid);
+        this.login = login;
+        this.password = password;
+        this.setActive(active);
+    }
+
+    public UserEnt(UUID uuid, Long version, String login, String password, boolean active) {
+        this.setEntityId(uuid);
+        this.setVersion(Objects.isNull(version) ? 0 : version);
         this.login = login;
         this.password = password;
         this.setActive(active);

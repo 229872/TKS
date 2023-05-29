@@ -1,5 +1,6 @@
 package pl.lodz.p.edu.adapter.rest.controller;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.Stateless;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -94,6 +95,7 @@ public class RentController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/")
+    @RolesAllowed("ADMIN")
     public Response getAllRents() {
         List<RentOutputDTO> rentsDTO = rentService.getAll();
         return Response.ok(rentsDTO).build();
